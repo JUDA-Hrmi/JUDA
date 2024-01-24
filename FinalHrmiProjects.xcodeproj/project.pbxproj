@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		096E63182B616886009246CE /* DrinkListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096E63172B616886009246CE /* DrinkListCell.swift */; };
 		B121A5722B5F8EE100667D42 /* Font +.swift in Sources */ = {isa = PBXBuildFile; fileRef = B121A5712B5F8EE100667D42 /* Font +.swift */; };
 		B121A5732B5F910900667D42 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B121A56C2B5F8D5D00667D42 /* Pretendard-Bold.otf */; };
 		B121A5742B5F910B00667D42 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = B121A56D2B5F8D5D00667D42 /* Pretendard-Light.otf */; };
@@ -43,6 +44,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		096E63172B616886009246CE /* DrinkListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkListCell.swift; sourceTree = "<group>"; };
 		B121A5692B5F8D5D00667D42 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		B121A56A2B5F8D5D00667D42 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		B121A56B2B5F8D5D00667D42 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 			isa = PBXGroup;
 			children = (
 				B1EE24A42B614872007F68B0 /* SearchBar.swift */,
+				096E63172B616886009246CE /* DrinkListCell.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 				B1EE249E2B6144DD007F68B0 /* DrinkInfoViewModel.swift in Sources */,
 				B1EE24A22B6144EA007F68B0 /* LogInViewModel.swift in Sources */,
 				B1B8FE7F2B5EA9D900921BBE /* ContentView.swift in Sources */,
+				096E63182B616886009246CE /* DrinkListCell.swift in Sources */,
 				B1EE24982B6144BD007F68B0 /* LikedViewModel.swift in Sources */,
 				B1EE24962B6144A5007F68B0 /* MypageViewModel.swift in Sources */,
 				B1EE24922B61447F007F68B0 /* MainView.swift in Sources */,
