@@ -56,6 +56,7 @@ struct DrinkGridCell: View {
                     HStack(alignment: .center, spacing: 6) {
                         // 별
                         HStack(alignment: .center, spacing: 0) {
+                            // TODO: 추후 커스텀 별로 이미지 교체 예정
                             Image(systemName: "star.fill")
                             Image(systemName: "star.fill")
                             Image(systemName: "star.fill")
