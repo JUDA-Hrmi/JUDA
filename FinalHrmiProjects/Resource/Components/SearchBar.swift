@@ -8,17 +8,22 @@
 import SwiftUI
 
 struct SearchBar: View {
+    @State private var inputText: String = ""
     var body: some View {
         HStack {
-            HStack(spacing: 0) {
+            HStack(spacing: 5) {
                 Image(systemName: "magnifyingglass")
                     .padding(.leading)
-                Text("검색")
+
+                TextField("검색", text: $inputText)
                     .font(.medium16)
-                    .lineSpacing(22)
+                    .textInputAutocapitalization(.never)
             }
             Spacer()
-            Image(systemName: "xmark")
+            // TODO: xmark 기능 구현
+            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                Image(systemName: "xmark")
+            })
         }
         .foregroundColor(.gray01)
         .padding(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 20))
