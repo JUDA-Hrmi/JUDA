@@ -20,10 +20,14 @@ struct SearchBar: View {
                     .textInputAutocapitalization(.never)
             }
             Spacer()
-            // TODO: xmark 기능 구현
-            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                Image(systemName: "xmark")
-            })
+            
+            if !inputText.isEmpty {
+                Button(action: {
+                    inputText = ""
+                }, label: {
+                    Image(systemName: "xmark")
+                })
+            }
         }
         .foregroundColor(.gray01)
         .padding(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 20))
