@@ -32,16 +32,16 @@ struct DrinkListCell: View {
                     // 술 이름
                     Text(drinkName)
                         .lineLimit(2)
-                        .font(.system(size: 16, weight: .semibold))
-                        .foregroundStyle(.black)
+                        .font(.semibold16)
+                        .foregroundStyle(.mainBlack)
                     // 나라, 도수
                     HStack(spacing: 10) {
                         Text(drinkOrigin)
-                            .font(.system(size: 14, weight: .semibold))
+                            .font(.semibold14)
                         Text(drinkABV)
-                            .font(.system(size: 14, weight: .semibold))
+                            .font(.semibold14)
                     }
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(.gray01)
                     // 별점
                     HStack(alignment: .center, spacing: 6) {
                         // 별
@@ -53,11 +53,11 @@ struct DrinkListCell: View {
                             Image(systemName: "star.fill")
                             Image(systemName: "star.leadinghalf.filled")
                         }
-                        .foregroundStyle(.yellow)
+                        .foregroundStyle(.mainAccent05)
                         // 별점
                         Text(drinkRating)
-                            .font(.system(size: 14, weight: .semibold))
-                            .foregroundStyle(.black)
+                            .font(.semibold14)
+                            .foregroundStyle(.mainBlack)
                     }
                 }
             }
@@ -67,7 +67,7 @@ struct DrinkListCell: View {
                 isLiked.toggle()
             } label: {
                 Image(systemName: isLiked ? "heart.fill" : "heart")
-                    .foregroundStyle(isLiked ? Color.red : Color.gray)
+                    .foregroundStyle(isLiked ? Color.mainAccent02 : Color.gray01)
             }
         }
         .padding(.vertical, 10)
