@@ -16,9 +16,13 @@ struct CustomSortingButton: View {
             Button(action: {
                 isShowingSheet.toggle()
             }) {
-                Text(selectedSortingOption)
-                    .font(.medium16)
-                    .foregroundStyle(.mainBlack)
+                HStack(spacing: 5) {
+                    Text(selectedSortingOption)
+                        .font(.medium16)
+                        .foregroundStyle(.mainBlack)
+                    Image("arrow.style")
+                        .foregroundStyle(.mainBlack)
+                }
             }
             .actionSheet(isPresented: $isShowingSheet) {
                 ActionSheet(
@@ -26,11 +30,11 @@ struct CustomSortingButton: View {
                     buttons: [
                         .default(Text("인기순")) {
                             selectedSortingOption = "인기순"
-                            // 정렬 결과를 표시하는 함수 호출
+                            // TODO: 정렬 결과를 표시하는 함수 호출
                         },
                         .default(Text("최신순")) {
                             selectedSortingOption = "최신순"
-                            // 정렬 결과를 표시하는 함수 호출
+                            // TODO: 정렬 결과를 표시하는 함수 호출
                         },
                         .cancel()
                     ]
