@@ -15,7 +15,6 @@
 		B121A5772B5F911900667D42 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B121A56A2B5F8D5D00667D42 /* Pretendard-SemiBold.otf */; };
 		B121A5782B5F911A00667D42 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = B121A56E2B5F8D5E00667D42 /* Pretendard-Thin.otf */; };
 		B14771F92B6218870036A4A9 /* CustomChangeStyleSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14771F82B6218870036A4A9 /* CustomChangeStyleSegment.swift */; };
-		B14771FB2B62395D0036A4A9 /* rmsidvkdlf.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14771FA2B62395D0036A4A9 /* rmsidvkdlf.swift */; };
 		B1B8FE7D2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8FE7C2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift */; };
 		B1B8FE7F2B5EA9D900921BBE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8FE7E2B5EA9D900921BBE /* ContentView.swift */; };
 		B1B8FE812B5EA9DA00921BBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */; };
@@ -54,7 +53,6 @@
 		B121A56F2B5F8DA100667D42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B121A5712B5F8EE100667D42 /* Font +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font +.swift"; sourceTree = "<group>"; };
 		B14771F82B6218870036A4A9 /* CustomChangeStyleSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomChangeStyleSegment.swift; sourceTree = "<group>"; };
-		B14771FA2B62395D0036A4A9 /* rmsidvkdlf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rmsidvkdlf.swift; sourceTree = "<group>"; };
 		B1B8FE792B5EA9D900921BBE /* FinalHrmiProjects.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalHrmiProjects.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1B8FE7C2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalHrmiProjectsApp.swift; sourceTree = "<group>"; };
 		B1B8FE7E2B5EA9D900921BBE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -312,7 +310,6 @@
 			children = (
 				B1EE24A42B614872007F68B0 /* SearchBar.swift */,
 				B14771F82B6218870036A4A9 /* CustomChangeStyleSegment.swift */,
-				B14771FA2B62395D0036A4A9 /* rmsidvkdlf.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -423,7 +420,6 @@
 				B1EE24A52B614872007F68B0 /* SearchBar.swift in Sources */,
 				B1EE24942B614485007F68B0 /* LogInView.swift in Sources */,
 				B1EE248E2B614470007F68B0 /* PostsView.swift in Sources */,
-				B14771FB2B62395D0036A4A9 /* rmsidvkdlf.swift in Sources */,
 				B1EE24882B61445E007F68B0 /* MypageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
