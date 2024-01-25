@@ -62,11 +62,3 @@ struct CustomTextSegment: View {
 	return CustomTextSegment(segments: PostOrLiked.post, selectedSegmentIndex: .constant(1))
 		.frame(width: 100)
 }
-
-extension String {
-   func widthOfString(usingFont font: UIFont) -> CGFloat {
-		let fontAttributes = [NSAttributedString.Key.font: font]
-		let size = self.size(withAttributes: fontAttributes)
-		return size.width
-	}
-}
