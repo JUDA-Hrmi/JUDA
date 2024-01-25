@@ -24,7 +24,7 @@ struct DrinkGridCell: View {
                 isLiked.toggle()
             } label: {
                 Image(systemName: isLiked ? "heart.fill" : "heart")
-                    .foregroundStyle(isLiked ? Color.mainAccent02 : Color.gray01)
+                    .foregroundStyle(isLiked ? .mainAccent02 : .gray01)
             }
             // 술 정보
             VStack(alignment: .leading, spacing: 10) {
