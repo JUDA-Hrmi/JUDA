@@ -14,6 +14,7 @@
 		B121A5762B5F911700667D42 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = B121A5692B5F8D5D00667D42 /* Pretendard-Regular.otf */; };
 		B121A5772B5F911900667D42 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B121A56A2B5F8D5D00667D42 /* Pretendard-SemiBold.otf */; };
 		B121A5782B5F911A00667D42 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = B121A56E2B5F8D5E00667D42 /* Pretendard-Thin.otf */; };
+		B14771F72B62019B0036A4A9 /* View +.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14771F62B62019B0036A4A9 /* View +.swift */; };
 		B1B8FE7D2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8FE7C2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift */; };
 		B1B8FE7F2B5EA9D900921BBE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8FE7E2B5EA9D900921BBE /* ContentView.swift */; };
 		B1B8FE812B5EA9DA00921BBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */; };
@@ -51,6 +52,7 @@
 		B121A56E2B5F8D5E00667D42 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
 		B121A56F2B5F8DA100667D42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B121A5712B5F8EE100667D42 /* Font +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font +.swift"; sourceTree = "<group>"; };
+		B14771F62B62019B0036A4A9 /* View +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View +.swift"; sourceTree = "<group>"; };
 		B1B8FE792B5EA9D900921BBE /* FinalHrmiProjects.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalHrmiProjects.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1B8FE7C2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalHrmiProjectsApp.swift; sourceTree = "<group>"; };
 		B1B8FE7E2B5EA9D900921BBE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				B121A5712B5F8EE100667D42 /* Font +.swift */,
+				B14771F62B62019B0036A4A9 /* View +.swift */,
 				B1EE24A32B614508007F68B0 /* Components */,
 				B121A5682B5F8D4800667D42 /* Pretendard */,
 			);
@@ -403,6 +406,7 @@
 				B1EE24732B61431A007F68B0 /* DummyModel.swift in Sources */,
 				B1EE249E2B6144DD007F68B0 /* DrinkInfoViewModel.swift in Sources */,
 				B1EE24A22B6144EA007F68B0 /* LogInViewModel.swift in Sources */,
+				B14771F72B62019B0036A4A9 /* View +.swift in Sources */,
 				B1B8FE7F2B5EA9D900921BBE /* ContentView.swift in Sources */,
 				B1EE24982B6144BD007F68B0 /* LikedViewModel.swift in Sources */,
 				B1EE24962B6144A5007F68B0 /* MypageViewModel.swift in Sources */,
@@ -550,7 +554,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FinalHrmiProjects/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = W53R97SB66;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FinalHrmiProjects/Info.plist;
@@ -564,7 +568,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hrmi.FinalHrmiProjects;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sh.FinalHrmiProjects;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -580,7 +584,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FinalHrmiProjects/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = W53R97SB66;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FinalHrmiProjects/Info.plist;
@@ -594,7 +598,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hrmi.FinalHrmiProjects;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sh.FinalHrmiProjects;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
