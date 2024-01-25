@@ -22,9 +22,8 @@ struct DrinkSelectHorizontalScrollBar: View {
                 ForEach(0..<typesOfDrink.count, id: \.self) { index in
                     // 술 종류
                     Text(typesOfDrink[index])
-                        .font(.system(size: 16))
-                        .fontWeight(index == selectedDrinkIndex ? .semibold : .medium)
-                        .foregroundStyle(index == selectedDrinkIndex ? Color.black : Color.gray)
+                        .font(index == selectedDrinkIndex ? .semibold16 : .medium16)
+                        .foregroundStyle(index == selectedDrinkIndex ? Color.mainBlack : Color.gray01)
                         .onTapGesture {
                             selectedDrinkIndex = index
                         }
