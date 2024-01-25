@@ -67,7 +67,7 @@ struct DrinkListCell: View {
                 isLiked.toggle()
             } label: {
                 Image(systemName: isLiked ? "heart.fill" : "heart")
-                    .foregroundStyle(isLiked ? Color.mainAccent02 : Color.gray01)
+                    .foregroundStyle(isLiked ? .mainAccent02 : .gray01)
             }
         }
         .padding(.vertical, 10)
