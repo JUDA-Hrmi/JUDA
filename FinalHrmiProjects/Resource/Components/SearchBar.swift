@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SearchBar: View {
-    // 텍필에 입력할 텍스트
     @State private var inputText: String = ""
 //    @FocusState private var isFocused: Bool
     var body: some View {
