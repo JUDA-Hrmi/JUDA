@@ -60,10 +60,8 @@ struct PostCell: View {
 				}
 			}
 			.frame(height: 30)
-			.border(.mainBlack)
 		}
 		.frame(width: 170, height: 200)
-		.border(.mainBlack)
 	}
 	
 	// 좋아요 버튼 액션 메서드

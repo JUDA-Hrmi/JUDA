@@ -32,7 +32,7 @@ struct CustomTextSegment: View {
 						.foregroundColor(selectedSegmentIndex == index ? .mainBlack : .gray01)
 					
 					// 세그먼트 텍스트 하단 바
-					ZStack {
+					ZStack(alignment: .center) {
 						// 선택되지 않은 문자열 하단엔 바 안보임
 						Capsule()
 							.fill(.clear)
@@ -55,11 +55,18 @@ struct CustomTextSegment: View {
 				}
 			}
 		}
-		// 텍스트의 width와 하단 바의 width 맞춰줌
-		.fixedSize()
 	}
 }
 
 #Preview {
-	return CustomTextSegment(segments: PostOrLiked.liked, selectedSegmentIndex: .constant(0))
+	return CustomTextSegment(segments: PostOrLiked.post, selectedSegmentIndex: .constant(1))
+		.frame(width: 100)
+}
+
+extension String {
+   func widthOfString(usingFont font: UIFont) -> CGFloat {
+		let fontAttributes = [NSAttributedString.Key.font: font]
+		let size = self.size(withAttributes: fontAttributes)
+		return size.width
+	}
 }
