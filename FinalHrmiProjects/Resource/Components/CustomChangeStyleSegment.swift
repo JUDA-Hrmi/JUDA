@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct SegmentBarVer2: View {
-    private let cellStyle = ["square.grid.2x2.fill", "list.bullets"]
-    @Binding var selectedSymbolIndex: Int
+struct CustomChangeStyleSegment: View {
+    private let cellStyle = ["grid.style", "list.style"]
+//    @Binding var selectedSymbolIndex: Int
     
     // 현재 뷰에서 tap 체크용
-//    @State private var selectedSymbolIndex = 0
+    @State private var selectedSymbolIndex = 0
     var body: some View {
         HStack {
             HStack {
@@ -31,5 +31,6 @@ struct SegmentBarVer2: View {
 }
 
 #Preview {
-    SegmentBarVer2(selectedSymbolIndex: .constant(1))
+//    SegmentBarVer2(selectedSymbolIndex: .constant(1))
+    CustomChangeStyleSegment()
 }
