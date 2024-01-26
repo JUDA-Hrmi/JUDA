@@ -22,14 +22,14 @@ struct DrinkInfoSegment: View {
 
 //MARK: 리스트/그리드 정렬 버튼
 struct CustomChangeStyleSegment: View {
-    private let cellStyle = ["grid.style", "list.style"]
+    private let cellStyleSymbolList = ["grid.style", "list.style"]
 //    @Binding var selectedSymbolIndex: Int
     @State private var selectedSymbolIndex = 0 // 현재 뷰에서 어떤 이미지 tap 체크 변수
     var body: some View {
         HStack {
             HStack(spacing: 5) {
-                ForEach(0..<cellStyle.count, id: \.self) { index in
-                    Image(cellStyle[index])
+                ForEach(0..<cellStyleSymbolList.count, id: \.self) { index in
+                    Image(cellStyleSymbolList[index])
                         .foregroundStyle(index == selectedSymbolIndex ? .mainBlack : .gray01)
                         .onTapGesture {
                             withAnimation {
