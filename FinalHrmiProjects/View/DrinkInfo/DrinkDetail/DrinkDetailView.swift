@@ -22,7 +22,7 @@ struct DrinkDummyData: Identifiable {
     let wellMatchedFoods: [String]
     
     static let sample = DrinkDummyData(
-        image: "DummyDrinkImage", name: "카누카 칵테일 700ml", origin: "스페인",
+        image: "canuca", name: "카누카 칵테일 700ml", origin: "스페인",
         abv: "15%", price: "35,000원", rating: "4.7", tastingNotes: ["Aroma": ["달콤한", "라임"],
                                                                     "Taste": ["라임 모히또"],
                                                                     "Finish": ["상큼한", "쌉쌀한"]],
@@ -32,7 +32,13 @@ struct DrinkDummyData: Identifiable {
 
 struct DrinkDetailView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        // 세로 스크롤
+        ScrollView {
+            VStack(spacing: 0) {
+                // 술 정보 (이미지, 이름, 나라, 도수, 가격, 별점, 태그된 게시물)
+                DrinkDetails()
+            }
+        }
     }
 }
 
