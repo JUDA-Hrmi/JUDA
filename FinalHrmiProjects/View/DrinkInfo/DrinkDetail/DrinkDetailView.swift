@@ -37,6 +37,12 @@ struct DrinkDetailView: View {
             VStack(spacing: 0) {
                 // 술 정보 (이미지, 이름, 나라, 도수, 가격, 별점, 태그된 게시물)
                 DrinkDetails()
+                
+                // 맛 + 향
+                TastingNotes()
+                
+                // 잘어울리는 음식
+                WellMatched()
             }
         }
     }
