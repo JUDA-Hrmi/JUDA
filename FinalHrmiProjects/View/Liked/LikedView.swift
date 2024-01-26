@@ -16,16 +16,20 @@ struct LikedView: View {
             // 세그먼트 (술찜 리스트 / 술상 리스트)
             CustomTextSegment(segments: PostOrLiked.liked, selectedSegmentIndex: $selectedSegmentIndex)
                 .frame(width: 200)
-                .padding(.vertical, 16)
+                .padding(.vertical, 10)
                 .padding(.horizontal, 20)
                 .frame(maxWidth: .infinity, alignment: .leading)
-            if selectedSegmentIndex == 0 {
-                // 술찜 리스트
-                LikedDrinkList()
-            } else {
-                // 술상 리스트
-                LikedPostGrid()
+            // 세로 스크롤
+            ScrollView {
+                if selectedSegmentIndex == 0 {
+                    // 술찜 리스트
+                    LikedDrinkList()
+                } else {
+                    // 술상 리스트
+                    LikedPostGrid()
+                }
             }
+            .scrollIndicators(.hidden)
         }
     }
 }

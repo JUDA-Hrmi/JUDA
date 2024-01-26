@@ -12,9 +12,20 @@ struct LikedPostGrid: View {
     @State private var isLikePost = true
     // 게시물
     @State private var postLikeCount = 45
+    // UITest - 술상 그리드 셀 2개 column
+    private let columns: [GridItem] = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
     
     var body: some View {
-        Text("Post")
+        LazyVGrid(columns: columns, spacing: 10) {
+            ForEach(0..<10, id: \.self) { _ in
+                // TODO: 추후에 네비게이션으로 해당 술상의 Detail 로 이동 연결
+                PostCell(isLike: $isLikePost, likeCount: $postLikeCount)
+            }
+        }
+        .padding(.horizontal, 20)
     }
 }
 
