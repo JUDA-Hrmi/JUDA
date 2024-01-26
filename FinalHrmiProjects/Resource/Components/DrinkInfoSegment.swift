@@ -15,8 +15,8 @@ struct DrinkInfoSegment: View {
             Spacer()
             CustomSortingButton()
         }
-        // 양쪽 padding 20씩 설정
-        .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
+        .padding(.horizontal, 20)
+        .padding(.vertical, 10)
     }
 }
 
