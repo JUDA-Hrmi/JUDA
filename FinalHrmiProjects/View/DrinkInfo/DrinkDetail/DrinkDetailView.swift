@@ -34,15 +34,33 @@ struct DrinkDetailView: View {
     var body: some View {
         // 세로 스크롤
         ScrollView {
-            VStack(spacing: 0) {
+            VStack(spacing: 10) {
                 // 술 정보 (이미지, 이름, 나라, 도수, 가격, 별점, 태그된 게시물)
                 DrinkDetails()
-                
+                // TODO: 커스텀 디바이더로 변경 예정
+                Divider()
+                    .frame(height: 0.5)
+                    .backgroundStyle(.gray04)
                 // 맛 + 향
                 TastingNotes()
-                
+                // TODO: 커스텀 디바이더로 변경 예정
+                Divider()
+                    .frame(height: 0.5)
+                    .backgroundStyle(.gray04)
                 // 잘어울리는 음식
                 WellMatched()
+                // TODO: 커스텀 디바이더로 변경 예정
+                Divider()
+                    .frame(height: 0.5)
+                    .backgroundStyle(.gray04)
+                // 차트 - 선호하는 연령, 성별
+                PeferencesChart()
+                // TODO: 커스텀 디바이더로 변경 예정
+                Divider()
+                    .frame(height: 0.5)
+                    .backgroundStyle(.gray04)
+                // 태그된 인기 게시물
+                TaggedTrendingPosts()
             }
         }
     }

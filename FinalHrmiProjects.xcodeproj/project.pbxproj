@@ -22,6 +22,8 @@
 		09254CAE2B6381B500569D94 /* TastingNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09254CAD2B6381B500569D94 /* TastingNotes.swift */; };
 		09254CB02B63823E00569D94 /* WellMatched.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09254CAF2B63823E00569D94 /* WellMatched.swift */; };
 		09254CB22B6382F800569D94 /* PeferencesChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09254CB12B6382F800569D94 /* PeferencesChart.swift */; };
+		09254CB62B63B1D700569D94 /* TaggedTrendingPosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09254CB52B63B1D700569D94 /* TaggedTrendingPosts.swift */; };
+		09254CB82B63B20300569D94 /* PostListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09254CB72B63B20300569D94 /* PostListCell.swift */; };
 		096E63182B616886009246CE /* DrinkListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096E63172B616886009246CE /* DrinkListCell.swift */; };
 		096E631A2B616F31009246CE /* DrinkGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096E63192B616F31009246CE /* DrinkGridCell.swift */; };
 		09CDADA52B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDADA42B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift */; };
@@ -85,6 +87,8 @@
 		09254CAD2B6381B500569D94 /* TastingNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TastingNotes.swift; sourceTree = "<group>"; };
 		09254CAF2B63823E00569D94 /* WellMatched.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WellMatched.swift; sourceTree = "<group>"; };
 		09254CB12B6382F800569D94 /* PeferencesChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeferencesChart.swift; sourceTree = "<group>"; };
+		09254CB52B63B1D700569D94 /* TaggedTrendingPosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaggedTrendingPosts.swift; sourceTree = "<group>"; };
+		09254CB72B63B20300569D94 /* PostListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListCell.swift; sourceTree = "<group>"; };
 		096E63172B616886009246CE /* DrinkListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkListCell.swift; sourceTree = "<group>"; };
 		096E63192B616F31009246CE /* DrinkGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkGridCell.swift; sourceTree = "<group>"; };
 		09CDADA42B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkSelectHorizontalScrollBar.swift; sourceTree = "<group>"; };
@@ -153,6 +157,8 @@
 				09254CAD2B6381B500569D94 /* TastingNotes.swift */,
 				09254CAF2B63823E00569D94 /* WellMatched.swift */,
 				09254CB12B6382F800569D94 /* PeferencesChart.swift */,
+				09254CB52B63B1D700569D94 /* TaggedTrendingPosts.swift */,
+				09254CB72B63B20300569D94 /* PostListCell.swift */,
 			);
 			path = DrinkDetail;
 			sourceTree = "<group>";
@@ -491,6 +497,7 @@
 				09254CAC2B637F7300569D94 /* DrinkDetails.swift in Sources */,
 				B1EE24732B61431A007F68B0 /* DummyModel.swift in Sources */,
 				B1EE249E2B6144DD007F68B0 /* DrinkInfoViewModel.swift in Sources */,
+				09254CB62B63B1D700569D94 /* TaggedTrendingPosts.swift in Sources */,
 				096E631A2B616F31009246CE /* DrinkGridCell.swift in Sources */,
 				7B904C682B6184560052384A /* CustomTextSegment.swift in Sources */,
 				B1EE24A22B6144EA007F68B0 /* LogInViewModel.swift in Sources */,
@@ -499,6 +506,7 @@
 				09254CB22B6382F800569D94 /* PeferencesChart.swift in Sources */,
 				096E63182B616886009246CE /* DrinkListCell.swift in Sources */,
 				B158F83B2B6539FC00E33C47 /* EnabledBottomSheetView.swift in Sources */,
+				09254CB82B63B20300569D94 /* PostListCell.swift in Sources */,
 				B1EE24982B6144BD007F68B0 /* LikedViewModel.swift in Sources */,
 				B1EE24962B6144A5007F68B0 /* MypageViewModel.swift in Sources */,
 				B1EE24922B61447F007F68B0 /* MainView.swift in Sources */,
