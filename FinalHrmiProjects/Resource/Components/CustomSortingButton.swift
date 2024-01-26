@@ -7,9 +7,10 @@
 
 import SwiftUI
 
+//MARK: 인기/최신순 정렬
 struct CustomSortingButton: View {
-    @State private var isShowingSheet = false
-    @State private var selectedSortingOption = "인기순"
+    @State private var isShowingSheet: Bool = false
+    @State private var selectedSortingOption: String = "인기순"
     
     var body: some View {
         VStack {
@@ -26,6 +27,7 @@ struct CustomSortingButton: View {
             }
             .actionSheet(isPresented: $isShowingSheet) {
                 ActionSheet(
+                    //TODO: 정렬 옵션 논의 후 추가하기
                     title: Text("정렬 방식 선택"),
                     buttons: [
                         .default(Text("인기순")) {
