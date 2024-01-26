@@ -8,6 +8,8 @@
 import SwiftUI
 import UIKit
 
+// MARK: - WillDisappearHandler
+
 // SwiftUI에서 뷰가 사라질 때의 로직을 처리하는 View Modifier.
 struct WillDisappearHandler: UIViewControllerRepresentable {
     
@@ -25,7 +27,7 @@ struct WillDisappearHandler: UIViewControllerRepresentable {
     
     // UIViewController 업데이트 시에 아무 작업도 수행하지 않음
     func updateUIViewController(_ uiViewController: UIViewController, context: UIViewControllerRepresentableContext<WillDisappearHandler>) {}
-
+    
     typealias UIViewControllerType = UIViewController
     
     // Coordinator 클래스 정의
@@ -52,6 +54,8 @@ struct WillDisappearHandler: UIViewControllerRepresentable {
     }
 }
 
+// MARK: - WillDisappearModifier
+
 // View가 사라질 때 콜백을 실행하는 View Modifier.
 struct WillDisappearModifier: ViewModifier {
     let callback: () -> Void // 뷰가 사라질 때 실행할 클로저
@@ -63,6 +67,8 @@ struct WillDisappearModifier: ViewModifier {
     }
 }
 
+// MARK: - View +
+
 extension View {
     
     // 뷰가 사라질 때 실행할 클로저를 받아 "onWillDisappear" 모디파이어를 추가하는 메서드
@@ -70,143 +76,101 @@ extension View {
         self.modifier(WillDisappearModifier(callback: perform))
     }
     
-    //사용자 지정 네비게이션 바를 처리하는 커스텀 네비게이션바 Modifier
-    func customNavigationBar<C, L> (                        // 왼쪽 + 가운데
-        centerView: @escaping (() -> C),
-        leftView: @escaping (() -> L)
-    ) -> some View where C: View, L: View {
+    // 사용자 지정 네비게이션 바를 처리하는 커스텀 네비게이션바 Modifier
+    func customNavigationBar<C, L, T> (
+        centerView: @escaping (() -> C) = { EmptyView() },
+        leadingView: @escaping (() -> L),
+        trailingView: [NavigationTrailingButtonPostion: () -> T] = [:]
+    ) -> some View where C: View, L: View, T: View {
         modifier(
             CustomNavigationBarModifier(
                 centerView: centerView,
-                leftView: leftView,
-                rightView: {
-                    EmptyView()
-                },
-                right2View: {
-                    EmptyView()
-                },
-                right3View: {
-                    EmptyView()
-                }
-            )
-        )
-    }
-    
-    func customNavigationBar<L, R3> (                       // 왼쪽 + 오른쪽 끝(1개)
-        leftview: @escaping (() -> L),
-        right3view: @escaping (() -> R3)
-    ) -> some View where L: View, R3: View {
-        modifier(CustomNavigationBarModifier(
-            centerView: {
-                EmptyView()
-            },
-            leftView: leftview,
-            rightView: {
-                EmptyView()
-            },
-            right2View: {
-                EmptyView()
-            },
-            right3View: right3view
-        ))
-    }
-    
-    func customNavigationBar<L, R2, R3>(                    // 왼쪽 + 오른쪽 끝(2개)
-        leftView: @escaping (() -> L),
-        right2View: @escaping (() -> R2),
-        right3View: @escaping (() -> R3)
-    ) -> some View where L: View, R2: View, R3: View {
-        modifier(
-            CustomNavigationBarModifier(
-                centerView: {
-                    EmptyView()
-                },
-                leftView: leftView,
-                rightView: {
-                    EmptyView()
-                },
-                right2View: right2View,
-                right3View: right3View
-            )
-        )
-    }
-    
-    func customNavigationBar<L, R, R2, R3>(                 // 왼쪽 + 오른쪽 끝(3)개
-        leftView: @escaping (() -> L),
-        rightView: @escaping (() -> R),
-        right2View: @escaping (() -> R2),
-        right3View: @escaping (() -> R3)
-    ) -> some View where L: View, R: View, R2: View, R3: View {
-        modifier(
-            CustomNavigationBarModifier(
-                centerView: {
-                    EmptyView()
-                },
-                leftView: leftView,
-                rightView: rightView,
-                right2View: right2View,
-                right3View: right3View
+                leadingView: leadingView,
+                trailingViews: trailingView
             )
         )
     }
 }
 
+// MARK: - CustomNavigationBarModifier
+enum NavigationTrailingButtonPostion: Hashable, Comparable {
+    case leading, center, trailing
+}
+
 // SwiftUI용 커스텀 네비게이션 바 뷰 모디파이어입니다.
-struct CustomNavigationBarModifier<C, L, R, R2, R3>: ViewModifier where C: View, L: View, R: View, R2: View, R3: View {
+struct CustomNavigationBarModifier<C, L, T>: ViewModifier where C: View, L: View, T: View {
     let centerView: (() -> C)? // 중앙 뷰를 나타내는 클로저
-    let leftView: (() -> L)? // 왼쪽 뷰를 나타내는 클로저
-    let rightView: (() -> R)? // 오른쪽 뷰를 나타내는 클로저
-    let right2View: (() -> R2)? // 두 번째 오른쪽 뷰를 나타내는 클로저
-    let right3View: (() -> R3)? // 세 번째 오른쪽 뷰를 나타내는 클로저
+    let leadingView: (() -> L)? // 왼쪽 뷰를 나타내는 클로저
+    let trailingViews: [NavigationTrailingButtonPostion: (() -> T)?] // 오른쪽 뷰를 나타내는 클로저
     
-    init(centerView: (() -> C)? = nil, leftView: (() -> L)? = nil, rightView: (() -> R)? = nil, right2View: (() -> R2)? = nil, right3View: (() -> R3)? = nil) {
+    init(centerView: (() -> C)? = nil, leadingView: (() -> L)? = nil, trailingViews: [NavigationTrailingButtonPostion: (() -> T)?] = [:]) {
         self.centerView = centerView
-        self.leftView = leftView
-        self.rightView = rightView
-        self.right2View = right2View
-        self.right3View = right3View
+        self.leadingView = leadingView
+        self.trailingViews = trailingViews
     }
-    // 뷰의 외관을 정의하는 body 함수입니다.
+    // 뷰의 외관을 정의하는 body 함수.
     func body(content: Content) -> some View {
         VStack {
             ZStack {
-                HStack {
-                    self.leftView?()
+                HStack(alignment: .center) {
+                    self.leadingView?()
+                    
+                    Spacer()
+                    
+                    self.centerView?()
                     
                     Spacer()
                     
                     HStack {
-                        Spacer()
-                        
-                        self.centerView?()
-                        
-                        Spacer()
-                    }
-                    
-                    self.rightView?()
-                        .padding(.trailing, 10)
-                    
-                    if let right2View = right2View { // 두 번째 오른쪽 뷰가 nil이 아닌 경우에만 추가
-                        right2View()
-                            .padding(.trailing, 10)
-                    }
-                    
-                    if let right3View = right3View { // 세 번째 오른쪽 뷰가 nil이 아닌 경우에만 추가
-                        right3View()
-                            .padding(.trailing, 10)
+                        ForEach(trailingViews.keys.sorted(), id: \.self) { key in
+                            if let trailingView = self.trailingViews[key] {
+                                trailingView?()
+                                    .padding(.trailing, 10)
+                            }
+                        }
                     }
                 }
                 .padding()
                 .background(Color(UIColor.systemBackground).ignoresSafeArea(.all, edges: .top))
             }
             Spacer()
-                content
-                
-                
+            content
+        }
+        .navigationBarBackButtonHidden(true)
+    }
+}
+
+
+struct TestView: View {
+    var body: some View {
+        NavigationStack {
+            List {
+                ForEach(0..<30, id: \.self) { _ in
+                    Text("????")
+                }
             }
-            .navigationBarBackButtonHidden(true)
+            .customNavigationBar(
+                leadingView: {
+                Button {
+                    //
+                } label: {
+                    Image(systemName: "chevron.left")
+                }
+            }, trailingView: [
+                .center : {
+                    Button {
+                        //
+                    } label: {
+                        Image(systemName: "keyboard.chevron.compact.left.fill")
+                    }
+                }, .trailing: {
+                    Button {
+                        //
+                    } label: {
+                        Image(systemName: "square.and.arrow.up.circle")
+                    }
+            }
+            ])
         }
     }
-
-
-
+}
