@@ -10,7 +10,7 @@ import SwiftUI
 // PostView와 LikedView에서 세그먼트에서 사용될 문자열을 저장하는 namespace
 enum PostOrLiked {
 	static let post = ["인기", "최신"]
-	static let liked = ["술상 리스트", "술찜 리스트"]
+	static let liked = ["술찜 리스트", "술상 리스트"]
 }
 
 struct CustomTextSegment: View {
@@ -55,6 +55,7 @@ struct CustomTextSegment: View {
 				}
 			}
 		}
+//        .frame(width: segments == PostOrLiked.post ? 100 : 200)
 	}
 }
 
