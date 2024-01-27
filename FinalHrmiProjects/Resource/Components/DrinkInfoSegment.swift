@@ -72,13 +72,8 @@ struct CustomSortingButton: View {
                     }
                 // '인기순' 클릭 -> CustomBottomSheet 올라옴
                 if isShowingSheet {
-                    CustomBottomSheet($isShowingSheet, height: 260) {
-                        VStack {
-                            // CustomBottomSheet안에 보여줄 항목 리스트 형태로 그리기.
-                            ForEach(0..<optionList.count, id: \.self) { index in
-                                SortingOptionCell(selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, sortingOptionName: optionList[index])
-                            }
-                        }
+                    CustomBottomSheet($isShowingSheet, height: 300) {
+                        SortingOptionsView(optionList: optionList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
                     }
                 }
             }
