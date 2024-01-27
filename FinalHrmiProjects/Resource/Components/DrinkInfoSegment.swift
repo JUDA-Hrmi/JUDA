@@ -46,7 +46,7 @@ struct CustomChangeStyleSegment: View {
 //MARK: - 정렬 옵션 Sheet 버튼
 struct CustomSortingButton: View {
     // Sheet 올라올 때 내부에 표시될 이름
-    private let optionList = ["인기순", "도수 높은 순", "도수 낮은 순", "가격 높은 순", "가격 낮은 순"]
+    private let optionNameList = ["인기순", "도수 높은 순", "도수 낮은 순", "가격 높은 순", "가격 낮은 순"]
     
     @State private var isShowingSheet: Bool = false
     @State private var selectedSortingOption: String = "인기순"
@@ -73,7 +73,7 @@ struct CustomSortingButton: View {
                 // '인기순' 클릭 -> CustomBottomSheet 올라옴
                 if isShowingSheet {
                     CustomBottomSheet($isShowingSheet, height: 300) {
-                        SortingOptionsView(optionList: optionList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
+                        SortingOptionsView(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
                     }
                 }
             }

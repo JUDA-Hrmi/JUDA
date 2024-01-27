@@ -59,7 +59,7 @@ struct CustomBottomSheet<Content>: View where Content: View {
 
 // MARK: -  CustomBottomSheet 안에 띄울 뷰
 struct SortingOptionsView: View {
-    let optionList: [String]
+    let optionNameList: [String]
     
     @Binding var selectedSortingOption: String
     @Binding var isShowingSheet: Bool
@@ -67,7 +67,7 @@ struct SortingOptionsView: View {
     var body: some View {
         VStack {
             // CustomBottomSheet 안에 보여줄 항목 리스트 형태로 그리기.
-            ForEach(optionList, id: \.self) { option in
+            ForEach(optionNameList, id: \.self) { option in
                 SortingOptionCell(selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, sortingOptionName: option)
             }
             Divider()
