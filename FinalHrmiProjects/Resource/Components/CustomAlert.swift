@@ -60,6 +60,7 @@ struct CustomAlert: View {
             .background()
             .cornerRadius(10)
         }
+        .navigationBarBackButtonHidden()
     }
 }
 
