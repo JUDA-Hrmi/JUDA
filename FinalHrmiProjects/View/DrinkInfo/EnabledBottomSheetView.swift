@@ -17,7 +17,7 @@ struct EnabledBottomSheetView: View {
     var body: some View {
         ZStack {
             // 정렬 옵션 클릭 유무에 따른 뒷배경 블러 효과 쌓기
-            Color.black.opacity(0.1)
+            Color.black.opacity(0.3)
                 .opacity(isShowingSheet ? 1 : 0)
                 .onTapGesture {
                     isShowingSheet.toggle()
