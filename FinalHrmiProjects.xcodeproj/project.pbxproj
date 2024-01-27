@@ -21,6 +21,7 @@
 		B121A5782B5F911A00667D42 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = B121A56E2B5F8D5E00667D42 /* Pretendard-Thin.otf */; };
 		B127A4222B64EB53001F005D /* CustomBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B127A4212B64EB53001F005D /* CustomBottomSheet.swift */; };
 		B14771F72B62019B0036A4A9 /* View +.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14771F62B62019B0036A4A9 /* View +.swift */; };
+		B158F83B2B6539FC00E33C47 /* EnabledBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B158F83A2B6539FC00E33C47 /* EnabledBottomSheetView.swift */; };
 		B16EB85C2B63859800E920A3 /* DrinkInfoSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */; };
 		B1B8FE7D2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8FE7C2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift */; };
 		B1B8FE7F2B5EA9D900921BBE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8FE7E2B5EA9D900921BBE /* ContentView.swift */; };
@@ -66,6 +67,7 @@
 		B121A5712B5F8EE100667D42 /* Font +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font +.swift"; sourceTree = "<group>"; };
 		B127A4212B64EB53001F005D /* CustomBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheet.swift; sourceTree = "<group>"; };
 		B14771F62B62019B0036A4A9 /* View +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View +.swift"; sourceTree = "<group>"; };
+		B158F83A2B6539FC00E33C47 /* EnabledBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnabledBottomSheetView.swift; sourceTree = "<group>"; };
 		B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoSegment.swift; sourceTree = "<group>"; };
 		B1B8FE792B5EA9D900921BBE /* FinalHrmiProjects.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalHrmiProjects.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1B8FE7C2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalHrmiProjectsApp.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				B1EE248F2B614477007F68B0 /* DrinkInfoView.swift */,
+				B158F83A2B6539FC00E33C47 /* EnabledBottomSheetView.swift */,
 			);
 			path = DrinkInfo;
 			sourceTree = "<group>";
@@ -433,6 +436,7 @@
 				B14771F72B62019B0036A4A9 /* View +.swift in Sources */,
 				B1B8FE7F2B5EA9D900921BBE /* ContentView.swift in Sources */,
 				096E63182B616886009246CE /* DrinkListCell.swift in Sources */,
+				B158F83B2B6539FC00E33C47 /* EnabledBottomSheetView.swift in Sources */,
 				B1EE24982B6144BD007F68B0 /* LikedViewModel.swift in Sources */,
 				B1EE24962B6144A5007F68B0 /* MypageViewModel.swift in Sources */,
 				B1EE24922B61447F007F68B0 /* MainView.swift in Sources */,

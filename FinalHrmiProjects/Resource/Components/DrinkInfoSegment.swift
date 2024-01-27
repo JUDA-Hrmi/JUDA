@@ -7,28 +7,6 @@
 
 import SwiftUI
 
-// MARK: - <즁요> DrinkInfoView 조립 예시 코드
-// CustomSortingButton시 sheet뷰가 띄워질 때 ZStack으로 쌓여야한다.
-struct DrawViewExampleCode: View {
-    private let optionNameList = ["인기순", "도수 높은 순", "도수 낮은 순", "가격 높은 순", "가격 낮은 순"]
-    
-    @State private var isShowingSheet: Bool = false
-    @State private var selectedSortingOption: String = "인기순"
-    
-    var body: some View {
-        ZStack {
-            VStack {
-                DrinkSelectHorizontalScrollBar()
-                DrinkInfoSegment(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
-                Spacer()
-                // TODO: DrinkInfoView 구성하는 구조체 넣기
-            }
-            // DrinkInfoSegment 클릭 시 띄워지는 CustomSheet뷰
-            EnabledBottomSheetView(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
-        }
-    }
-}
-
 // MARK: - CustomChangeStyleSegment + CustomSortingButton
 struct DrinkInfoSegment: View {
     let optionNameList: [String] // 정렬옵션 이름이 담겨진 리스트

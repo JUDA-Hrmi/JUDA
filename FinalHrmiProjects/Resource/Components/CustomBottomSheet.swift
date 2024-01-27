@@ -58,33 +58,6 @@ struct CustomBottomSheet<Content>: View where Content: View {
     }
 }
 
-// MARK: - CustomSortingButton 클릭 시 띄워지는 CustomBottomSheet뷰
-struct EnabledBottomSheetView: View {
-    let optionNameList: [String] // 정렬옵션 이름이 담겨진 리스트
-    
-    @Binding var selectedSortingOption: String // 선택된 항목 이름
-    @Binding var isShowingSheet: Bool
-    
-    var body: some View {
-        ZStack {
-            // 정렬 옵션 클릭 유무에 따른 뒷배경 블러 효과 쌓기
-            Color.black.opacity(0.1)
-                .opacity(isShowingSheet ? 1 : 0)
-                .onTapGesture {
-                    isShowingSheet.toggle()
-                }
-            // 정렬 옵션 클릭 -> CustomBottomSheet 올라옴
-            if isShowingSheet {
-                CustomBottomSheet($isShowingSheet, height: 300) {
-                    SortingOptionsList(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
-                }
-            }
-        }
-        .ignoresSafeArea(.all)
-        .animation(.interactiveSpring(), value: isShowingSheet)
-    }
-}
-
 // MARK: -  CustomBottomSheet 안에 띄워질 Content뷰
 struct SortingOptionsList: View {
     let optionNameList: [String] // 정렬옵션 이름이 담겨진 리스트
