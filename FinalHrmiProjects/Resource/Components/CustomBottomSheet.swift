@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 커스텀 sheet
 struct CustomBottomSheet<Content>: View where Content: View {
     public var height: CGFloat
     public var content: Content
@@ -57,18 +58,45 @@ struct CustomBottomSheet<Content>: View where Content: View {
     }
 }
 
-// MARK: -  CustomBottomSheet 안에 띄울 뷰
-struct SortingOptionsView: View {
-    let optionNameList: [String]
+// MARK: - CustomSortingButton 클릭 시 띄워지는 CustomBottomSheet뷰
+struct EnabledBottomSheetView: View {
+    let optionNameList: [String] // 정렬옵션 이름이 담겨진 리스트
     
-    @Binding var selectedSortingOption: String
+    @Binding var selectedSortingOption: String // 선택된 항목 이름
+    @Binding var isShowingSheet: Bool
+    
+    var body: some View {
+        ZStack {
+            // 정렬 옵션 클릭 유무에 따른 뒷배경 블러 효과 쌓기
+            Color.black.opacity(0.1)
+                .opacity(isShowingSheet ? 1 : 0)
+                .onTapGesture {
+                    isShowingSheet.toggle()
+                }
+            // 정렬 옵션 클릭 -> CustomBottomSheet 올라옴
+            if isShowingSheet {
+                CustomBottomSheet($isShowingSheet, height: 300) {
+                    SortingOptionsList(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
+                }
+            }
+        }
+        .ignoresSafeArea(.all)
+        .animation(.interactiveSpring(), value: isShowingSheet)
+    }
+}
+
+// MARK: -  CustomBottomSheet 안에 띄워질 Content뷰
+struct SortingOptionsList: View {
+    let optionNameList: [String] // 정렬옵션 이름이 담겨진 리스트
+    
+    @Binding var selectedSortingOption: String // 선택된 항목 이름
     @Binding var isShowingSheet: Bool
 
     var body: some View {
         VStack {
             // CustomBottomSheet 안에 보여줄 항목 리스트 형태로 그리기.
             ForEach(optionNameList, id: \.self) { option in
-                SortingOptionCell(selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, sortingOptionName: option)
+                SortingOptionCell(sortingOptionName: option, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
             }
             Divider()
             Button(action: {
@@ -85,10 +113,11 @@ struct SortingOptionsView: View {
 
 // MARK: -  SortingOptionsView 구성 Cell
 struct SortingOptionCell: View {
-    @Binding var selectedSortingOption: String // 선택된 항목 이름
-    @Binding public var isShowingSheet: Bool
-    
     let sortingOptionName: String // 정렬 옵션 항목 이름
+    
+    @Binding var selectedSortingOption: String // 선택된 항목 이름
+    @Binding var isShowingSheet: Bool
+    
     var body: some View {
         Button(action: {
             // 해당 cell 클릭 시 CustomSortingButton에 표시되는 문구 변경
