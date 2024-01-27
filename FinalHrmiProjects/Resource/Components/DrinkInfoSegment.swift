@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// MARK: 두 구조체 합친 버전 (뷰 그릴 때 이 구조체 사용)
+// MARK: - 두 구조체 합친 버전 (뷰 그릴 때 이 구조체 사용)
 struct DrinkInfoSegment: View {
     var body: some View {
         HStack {
@@ -20,7 +20,7 @@ struct DrinkInfoSegment: View {
     }
 }
 
-//MARK: 리스트/그리드 정렬 버튼
+//MARK: - 리스트/그리드 정렬 버튼
 struct CustomChangeStyleSegment: View {
     private let cellStyleSymbolList = ["grid.style", "list.style"]
 //    @Binding var selectedSymbolIndex: Int
@@ -42,13 +42,17 @@ struct CustomChangeStyleSegment: View {
     }
 }
 
-//MARK: 인기/최신순 정렬
+
+//MARK: - 정렬 옵션 Sheet 버튼
 struct CustomSortingButton: View {
+    // Sheet 올라올 때 내부에 표시될 이름
+    private let optionList = ["인기순", "도수 높은 순", "도수 낮은 순", "가격 높은 순", "가격 낮은 순"]
+    
     @State private var isShowingSheet: Bool = false
     @State private var selectedSortingOption: String = "인기순"
     
     var body: some View {
-        VStack {
+        ZStack {
             Button(action: {
                 isShowingSheet.toggle()
             }) {
@@ -60,28 +64,36 @@ struct CustomSortingButton: View {
                         .foregroundStyle(.mainBlack)
                 }
             }
-            .actionSheet(isPresented: $isShowingSheet) {
-                ActionSheet(
-                    //TODO: 정렬 옵션 논의 후 추가하기
-                    title: Text("정렬 방식 선택"),
-                    buttons: [
-                        .default(Text("인기순")) {
-                            selectedSortingOption = "인기순"
-                            // TODO: 정렬 결과를 표시하는 함수 호출
-                        },
-                        .default(Text("최신순")) {
-                            selectedSortingOption = "최신순"
-                            // TODO: 정렬 결과를 표시하는 함수 호출
-                        },
-                        .cancel()
-                    ]
-                )
+            ZStack {
+                Color.black.opacity(0.1)
+                    .opacity(isShowingSheet ? 1 : 0)
+                    .onTapGesture {
+                        isShowingSheet.toggle()
+                    }
+                // '인기순' 클릭 -> CustomBottomSheet 올라옴
+                if isShowingSheet {
+                    CustomBottomSheet($isShowingSheet, height: 260) {
+                        VStack {
+                            // CustomBottomSheet안에 보여줄 항목 리스트 형태로 그리기.
+                            ForEach(0..<optionList.count, id: \.self) { index in
+                                SortingOptionCell(selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, sortingOptionName: optionList[index])
+                            }
+                        }
+                    }
+                }
             }
+            .edgesIgnoringSafeArea(.all)
+            .animation(.interactiveSpring(), value: isShowingSheet)
         }
     }
 }
 
-#Preview {
+
+//#Preview {
 //    SegmentBarVer2(selectedSymbolIndex: .constant(1))
-    DrinkInfoSegment()
-}
+//    BottomSheet(.constant(true), height: 300) {
+//        SortingOptionCellListView(selectedSortingOption: .constant("인기순"))
+//    }
+//    .background(Color.secondary)
+//
+//}
