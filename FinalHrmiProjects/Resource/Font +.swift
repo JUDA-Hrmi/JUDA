@@ -26,6 +26,7 @@ extension Font {
     static let medium16: Font = .custom(FontType.Medium.name, size: 16)
     static let medium14: Font = .custom(FontType.Medium.name, size: 14)
     // Regular
+    static let regular24: Font = .custom(FontType.Regular.name, size: 24)
     static let regular20: Font = .custom(FontType.Regular.name, size: 20)
     static let regular18: Font = .custom(FontType.Regular.name, size: 18)
     static let regular16: Font = .custom(FontType.Regular.name, size: 16)
@@ -40,6 +41,7 @@ extension Font {
     static let thin18: Font = .custom(FontType.Thin.name, size: 18)
     static let thin16: Font = .custom(FontType.Thin.name, size: 16)
     static let thin14: Font = .custom(FontType.Thin.name, size: 14)
+    static let thin12: Font = .custom(FontType.Thin.name, size: 12)
 }
 
 enum FontType {

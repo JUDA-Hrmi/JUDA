@@ -9,20 +9,18 @@
 import SwiftUI
 
 struct LogInView: View {
-    @Environment(\.colorScheme) var scheme  //다크모드 + 라이트모드 동시 대응
-        //Components -> Theme 파일 참고
     var body: some View {
         // MARK: - 상위 뷰
         ZStack {
-            Theme.backgroundColor(scheme: scheme)
             VStack {
                 VStack {
                     Image("appIcon")
                         .resizable()
                         .frame(width: 289, height: 250)
+                        .cornerRadius(10)
                     
                     Text("HrMi")
-                        .font(.regular20)
+                        .font(.regular24)
                         .multilineTextAlignment(.center)
                 }
                 .padding(.vertical, 70)
@@ -49,7 +47,7 @@ struct LogInView: View {
                 
                 // MARK: - 하위뷰
                 Text("2024, HrMi all rights reserved.\nPowered by PJ3T7_HrMi")
-                    .font(.medium14)
+                    .font(.thin12)
                     .multilineTextAlignment(.center)
             }
         }
