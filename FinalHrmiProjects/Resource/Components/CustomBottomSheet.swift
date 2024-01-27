@@ -36,7 +36,7 @@ struct CustomBottomSheet<Content>: View where Content: View {
         .background(
             Rectangle()
                 .fill(.white)
-                .edgesIgnoringSafeArea([.bottom, .horizontal])
+                .ignoresSafeArea(.all, edges: [.bottom, .horizontal])
         )
         .transition(.opacity.combined(with: .move(edge: .bottom)))
         .offset(y: translation + height) // 화면의 하단으로부터 얼마나 떨어질지.

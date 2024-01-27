@@ -77,7 +77,7 @@ struct CustomSortingButton: View {
                     }
                 }
             }
-            .edgesIgnoringSafeArea(.all)
+            .ignoresSafeArea(.all)
             .animation(.interactiveSpring(), value: isShowingSheet)
         }
     }
