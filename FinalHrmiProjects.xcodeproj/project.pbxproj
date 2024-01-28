@@ -118,6 +118,7 @@
 			children = (
 				B121A5712B5F8EE100667D42 /* Font +.swift */,
 				B14771F62B62019B0036A4A9 /* View +.swift */,
+				B158F83E2B657A9000E33C47 /* Theme.swift */,
 				B1EE24A32B614508007F68B0 /* Components */,
 				B121A5682B5F8D4800667D42 /* Pretendard */,
 			);
@@ -339,7 +340,6 @@
 				B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */,
 				B127A4212B64EB53001F005D /* CustomBottomSheet.swift */,
 				09254CA62B637C9900569D94 /* CustomDivider.swift */,
-				B158F83E2B657A9000E33C47 /* Theme.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
