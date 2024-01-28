@@ -51,6 +51,7 @@ struct DrinkDetailView: View {
                 TaggedTrendingPosts()
             }
         }
+        .scrollIndicators(.hidden)
     }
 }
 
