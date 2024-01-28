@@ -39,10 +39,8 @@ struct CustomChangeStyleSegment: View {
                     Image(cellStyleSymbolList[index])
                         .foregroundStyle(index == selectedSymbolIndex ? .mainBlack : .gray01)
                         .onTapGesture {
-                            withAnimation {
-                                selectedSymbolIndex = index
-                                isGridView = selectedSymbolIndex == 0
-                            }
+                            selectedSymbolIndex = index
+                            isGridView = selectedSymbolIndex == 0
                         }
                 }
             }
