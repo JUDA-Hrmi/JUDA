@@ -260,7 +260,6 @@
 				0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */,
 				0961B7962B6624D300A9F553 /* DrinkInfoList.swift */,
 				B158F83A2B6539FC00E33C47 /* EnabledBottomSheetView.swift */,
-				0914DEAC2B66453E0014E102 /* PagerView.swift */,
 			);
 			path = DrinkInfo;
 			sourceTree = "<group>";
@@ -368,6 +367,7 @@
 				B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */,
 				B127A4212B64EB53001F005D /* CustomBottomSheet.swift */,
 				09254CA62B637C9900569D94 /* CustomDivider.swift */,
+				0914DEAC2B66453E0014E102 /* PagerView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
