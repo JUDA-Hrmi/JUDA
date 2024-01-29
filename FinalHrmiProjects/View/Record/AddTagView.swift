@@ -49,8 +49,7 @@ struct AddTagView: View {
                     .padding(.vertical, 10)
                     .overlay {
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(style: StrokeStyle())
-                            .tint(.mainAccent03)
+                            .stroke(.mainAccent03, lineWidth: 1)
                     }
             }
             .padding(.horizontal, 20)
