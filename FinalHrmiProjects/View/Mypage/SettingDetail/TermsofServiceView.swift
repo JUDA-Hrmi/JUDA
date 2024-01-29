@@ -6,13 +6,42 @@
 //
 
 import SwiftUI
+import SafariServices
 
 struct TermsofServiceView: View {
+    var text: String
+    var urlString: String
+    
+    @Binding var isShowWebView: Bool
+    
     var body: some View {
-        Text("서비스 이용약관 뷰입니다.")
+        Button {
+            isShowWebView.toggle()
+        } label: {
+            HStack {
+                Text(text)
+                Spacer()
+                Image(systemName: "chevron.forward")
+            }
+            .modifier(CustomText())
+            .fullScreenCover(isPresented: $isShowWebView) {
+                SafariView(url:URL(string: self.urlString)!)
+            }
+        }
     }
 }
 
-#Preview {
-    TermsofServiceView()
+
+struct SafariView: UIViewControllerRepresentable {
+
+    let url: URL
+
+    func makeUIViewController(context: UIViewControllerRepresentableContext<SafariView>) -> SFSafariViewController {
+        return SFSafariViewController(url: url)
+    }
+
+    func updateUIViewController(_ uiViewController: SFSafariViewController, context: UIViewControllerRepresentableContext<SafariView>) {
+
+    }
+
 }

@@ -10,8 +10,13 @@ import WebKit
 
 struct SettingView: View {
     private let optionNameList = ["라이트 모드", "다크 모드", "시스템 모드"]
+//    private let urlStringList = [
+//        "https://glacier-coneflower-d58.notion.site/29591f62365f45c68f5bf83b79a15c8c?pvs=4",
+//        "https://glacier-coneflower-d58.notion.site/2003b94d70cc46ca95fe76266a30df09?pvs=4",
+//        "https://glacier-coneflower-d58.notion.site/25acb23600d24ec3b3146115f98d2dad?pvs=4"
+//    ]
     private let urlStringList = [
-        "https://glacier-coneflower-d58.notion.site/2003b94d70cc46ca95fe76266a30df09?pvs=4",
+        "https://glacier-coneflower-d58.notion.site/29591f62365f45c68f5bf83b79a15c8c?pvs=4",
         "https://glacier-coneflower-d58.notion.site/2003b94d70cc46ca95fe76266a30df09?pvs=4",
         "https://glacier-coneflower-d58.notion.site/25acb23600d24ec3b3146115f98d2dad?pvs=4"
     ]
@@ -109,49 +114,13 @@ struct SettingView: View {
                     CustomDivider()
                     
                     // MARK: 서비스 이용약관
-                    Button {
-                        isShowServiceWebView.toggle()
-                    } label: {
-                        HStack {
-                            Text("서비스 이용약관")
-                            Spacer()
-                            Image(systemName: "chevron.forward")
-                        }
-                        .modifier(CustomText())
-                        .sheet(isPresented: $isShowServiceWebView) {
-                            SettingWKWebView(url: urlStringList[0])
-                        }
-                    }
+                    TermsofServiceView(text: "서비스 이용약관", urlString: urlStringList[0], isShowWebView: $isShowServiceWebView)
                     
                     // MARK: 개인정보 처리방침
-                    Button {
-                        isShowPrivacyWebView.toggle()
-                    } label: {
-                        HStack {
-                            Text("개인정보 처리방침")
-                            Spacer()
-                            Image(systemName: "chevron.forward")
-                        }
-                        .modifier(CustomText())
-                        .sheet(isPresented: $isShowPrivacyWebView) {
-                            SettingWKWebView(url: urlStringList[1])
-                        }
-                    }
+                    TermsofServiceView(text: "개인정보 처리방침", urlString: urlStringList[1], isShowWebView: $isShowPrivacyWebView)
                     
                     // MARK: 위치정보 처리방침
-                    Button {
-                        isShowLocationWebView.toggle()
-                    } label: {
-                        HStack {
-                            Text("위치정보 처리방침")
-                            Spacer()
-                            Image(systemName: "chevron.forward")
-                        }
-                        .modifier(CustomText())
-                        .sheet(isPresented: $isShowLocationWebView) {
-                            SettingWKWebView(url: urlStringList[2])
-                        }
-                    }
+                    TermsofServiceView(text: "위치정보 처리방침", urlString: urlStringList[2], isShowWebView: $isShowLocationWebView)
         
                     // MARK: 버전 정보
                     Text("버전 정보 0.0.1")
