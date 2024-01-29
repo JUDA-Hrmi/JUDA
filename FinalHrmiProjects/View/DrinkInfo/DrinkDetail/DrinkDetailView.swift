@@ -51,7 +51,29 @@ struct DrinkDetailView: View {
                 TaggedTrendingPosts()
             }
         }
+        // 스크롤 인디케이터 X
         .scrollIndicators(.hidden)
+        // 커스텀 네비게이션
+        .customNavigationBar(
+            leadingView: {
+            Button {
+                // TODO: 뒤로가기
+            } label: {
+                Image(systemName: "chevron.backward")
+                    .font(.semibold18)
+            }
+            .tint(.mainBlack)
+        }, trailingView: [
+            .trailing: {
+                Button {
+                    // TODO: 공유하기
+                } label: {
+                    Image(systemName: "square.and.arrow.up")
+                        .font(.semibold18)
+                }
+                .tint(.mainBlack)
+        }
+        ])
     }
 }
 
