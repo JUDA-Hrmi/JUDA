@@ -9,7 +9,7 @@ import SwiftUI
 
 // NavigationLink: without Button blinking animation
 struct EmptyActionStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-    }
+	func makeBody(configuration: Configuration) -> some View {
+		configuration.label
+	}
 }

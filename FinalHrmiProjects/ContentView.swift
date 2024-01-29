@@ -9,17 +9,18 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("안녕하세요")
-                .font(.thin20)
-                .foregroundStyle(Color.mainAccent01)
-            Text("안녕하세요")
-                .font(.system(size: 20))
-        }
-        .padding()
+//        VStack {
+//            Image(systemName: "globe")
+//                .imageScale(.large)
+//                .foregroundStyle(.tint)
+//            Text("안녕하세요")
+//                .font(.thin20)
+//                .foregroundStyle(Color.mainAccent01)
+//            Text("안녕하세요")
+//                .font(.system(size: 20))
+//        }
+//        .padding()
+        RootView()
     }
 }
 
