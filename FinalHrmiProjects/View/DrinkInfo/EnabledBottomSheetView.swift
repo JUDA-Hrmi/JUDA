@@ -13,7 +13,7 @@ struct EnabledBottomSheetView: View {
     
     @Binding var selectedSortingOption: String // 선택된 항목 이름
     @Binding var isShowingSheet: Bool
-    @State private var headText = "정렬 방식 선택"
+    @Binding var headText: String
     
     var body: some View {
         ZStack {
@@ -42,17 +42,18 @@ struct DrawViewExampleCode: View {
     
     @State private var isShowingSheet: Bool = false
     @State private var selectedSortingOption: String = "인기순"
+    @State private var headText: String = "정렬 방식 선택"
     
     var body: some View {
         ZStack {
             VStack {
                 DrinkSelectHorizontalScrollBar()
-                DrinkInfoSegment(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
+                DrinkInfoSegment(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, isShowSymbolImage: .constant(true))
                 Spacer()
                 // TODO: DrinkInfoView 구성하는 구조체 넣기
             }
             // DrinkInfoSegment 클릭 시 띄워지는 CustomSheet뷰
-            EnabledBottomSheetView(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
+            EnabledBottomSheetView(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, headText: $headText)
         }
     }
 }

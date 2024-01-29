@@ -8,6 +8,13 @@
 import SwiftUI
 
 struct SettingView: View {
+    private let optionNameList = ["라이트 모드", "다크 모드", "시스템 모드"]
+    
+    @State private var isShowingSheet: Bool = false
+    @State private var selectedSortingOption: String = "시스템 모드"
+    @State private var headText = "화면 모드 선택"
+//    @State private var isShowSymbolImage = false
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -28,15 +35,18 @@ struct SettingView: View {
                     
                     // MARK: 화면 모드 설정
                     // TODO: CustomBottomSheet로 바꾸기
-                    Button(action: {}, label: {
+                    // 버튼 클릭 시 반짝이는 애니메이션 제거 코드 추가하기
+                    Button(action: {
+                        isShowingSheet.toggle()
+                    }, label: {
                         HStack {
                             Text("화면 모드 설정")
                             Spacer()
-                            Image(systemName: "chevron.forward")
+                            CustomSortingButton(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, isShowSymbolImage: .constant(false))
                         }
                         .modifier(CustomText())
                     })
-                    
+                    .buttonStyle(EmptyActionStyle())
                     // MARK: 로그아웃
                     Button(action: {}, label: {
                         Text("로그아웃")
@@ -127,6 +137,7 @@ struct SettingView: View {
                     
                     CustomDivider()
                 }
+                EnabledBottomSheetView(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, headText: $headText)
             }
         }
     }
@@ -142,6 +153,7 @@ struct CustomText: ViewModifier {
             .padding(.vertical, 10)
     }
 }
+
 
 #Preview {
     SettingView()

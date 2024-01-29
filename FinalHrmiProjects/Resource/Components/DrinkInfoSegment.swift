@@ -13,12 +13,13 @@ struct DrinkInfoSegment: View {
     
     @Binding var selectedSortingOption: String // 선택된 항목 이름
     @Binding var isShowingSheet: Bool
+    @Binding var isShowSymbolImage: Bool
     
     var body: some View {
         HStack {
             CustomChangeStyleSegment()
             Spacer()
-            CustomSortingButton(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
+            CustomSortingButton(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, isShowSymbolImage: $isShowSymbolImage)
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
@@ -54,6 +55,7 @@ struct CustomSortingButton: View {
     
     @Binding var selectedSortingOption: String // 선택된 항목 이름
     @Binding var isShowingSheet: Bool
+    @Binding var isShowSymbolImage: Bool // <정렬옵션 글씨 + 심볼 이미지> OR <정렬옵션>
     
     var body: some View {
         HStack {
@@ -64,8 +66,10 @@ struct CustomSortingButton: View {
                     Text(selectedSortingOption)
                         .font(.medium16)
                         .foregroundStyle(.mainBlack)
-                    Image("arrow.style")
-                        .foregroundStyle(.mainBlack)
+                    if isShowSymbolImage {
+                        Image("arrow.style")
+                            .foregroundStyle(.mainBlack)
+                    }
                 }
             }
         }
