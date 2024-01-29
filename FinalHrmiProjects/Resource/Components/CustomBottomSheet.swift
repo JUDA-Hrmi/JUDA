@@ -14,12 +14,10 @@ struct CustomBottomSheet<Content>: View where Content: View {
     
     @Environment(\.colorScheme) var scheme
     @Binding private var isShowingSheet: Bool
-    @Binding private var headText: String
     @GestureState private var translation: CGFloat = .zero - 50
     
-    public init(_ isShowingSheet: Binding<Bool>, _ headText: Binding<String>, height: CGFloat, content: () -> Content) {
+    public init(_ isShowingSheet: Binding<Bool>, height: CGFloat, content: () -> Content) {
         self._isShowingSheet = isShowingSheet
-        self._headText = headText
         self.height = height
         self.content = content()
     }
@@ -30,7 +28,7 @@ struct CustomBottomSheet<Content>: View where Content: View {
                 .fill(Theme.backgroundColor(scheme: scheme))
                 .frame(height: 50)
                 .overlay(
-                    Text(headText)
+                    Text("정렬 방식 선택")
                         .font(.light14)
                 )
             
@@ -125,4 +123,3 @@ struct SortingOptionCell: View {
         .padding(.vertical, 10)
     }
 }
-

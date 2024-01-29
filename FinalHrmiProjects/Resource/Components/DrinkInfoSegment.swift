@@ -13,14 +13,13 @@ struct DrinkInfoSegment: View {
     
     @Binding var selectedSortingOption: String // 선택된 항목 이름
     @Binding var isShowingSheet: Bool
-    @Binding var isShowSymbolImage: Bool
-    @Binding var buttonColor: Color
+    @Binding var isGridView: Bool
     
     var body: some View {
         HStack {
-            CustomChangeStyleSegment()
+            CustomChangeStyleSegment(isGridView: $isGridView)
             Spacer()
-            CustomSortingButton(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, isShowSymbolImage: $isShowSymbolImage, buttonColor: $buttonColor)
+            CustomSortingButton(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
@@ -30,19 +29,18 @@ struct DrinkInfoSegment: View {
 //MARK: - 리스트/그리드 정렬 버튼
 struct CustomChangeStyleSegment: View {
     private let cellStyleSymbolList = ["grid.style", "list.style"]
-//    @Binding var selectedSymbolIndex: Int
     @State private var selectedSymbolIndex = 0 // 현재 뷰에서 어떤 이미지 tap 체크 변수
+    @Binding var isGridView: Bool
     
     var body: some View {
         HStack {
-            HStack(spacing: 5) {
+            HStack(spacing: 10) {
                 ForEach(0..<cellStyleSymbolList.count, id: \.self) { index in
                     Image(cellStyleSymbolList[index])
                         .foregroundStyle(index == selectedSymbolIndex ? .mainBlack : .gray01)
                         .onTapGesture {
-                            withAnimation {
-                                selectedSymbolIndex = index
-                            }
+                            selectedSymbolIndex = index
+                            isGridView = selectedSymbolIndex == 0
                         }
                 }
             }
@@ -56,8 +54,6 @@ struct CustomSortingButton: View {
     
     @Binding var selectedSortingOption: String // 선택된 항목 이름
     @Binding var isShowingSheet: Bool
-    @Binding var isShowSymbolImage: Bool // <정렬옵션 글씨 + 심볼 이미지> OR <정렬옵션>
-    @Binding var buttonColor: Color // 정렬옵션 버튼 색상
     
     var body: some View {
         HStack {
@@ -67,14 +63,11 @@ struct CustomSortingButton: View {
                 HStack(spacing: 5) {
                     Text(selectedSortingOption)
                         .font(.medium16)
-                        .foregroundStyle(buttonColor)
-                    if isShowSymbolImage {
-                        Image("arrow.style")
-                            .foregroundStyle(buttonColor)
-                    }
+                        .foregroundStyle(.mainBlack)
+                    Image(systemName: "chevron.down")
+                        .foregroundStyle(.mainBlack)
                 }
             }
-            .buttonStyle(EmptyActionStyle())
         }
     }
 }

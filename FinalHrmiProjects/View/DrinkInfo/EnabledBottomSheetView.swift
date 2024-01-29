@@ -13,7 +13,6 @@ struct EnabledBottomSheetView: View {
     
     @Binding var selectedSortingOption: String // 선택된 항목 이름
     @Binding var isShowingSheet: Bool
-    @Binding var headText: String
     
     var body: some View {
         ZStack {
@@ -25,7 +24,7 @@ struct EnabledBottomSheetView: View {
                 }
             // 정렬 옵션 클릭 -> CustomBottomSheet 올라옴
             if isShowingSheet {
-                CustomBottomSheet($isShowingSheet, $headText, height: 300) {
+                CustomBottomSheet($isShowingSheet, height: 300) {
                     SortingOptionsList(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
                 }
             }
