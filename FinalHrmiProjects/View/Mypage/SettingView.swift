@@ -141,7 +141,9 @@ struct SettingView: View {
                 }
                 EnabledBottomSheetView(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, headText: $headText)
                 if isLogoutClicked {
-                    CustomAlert(message: "로그인이 필요한 기능이에요.\n더 많은 기능을 사용할 수 있어요.", leftButtonLabel: "취소", leftButtonAction: {}, rightButtonLabel: "로그인", rightButtonAction: {})
+                    CustomAlert(message: "로그아웃 하시겠습니까?", leftButtonLabel: "취소", leftButtonAction: {
+                        isLogoutClicked.toggle()
+                    }, rightButtonLabel: "로그아웃", rightButtonAction: {}) // TODO: 로그아웃 기능 추가하기
                 }
             }
         }
