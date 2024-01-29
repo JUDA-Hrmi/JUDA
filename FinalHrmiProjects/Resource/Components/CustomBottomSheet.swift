@@ -123,8 +123,3 @@ struct SortingOptionCell: View {
         .padding(.vertical, 10)
     }
 }
-
-
-#Preview {
-    DrawViewExampleCode()
-}
