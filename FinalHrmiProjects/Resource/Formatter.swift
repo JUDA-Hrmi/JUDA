@@ -8,7 +8,6 @@
 import Foundation
 
 enum Formatter {
-    
     // 좋아요 숫자 1000 넘으면 k, 1000000 넘으면 m 으로 변경해주는 함수
     static func formattedPostLikesCount(_ count: Int) -> String {
         let numberFormatter = NumberFormatter()
