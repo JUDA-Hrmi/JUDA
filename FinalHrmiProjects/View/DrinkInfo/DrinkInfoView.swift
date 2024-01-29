@@ -51,7 +51,6 @@ struct DrinkInfoView: View {
                                     }
                                 }
                             }
-                            .tabViewStyle(.page(indexDisplayMode: .never))
                         }
                         .onChange(of: selectedDrinkTypeIndex) { newValue in
                             withAnimation {

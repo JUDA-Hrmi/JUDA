@@ -29,12 +29,14 @@ struct DrinkSelectHorizontalScrollBar: View {
                             selectedDrinkTypeIndex = index
                         }
                         .id(index)
+                        .padding(.horizontal, 4)
+                        .padding(.bottom, 6)
                         .overlay(alignment: .bottom) {
                             // 전환 애니메이션 사용을 위한 장치
                             if selectedDrinkTypeIndex == index {
                                 Rectangle()
                                     .matchedGeometryEffect(id: "selectDrinkType", in: animationWithDrinkType)
-                                    .frame(height: 0)
+                                    .frame(height: 2)
                             }
                         }
                 }
@@ -42,7 +44,10 @@ struct DrinkSelectHorizontalScrollBar: View {
         }
         // 스크롤 인디케이터 X
         .scrollIndicators(.hidden)
-        .padding(20)
+//        .padding(20)
+        .padding(.horizontal, 16)
+        .padding(.bottom, 14)
+        .padding(.top, 20)
         .frame(maxWidth: .infinity)
     }
 }
