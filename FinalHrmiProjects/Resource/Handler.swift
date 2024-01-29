@@ -8,8 +8,8 @@ import SwiftUI
 
 // Tag 관련 Method 담고있는 namespace
 enum TagHandler {
-	// horizontal에 들어가있는 padding 값 20씩해서 화면 width에서 40을 빼준 width 값을 얻기 위한 메서드
-	static func getScreenWidth(padding: CGFloat) -> CGFloat {
+	// horizontal에 들어가있는 (padding * 2)를 화면 width에서 뺄셈해준 width 값을 얻기 위한 메서드
+	static func getScreenWidthWithoutPadding(padding: CGFloat) -> CGFloat {
 		let scenes = UIApplication.shared.connectedScenes
 		let windowScene = scenes.first as? UIWindowScene
 		let window = windowScene?.windows.first
@@ -32,7 +32,7 @@ enum TagHandler {
 		var totalWidth: CGFloat = 0 // 화면상의 width와 비교하여 계산하기 위한 1차원 배열의 총 width를 계산해서 담아줄 저장 프로퍼티
 		
 		tags.forEach { tag in
-			let fontSize = getFontSize(tag: tagString + tag, fontSize: fontSize) + spacing // size = "# " + tag 문자열 + spacing(15)
+			let fontSize = getFontSize(tag: tagString + tag, fontSize: fontSize) + spacing // size = tagString 문자열 + tag 문자열 + spacing
 			totalWidth += fontSize
 			
 			// 1. 총합 width가 화면 상의 width 보다 클 경우
