@@ -31,7 +31,7 @@ struct AddTagView: View {
     ]
 
     var body: some View {
-        VStack {
+        NavigationStack {
             // 사진 선택 및 선택된 사진을 보여주는 수평 스크롤 이미지 뷰
             // TODO: sheet로 올라오는 photopicker에 선택된 사진 체크 처리 및 이미지 뷰 수정
             ImageSelectHorizontalScroll(selectedPhotos: $selectedPhotos)
@@ -68,8 +68,25 @@ struct AddTagView: View {
                 DrinkTagScroll(drinkTags: $drinkTags)
             }
         }
-        // TODO: customNavigationToolbar 적용
-        // TODO: 사진 없는 경우, 툴바 "다음" 못 누르게 하기
+        .customNavigationBar(
+            leadingView: {
+                Button {
+                    //
+                } label: {
+                    Image(systemName: "chevron.left")
+                }
+            }, trailingView: [
+                .trailing: {
+                    Button {
+                        // TODO: 사진 없는 경우, 툴바 "다음" 못 누르게 하기
+                        // WritingView 이동
+                    } label: {
+                        Text("다음")
+                            .font(.semibold18)
+                    }
+                }
+            ])
+        .foregroundStyle(.mainBlack)
         // SearchTageView Sheet
         .sheet(isPresented: $isShowTagSearch) {
 //            SearchTagView(isShowTagSearch: $isShowTagSearch)
