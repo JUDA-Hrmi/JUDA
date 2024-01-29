@@ -15,11 +15,11 @@ struct MainView: View {
                 VStack(alignment:.center, spacing: 20) {
                     WeatherView(isLoggedIn: $isLoggedIn)
                         .padding(.bottom, 20)
-                    SuggestSulView(isLoggedIn: $isLoggedIn)
                 }
+                SuggestDrinkView(isLoggedIn: $isLoggedIn)
             }
-            .padding(.horizontal, 20)
         }
+        .padding(.horizontal, 20)
     }
 }
 

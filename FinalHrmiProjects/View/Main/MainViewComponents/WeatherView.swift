@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+
 // MARK: - 날씨 + 메뉴 추천 뷰
 struct WeatherView: View {
     @Binding var isLoggedIn: Bool
@@ -23,20 +24,18 @@ struct WeatherView: View {
             
             Text(isLoggedIn ? "오늘은 비가 와요." : "오늘의 날씨와 어울리는")
                 .multilineTextAlignment(.center)
-                .font(.medium18)
 
             HStack(spacing: 3) {
                 Text(isLoggedIn ? food[0] : food[1])
                     .foregroundColor(.mainAccent02)
-                    .font(.medium18)
                 Text(isLoggedIn ? " + " : "와 ")
                     .font(.medium18)
                 Text(isLoggedIn ? sul[0] : sul[1])
-                    .font(.medium18)
                     .foregroundColor(.mainAccent02)
                 Text(isLoggedIn ? "한 잔 어때요?" : "조합을 확인하세요.")
-                    .font(.medium18)
+                
             }
         }
+        .font(.medium18)
     }
 }

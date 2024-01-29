@@ -1,29 +1,33 @@
 //
-//  SuggestSulView.swift
+//  Component.swift
 //  FinalHrmiProjects
 //
 //  Created by 백대홍 on 1/29/24.
 //
 
 import SwiftUI
-// MARK: - 오늘의 추천 술 전체 뷰
-struct SuggestSulView: View {
+
+struct SuggestDrinkView: View {
     @Binding var isLoggedIn: Bool
     var body: some View {
-        VStack(alignment:.leading, spacing: 10) {
-            Text("오늘의 추천 술")
-                .font(.semibold18)
-            
-            TodaysulView(todaySul: TodaysulData)
-                .opacity(isLoggedIn ? 1.0 : 0.8)
-                .blur(radius: isLoggedIn ? 0 : 3)
-        }
         if isLoggedIn {
-            VStack {
-                Text("여기에 뭐넣지..?")
+            VStack(alignment: .leading, spacing: 10) {
+                SuggestDrinkCell(isLoggedIn: $isLoggedIn)
+                Text("다른 사람들은 어떻게 먹었을까?")
+                    .font(.medium16)
+                NavigationLink {
+                    DrinkInfoView()
+                } label: {
+                    Text("추천 술상 보러가기")
+                        .font(.medium16)
+                        .foregroundStyle(.mainAccent03)
+                        .underline()
+                }
             }
+            .padding(.top, 20)
         } else {
             VStack(alignment: .center, spacing: 10) {
+                SuggestDrinkCell(isLoggedIn: $isLoggedIn)
                 Text("추천 안주와 술을 알고 싶다면?")
                     .font(.medium16)
                 NavigationLink {
@@ -40,7 +44,7 @@ struct SuggestSulView: View {
                     .cornerRadius(10)
                 }
             }
-            .padding(.top,30)
+            .padding(.top, 20)
         }
     }
 }

@@ -13,9 +13,10 @@
 		09CDADA52B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDADA42B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift */; };
 		7B904C662B6168C60052384A /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B904C652B6168C60052384A /* PostCell.swift */; };
 		7B904C682B6184560052384A /* CustomTextSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B904C672B6184560052384A /* CustomTextSegment.swift */; };
-		AC762BE42B6772CD0089F1D1 /* SuggestSulView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC762BE32B6772CD0089F1D1 /* SuggestSulView.swift */; };
+		AC762BE42B6772CD0089F1D1 /* SuggestDrinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC762BE32B6772CD0089F1D1 /* SuggestDrinkCell.swift */; };
 		AC762BE62B6772FA0089F1D1 /* TodaySulView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC762BE52B6772FA0089F1D1 /* TodaySulView.swift */; };
 		AC762BE82B6773180089F1D1 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC762BE72B6773180089F1D1 /* WeatherView.swift */; };
+		AC762BEB2B678D020089F1D1 /* SuggestDrinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC762BEA2B678D020089F1D1 /* SuggestDrinkView.swift */; };
 		B121A5722B5F8EE100667D42 /* Font +.swift in Sources */ = {isa = PBXBuildFile; fileRef = B121A5712B5F8EE100667D42 /* Font +.swift */; };
 		B121A5732B5F910900667D42 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B121A56C2B5F8D5D00667D42 /* Pretendard-Bold.otf */; };
 		B121A5742B5F910B00667D42 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = B121A56D2B5F8D5D00667D42 /* Pretendard-Light.otf */; };
@@ -62,9 +63,10 @@
 		09CDADA42B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkSelectHorizontalScrollBar.swift; sourceTree = "<group>"; };
 		7B904C652B6168C60052384A /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		7B904C672B6184560052384A /* CustomTextSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextSegment.swift; sourceTree = "<group>"; };
-		AC762BE32B6772CD0089F1D1 /* SuggestSulView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestSulView.swift; sourceTree = "<group>"; };
+		AC762BE32B6772CD0089F1D1 /* SuggestDrinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestDrinkCell.swift; sourceTree = "<group>"; };
 		AC762BE52B6772FA0089F1D1 /* TodaySulView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaySulView.swift; sourceTree = "<group>"; };
 		AC762BE72B6773180089F1D1 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
+		AC762BEA2B678D020089F1D1 /* SuggestDrinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestDrinkView.swift; sourceTree = "<group>"; };
 		B121A5692B5F8D5D00667D42 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		B121A56A2B5F8D5D00667D42 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		B121A56B2B5F8D5D00667D42 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
@@ -120,9 +122,10 @@
 		AC762BE92B6778D80089F1D1 /* MainViewComponents */ = {
 			isa = PBXGroup;
 			children = (
-				AC762BE32B6772CD0089F1D1 /* SuggestSulView.swift */,
+				AC762BE32B6772CD0089F1D1 /* SuggestDrinkCell.swift */,
 				AC762BE52B6772FA0089F1D1 /* TodaySulView.swift */,
 				AC762BE72B6773180089F1D1 /* WeatherView.swift */,
+				AC762BEA2B678D020089F1D1 /* SuggestDrinkView.swift */,
 			);
 			path = MainViewComponents;
 			sourceTree = "<group>";
@@ -449,6 +452,7 @@
 				B127A4222B64EB53001F005D /* CustomBottomSheet.swift in Sources */,
 				B1EE249A2B6144C5007F68B0 /* RecordViewModel.swift in Sources */,
 				B1EE24732B61431A007F68B0 /* DummyModel.swift in Sources */,
+				AC762BEB2B678D020089F1D1 /* SuggestDrinkView.swift in Sources */,
 				B1EE249E2B6144DD007F68B0 /* DrinkInfoViewModel.swift in Sources */,
 				096E631A2B616F31009246CE /* DrinkGridCell.swift in Sources */,
 				7B904C682B6184560052384A /* CustomTextSegment.swift in Sources */,
@@ -466,7 +470,7 @@
 				B1EE248C2B61446A007F68B0 /* RecordView.swift in Sources */,
 				B1B8FE7D2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift in Sources */,
 				AC762BE62B6772FA0089F1D1 /* TodaySulView.swift in Sources */,
-				AC762BE42B6772CD0089F1D1 /* SuggestSulView.swift in Sources */,
+				AC762BE42B6772CD0089F1D1 /* SuggestDrinkCell.swift in Sources */,
 				B1EE24902B614477007F68B0 /* DrinkInfoView.swift in Sources */,
 				AC762BE82B6773180089F1D1 /* WeatherView.swift in Sources */,
 				09254CA72B637C9900569D94 /* CustomDivider.swift in Sources */,
