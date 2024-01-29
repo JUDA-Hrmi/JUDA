@@ -10,6 +10,15 @@ import SwiftUI
 struct WritingView: View {
     // 선택된 사진들을 담은 배열 (더미 데이터는 Assets을 사용하기 위해 작성)
     @State private var images: [String] = ["foodEx1", "foodEx2", "foodEx3", "foodEx4", "foodEx5"]
+    // TextEditor으로 작성될 글 내용
+    @State var content: String = ""
+    
+    // TextEditor에서 사용되는 placeholder
+    private let placeholder = """
+                    사진에 대해 설명해주세요.
+                    음식과 함께 마신 술은 어땠나요?
+                    """
+
 
     var body: some View {
         NavigationStack {
@@ -43,6 +52,20 @@ struct WritingView: View {
             // TODO: frame 가변으로 변경
             .frame(height: 100)
             .padding(.leading, 20)
+            
+            // 글 내용 적는 TextEditor
+            TextEditor(text: $content)
+                // TextEditor에 Text를 오버레이하여 placeholder로 보여줌
+                .overlay(alignment: .topLeading) {
+                    // content가 입력됐을 때, placeholder "" 처리
+                    Text(content.isEmpty ? placeholder : "")
+                        .padding(.leading, 6)
+                        .padding(.top, 10)
+                        .foregroundStyle(.gray01)
+                    
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 10)
 
         }
         .customNavigationBar(
