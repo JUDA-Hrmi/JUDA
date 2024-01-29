@@ -7,11 +7,18 @@
 
 import SwiftUI
 
+struct FoodTag {
+    let id = UUID()
+    let name: String
+}
+
 struct WritingView: View {
     // 선택된 사진들을 담은 배열 (더미 데이터는 Assets을 사용하기 위해 작성)
     @State private var images: [String] = ["foodEx1", "foodEx2", "foodEx3", "foodEx4", "foodEx5"]
     // TextEditor으로 작성될 글 내용
-    @State var content: String = ""
+    @State private var content: String = ""
+    // 음식 태그 배열
+    @State private var foodTags: [FoodTag] = []
     
     // TextEditor에서 사용되는 placeholder
     private let placeholder = """
@@ -66,6 +73,21 @@ struct WritingView: View {
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 10)
+            
+            CustomDivider()
+            
+            HStack {
+                Text("음식 태그")
+                    .font(.semibold18)
+                Spacer()
+            }
+            .padding(.horizontal, 20)
+            // TODO: DrinkInfoDetail 참고하여 Divider와 HStack 사이 패딩 변경 필요
+            .padding(.vertical, 5)
+            
+            // 음식 태그 추가 TextField
+            FoodTagAddTextField(foodTags: $foodTags)
+            
 
         }
         .customNavigationBar(
@@ -85,6 +107,42 @@ struct WritingView: View {
             }
             ])
         .foregroundStyle(.mainBlack)
+    }
+}
+
+// 음식 태그 추가하는 TextField
+struct FoodTagAddTextField: View {
+    @Binding var foodTags: [FoodTag]
+    @State private var foodTagName: String = ""
+    
+    var body: some View {
+        HStack {
+            Text("#")
+                .font(.regular16)
+                .opacity(0.7)
+            
+            TextField("음식 이름", text: $foodTagName)
+            Button {
+                // 중복 추가 불가
+                // TextField 비워주기
+                if !foodTags.isEmpty && !foodTags.contains(where: { $0.name == foodTagName }) {
+                    foodTags.append(FoodTag(name: foodTagName))
+                }
+                foodTagName = ""
+            } label: {
+                Text("추가하기")
+                    .font(.regular14)
+                    .opacity(0.7)
+                
+            }
+            .buttonStyle(.plain)
+        }
+        .padding(.horizontal, 20)
+        .padding(.vertical, 10)
+        .background(.mainAccent03.opacity(0.2))
+        .clipShape(.rect(cornerRadius: 10))
+        .padding(.horizontal, 20)
+
     }
 }
 
