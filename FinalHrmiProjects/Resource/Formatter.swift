@@ -25,4 +25,9 @@ enum Formatter {
             return "\(count)"
         }
     }
+    
+    // 평점을 소수점 첫번째 자리까지 String으로 변환해주는 함수
+    static func formattedStarRatingCount(rating: Double) -> String {
+        String(format: "%.1f", rating)
+    }
 }
