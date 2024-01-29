@@ -53,8 +53,7 @@ struct SettingView: View {
                         .padding(.vertical, 10)
                 })
                 
-                // TODO: 커스텀 Divider로 바꾸기
-                Divider()
+                CustomDivider()
                 
                 // MARK: 공지사항
                 NavigationLink {
@@ -81,8 +80,7 @@ struct SettingView: View {
                     .modifier(CustomText())
                 }
                 
-                // TODO: 커스텀 Divider로 바꾸기
-                Divider()
+                CustomDivider()
                 
                 // MARK: 서비스 이용약관
                 NavigationLink {
@@ -127,8 +125,7 @@ struct SettingView: View {
                     .padding(.horizontal, 20)
                     .padding(.vertical, 10)
                 
-                // TODO: 커스텀 Divider로 바꾸기
-                Divider()
+                CustomDivider()
             }
         }
     }
