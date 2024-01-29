@@ -43,7 +43,7 @@ struct PostPhotoScroll: View {
 				Button {
 					isFullSizePhotoPresented = false
 				} label: {
-					Image(systemName: "xmark.circle")
+					Image(systemName: "xmark")
 						.foregroundStyle(.gray01)
 						.font(.bold20)
 				}
