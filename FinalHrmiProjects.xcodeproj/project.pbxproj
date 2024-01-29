@@ -11,6 +11,7 @@
 		096E63182B616886009246CE /* DrinkListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096E63172B616886009246CE /* DrinkListCell.swift */; };
 		096E631A2B616F31009246CE /* DrinkGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096E63192B616F31009246CE /* DrinkGridCell.swift */; };
 		09CDADA52B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDADA42B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift */; };
+		7B6D76A52B6777AC00601B55 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76A42B6777AC00601B55 /* Button.swift */; };
 		7B904C662B6168C60052384A /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B904C652B6168C60052384A /* PostCell.swift */; };
 		7B904C682B6184560052384A /* CustomTextSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B904C672B6184560052384A /* CustomTextSegment.swift */; };
 		AC1FEAAE2B639781006E9E65 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1FEAAD2B639781006E9E65 /* CustomAlert.swift */; };
@@ -60,6 +61,7 @@
 		096E63172B616886009246CE /* DrinkListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkListCell.swift; sourceTree = "<group>"; };
 		096E63192B616F31009246CE /* DrinkGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkGridCell.swift; sourceTree = "<group>"; };
 		09CDADA42B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkSelectHorizontalScrollBar.swift; sourceTree = "<group>"; };
+		7B6D76A42B6777AC00601B55 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Button.swift; path = "../../../../../../../.Trash/PJ4T7_HrMi 오후 2.36.07/FinalHrmiProjects/Resource/Button.swift"; sourceTree = "<group>"; };
 		7B904C652B6168C60052384A /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		7B904C672B6184560052384A /* CustomTextSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextSegment.swift; sourceTree = "<group>"; };
 		AC1FEAAD2B639781006E9E65 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 		B121A5652B5F8D2000667D42 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				7B6D76A42B6777AC00601B55 /* Button.swift */,
 				B121A5712B5F8EE100667D42 /* Font +.swift */,
 				B14771F62B62019B0036A4A9 /* View +.swift */,
 				B158F83E2B657A9000E33C47 /* Theme.swift */,
@@ -453,6 +456,7 @@
 				B1EE24962B6144A5007F68B0 /* MypageViewModel.swift in Sources */,
 				B1EE24922B61447F007F68B0 /* MainView.swift in Sources */,
 				09CDADA52B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift in Sources */,
+				7B6D76A52B6777AC00601B55 /* Button.swift in Sources */,
 				B16EB85C2B63859800E920A3 /* DrinkInfoSegment.swift in Sources */,
 				B1EE24A02B6144E3007F68B0 /* MainViewModel.swift in Sources */,
 				B1EE248C2B61446A007F68B0 /* RecordView.swift in Sources */,
