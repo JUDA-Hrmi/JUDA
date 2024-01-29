@@ -122,12 +122,12 @@
 		B121A5652B5F8D2000667D42 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				7B6D76A62B677A8F00601B55 /* Button.swift */,
 				B121A5712B5F8EE100667D42 /* Font +.swift */,
 				B14771F62B62019B0036A4A9 /* View +.swift */,
 				B158F83E2B657A9000E33C47 /* Theme.swift */,
 				B1EE24A32B614508007F68B0 /* Components */,
 				B121A5682B5F8D4800667D42 /* Pretendard */,
-				7B6D76A62B677A8F00601B55 /* Button.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
