@@ -48,7 +48,7 @@ struct DrawViewExampleCode: View {
         ZStack {
             VStack {
                 DrinkSelectHorizontalScrollBar()
-                DrinkInfoSegment(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, isShowSymbolImage: .constant(true))
+                DrinkInfoSegment(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, isShowSymbolImage: .constant(true), buttonColor: .constant(.mainBlack))
                 Spacer()
                 // TODO: DrinkInfoView 구성하는 구조체 넣기
             }

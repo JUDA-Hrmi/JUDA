@@ -42,11 +42,10 @@ struct SettingView: View {
                         HStack {
                             Text("화면 모드 설정")
                             Spacer()
-                            CustomSortingButton(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, isShowSymbolImage: .constant(false))
+                            CustomSortingButton(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, isShowSymbolImage: .constant(false), buttonColor: .constant(.gray01))
                         }
                         .modifier(CustomText())
                     })
-                    .buttonStyle(EmptyActionStyle())
                     // MARK: 로그아웃
                     Button(action: {}, label: {
                         Text("로그아웃")
