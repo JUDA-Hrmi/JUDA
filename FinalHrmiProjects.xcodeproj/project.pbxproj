@@ -19,7 +19,7 @@
 		B10115152B6741A600D0F09D /* SelectedProfilePhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10115142B6741A600D0F09D /* SelectedProfilePhotoView.swift */; };
 		B10115182B6741D000D0F09D /* AlarmSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10115172B6741D000D0F09D /* AlarmSettingView.swift */; };
 		B101151A2B6741DE00D0F09D /* DisplaySettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10115192B6741DE00D0F09D /* DisplaySettingView.swift */; };
-		B101151C2B6741E100D0F09D /* InquiryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101151B2B6741E100D0F09D /* InquiryView.swift */; };
+		B101151C2B6741E100D0F09D /* EmailContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101151B2B6741E100D0F09D /* EmailContactView.swift */; };
 		B101151E2B6741E400D0F09D /* LocationPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101151D2B6741E400D0F09D /* LocationPolicyView.swift */; };
 		B10115202B6741E700D0F09D /* NoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101151F2B6741E700D0F09D /* NoticeView.swift */; };
 		B10115222B6741EB00D0F09D /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10115212B6741EB00D0F09D /* PrivacyPolicyView.swift */; };
@@ -79,7 +79,7 @@
 		B10115142B6741A600D0F09D /* SelectedProfilePhotoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedProfilePhotoView.swift; sourceTree = "<group>"; };
 		B10115172B6741D000D0F09D /* AlarmSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmSettingView.swift; sourceTree = "<group>"; };
 		B10115192B6741DE00D0F09D /* DisplaySettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplaySettingView.swift; sourceTree = "<group>"; };
-		B101151B2B6741E100D0F09D /* InquiryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InquiryView.swift; sourceTree = "<group>"; };
+		B101151B2B6741E100D0F09D /* EmailContactView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailContactView.swift; sourceTree = "<group>"; };
 		B101151D2B6741E400D0F09D /* LocationPolicyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationPolicyView.swift; sourceTree = "<group>"; };
 		B101151F2B6741E700D0F09D /* NoticeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeView.swift; sourceTree = "<group>"; };
 		B10115212B6741EB00D0F09D /* PrivacyPolicyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyView.swift; sourceTree = "<group>"; };
@@ -153,7 +153,7 @@
 			children = (
 				B10115172B6741D000D0F09D /* AlarmSettingView.swift */,
 				B10115192B6741DE00D0F09D /* DisplaySettingView.swift */,
-				B101151B2B6741E100D0F09D /* InquiryView.swift */,
+				B101151B2B6741E100D0F09D /* EmailContactView.swift */,
 				B101151D2B6741E400D0F09D /* LocationPolicyView.swift */,
 				B101151F2B6741E700D0F09D /* NoticeView.swift */,
 				B10115212B6741EB00D0F09D /* PrivacyPolicyView.swift */,
@@ -519,7 +519,7 @@
 				B1EE24942B614485007F68B0 /* LogInView.swift in Sources */,
 				B1EE248E2B614470007F68B0 /* PostsView.swift in Sources */,
 				B10115152B6741A600D0F09D /* SelectedProfilePhotoView.swift in Sources */,
-				B101151C2B6741E100D0F09D /* InquiryView.swift in Sources */,
+				B101151C2B6741E100D0F09D /* EmailContactView.swift in Sources */,
 				AC1FEAAE2B639781006E9E65 /* CustomAlert.swift in Sources */,
 				B1698E0D2B678B8B002A3425 /* Button.swift in Sources */,
 				B158F83F2B657A9000E33C47 /* Theme.swift in Sources */,

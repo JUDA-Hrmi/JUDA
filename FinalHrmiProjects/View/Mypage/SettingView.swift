@@ -83,12 +83,12 @@ struct SettingView: View {
                         
                     }
                     
-                    // MARK: 1:1 문의하기
+                    // MARK: 메일 문의하기
                     NavigationLink {
-                        InquiryView()
+                        EmailContactView()
                     } label: {
                         HStack {
-                            Text("1:1 문의하기")
+                            Text("메일 문의하기")
                             Spacer()
                             Image(systemName: "chevron.forward")
                         }

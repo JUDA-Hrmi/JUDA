@@ -6,13 +6,13 @@
 //
 
 import SwiftUI
-
-struct InquiryView: View {
+// TODO: 더 논의 필요
+struct EmailContactView: View {
     var body: some View {
-        Text("문의하기 뷰입니다.")
+        Text("메일로 문의하기 뷰입니다.")
     }
 }
 
 #Preview {
-    InquiryView()
+    EmailContactView()
 }
