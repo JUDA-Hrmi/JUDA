@@ -78,8 +78,3 @@ struct CustomSortingButton: View {
         }
     }
 }
-
-
-#Preview {
-    DrawViewExampleCode()
-}

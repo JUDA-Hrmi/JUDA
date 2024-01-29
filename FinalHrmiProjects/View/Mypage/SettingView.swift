@@ -43,6 +43,7 @@ struct SettingView: View {
                             Text("화면 모드 설정")
                             Spacer()
                             CustomSortingButton(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, isShowSymbolImage: .constant(false), buttonColor: .constant(.gray01))
+                                .buttonStyle(EmptyActionStyle())
                         }
                         .modifier(CustomText())
                     })

@@ -126,7 +126,3 @@ struct SortingOptionCell: View {
     }
 }
 
-
-#Preview {
-    DrawViewExampleCode()
-}
