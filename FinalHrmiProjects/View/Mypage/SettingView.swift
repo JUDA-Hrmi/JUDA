@@ -13,7 +13,7 @@ struct SettingView: View {
     @State private var isShowingSheet: Bool = false
     @State private var selectedSortingOption: String = "시스템 모드"
     @State private var headText = "화면 모드 선택"
-//    @State private var isShowSymbolImage = false
+    @State private var isLogoutClicked = false
     
     var body: some View {
         NavigationStack {
@@ -47,7 +47,9 @@ struct SettingView: View {
                         .modifier(CustomText())
                     })
                     // MARK: 로그아웃
-                    Button(action: {}, label: {
+                    Button(action: {
+                        isLogoutClicked.toggle()
+                    }, label: {
                         Text("로그아웃")
                             .foregroundStyle(.mainAccent02)
                             .padding(.horizontal, 20)
@@ -137,6 +139,9 @@ struct SettingView: View {
                     CustomDivider()
                 }
                 EnabledBottomSheetView(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, headText: $headText)
+                if isLogoutClicked {
+                    CustomAlert(message: "로그인이 필요한 기능이에요.\n더 많은 기능을 사용할 수 있어요.", leftButtonLabel: "취소", leftButtonAction: {}, rightButtonLabel: "로그인", rightButtonAction: {})
+                }
             }
         }
     }
