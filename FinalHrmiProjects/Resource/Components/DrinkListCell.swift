@@ -13,7 +13,7 @@ struct DrinkListCell: View {
     private let drinkName = "카누카 칵테일 700ml"
     private let drinkOrigin = "스페인"
     private let drinkABV = "15%"
-    private let drinkRating = "4.7"
+    private let drinkRating = 4.7
     // UITest - Drink 하트
     @State private var isLiked = false
     
@@ -43,22 +43,8 @@ struct DrinkListCell: View {
                     }
                     .foregroundStyle(.gray01)
                     // 별점
-                    HStack(alignment: .center, spacing: 6) {
-                        // 별
-                        HStack(alignment: .center, spacing: 0) {
-                            // TODO: 추후 커스텀 별로 이미지 교체 예정
-                            Image(systemName: "star.fill")
-                            Image(systemName: "star.fill")
-                            Image(systemName: "star.fill")
-                            Image(systemName: "star.fill")
-                            Image(systemName: "star.leadinghalf.filled")
-                        }
-                        .foregroundStyle(.mainAccent05)
-                        // 별점
-                        Text(drinkRating)
-                            .font(.semibold14)
-                            .foregroundStyle(.mainBlack)
-                    }
+                    StarRating(rating: drinkRating, color: .mainAccent05,
+                               starSize: .semibold14, fontSize: .semibold14)
                 }
             }
             Spacer()
