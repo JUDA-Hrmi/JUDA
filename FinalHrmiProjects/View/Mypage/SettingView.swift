@@ -26,6 +26,7 @@ struct SettingView: View {
                 }
                 
                 // MARK: 화면 모드 설정
+                // TODO: CustomBottomSheet로 바꾸기
                 NavigationLink {
                     DisplaySettingView()
                 } label: {
