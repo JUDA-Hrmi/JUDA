@@ -8,26 +8,26 @@
 import SwiftUI
 
 // MARK: - 오늘의 추천 술 데이터
-struct Todaydrink: Identifiable, Hashable {
+struct TodayDrink: Identifiable, Hashable {
     var id = UUID()
     var title: String
     var image: String
 }
 
-var TodaysulData: [Todaydrink] = [
-    Todaydrink(title: "지평 막걸리", image:"jipyeong"),
-    Todaydrink(title: "루나가이아 지비뽀", image:"jibibbo"),
-    Todaydrink(title: "진로", image:"jinro"),
+var TodayDrinkData: [TodayDrink] = [
+    TodayDrink(title: "지평 막걸리", image:"jipyeong"),
+    TodayDrink(title: "루나가이아 지비뽀", image:"jibibbo"),
+    TodayDrink(title: "진로", image:"jinro"),
 ]
 
 // MARK: - 오늘의 추천 술 뷰
-struct TodayDrinkView: View {
-    var todaySul: [Todaydrink] = TodaysulData
+struct TodayDrinkRecommendedView: View {
+    var todaySul: [TodayDrink] = TodayDrinkData
     var body: some View {
         VStack {
             HStack(spacing: 10) {
                 ForEach(todaySul, id: \.self) { sul in
-                    TodayDrinkCell(todaySul: sul)
+                    TodayDrinkRecommendedCell(todaySul: sul)
                 }
             }
         }
@@ -35,12 +35,12 @@ struct TodayDrinkView: View {
 }
 
 #Preview {
-    TodayDrinkView()
+    TodayDrinkRecommendedView()
 }
 
 // MARK: - 오늘의 추천 술 뷰셀
-struct TodayDrinkCell: View {
-    var todaySul: Todaydrink
+struct TodayDrinkRecommendedCell: View {
+    var todaySul: TodayDrink
     var body: some View {
         VStack {
             Image(todaySul.image)
@@ -56,7 +56,7 @@ struct TodayDrinkCell: View {
 }
 
 #Preview {
-    TodayDrinkCell(todaySul: Todaydrink(title: "지평 막걸리", image:"jipyeong"))
+    TodayDrinkRecommendedCell(todaySul: TodayDrink(title: "지평 막걸리", image:"jipyeong"))
 }
 
 

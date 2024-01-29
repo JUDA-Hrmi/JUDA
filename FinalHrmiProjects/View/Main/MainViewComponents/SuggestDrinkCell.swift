@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+
 // MARK: - 오늘의 추천 술 전체 뷰
 struct SuggestDrinkCell: View {
     @Binding var isLoggedIn: Bool
@@ -15,7 +16,7 @@ struct SuggestDrinkCell: View {
                 Text("오늘의 추천 술")
                     .font(.semibold18)
                 
-                TodayDrinkView(todaySul: TodaysulData)
+                TodayDrinkRecommendedView(todaySul: TodayDrinkData)
                     .opacity(isLoggedIn ? 1.0 : 0.8)
                     .blur(radius: isLoggedIn ? 0 : 3)
             }

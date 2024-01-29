@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 하단 로그인 OR 비로그인 상태에 따른 뷰 전환
 struct SuggestDrinkView: View {
     @Binding var isLoggedIn: Bool
     var body: some View {
