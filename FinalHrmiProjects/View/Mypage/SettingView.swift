@@ -13,7 +13,8 @@ struct SettingView: View {
     @State private var isShowingSheet: Bool = false
     @State private var selectedSortingOption: String = "시스템 모드"
     @State private var headText = "화면 모드 선택"
-    @State private var isLogoutClicked = false
+    @State private var isLogoutClicked = false // 로그아웃 버튼 클릭 시
+    @State private var isDeletAccount = false // 회원탈퇴 버튼 클릭 시
     
     var body: some View {
         NavigationStack {
@@ -49,7 +50,7 @@ struct SettingView: View {
                     })
                     // MARK: 로그아웃
                     Button(action: {
-                        isLogoutClicked.toggle()
+                        isLogoutClicked.toggle() // 버튼 클릭 시, 커스텀 다이얼로그 활성화
                     }, label: {
                         Text("로그아웃")
                             .foregroundStyle(.mainAccent02)
@@ -58,7 +59,9 @@ struct SettingView: View {
                     })
                     
                     // MARK: 회원탈퇴
-                    Button(action: {}, label: {
+                    Button(action: {
+                        isDeletAccount.toggle() // 버튼 클릭 시, 커스텀 다이얼로그 활성화
+                    }, label: {
                         Text("회원탈퇴")
                             .foregroundStyle(.mainAccent02)
                             .padding(.horizontal, 20)
@@ -140,10 +143,19 @@ struct SettingView: View {
                     CustomDivider()
                 }
                 EnabledBottomSheetView(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, headText: $headText)
+                
+                // 로그아웃 버튼 클릭 시 띄워지는 CustomAlert
                 if isLogoutClicked {
                     CustomAlert(message: "로그아웃 하시겠습니까?", leftButtonLabel: "취소", leftButtonAction: {
                         isLogoutClicked.toggle()
                     }, rightButtonLabel: "로그아웃", rightButtonAction: {}) // TODO: 로그아웃 기능 추가하기
+                }
+                
+                // 회원탈퇴 버튼 클릭 시 띄워지는 CustomAlert
+                if isDeletAccount {
+                    CustomAlert(message: "계정을 삭제하시겠습니까?", leftButtonLabel: "취소", leftButtonAction: {
+                        isDeletAccount.toggle()
+                    }, rightButtonLabel: "탈퇴하기", rightButtonAction: {}) // TODO: 회원탈퇴 기능 추가하기
                 }
             }
         }
