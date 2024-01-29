@@ -33,7 +33,7 @@ struct StarRating: View {
                         }
                     }
             }
-            Text(formattedStarRatingCount(rating:4.5))
+            Text(formattedStarRatingCount(rating: rating))
                 .font(fontSize)
                 .padding(.leading, 10)
         }
