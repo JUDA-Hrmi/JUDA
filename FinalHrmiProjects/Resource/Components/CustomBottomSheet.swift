@@ -12,6 +12,7 @@ struct CustomBottomSheet<Content>: View where Content: View {
     public var height: CGFloat
     public var content: Content
     
+    @Environment(\.colorScheme) var scheme
     @Binding private var isShowingSheet: Bool
     @GestureState private var translation: CGFloat = .zero - 50
     
@@ -24,19 +25,20 @@ struct CustomBottomSheet<Content>: View where Content: View {
     var body: some View {
         VStack(spacing: .zero) {
             RoundedRectangle(cornerRadius: 20)
-                .fill(.white)
+                .fill(Theme.backgroundColor(scheme: scheme))
                 .frame(height: 50)
                 .overlay(
                     Text("정렬 방식 선택")
                         .font(.light14)
                 )
+            
             self.content
                 .frame(height: self.height)
         }
         .frame(height: self.height + 10)
         .background(
             Rectangle()
-                .fill(.white)
+                .fill(Theme.backgroundColor(scheme: scheme))
                 .ignoresSafeArea(.all, edges: [.bottom, .horizontal])
         )
         .transition(.opacity.combined(with: .move(edge: .bottom)))
@@ -123,8 +125,6 @@ struct SortingOptionCell: View {
 }
 
 
-//#Preview {
-//    CustomBottomSheet(.constant(true), height: 300) {
-//        SortingOptionCellListView(selectedSortingOption: .constant("인기순"))
-//    }
-//}
+#Preview {
+    DrawViewExampleCode()
+}
