@@ -38,7 +38,6 @@ struct SettingView: View {
                 VStack(alignment: .leading) {
                     // MARK: 알림 설정
                     NavigationLink {
-                        // TODO: 각 설정사항에 맞게 뷰 생성 후 바꾸기
                         AlarmSettingView()
                     } label: {
                         HStack {
@@ -46,12 +45,10 @@ struct SettingView: View {
                             Spacer()
                             Image(systemName: "chevron.forward")
                         }
-                        //TODO: 반복되는 사항 ViewModifier로 하나로 묶기
                         .modifier(CustomText())
                     }
                     
                     // MARK: 화면 모드 설정
-                    // TODO: CustomBottomSheet로 바꾸기
                     // 버튼 클릭 시 반짝이는 애니메이션 제거 코드 추가하기
                     Button(action: {
                         isShowingSheet.toggle()
@@ -114,13 +111,13 @@ struct SettingView: View {
                     CustomDivider()
                     
                     // MARK: 서비스 이용약관
-                    TermsofServiceView(text: "서비스 이용약관", urlString: urlStringList[0], isShowWebView: $isShowServiceWebView)
+                    AppServiceInfoView(text: "서비스 이용약관", urlString: urlStringList[0], isShowWebView: $isShowServiceWebView)
                     
                     // MARK: 개인정보 처리방침
-                    TermsofServiceView(text: "개인정보 처리방침", urlString: urlStringList[1], isShowWebView: $isShowPrivacyWebView)
+                    AppServiceInfoView(text: "개인정보 처리방침", urlString: urlStringList[1], isShowWebView: $isShowPrivacyWebView)
                     
                     // MARK: 위치정보 처리방침
-                    TermsofServiceView(text: "위치정보 처리방침", urlString: urlStringList[2], isShowWebView: $isShowLocationWebView)
+                    AppServiceInfoView(text: "위치정보 처리방침", urlString: urlStringList[2], isShowWebView: $isShowLocationWebView)
         
                     // MARK: 버전 정보
                     Text("버전 정보 0.0.1")
@@ -142,8 +139,9 @@ struct SettingView: View {
                 }
                 
                 // 회원탈퇴 버튼 클릭 시 띄워지는 CustomAlert
+                // TODO: 탈퇴 문구 수정하기
                 if isDeletAccount {
-                    CustomAlert(message: "계정을 삭제하시겠습니까?", leftButtonLabel: "취소", leftButtonAction: {
+                    CustomAlert(message: "탈퇴하시겠습니까?", leftButtonLabel: "취소", leftButtonAction: {
                         isDeletAccount.toggle()
                     }, rightButtonLabel: "탈퇴하기", rightButtonAction: {}) // TODO: 회원탈퇴 기능 추가하기
                 }

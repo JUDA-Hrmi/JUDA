@@ -8,7 +8,7 @@
 import SwiftUI
 import SafariServices
 
-struct TermsofServiceView: View {
+struct AppServiceInfoView: View {
     var text: String
     var urlString: String
     
