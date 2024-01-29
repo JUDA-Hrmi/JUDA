@@ -6,15 +6,26 @@
 //
 
 import SwiftUI
+import WebKit
 
 struct SettingView: View {
     private let optionNameList = ["라이트 모드", "다크 모드", "시스템 모드"]
+    private let urlStringList = [
+        "https://glacier-coneflower-d58.notion.site/2003b94d70cc46ca95fe76266a30df09?pvs=4",
+        "https://glacier-coneflower-d58.notion.site/2003b94d70cc46ca95fe76266a30df09?pvs=4",
+        "https://glacier-coneflower-d58.notion.site/25acb23600d24ec3b3146115f98d2dad?pvs=4"
+    ]
     
     @State private var isShowingSheet: Bool = false
     @State private var selectedSortingOption: String = "시스템 모드"
     @State private var headText = "화면 모드 선택"
+    
     @State private var isLogoutClicked = false // 로그아웃 버튼 클릭 시
     @State private var isDeletAccount = false // 회원탈퇴 버튼 클릭 시
+    
+    @State private var isShowServiceWebView = false // 서비스 이용약관 보여주기
+    @State private var isShowPrivacyWebView = false // 개인 정보 처리 방침 보여주기
+    @State private var isShowLocationWebView = false // 위치 정보 처리방침 보여주기
     
     var body: some View {
         NavigationStack {
@@ -98,8 +109,8 @@ struct SettingView: View {
                     CustomDivider()
                     
                     // MARK: 서비스 이용약관
-                    NavigationLink {
-                        TermsofServiceView()
+                    Button {
+                        isShowServiceWebView.toggle()
                     } label: {
                         HStack {
                             Text("서비스 이용약관")
@@ -107,11 +118,14 @@ struct SettingView: View {
                             Image(systemName: "chevron.forward")
                         }
                         .modifier(CustomText())
+                        .sheet(isPresented: $isShowServiceWebView) {
+                            SettingWKWebView(url: urlStringList[0])
+                        }
                     }
                     
                     // MARK: 개인정보 처리방침
-                    NavigationLink {
-                        PrivacyPolicyView()
+                    Button {
+                        isShowPrivacyWebView.toggle()
                     } label: {
                         HStack {
                             Text("개인정보 처리방침")
@@ -119,11 +133,14 @@ struct SettingView: View {
                             Image(systemName: "chevron.forward")
                         }
                         .modifier(CustomText())
+                        .sheet(isPresented: $isShowPrivacyWebView) {
+                            SettingWKWebView(url: urlStringList[1])
+                        }
                     }
                     
                     // MARK: 위치정보 처리방침
-                    NavigationLink {
-                        LocationPolicyView()
+                    Button {
+                        isShowLocationWebView.toggle()
                     } label: {
                         HStack {
                             Text("위치정보 처리방침")
@@ -131,6 +148,9 @@ struct SettingView: View {
                             Image(systemName: "chevron.forward")
                         }
                         .modifier(CustomText())
+                        .sheet(isPresented: $isShowLocationWebView) {
+                            SettingWKWebView(url: urlStringList[2])
+                        }
                     }
         
                     // MARK: 버전 정보
@@ -142,6 +162,7 @@ struct SettingView: View {
                     
                     CustomDivider()
                 }
+                // 화면 모드 설정 클릭 시 띄워지는 CustomBottomSheetView
                 EnabledBottomSheetView(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, headText: $headText)
                 
                 // 로그아웃 버튼 클릭 시 띄워지는 CustomAlert

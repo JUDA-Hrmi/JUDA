@@ -37,6 +37,7 @@
 		B158F83B2B6539FC00E33C47 /* EnabledBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B158F83A2B6539FC00E33C47 /* EnabledBottomSheetView.swift */; };
 		B158F83F2B657A9000E33C47 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B158F83E2B657A9000E33C47 /* Theme.swift */; };
 		B1698E0D2B678B8B002A3425 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1698E0C2B678B8B002A3425 /* Button.swift */; };
+		B1698E112B67E18B002A3425 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1698E102B67E18B002A3425 /* WebView.swift */; };
 		B16EB85C2B63859800E920A3 /* DrinkInfoSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */; };
 		B1B8FE7D2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8FE7C2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift */; };
 		B1B8FE7F2B5EA9D900921BBE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8FE7E2B5EA9D900921BBE /* ContentView.swift */; };
@@ -98,6 +99,7 @@
 		B158F83A2B6539FC00E33C47 /* EnabledBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnabledBottomSheetView.swift; sourceTree = "<group>"; };
 		B158F83E2B657A9000E33C47 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		B1698E0C2B678B8B002A3425 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		B1698E102B67E18B002A3425 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoSegment.swift; sourceTree = "<group>"; };
 		B1B8FE792B5EA9D900921BBE /* FinalHrmiProjects.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalHrmiProjects.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1B8FE7C2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalHrmiProjectsApp.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				B14771F62B62019B0036A4A9 /* View +.swift */,
 				B158F83E2B657A9000E33C47 /* Theme.swift */,
 				B1698E0C2B678B8B002A3425 /* Button.swift */,
+				B1698E102B67E18B002A3425 /* WebView.swift */,
 				B1EE24A32B614508007F68B0 /* Components */,
 				B121A5682B5F8D4800667D42 /* Pretendard */,
 			);
@@ -507,6 +510,7 @@
 				B1EE24962B6144A5007F68B0 /* MypageViewModel.swift in Sources */,
 				B1EE24922B61447F007F68B0 /* MainView.swift in Sources */,
 				09CDADA52B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift in Sources */,
+				B1698E112B67E18B002A3425 /* WebView.swift in Sources */,
 				B16EB85C2B63859800E920A3 /* DrinkInfoSegment.swift in Sources */,
 				B1EE24A02B6144E3007F68B0 /* MainViewModel.swift in Sources */,
 				B1EE248C2B61446A007F68B0 /* RecordView.swift in Sources */,
