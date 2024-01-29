@@ -43,28 +43,30 @@ struct PostDetailView: View {
 	@State private var windowWidth: CGFloat = 0
 	
 	var body: some View {
-		VStack {
-			ScrollView {
-				PostInfo(userName: "hrmi",
-						 profileImageName: "appIcon",
-						 postUploadDate: "2023.12.08",
-						 isLike: $isLike,
-						 likeCount: $likeCount)
-				
-				PostPhotoScroll(postPhotos: postPhotos)
-				
-				VStack(spacing: 20) {
-					PostDrinkRating(userName: "hrmi",
-									postDrinks: postDrinks,
-									postDrinksStarRating: postDrinksStarRating)
-					CustomDivider()
+		NavigationStack {
+			VStack {
+				ScrollView {
+					PostInfo(userName: "hrmi",
+							 profileImageName: "appIcon",
+							 postUploadDate: "2023.12.08",
+							 isLike: $isLike,
+							 likeCount: $likeCount)
 					
-					Text(postContent)
-						.font(.regular16)
+					PostPhotoScroll(postPhotos: postPhotos)
 					
-					PostTags(tags: tags, windowWidth: windowWidth)
+					VStack(spacing: 20) {
+						PostDrinkRating(userName: "hrmi",
+										postDrinks: postDrinks,
+										postDrinksStarRating: postDrinksStarRating)
+						CustomDivider()
+						
+						Text(postContent)
+							.font(.regular16)
+						
+						PostTags(tags: tags, windowWidth: windowWidth)
+					}
+					.padding(.horizontal, 20)
 				}
-				.padding(.horizontal, 20)
 			}
 		}
 		.task {

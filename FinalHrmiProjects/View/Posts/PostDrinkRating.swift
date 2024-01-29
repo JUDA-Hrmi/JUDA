@@ -21,28 +21,33 @@ struct PostDrinkRating: View {
 				Spacer()
 			}
 			ForEach(0..<postDrinks.count, id:\.self) { index in
-				HStack(spacing: 2) {
-					Text(postDrinks[index])
-						.font(.semibold16)
-						.lineLimit(1)
-					Spacer()
-					
-					let rating = postDrinksStarRating[index]
-					let fullStars = Int(rating)
-					let hasHalfStar = (rating - Double(fullStars)) >= 0.5
-					HStack(spacing: 5) {
-						HStack(spacing: 0) {
-							ForEach(0..<5) { index in
-								Image(systemName: index < fullStars ? "star.fill" : (hasHalfStar && index == fullStars ? "star.leadinghalf.filled" : "star"))
-									.foregroundStyle(.mainAccent03)
+				NavigationLink {
+					// TODO: DrinkInfoView Linking code
+				} label: {
+					HStack(spacing: 2) {
+						Text(postDrinks[index])
+							.font(.semibold16)
+							.lineLimit(1)
+						Spacer()
+						
+						let rating = postDrinksStarRating[index]
+						let fullStars = Int(rating)
+						let hasHalfStar = (rating - Double(fullStars)) >= 0.5
+						HStack(spacing: 5) {
+							HStack(spacing: 0) {
+								ForEach(0..<5) { index in
+									Image(systemName: index < fullStars ? "star.fill" : (hasHalfStar && index == fullStars ? "star.leadinghalf.filled" : "star"))
+										.foregroundStyle(.mainAccent03)
+								}
 							}
+							Text(String(format: "%.1F", postDrinksStarRating[index]))
+								.font(.semibold14)
+							Image(systemName: "chevron.forward")
 						}
-						Text(String(format: "%.1F", postDrinksStarRating[index]))
-							.font(.semibold14)
-						Image(systemName: "chevron.forward")
 					}
+					.foregroundStyle(.mainBlack)
+					.padding(.horizontal, 10)
 				}
-				.padding(.horizontal, 10)
 			}
 		}
     }

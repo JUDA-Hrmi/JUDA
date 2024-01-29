@@ -18,6 +18,7 @@ struct PostInfo: View {
 	
     var body: some View {
 		HStack {
+			// TODO: user의 profile 탭 할 경우, navigationLink로 user profile로 이동할 수 있도록 추후 구현 예정
 			// 사용자의 프로필 사진
 			Image(profileImageName)
 				.resizable()

@@ -19,11 +19,15 @@ struct PostTags: View {
 									   fontSize: 14,
 									   windowWidth: windowWidth,
 									   tagString: "# "), id: \.self) { row in
-				HStack(spacing: 15) {
-					ForEach(row, id: \.self) { tag in
-						Text("# \(tag)")
-							.font(.semibold14)
-							.foregroundStyle(.mainAccent04)
+				NavigationLink {
+					// TODO: PostView Linking code
+				} label: {
+					HStack(spacing: 15) {
+						ForEach(row, id: \.self) { tag in
+							Text("# \(tag)")
+								.font(.semibold14)
+								.foregroundStyle(.mainAccent04)
+						}
 					}
 				}
 			}
