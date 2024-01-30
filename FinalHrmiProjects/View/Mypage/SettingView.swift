@@ -31,8 +31,9 @@ struct SettingView: View {
             ZStack {
                 VStack(alignment: .leading) {
                     // MARK: 알림 설정
+                    // TODO: 토글로 바꾸기
                     NavigationLink {
-                        AlarmSettingView()
+                        
                     } label: {
                         HStack {
                             Text("알림 설정")
