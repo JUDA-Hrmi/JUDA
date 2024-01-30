@@ -15,21 +15,30 @@ struct LikedView: View {
         NavigationStack {
             // 세그먼트 (술찜 리스트 / 술상 리스트)
             CustomTextSegment(segments: PostOrLiked.liked, selectedSegmentIndex: $selectedSegmentIndex)
-                .frame(width: 200)
                 .padding(.vertical, 10)
                 .padding(.horizontal, 20)
                 .frame(maxWidth: .infinity, alignment: .leading)
-            // 세로 스크롤
-            ScrollView {
-                if selectedSegmentIndex == 0 {
-                    // 술찜 리스트
-                    LikedDrinkList()
-                } else {
-                    // 술상 리스트
-                    LikedPostGrid()
+            // Likes
+            PagerView(pageCount: PostOrLiked.liked.count, currentIndex: $selectedSegmentIndex) {
+                ForEach(0..<PostOrLiked.liked.count, id: \.self) { idx in
+                    ScrollViewReader { value in
+                        Group {
+                            if idx == 0 {
+                                // 술찜 리스트
+                                LikedDrinkList()
+                            } else {
+                                // 술상 리스트
+                                LikedPostGrid()
+                            }
+                        }
+                        .onChange(of: selectedSegmentIndex) { newValue in
+                            withAnimation() {
+                                value.scrollTo(newValue, anchor: .center)
+                            }
+                        }
+                    }
                 }
             }
-            .scrollIndicators(.hidden)
         }
     }
 }
