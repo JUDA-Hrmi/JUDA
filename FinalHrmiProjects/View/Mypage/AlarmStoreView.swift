@@ -42,6 +42,7 @@ struct AlarmStoreView: View {
     
     var body: some View {
         VStack(spacing: 0) {
+            // TODO: CustomScrollView 로 수정 예정
             ScrollView {
                 ForEach(Alarm.alarmList, id: \.self) { alarm in
                     AlarmStoreListCell(alarm: alarm)
