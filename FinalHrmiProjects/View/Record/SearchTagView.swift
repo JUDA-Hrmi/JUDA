@@ -13,7 +13,7 @@ struct SearchTagView: View {
     // Sheet 상태 변수
     @Binding var isShowTagSearch: Bool
     // 찜 목록 가져오는 배열
-    private let likeds: [String] = []
+    private let likeds: [String] = ["1","2","3"]
 
     var body: some View {
         VStack {
@@ -36,6 +36,7 @@ struct SearchTagView: View {
             // 찜 목록이 없을 때, 임의의 텍스트 보여주기
             if likeds.isEmpty {
                 Spacer()
+                // TODO: 텍스트 내용 변경
                 Text("술찜 없을 때 텍스트")
                     .font(.regular14)
                     .foregroundStyle(.gray01)
@@ -43,7 +44,8 @@ struct SearchTagView: View {
             } else {
                 // 찜 목록이 있을 때, DrinkListCell 리스트로 보여주기
                 ScrollView {
-                    ForEach(likeds, id: \.self) { liked in
+                    ForEach(likeds, id: \.self) { _ in
+                        // TODO: Cell 클릭 시 별점 평가 Dialog 띄우기
                         DrinkListCell()
                     }
                 }
