@@ -70,15 +70,16 @@ struct AddTagView: View {
         .customNavigationBar(
             leadingView: {
                 Button {
-                    //
+                    // TODO: PostsView로 돌아가기
                 } label: {
                     Image(systemName: "chevron.left")
+                        .font(.semibold18)
                 }
             }, trailingView: [
                 .trailing: {
                     Button {
                         // TODO: 사진 없는 경우, 툴바 "다음" 못 누르게 하기
-                        // WritingView 이동
+                        // TODO: WritingView로 이동
                     } label: {
                         Text("다음")
                             .font(.semibold18)
