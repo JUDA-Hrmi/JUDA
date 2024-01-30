@@ -8,8 +8,29 @@
 import SwiftUI
 
 struct ChangeUserNameView: View {
+    @Environment(\.presentationMode) var presentationMode
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            
+        }
+        .navigationBarBackButtonHidden()
+        .customNavigationBar(
+            centerView: {
+                Text("닉네임 수정")
+            },
+            leadingView: {
+                Button {
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .foregroundStyle(.mainBlack)
+                }
+            },trailingView: [
+                .trailing: {
+                    Text("")
+                }
+            ])
+        
     }
 }
 
