@@ -1,9 +1,10 @@
 //
-//  Handler +.swift
+//  Handler.swift
 //  FinalHrmiProjects
 //
 //  Created by Minjae Kim on 1/29/24.
 //
+
 import SwiftUI
 
 // Tag 관련 Method 담고있는 namespace
