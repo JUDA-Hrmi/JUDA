@@ -13,7 +13,7 @@ struct AppServiceInfoView: View {
     var text: String
     var urlString: String
     
-    @Binding var isShowWebView: Bool
+    @State var isShowWebView: Bool
     
     var body: some View {
         Button {
@@ -32,6 +32,7 @@ struct AppServiceInfoView: View {
     }
 }
 
+// url에 해당하는 Safari 뷰로 연결
 struct SafariView: UIViewControllerRepresentable {
     let url: URL
 

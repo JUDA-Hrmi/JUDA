@@ -9,22 +9,16 @@ import SwiftUI
 import WebKit
 
 struct SettingView: View {
-    private let optionNameList = ["라이트 모드", "다크 모드", "시스템 모드"]
-    private let urlStringList = [
-        "https://bit.ly/HrmiService",
-        "https://bit.ly/HrmiPrivacyPolicy",
-        "https://bit.ly/HrmiLocationPolicy"
-    ]
+    private let optionNameList = ["라이트 모드", "다크 모드", "시스템 모드"] // 화면 모드 설정 옵션 이름 리스트
+    private var isShowWebView = false // 웹뷰 시트 올라오기
+    private let webViewNameList = ["서비스 이용약관", "개인정보 처리방침", "위치정보 처리방침"] // 웹뷰로 보여줘야하는 항목 이름 리스트
+    private let webViewurlList = [ "https://bit.ly/HrmiService", "https://bit.ly/HrmiPrivacyPolicy", "https://bit.ly/HrmiLocationPolicy"] // webViewNameList에 해당하는 url 주소
     
-    @State private var isShowingSheet: Bool = false
+    @State private var isShowingSheet: Bool = false // CustomBottomSheet 올라오기
     @State private var selectedSortingOption: String = "시스템 모드"
     
     @State private var isLogoutClicked = false // 로그아웃 버튼 클릭 시
     @State private var isDeletAccount = false // 회원탈퇴 버튼 클릭 시
-    
-    @State private var isShowServiceWebView = false // 서비스 이용약관 보여주기
-    @State private var isShowPrivacyWebView = false // 개인 정보 처리 방침 보여주기
-    @State private var isShowLocationWebView = false // 위치 정보 처리방침 보여주기
     
     var body: some View {
         NavigationStack {
@@ -107,14 +101,10 @@ struct SettingView: View {
                     
                     CustomDivider()
                     
-                    // MARK: 서비스 이용약관
-                    AppServiceInfoView(text: "서비스 이용약관", urlString: urlStringList[0], isShowWebView: $isShowServiceWebView)
-                    
-                    // MARK: 개인정보 처리방침
-                    AppServiceInfoView(text: "개인정보 처리방침", urlString: urlStringList[1], isShowWebView: $isShowPrivacyWebView)
-                    
-                    // MARK: 위치정보 처리방침
-                    AppServiceInfoView(text: "위치정보 처리방침", urlString: urlStringList[2], isShowWebView: $isShowLocationWebView)
+                    // MARK: 이용약관 및 정보 처리 방침
+                    ForEach(0..<webViewNameList.count, id: \.self) { index in
+                        AppServiceInfoView(text: webViewNameList[index], urlString: webViewurlList[index], isShowWebView: isShowWebView)
+                    }
         
                     // MARK: 버전 정보
                     Text("버전 정보 0.0.1")
@@ -125,6 +115,8 @@ struct SettingView: View {
                     
                     CustomDivider()
                 }
+                
+                // TODO: CustomBottomSheet 수정에 따른 변화 있을 것
                 // 화면 모드 설정 클릭 시 띄워지는 CustomBottomSheetView
                 EnabledBottomSheetView(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
                 
@@ -136,7 +128,8 @@ struct SettingView: View {
                 }
                 
                 // 회원탈퇴 버튼 클릭 시 띄워지는 CustomAlert
-                // TODO: 탈퇴 문구 수정하기
+                // TODO: - 1. 탈퇴 문구 수정하기
+                // TODO: - 2. CustomSettingDialog로 바꾸기
                 if isDeletAccount {
                     CustomAlert(message: "탈퇴하시겠습니까?", leftButtonLabel: "취소", leftButtonAction: {
                         isDeletAccount.toggle()
