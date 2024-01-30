@@ -39,6 +39,7 @@ struct LikedView: View {
                     }
                 }
             }
+            .ignoresSafeArea()
         }
     }
 }
