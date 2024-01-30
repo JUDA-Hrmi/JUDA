@@ -14,6 +14,7 @@ struct SettingView: View {
     private let webViewNameList = ["서비스 이용약관", "개인정보 처리방침", "위치정보 처리방침"] // 웹뷰로 보여줘야하는 항목 이름 리스트
     private let webViewurlList = [ "https://bit.ly/HrmiService", "https://bit.ly/HrmiPrivacyPolicy", "https://bit.ly/HrmiLocationPolicy"] // webViewNameList에 해당하는 url 주소
     
+    @State var isAlarmOn: Bool = true // 알람 설정 toggle 
     @State private var isShowingSheet: Bool = false // CustomBottomSheet 올라오기
     @State private var selectedSortingOption: String = "시스템 모드"
     
@@ -25,17 +26,10 @@ struct SettingView: View {
             ZStack {
                 VStack(alignment: .leading) {
                     // MARK: 알림 설정
-                    // TODO: 토글로 바꾸기
-                    NavigationLink {
-                        
-                    } label: {
-                        HStack {
-                            Text("알림 설정")
-                            Spacer()
-                            Image(systemName: "chevron.forward")
-                        }
-                        .modifier(CustomText())
-                    }
+                    Toggle(isOn: $isAlarmOn, label: {
+                        Text("알림 설정: \(String(self.isAlarmOn) == "true" ? "ON" : "OFF")")
+                    })
+                    .modifier(CustomText())
                     
                     // MARK: 화면 모드 설정
                     // 버튼 클릭 시 반짝이는 애니메이션 제거 코드 추가하기
