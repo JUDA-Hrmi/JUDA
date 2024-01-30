@@ -30,6 +30,7 @@ struct PostDrinkRating: View {
 							.lineLimit(1)
 						Spacer()
 						
+						// TODO: need StarRating code modify
 						let rating = postDrinksStarRating[index]
 						let fullStars = Int(rating)
 						let hasHalfStar = (rating - Double(fullStars)) >= 0.5
