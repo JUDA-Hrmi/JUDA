@@ -33,10 +33,15 @@ struct StarRating: View {
                         }
                     }
             }
-            Text(Formatter.formattedStarRatingCount(rating: rating))
+            Text(formattedStarRatingCount(rating: rating))
                 .font(fontSize)
                 .padding(.leading, 10)
         }
+    }
+    
+    // 평점을 소수점 첫번째 자리까지 String으로 변환해주는 함수
+    private func formattedStarRatingCount(rating: Double) -> String {
+        String(format: "%.1f", rating)
     }
 }
 
