@@ -6,11 +6,19 @@
 //
 
 import SwiftUI
+struct PhotoData: Identifiable {
+    let id = UUID()
+    var image: UIImage?
+}
 
 struct MypageView: View {
     @State var userName: String = "sayHong"
     @State var isLike: Bool = true
     @State var likeCount: Int = 303
+    
+    @State private var isShowPhotoPicker: Bool = false
+    @State private var showActionSheet: Bool = false
+    @Binding var photoDummyData: UIImage?
     
     var body: some View {
         NavigationStack {
@@ -53,15 +61,19 @@ struct MypageView: View {
                         // TODO: 수정 버튼 클릭 -> 사진 선택하는 뷰로 갈 것.
                         // 커스텀 시트 쓸 지 액션시트 쓸지 정하기
                         // 밑에서 아래로 올라오는 뷰 이동 방식이 좋을 것 같기동
-                        NavigationLink {
-                            SelectedProfilePhotoView()
-                        } label: {
+                        Button(action: {
+                            isShowPhotoPicker.toggle()
+                        }, label: {
                             Image(systemName: "pencil.circle.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 20, height: 20)
                                 .foregroundStyle(.gray01)
-                        }
+                        })
+                        .sheet(isPresented: $isShowPhotoPicker, content: {
+                            PhotoPicker(selectedPhoto: $photoDummyData,
+                                        isLibraryPresented: $isShowPhotoPicker)
+                        })
                         
                     }
                     Text(userName)
@@ -121,5 +133,5 @@ struct MypageView: View {
 }
 
 #Preview {
-    MypageView()
+    MypageView(photoDummyData: .constant(nil))
 }
