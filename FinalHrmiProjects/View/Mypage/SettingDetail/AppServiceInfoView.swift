@@ -8,6 +8,7 @@
 import SwiftUI
 import SafariServices
 
+// 웹뷰로 넘어가야하는 경우 사용하는 구조체
 struct AppServiceInfoView: View {
     var text: String
     var urlString: String
