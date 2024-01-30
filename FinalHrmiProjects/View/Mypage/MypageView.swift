@@ -22,13 +22,13 @@ struct MypageView: View {
                 HStack {
                     // MARK: - 알람 모아보는 뷰
                     NavigationLink {
-                        // TODO: AlarmStackView()
+                        AlarmStoreView()
                     } label: {
                         Image(systemName: "bell")
                     }
                     // MARK: - SettingView 이동을 위한 버튼
                     NavigationLink {
-                        // TODO: SettingView()
+                        SettingView()
                     } label: {
                         Image(systemName: "gearshape")
                     }
@@ -54,7 +54,7 @@ struct MypageView: View {
                         // 커스텀 시트 쓸 지 액션시트 쓸지 정하기
                         // 밑에서 아래로 올라오는 뷰 이동 방식이 좋을 것 같기동
                         NavigationLink {
-                            // TODO: SelectedProfilePhotoView()
+                            SelectedProfilePhotoView()
                         } label: {
                             Image(systemName: "pencil.circle.fill")
                                 .resizable()
@@ -104,17 +104,17 @@ struct MypageView: View {
                     ForEach(0..<4) { _ in
                         NavigationLink {
                             // TODO: PostCell에 해당하는 DetailView로 이동하기
-                            PostsView()
+//                            PostsDetailView()
                         } label: {
                             // TODO: 네비게이션 루트 설정
                             // 글 누르고 back눌렀을 때 마이페이지로 다시 돌아올지 PostsView에서 있을지 루트 잘 설정하기
                             PostCell(isLike: $isLike, likeCount: $likeCount)
                         }
+                        // Blinking 애니메이션 삭제
                         .buttonStyle(EmptyActionStyle())
                     }
                 }
-                // TODO: padding() 구체화하기
-                .padding()
+                .padding(.horizontal, 20)
             }
         }
     }
