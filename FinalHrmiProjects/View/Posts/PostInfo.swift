@@ -45,16 +45,17 @@ struct PostInfo: View {
 				// 좋아요를 해제 -> 테두리가 회색인 하트
 				Image(systemName: isLike ? "heart.fill" : "heart")
 					.foregroundStyle(isLike ? .mainAccent01 : .gray01)
+				// TODO: fomat 변경
 				Text("\(likeCount)")
 					.foregroundStyle(.gray01)
 			}
 			.font(.regular16)
-			.padding(.trailing, 10)
 			.onTapGesture {
 				likeButtonAction()
 			}
 		}
 		.padding(.horizontal, 20)
+		.padding(.vertical, 5)
     }
 	
 	// 좋아요 버튼 액션 메서드

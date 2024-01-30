@@ -19,8 +19,7 @@ struct PostPhotoScroll: View {
 			ForEach(0..<postPhotos.count, id: \.self) { index in
 				Image(postPhotos[index])
 					.resizable()
-					.aspectRatio(contentMode: .fill)
-					.clipped()
+					.aspectRatio(1.0, contentMode: .fill)
 					.onTapGesture {
 						isFullSizePhotoPresented = true
 					}
@@ -29,8 +28,10 @@ struct PostPhotoScroll: View {
 		.frame(height: 350)
 		.padding(.bottom, 10)
 		.tabViewStyle(.page)
+		
+		// 사진을 탭했을 시, 전체화면에서 사진의 원본 비율로 보여주는 뷰
 		.fullScreenCover(isPresented: $isFullSizePhotoPresented) {
-			ZStack(alignment: .topLeading) {
+			ZStack(alignment: .topTrailing) {
 				Color.black
 				
 				TabView(selection: $selectedIndex) {
@@ -46,6 +47,7 @@ struct PostPhotoScroll: View {
 					Image(systemName: "xmark")
 						.foregroundStyle(.gray01)
 						.font(.bold20)
+						.padding(.top, 30)
 				}
 				.padding(30)
 			}

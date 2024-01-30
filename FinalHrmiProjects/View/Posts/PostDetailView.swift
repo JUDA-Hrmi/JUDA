@@ -42,40 +42,122 @@ struct PostDetailView: View {
 	
 	@State private var windowWidth: CGFloat = 0
 	
+	@State private var isReportPresented = false
+	
+	@State private var isDeleteDialogPresented = false
+	
 	var body: some View {
 		NavigationStack {
-			VStack {
-				ScrollView {
-					PostInfo(userName: "hrmi",
-							 profileImageName: "appIcon",
-							 postUploadDate: "2023.12.08",
-							 isLike: $isLike,
-							 likeCount: $likeCount)
-					
-					PostPhotoScroll(postPhotos: postPhotos)
-					
-					VStack(spacing: 20) {
-						PostDrinkRating(userName: "hrmi",
-										postDrinks: postDrinks,
-										postDrinksStarRating: postDrinksStarRating)
-						CustomDivider()
+			ZStack {
+				VStack {
+					ScrollView {
+						// Bar 형태로 된 게시글 정보를 보여주는 뷰
+						PostInfo(userName: "hrmi",
+								 profileImageName: "appIcon",
+								 postUploadDate: "2023.12.08",
+								 isLike: $isLike,
+								 likeCount: $likeCount)
 						
-						Text(postContent)
-							.font(.regular16)
+						// 게시글의 사진을 페이징 스크롤 형식으로 보여주는 뷰
+						PostPhotoScroll(postPhotos: postPhotos)
 						
-						PostTags(tags: tags, windowWidth: windowWidth)
+						VStack(spacing: 20) {
+							PostDrinkRating(userName: "hrmi",
+											postDrinks: postDrinks,
+											postDrinksStarRating: postDrinksStarRating)
+							CustomDivider()
+							
+							Text(postContent)
+								.font(.regular16)
+							
+							PostTags(tags: tags, windowWidth: windowWidth)
+						}
+						.padding(.horizontal, 20)
 					}
-					.padding(.horizontal, 20)
+				}
+				
+				// 삭제 버튼 눌렸을 시 삭제에 대한 다이얼로그 출력
+				if isDeleteDialogPresented {
+					CustomAlert(message: "삭제하시겠습니까?",
+								leftButtonLabel: "취소",
+								leftButtonAction: {
+						isDeleteDialogPresented = false
+					}, rightButtonLabel: "삭제") {
+						isDeleteDialogPresented = false
+						// TODO: write view dismiss code
+					}
 				}
 			}
 		}
 		.task {
 			windowWidth = TagHandler.getScreenWidthWithoutPadding(padding: 20)
 		}
+		.navigationBarBackButtonHidden()
+		.toolbar {
+			ToolbarItem(placement: .topBarLeading) {
+				Button {
+					// TODO: NavigationStack path remove
+				} label: {
+					Image(systemName: "chevron.left")
+						.font(.regular16)
+				}
+			}
+			switch postUserType {
+			case .writter:
+				ToolbarItem(placement: .topBarTrailing) {
+					Button {
+						// TODO: Share Post Content
+					} label: {
+						Image(systemName: "square.and.arrow.up")
+							.font(.regular16)
+					}
+				}
+				
+				ToolbarItem(placement: .topBarTrailing) {
+					Button {
+						// TODO: Edit Post Content
+					} label: {
+						Image(systemName: "pencil")
+							.font(.regular16)
+					}
+				}
+				
+				ToolbarItem(placement: .topBarTrailing) {
+					Button {
+						isDeleteDialogPresented = true
+					} label: {
+						Image(systemName: "trash")
+							.font(.regular16)
+					}
+				}
+			case .reader:
+				ToolbarItem(placement: .topBarTrailing) {
+					Button {
+						// TODO: Share Post Content
+					} label: {
+						Image(systemName: "square.and.arrow.up")
+							.font(.regular16)
+					}
+				}
+				
+				ToolbarItem(placement: .topBarTrailing) {
+					Button {
+						isReportPresented = true
+					} label: {
+						Image(systemName: "light.beacon.max")
+							.font(.regular18)
+					}
+				}
+			}
+		}
+		.foregroundStyle(.mainBlack)
+		.fullScreenCover(isPresented: $isReportPresented) {
+			PostReportView(isReportPresented: $isReportPresented)
+		}
 	}
 }
 
-#Preview {
-	PostDetailView(postUserType: .writter, nickName: "hrmi", isLike: .constant(false), likeCount: .constant(45))
-}
+//#Preview {
+//	PostDetailView(postUserType: .writter, nickName: "hrmi", isLike: .constant(false), likeCount: .constant(45))
+//}
 

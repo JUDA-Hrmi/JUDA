@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
+	@State var isReportPresented = false
+	@State var isLike = false
+	@State var likeCount = 45
     var body: some View {
 //        VStack {
 //            Image(systemName: "globe")
