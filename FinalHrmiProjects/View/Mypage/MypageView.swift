@@ -45,7 +45,7 @@ struct MypageView: View {
                 
                 // MARK: - 닉네임 수정 -> 네비뷰인가 텍필 수정인가?
                 NavigationLink {
-                    // TODO: [기능] 네비로 할 지 텍필 수정으로 할지 확인 후 수정하기
+                    ChangeUserNameView()
                 } label: {
                     Text("닉네임 수정")
                         .font(.light14)

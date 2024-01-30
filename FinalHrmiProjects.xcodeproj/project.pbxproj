@@ -36,6 +36,7 @@
 		B16EB85C2B63859800E920A3 /* DrinkInfoSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */; };
 		B1B0580A2B68B119003C419A /* ProfilePhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B058092B68B119003C419A /* ProfilePhotoPicker.swift */; };
 		B1B0580C2B68C1A4003C419A /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B0580B2B68C1A4003C419A /* UserProfileView.swift */; };
+		B1B0580E2B68CF5B003C419A /* ChangeUserNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B0580D2B68CF5B003C419A /* ChangeUserNameView.swift */; };
 		B1B8FE7D2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8FE7C2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift */; };
 		B1B8FE7F2B5EA9D900921BBE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8FE7E2B5EA9D900921BBE /* ContentView.swift */; };
 		B1B8FE812B5EA9DA00921BBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */; };
@@ -97,6 +98,7 @@
 		B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoSegment.swift; sourceTree = "<group>"; };
 		B1B058092B68B119003C419A /* ProfilePhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePhotoPicker.swift; sourceTree = "<group>"; };
 		B1B0580B2B68C1A4003C419A /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
+		B1B0580D2B68CF5B003C419A /* ChangeUserNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeUserNameView.swift; sourceTree = "<group>"; };
 		B1B8FE792B5EA9D900921BBE /* FinalHrmiProjects.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalHrmiProjects.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1B8FE7C2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalHrmiProjectsApp.swift; sourceTree = "<group>"; };
 		B1B8FE7E2B5EA9D900921BBE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				B1B058092B68B119003C419A /* ProfilePhotoPicker.swift */,
 				B1B0580B2B68C1A4003C419A /* UserProfileView.swift */,
 				B1E0E1252B688E6C008FA3B6 /* AlarmStoreView.swift */,
+				B1B0580D2B68CF5B003C419A /* ChangeUserNameView.swift */,
 			);
 			path = MypageDetail;
 			sourceTree = "<group>";
@@ -510,6 +513,7 @@
 				B1EE24A02B6144E3007F68B0 /* MainViewModel.swift in Sources */,
 				B1EE248C2B61446A007F68B0 /* RecordView.swift in Sources */,
 				B1B8FE7D2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift in Sources */,
+				B1B0580E2B68CF5B003C419A /* ChangeUserNameView.swift in Sources */,
 				2C63DD522B676E1000770E3A /* TabItem.swift in Sources */,
 				B16EB85C2B63859800E920A3 /* DrinkInfoSegment.swift in Sources */,
 				B1EE24A02B6144E3007F68B0 /* MainViewModel.swift in Sources */,
