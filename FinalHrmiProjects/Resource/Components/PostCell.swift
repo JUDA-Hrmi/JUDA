@@ -62,7 +62,7 @@ struct PostCell: View {
 			}
 			.frame(height: 30)
 		}
-        .frame(maxHeight: 200)
+        .frame(maxWidth: 170, maxHeight: 200)
 	}
 	
 	// 좋아요 버튼 액션 메서드

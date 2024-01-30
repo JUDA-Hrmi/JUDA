@@ -32,9 +32,7 @@ struct LikedView: View {
                             }
                         }
                         .onChange(of: selectedSegmentIndex) { newValue in
-//                            withAnimation() {
                             value.scrollTo(newValue, anchor: .center)
-//                            }
                         }
                     }
                 }

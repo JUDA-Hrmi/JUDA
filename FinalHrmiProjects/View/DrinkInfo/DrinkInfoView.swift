@@ -48,9 +48,7 @@ struct DrinkInfoView: View {
                                     }
                                 }
                                 .onChange(of: selectedDrinkTypeIndex) { _ in
-//                                    withAnimation() {
                                     value.scrollTo(0, anchor: .center) // 술 종류 이동 시, 스크롤 상단 고정
-//                                    }
                                 }
                             }
                         }
