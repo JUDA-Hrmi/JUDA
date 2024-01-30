@@ -17,7 +17,7 @@
 		2C2044E82B63B9D600773266 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2044E72B63B9D600773266 /* RootView.swift */; };
 		2C2FF2982B63916700B2301A /* StarRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2FF2972B63916700B2301A /* StarRating.swift */; };
 		2C63DD522B676E1000770E3A /* TabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD512B676E1000770E3A /* TabItem.swift */; };
-		2C63DD612B67D5EB00770E3A /* ImageSelectHorizontalScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD602B67D5EB00770E3A /* ImageSelectHorizontalScroll.swift */; };
+		2C63DD612B67D5EB00770E3A /* PhotoSelectPagingTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD602B67D5EB00770E3A /* PhotoSelectPagingTab.swift */; };
 		2C63DD632B67D60C00770E3A /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD622B67D60C00770E3A /* PhotoPicker.swift */; };
 		2C63DD652B67DFA400770E3A /* DrinkTagScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD642B67DFA400770E3A /* DrinkTagScroll.swift */; };
 		7B6D76A72B677A8F00601B55 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76A62B677A8F00601B55 /* Button.swift */; };
@@ -76,7 +76,7 @@
 		2C2044E72B63B9D600773266 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		2C2FF2972B63916700B2301A /* StarRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarRating.swift; sourceTree = "<group>"; };
 		2C63DD512B676E1000770E3A /* TabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItem.swift; sourceTree = "<group>"; };
-		2C63DD602B67D5EB00770E3A /* ImageSelectHorizontalScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectHorizontalScroll.swift; sourceTree = "<group>"; };
+		2C63DD602B67D5EB00770E3A /* PhotoSelectPagingTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectPagingTab.swift; sourceTree = "<group>"; };
 		2C63DD622B67D60C00770E3A /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		2C63DD642B67DFA400770E3A /* DrinkTagScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkTagScroll.swift; sourceTree = "<group>"; };
 		7B6D76A62B677A8F00601B55 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
@@ -290,7 +290,7 @@
 			children = (
 				B1EE248B2B61446A007F68B0 /* AddTagView.swift */,
 				2C63DD642B67DFA400770E3A /* DrinkTagScroll.swift */,
-				2C63DD602B67D5EB00770E3A /* ImageSelectHorizontalScroll.swift */,
+				2C63DD602B67D5EB00770E3A /* PhotoSelectPagingTab.swift */,
 				2C63DD622B67D60C00770E3A /* PhotoPicker.swift */,
 			);
 			path = Record;
@@ -476,7 +476,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C2FF2982B63916700B2301A /* StarRating.swift in Sources */,
-				2C63DD612B67D5EB00770E3A /* ImageSelectHorizontalScroll.swift in Sources */,
+				2C63DD612B67D5EB00770E3A /* PhotoSelectPagingTab.swift in Sources */,
 				B1EE248A2B614464007F68B0 /* LikedView.swift in Sources */,
 				B127A4222B64EB53001F005D /* CustomBottomSheet.swift in Sources */,
 				B1EE249A2B6144C5007F68B0 /* RecordViewModel.swift in Sources */,

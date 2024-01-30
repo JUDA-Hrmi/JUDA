@@ -1,5 +1,5 @@
 //
-//  ImageSelectHorizontalScroll.swift
+//  PhotoSelectPagingTab.swift
 //  FinalHrmiProjects
 //
 //  Created by 정인선 on 1/29/24.
@@ -14,7 +14,7 @@ struct PhotoData: Identifiable {
     var image: UIImage?
 }
 
-struct ImageSelectHorizontalScroll: View {
+struct PhotoSelectPagingTab: View {
     // photo picker sheet 프로퍼티
     @State private var isLibraryPresented = false
     // 현재 선택된 탭의 인덱스. 초기값 0
@@ -110,5 +110,5 @@ struct ImageView: View {
 }
 
 //#Preview {
-//    ImageSelectHorizontalScroll()
+//    PhotoSelectPagingTab()
 //}

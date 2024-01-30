@@ -34,7 +34,7 @@ struct AddTagView: View {
         NavigationStack {
             // 사진 선택 및 선택된 사진을 보여주는 수평 스크롤 이미지 뷰
             // TODO: sheet로 올라오는 photopicker에 선택된 사진 체크 처리 및 이미지 뷰 수정
-            ImageSelectHorizontalScroll(selectedPhotos: $selectedPhotos)
+            PhotoSelectPagingTab(selectedPhotos: $selectedPhotos)
                 .padding(.horizontal, 20)
             
             // 술 태그 추가 버튼
