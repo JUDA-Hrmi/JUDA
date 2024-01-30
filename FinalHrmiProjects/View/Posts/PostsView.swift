@@ -11,7 +11,7 @@ import SwiftUI
 
 struct PostsView: View {
 	
-	@State private var segmentIndex = 0
+	@State private var selectedSegmentIndex = 0
 	
 	@State private var isLike = false
 	@State private var likeCount = 45
@@ -25,7 +25,7 @@ struct PostsView: View {
 				HStack {
 					// 인기, 최신 순으로 선택하여 정렬하기 위한 CustomSegment
 					CustomTextSegment(segments: PostOrLiked.post,
-									  selectedSegmentIndex: $segmentIndex)
+									  selectedSegmentIndex: $selectedSegmentIndex)
 					.frame(width: 88)
 					
 					Spacer()
@@ -41,23 +41,25 @@ struct PostsView: View {
 				}
 				.padding(20)
 				
-				// TODO: navigationLink 및 navigationDestination을 통한 RecordDetailView 전환 구현
-				ScrollView {
-					LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
-						ForEach(0..<12, id: \.self) { _ in
-							NavigationLink {
-//								PostDetailView(isLike: $isLike, likeCount: $likeCount)
-							} label: {
-								PostCell(isLike: $isLike, likeCount: $likeCount)
+				PagerView(pageCount: PostOrLiked.post.count, currentIndex: $selectedSegmentIndex) {
+					ForEach(0..<PostOrLiked.post.count, id: \.self) { index in
+						ScrollViewReader { value in
+							Group {
+								if index == 0 {
+									// 인기순
+									PostGrid(isLike: $isLike, likeCount: $likeCount)
+								} else {
+									// 최신순
+									PostGrid(isLike: $isLike, likeCount: $likeCount)
+								}
 							}
-							.buttonStyle(EmptyActionStyle())
+							.onChange(of: selectedSegmentIndex) { newValue in
+								withAnimation() {
+									value.scrollTo(newValue, anchor: .center)
+								}
+							}
 						}
 					}
-				}
-				.padding(.horizontal, 20)
-				.scrollIndicators(.hidden)
-				.refreshable {
-					// TODO: write post data refresh code
 				}
 			}
 		}
