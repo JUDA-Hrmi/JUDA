@@ -15,7 +15,7 @@ struct LikedView: View {
         NavigationStack {
             // 세그먼트 (술찜 리스트 / 술상 리스트)
             CustomTextSegment(segments: PostOrLiked.liked, selectedSegmentIndex: $selectedSegmentIndex)
-                .padding(.vertical, 10)
+                .padding(.vertical, 14)
                 .padding(.horizontal, 20)
                 .frame(maxWidth: .infinity, alignment: .leading)
             // Likes
@@ -32,9 +32,9 @@ struct LikedView: View {
                             }
                         }
                         .onChange(of: selectedSegmentIndex) { newValue in
-                            withAnimation() {
-                                value.scrollTo(newValue, anchor: .center)
-                            }
+//                            withAnimation() {
+                            value.scrollTo(newValue, anchor: .center)
+//                            }
                         }
                     }
                 }

@@ -24,7 +24,6 @@ struct CustomScrollView<Content: View>: View {
                                 vHeight = Double(contentGeo.size.height)
                             }
                             .onChange(of: scrollGeo.size.height) {
-                                // TODO: 탭바 있을 때도, 잘 작동하는지 확인 필요
                                 scrollAxis = contentGeo.size.height > $0 ? .vertical : []
                             }
                     }

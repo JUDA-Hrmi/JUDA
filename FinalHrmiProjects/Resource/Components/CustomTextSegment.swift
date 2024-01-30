@@ -26,7 +26,7 @@ struct CustomTextSegment: View {
             ForEach(0..<segments.count, id: \.self) { index in
                 // 세그먼트 텍스트
                 Text(segments[index])
-                    .font(.medium14)
+                    .font(.medium16)
                     .foregroundColor(selectedSegmentIndex == index ? .mainBlack : .gray01)
                     .onTapGesture {
                         // 세그먼트 전환 시, 부드럽게 전환하기위한 애니메이션
