@@ -18,10 +18,10 @@ struct MypageView: View {
                 Text("마이페이지")
                     .font(.semibold18)
                 Spacer()
-                HStack {
+                HStack(spacing: 16) {
                     // MARK: - 알람 모아보는 뷰
                     NavigationLink {
-                        AlarmStoreView()
+//                        AlarmStoreView()
                     } label: {
                         Image(systemName: "bell")
                     }

@@ -49,7 +49,19 @@ struct UserProfileView: View {
                 })
                 
             }
-            ChangeUserNameView()
+            // MARK: 텍스트 필드 버전
+            Text(userName)
+                .font(.medium18)
+            Spacer()
+            
+            NavigationLink {
+                ChangeUserNameView(userNickName: $userName)
+            } label: {
+                Text("닉네임 수정")
+                    .font(.light14)
+                    .foregroundStyle(.gray01)
+            }
+
         }
     }
 }
