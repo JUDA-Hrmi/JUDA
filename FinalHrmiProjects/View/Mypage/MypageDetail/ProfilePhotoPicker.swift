@@ -9,14 +9,14 @@ import SwiftUI
 import PhotosUI
 
 // MARK: - PHPickerViewController 로, 앨범에서 사진 고르기 사용
-struct SettingPhotoPicker: UIViewControllerRepresentable {
+struct ProfilePhotoPicker: UIViewControllerRepresentable {
     @Binding var selectedPhoto: UIImage?
     @Binding var isLibraryPresented: Bool
 
     class Coordinator: PHPickerViewControllerDelegate {
-        private let parent: SettingPhotoPicker
+        private let parent: ProfilePhotoPicker
         
-        init(_ parent: SettingPhotoPicker) {
+        init(_ parent: ProfilePhotoPicker) {
             self.parent = parent
         }
         
