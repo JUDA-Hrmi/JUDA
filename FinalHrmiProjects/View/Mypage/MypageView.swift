@@ -40,18 +40,6 @@ struct MypageView: View {
             // MARK: - Section 2
             HStack {
                 UserProfileView()
-                
-                Spacer()
-                
-                // MARK: - 닉네임 수정 -> 네비뷰인가 텍필 수정인가?
-                NavigationLink {
-                    ChangeUserNameView()
-                } label: {
-                    Text("닉네임 수정")
-                        .font(.light14)
-                        .foregroundStyle(.gray01)
-                }
-                
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 10)

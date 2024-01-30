@@ -49,8 +49,7 @@ struct UserProfileView: View {
                 })
                 
             }
-            Text(userName)
-                .font(.medium18)
+            ChangeUserNameView()
         }
     }
 }
