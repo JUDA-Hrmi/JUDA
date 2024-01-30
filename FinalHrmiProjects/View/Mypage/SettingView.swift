@@ -14,7 +14,7 @@ struct SettingView: View {
     private let webViewNameList = ["서비스 이용약관", "개인정보 처리방침", "위치정보 처리방침"] // 웹뷰로 보여줘야하는 항목 이름 리스트
     private let webViewurlList = [ "https://bit.ly/HrmiService", "https://bit.ly/HrmiPrivacyPolicy", "https://bit.ly/HrmiLocationPolicy"] // webViewNameList에 해당하는 url 주소
     
-    @State var isAlarmOn: Bool = true // 알람 설정 toggle 
+    @State var isAlarmOn: Bool = true // 알람 설정 toggle
     @State private var isShowingSheet: Bool = false // CustomBottomSheet 올라오기
     @State private var selectedSortingOption: String = "시스템 모드"
     
