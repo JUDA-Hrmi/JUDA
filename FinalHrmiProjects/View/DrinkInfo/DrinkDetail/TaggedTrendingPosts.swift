@@ -18,7 +18,7 @@ struct TaggedTrendingPostsDummyData: Identifiable {
     static let sampleDataList: [TaggedTrendingPostsDummyData] = [
         .init(image: "foodEx1", author: "nelchupapa", tags: ["대방어", "새우튀김", "뭐먹었지"], postLikesCount: 45),
         .init(image: "foodEx3", author: "mangJae", tags: ["초밥", "스시", "와인"], postLikesCount: 1_235),
-        .init(image: "foodEx5", author: "phang", tags: ["닭구이", "소맥", "꽈리고추"], postLikesCount: 2_423_481)
+        .init(image: "foodEx5", author: "phang", tags: ["닭구이", "소맥", "꽈리고추", "하이볼", "????"], postLikesCount: 2_423_481)
     ]
 }
 

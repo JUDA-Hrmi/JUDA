@@ -12,6 +12,7 @@ struct PostListCell: View {
     let postDummyData: TaggedTrendingPostsDummyData
     // 제안 - 여기서는 하트를 눌러서 on off 하지 않고, 현재 유저가 좋아요 눌렀는지만 체크하는 것?
     private let isLiked = false
+    @State private var windowWidth: CGFloat = 0
     
     var body: some View {
         HStack(alignment: .center, spacing: 20) {
@@ -28,13 +29,10 @@ struct PostListCell: View {
                 Text(postDummyData.author)
                     .font(.regular16)
                 // 태그
-                // TODO: 태그가 여러줄이 되면.. 어떻게 보여줄지, 코드 구성 다시하기
-                HStack(alignment: .center, spacing: 16) {
-                    ForEach(postDummyData.tags, id: \.self) { tag in
-                        Text("# \(tag)")
-                            .font(.light14)
-                    }
-                }
+                Text(getTagListToString(list: postDummyData.tags))
+                    .font(.light14)
+                    .lineLimit(1)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 // 좋아요
                 HStack(alignment: .center, spacing: 4) {
                     Image(systemName: isLiked ? "heart.fill" : "heart")
@@ -51,8 +49,15 @@ struct PostListCell: View {
         .padding(.vertical, 10)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
+    
+    // DrinkDetailView - TaggedTrendingPosts 에서 태그 한줄로 보여주기 위한 리스트 map + join 함수
+    private func getTagListToString(list: [String]) -> String {
+        let tagString = "# "
+        let spacing = "    "
+        return list.map { tagString + $0 }.joined(separator: spacing)
+    }
 }
 
 #Preview {
-    PostListCell(postDummyData: TaggedTrendingPostsDummyData.sampleDataList.first!)
+    PostListCell(postDummyData: TaggedTrendingPostsDummyData.sampleDataList.last!)
 }
