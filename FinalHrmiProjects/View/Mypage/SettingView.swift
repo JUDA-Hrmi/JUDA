@@ -81,18 +81,6 @@ struct SettingView: View {
                         
                     }
                     
-                    // MARK: 메일 문의하기
-                    NavigationLink {
-                        EmailContactView()
-                    } label: {
-                        HStack {
-                            Text("메일 문의하기")
-                            Spacer()
-                            Image(systemName: "chevron.forward")
-                        }
-                        .modifier(CustomText())
-                    }
-                    
                     CustomDivider()
                     
                     // MARK: 이용약관 및 정보 처리 방침
