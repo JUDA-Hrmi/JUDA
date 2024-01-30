@@ -107,8 +107,7 @@ struct CustomNavigationBarModifier<C, L, T>: ViewModifier where C: View, L: View
                         }
                     }
                 }
-                .padding(.horizontal, 20)
-                .padding(.vertical, 10)
+                .padding()
                 .background(Color(UIColor.systemBackground).ignoresSafeArea(.all, edges: .top))
             }
             Spacer()
