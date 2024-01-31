@@ -43,7 +43,7 @@ struct DrinkDetails: View {
                     .font(.regular16)
                 // 별점
                 StarRating(rating: sampleData.rating, color: .mainAccent05,
-                           starSize: .regular16, fontSize: .regular16)
+                           starSize: .regular16, fontSize: .regular16, starRatingType: .withText)
                 // 태그된 게시물
                 // TODO: 해당 술을 태그한 게시글이 보이는 PostsView 로 이동하는 네비게이션으로 변경 예정 (현재 주석처리)
 //                NavigationLink(value: Hashable?) {
