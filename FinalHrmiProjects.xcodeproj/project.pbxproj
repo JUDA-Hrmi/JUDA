@@ -25,6 +25,9 @@
 		09F8699E2B68E4E400A56A4C /* PeferencesChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F8699D2B68E4E400A56A4C /* PeferencesChart.swift */; };
 		09F869A02B68E50000A56A4C /* TaggedTrendingPosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F8699F2B68E50000A56A4C /* TaggedTrendingPosts.swift */; };
 		09F869A22B68E51600A56A4C /* PostListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869A12B68E51600A56A4C /* PostListCell.swift */; };
+		09F869A92B6A097900A56A4C /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE249F2B6144E3007F68B0 /* MainViewModel.swift */; };
+		09F869AA2B6A098D00A56A4C /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE248B2B61446A007F68B0 /* RecordView.swift */; };
+		09F869AB2B6A099000A56A4C /* FinalHrmiProjectsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8FE7C2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift */; };
 		2C2044E82B63B9D600773266 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2044E72B63B9D600773266 /* RootView.swift */; };
 		2C2FF2982B63916700B2301A /* StarRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2FF2972B63916700B2301A /* StarRating.swift */; };
 		2C63DD522B676E1000770E3A /* TabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD512B676E1000770E3A /* TabItem.swift */; };
@@ -46,7 +49,6 @@
 		B158F83B2B6539FC00E33C47 /* EnabledBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B158F83A2B6539FC00E33C47 /* EnabledBottomSheetView.swift */; };
 		B158F83F2B657A9000E33C47 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B158F83E2B657A9000E33C47 /* Theme.swift */; };
 		B16EB85C2B63859800E920A3 /* DrinkInfoSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */; };
-		B1B8FE7D2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8FE7C2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift */; };
 		B1B8FE7F2B5EA9D900921BBE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8FE7E2B5EA9D900921BBE /* ContentView.swift */; };
 		B1B8FE812B5EA9DA00921BBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */; };
 		B1B8FE842B5EA9DA00921BBE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1B8FE832B5EA9DA00921BBE /* Preview Assets.xcassets */; };
@@ -59,17 +61,14 @@
 		B1EE24732B61431A007F68B0 /* DummyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24722B61431A007F68B0 /* DummyModel.swift */; };
 		B1EE24882B61445E007F68B0 /* MypageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24872B61445E007F68B0 /* MypageView.swift */; };
 		B1EE248A2B614464007F68B0 /* LikedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24892B614464007F68B0 /* LikedView.swift */; };
-		B1EE248C2B61446A007F68B0 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE248B2B61446A007F68B0 /* RecordView.swift */; };
 		B1EE248E2B614470007F68B0 /* PostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE248D2B614470007F68B0 /* PostsView.swift */; };
 		B1EE24902B614477007F68B0 /* DrinkInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE248F2B614477007F68B0 /* DrinkInfoView.swift */; };
 		B1EE24922B61447F007F68B0 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24912B61447F007F68B0 /* MainView.swift */; };
 		B1EE24942B614485007F68B0 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24932B614485007F68B0 /* LogInView.swift */; };
-		B1EE24962B6144A5007F68B0 /* MypageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24952B6144A5007F68B0 /* MypageViewModel.swift */; };
 		B1EE24982B6144BD007F68B0 /* LikedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24972B6144BD007F68B0 /* LikedViewModel.swift */; };
 		B1EE249A2B6144C5007F68B0 /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24992B6144C5007F68B0 /* RecordViewModel.swift */; };
 		B1EE249C2B6144CD007F68B0 /* PostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE249B2B6144CD007F68B0 /* PostsViewModel.swift */; };
 		B1EE249E2B6144DD007F68B0 /* DrinkInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE249D2B6144DD007F68B0 /* DrinkInfoViewModel.swift */; };
-		B1EE24A02B6144E3007F68B0 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE249F2B6144E3007F68B0 /* MainViewModel.swift */; };
 		B1EE24A22B6144EA007F68B0 /* LogInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24A12B6144EA007F68B0 /* LogInViewModel.swift */; };
 		B1EE24A52B614872007F68B0 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24A42B614872007F68B0 /* SearchBar.swift */; };
 /* End PBXBuildFile section */
@@ -510,6 +509,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09F869AB2B6A099000A56A4C /* FinalHrmiProjectsApp.swift in Sources */,
+				09F869AA2B6A098D00A56A4C /* RecordView.swift in Sources */,
+				09F869A92B6A097900A56A4C /* MainViewModel.swift in Sources */,
 				2C2FF2982B63916700B2301A /* StarRating.swift in Sources */,
 				B1EE248A2B614464007F68B0 /* LikedView.swift in Sources */,
 				B127A4222B64EB53001F005D /* CustomBottomSheet.swift in Sources */,
@@ -531,19 +533,12 @@
 				09F869912B6890ED00A56A4C /* CustomScrollView.swift in Sources */,
 				B158F83B2B6539FC00E33C47 /* EnabledBottomSheetView.swift in Sources */,
 				B1EE24982B6144BD007F68B0 /* LikedViewModel.swift in Sources */,
-				B1EE24962B6144A5007F68B0 /* MypageViewModel.swift in Sources */,
 				B1EE24922B61447F007F68B0 /* MainView.swift in Sources */,
 				09CDADA52B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift in Sources */,
 				2C2044E82B63B9D600773266 /* RootView.swift in Sources */,
-				B1EE24A02B6144E3007F68B0 /* MainViewModel.swift in Sources */,
-				B1EE248C2B61446A007F68B0 /* RecordView.swift in Sources */,
 				09F869932B68E36800A56A4C /* Formatter.swift in Sources */,
-				B1B8FE7D2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift in Sources */,
 				2C63DD522B676E1000770E3A /* TabItem.swift in Sources */,
 				B16EB85C2B63859800E920A3 /* DrinkInfoSegment.swift in Sources */,
-				B1EE24A02B6144E3007F68B0 /* MainViewModel.swift in Sources */,
-				B1EE248C2B61446A007F68B0 /* RecordView.swift in Sources */,
-				B1B8FE7D2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift in Sources */,
 				0914DEAD2B66453E0014E102 /* PagerView.swift in Sources */,
 				0961B7972B6624D300A9F553 /* DrinkInfoList.swift in Sources */,
 				0961B7992B6624DD00A9F553 /* DrinkInfoGrid.swift in Sources */,
