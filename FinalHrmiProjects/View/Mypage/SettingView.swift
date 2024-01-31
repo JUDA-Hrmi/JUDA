@@ -10,14 +10,15 @@ import WebKit
 
 struct SettingView: View {
     private let optionNameList = ["라이트 모드", "다크 모드", "시스템 모드"] // 화면 모드 설정 옵션 이름 리스트
-    private var isShowWebView = false // 웹뷰 시트 올라오기
     private let webViewNameList = ["서비스 이용약관", "개인정보 처리방침", "위치정보 처리방침"] // 웹뷰로 보여줘야하는 항목 이름 리스트
     private let webViewurlList = [ "https://bit.ly/HrmiService", "https://bit.ly/HrmiPrivacyPolicy", "https://bit.ly/HrmiLocationPolicy"] // webViewNameList에 해당하는 url 주소
+    private var isShowWebView = false // 웹뷰 시트 올라오기
     
-    @State var isAlarmOn: Bool = true // 알람 설정 toggle
+    @Environment(\.dismiss) private var dismiss
+
+    @State private var isAlarmOn: Bool = true // 알람 설정 toggle
     @State private var isShowingSheet: Bool = false // CustomBottomSheet 올라오기
     @State private var selectedSortingOption: String = "시스템 모드"
-    
     @State private var isLogoutClicked = false // 로그아웃 버튼 클릭 시
     @State private var isDeletAccount = false // 회원탈퇴 버튼 클릭 시
     
@@ -27,7 +28,7 @@ struct SettingView: View {
                 VStack(alignment: .leading) {
                     // MARK: 알림 설정
                     Toggle(isOn: $isAlarmOn, label: {
-                        Text("알림 설정: \(String(self.isAlarmOn) == "true" ? "ON" : "OFF")")
+                        Text("알림 설정: \(String(isAlarmOn) == "true" ? "켜기" : "끄기")")
                     })
                     .modifier(CustomText())
                     
@@ -46,6 +47,7 @@ struct SettingView: View {
                         }
                         .modifier(CustomText())
                     })
+                    
                     // MARK: 로그아웃
                     Button(action: {
                         isLogoutClicked.toggle() // 버튼 클릭 시, 커스텀 다이얼로그 활성화
@@ -55,6 +57,7 @@ struct SettingView: View {
                             .padding(.horizontal, 20)
                             .padding(.vertical, 10)
                     })
+                    .buttonStyle(EmptyActionStyle())
                     
                     // MARK: 회원탈퇴
                     Button(action: {
@@ -65,6 +68,7 @@ struct SettingView: View {
                             .padding(.horizontal, 20)
                             .padding(.vertical, 10)
                     })
+                    .buttonStyle(EmptyActionStyle())
                     
                     CustomDivider()
                     
@@ -96,6 +100,7 @@ struct SettingView: View {
                         .padding(.vertical, 10)
                     
                     CustomDivider()
+                    Spacer()
                 }
                 
                 // TODO: CustomBottomSheet 수정에 따른 변화 있을 것
@@ -104,18 +109,33 @@ struct SettingView: View {
                 
                 // 로그아웃 버튼 클릭 시 띄워지는 CustomAlert
                 if isLogoutClicked {
-                    CustomAlert(message: "로그아웃 하시겠습니까?", leftButtonLabel: "취소", leftButtonAction: {
+                    CustomSettingDialog(message: "로그아웃 하시겠습니까?", leftButtonLabel: "취소", leftButtonAction: {
                         isLogoutClicked.toggle()
                     }, rightButtonLabel: "로그아웃", rightButtonAction: {}) // TODO: 로그아웃 기능 추가하기
                 }
                 
                 // 회원탈퇴 버튼 클릭 시 띄워지는 CustomAlert
                 // TODO: - 1. 탈퇴 문구 수정하기
-                // TODO: - 2. CustomSettingDialog로 바꾸기
                 if isDeletAccount {
-                    CustomAlert(message: "탈퇴하시겠습니까?", leftButtonLabel: "취소", leftButtonAction: {
+                    CustomSettingDialog(message: "탈퇴하시겠습니까?", leftButtonLabel: "취소", leftButtonAction: {
                         isDeletAccount.toggle()
                     }, rightButtonLabel: "탈퇴하기", rightButtonAction: {}) // TODO: 회원탈퇴 기능 추가하기
+                }
+            }
+            .navigationBarBackButtonHidden()
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "chevron.backward")
+                    }
+                    .tint(.mainBlack)
+                }
+                ToolbarItem(placement: .principal) {
+                    Text("설정")
+                        .font(.medium18)
+                        .foregroundStyle(.mainBlack)
                 }
             }
         }
