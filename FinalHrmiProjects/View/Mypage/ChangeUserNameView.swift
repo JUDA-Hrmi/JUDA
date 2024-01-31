@@ -22,8 +22,8 @@ struct MypageView1: View {
 }
 
 struct UserProfileView1: View {
-    @State var userName: String = "sayHong"
-    @State var isEditing: Bool = false
+    @State private var userName: String = "sayHong"
+    @State private var isEditing: Bool = false
     
     var body: some View {
         Text(userName)
@@ -46,8 +46,8 @@ struct ChangeUserNameView: View {
     @Environment(\.dismiss) var dismiss
     @FocusState var isFocused: Bool
     @Binding var userNickName: String
-    @State var userChangeNickName: String = ""
-    @State var isCompleted: Bool = true
+    @State private var userChangeNickName: String = ""
+    @State private var isCompleted: Bool = true
     @Binding var isEditing: Bool
     
     var body: some View {
@@ -67,7 +67,7 @@ struct ChangeUserNameView: View {
                         }
                 }
                 .padding(EdgeInsets(top: 15, leading: 10, bottom: 15, trailing: 20))
-                .background(Color(red: 0.46, green: 0.46, blue: 0.50).opacity(0.12))
+                .background(Color(.gray05))
                 .cornerRadius(10)
             
                 if isEditing && userChangeNickName.isEmpty {
