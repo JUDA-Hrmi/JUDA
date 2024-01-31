@@ -22,6 +22,8 @@ struct WritingView: View {
     @State private var foodTags: [FoodTag] = []
     // 화면 너비
     @State private var windowWidth: CGFloat = 0
+    @FocusState private var isFocusedTextEditor: Bool
+    @FocusState private var isFocusedTextField: Bool
     // TextEditor에서 사용되는 placeholder
     private let placeholder = """
                     사진에 대해 설명해주세요.
@@ -30,64 +32,80 @@ struct WritingView: View {
     
     var body: some View {
         NavigationStack {
-            // 선택된 사진들을 보여주는 Scroll View
-            SelectedPhotoHorizontalScroll(images: $images)
-            
-            // 글 작성 TextEditor
-            TextEditor(text: $content)
-                // TextEditor에 Text를 오버레이하여 placeholder로 보여줌
-                .overlay(alignment: .topLeading) {
-                    // content가 입력됐을 때, placeholder "" 처리
-                    Text(content.isEmpty ? placeholder : "")
-                        .padding(.leading, 6)
-                        .padding(.top, 10)
-                        .foregroundStyle(.gray01)
+            ScrollViewReader { proxy in
+                ScrollView(showsIndicators: false) {
+                    // 선택된 사진들을 보여주는 Scroll View
+                    SelectedPhotoHorizontalScroll(images: $images)
                     
+                    // 글 작성 TextEditor
+                    TextEditor(text: $content)
+                    // TextEditor에 Text를 오버레이하여 placeholder로 보여줌
+                        .overlay(alignment: .topLeading) {
+                            // content가 입력됐을 때, placeholder "" 처리
+                            Text(content.isEmpty ? placeholder : "")
+                                .padding(.leading, 6)
+                                .padding(.top, 10)
+                                .foregroundStyle(.gray01)
+                                .onTapGesture {
+                                    isFocusedTextEditor = true
+                                }
+                            
+                        }
+                        .frame(height: 350)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 10)
+                        .scrollIndicators(.hidden)
+                        .focused($isFocusedTextEditor)
+                    
+                    CustomDivider()
+                        .padding(.vertical, 10)
+                    
+                    VStack {
+                        HStack {
+                            Text("음식 태그")
+                                .font(.semibold18)
+                            Spacer()
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.bottom, 5)
+                        
+                        // 음식 태그 추가 TextField
+                        FoodTagAddTextField(foodTags: $foodTags, isFocusedTextField: $isFocusedTextField, proxy: proxy)
+                        // 추가된 음식 태그를 보여주는 Scroll View
+                        FoodTagVerticalScroll(foodTags: $foodTags, windowWidth: windowWidth/*, proxy: proxy, isFocusedTextField: $isFocusedTextField*/)
+                    }
+                    .padding(.bottom, 5)
+                    .id("TextField")
                 }
-                .padding(.horizontal, 20)
-                .padding(.vertical, 10)
-                .scrollIndicators(.hidden)
-            
-            CustomDivider()
-                .padding(.vertical, 10)
-            
-            HStack {
-                Text("음식 태그")
-                    .font(.semibold18)
-                Spacer()
+                .scrollDismissesKeyboard(.automatic)
+                .onTapGesture {
+                    hideKeyboard()
+                }
             }
-            .padding(.horizontal, 20)
-            .padding(.bottom, 5)
-            
-            // 음식 태그 추가 TextField
-            FoodTagAddTextField(foodTags: $foodTags)
-            // 추가된 음식 태그를 보여주는 Scroll View
-            FoodTagVerticalScroll(foodTags: $foodTags, windowWidth: windowWidth)
-
+            .task {
+                let scenes = UIApplication.shared.connectedScenes
+                let windowScene = scenes.first as? UIWindowScene
+                let window = windowScene?.windows.first
+                windowWidth = (window?.screen.bounds.width ?? 0) - 40
+            }
         }
-        .task {
-            let scenes = UIApplication.shared.connectedScenes
-            let windowScene = scenes.first as? UIWindowScene
-            let window = windowScene?.windows.first
-            windowWidth = (window?.screen.bounds.width ?? 0) - 40
-        }
-        .customNavigationBar(
-            leadingView: {
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
                 Button {
                     // TODO: AddTagView로 돌아가기
                 } label: {
                     Image(systemName: "chevron.left")
-                        .font(.semibold18)
-                }
-            }, trailingView: [.trailing: {
-                Button {
-                    // TODO: 데이터 저장
-                } label: {
-                    Text("완료")
-                        .font(.semibold18)
                 }
             }
-            ])
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink {
+                    // TODO: PostDetailView로 이동
+                } label : {
+                    Text("완료")
+                }
+            }
+        }
         .foregroundStyle(.mainBlack)
     }
 }

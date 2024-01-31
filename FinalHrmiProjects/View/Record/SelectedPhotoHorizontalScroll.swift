@@ -13,7 +13,7 @@ struct SelectedPhotoHorizontalScroll: View {
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            LazyHStack {
+            LazyHStack(spacing: 10) {
                 ForEach(0..<images.count, id: \.self) { index in
                     ZStack(alignment: .topTrailing) {
                         Image(images[index])
@@ -41,6 +41,7 @@ struct SelectedPhotoHorizontalScroll: View {
         // TODO: frame 가변으로 변경
         .frame(height: 100)
         .padding(.leading, 20)
+        .padding(.vertical, 10)
 
     }
 }

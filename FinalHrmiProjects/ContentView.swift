@@ -21,7 +21,10 @@ struct ContentView: View {
 //        }
 //        .padding()
 //        RootView()
-        WritingView()
+        NavigationStack {
+            NavigationLink("WritingView") { WritingView() }
+        }
+
     }
 }
 
