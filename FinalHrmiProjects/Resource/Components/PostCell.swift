@@ -40,6 +40,7 @@ struct PostCell: View {
 					Text("hrmi")
 						.lineLimit(1)
 						.font(.regular14)
+						.foregroundStyle(.mainBlack)
 				}
 				.padding(.leading, 5)
 				

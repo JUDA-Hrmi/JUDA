@@ -85,7 +85,7 @@ struct PostReportView: View {
 			
 			// 신고버튼을 탭 했을 시, 신고에 대한 다이얼로그 출력
 			if isReportDialogPresented {
-				CustomAlert(message: "신고하시겠습니까?",
+				CustomAlert(message: "신고하시겠습니까?", 
 							leftButtonLabel: "취소",
 							leftButtonAction: {
 					isReportDialogPresented = false

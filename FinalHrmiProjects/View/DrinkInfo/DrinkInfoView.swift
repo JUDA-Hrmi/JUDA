@@ -18,33 +18,37 @@ struct DrinkInfoView: View {
         "전체", "우리술", "맥주", "위스키", "와인", "브랜디", "리큐르", "럼", "사케", "기타"
     ]
     @State private var selectedDrinkTypeIndex = 0
-
+	
+	@State private var searchText = ""
+	
     var body: some View {
         NavigationStack {
             ZStack {
                 VStack(spacing: 0) {
                     // 검색 창
-                    SearchBar()
-                    // 술 종류 가로 스크롤
-                    // TODO: 각 탭의 결과에 맞춰 보여줄 리스트 변경 필요
-                    DrinkSelectHorizontalScrollBar(selectedDrinkTypeIndex: $selectedDrinkTypeIndex)
-
-                    // 세그먼트 + 필터링
-                    DrinkInfoSegment(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, isGridView: $isGridView)
-
-                    // 술 뷰 - DrinkSelectHorizontalScrollBar 의 선택에 따라 자연스럽게 페이징으로 화면 전환
-                    PagerView(pageCount: typesOfDrink.count,
-                              currentIndex: $selectedDrinkTypeIndex) {
-                        // TODO: 각 술 타입에 맞는 리스트를 grid 와 list 에 뿌려줘야 함
-                        ForEach(0..<typesOfDrink.count, id: \.self) { _ in
-                            ScrollViewReader { value in
-                                Group {
-                                    // 그리드
-                                    if isGridView {
-                                        DrinkInfoGrid()
-                                        // 리스트
-                                    } else {
-                                        DrinkInfoList()
+					SearchBar(inputText: $searchText)
+                    ScrollViewReader { value in
+                        Group {
+                            // 술 종류 가로 스크롤
+                            // TODO: 각 탭의 결과에 맞춰 보여줄 리스트 변경 필요
+                            DrinkSelectHorizontalScrollBar(selectedDrinkTypeIndex: $selectedDrinkTypeIndex)
+                            
+                            // 세그먼트 + 필터링
+                            DrinkInfoSegment(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, isGridView: $isGridView)
+                            
+                            // 술 뷰 - DrinkSelectHorizontalScrollBar 의 선택에 따라 자연스럽게 페이징으로 화면 전환
+                            PagerView(pageCount: typesOfDrink.count,
+                                      currentIndex: $selectedDrinkTypeIndex) {
+                                // TODO: 각 술 타입에 맞는 리스트를 grid 와 list 에 뿌려줘야 함
+                                ForEach(0..<typesOfDrink.count, id: \.self) { _ in
+                                    ScrollViewReader { _ in
+                                        // 그리드
+                                        if isGridView {
+                                            DrinkInfoGrid()
+                                            // 리스트
+                                        } else {
+                                            DrinkInfoList()
+                                        }
                                     }
                                 }
                                 .onChange(of: selectedDrinkTypeIndex) { _ in

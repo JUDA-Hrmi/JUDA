@@ -13,6 +13,8 @@ enum PostUserType {
 
 struct PostDetailView: View {
 	
+	@Environment(\.dismiss) var dismiss
+	
 	let postUserType: PostUserType
 	
 	let nickName: String
@@ -36,7 +38,7 @@ struct PostDetailView: View {
 양식과 한식, 다양한 조리법을 통해 방어를 다양하게 즐길 수 있으니 자신의 취향에 맞게 시도해보세요!
 """
 	
-	private let tags = ["대방어", "새우튀김", "광어", "우럭", "이거 한 줄에 몇개 넣어야 할까?", "정렬 문제도", "뭘까", "짬뽕", "짜장", "탕수육", "팔보채", "치킨", "피자", "족발"]
+	@State private var tags = ["대방어", "새우튀김", "광어", "우럭", "이거 한 줄에 몇개 넣어야 할까?", "정렬 문제도", "뭘까", "짬뽕", "짜장", "탕수육", "팔보채", "치킨", "피자", "족발", "콜라", "사이다", "맥콜", "데자와"]
 	
 	@State private var currentPage = 0
 	
@@ -70,7 +72,7 @@ struct PostDetailView: View {
 							Text(postContent)
 								.font(.regular16)
 							
-							PostTags(tags: tags, windowWidth: windowWidth)
+							PostTags(tags: $tags, windowWidth: windowWidth)
 						}
 						.padding(.horizontal, 20)
 					}
@@ -97,9 +99,9 @@ struct PostDetailView: View {
 			ToolbarItem(placement: .topBarLeading) {
 				Button {
 					// TODO: NavigationStack path remove
+					dismiss()
 				} label: {
 					Image(systemName: "chevron.left")
-						.font(.regular16)
 				}
 			}
 			switch postUserType {
@@ -109,7 +111,6 @@ struct PostDetailView: View {
 						// TODO: Share Post Content
 					} label: {
 						Image(systemName: "square.and.arrow.up")
-							.font(.regular16)
 					}
 				}
 				
@@ -118,7 +119,6 @@ struct PostDetailView: View {
 						// TODO: Edit Post Content
 					} label: {
 						Image(systemName: "pencil")
-							.font(.regular16)
 					}
 				}
 				
@@ -127,7 +127,6 @@ struct PostDetailView: View {
 						isDeleteDialogPresented = true
 					} label: {
 						Image(systemName: "trash")
-							.font(.regular16)
 					}
 				}
 			case .reader:
@@ -136,7 +135,7 @@ struct PostDetailView: View {
 						// TODO: Share Post Content
 					} label: {
 						Image(systemName: "square.and.arrow.up")
-							.font(.regular16)
+							.font(.regular14)
 					}
 				}
 				
@@ -145,7 +144,6 @@ struct PostDetailView: View {
 						isReportPresented = true
 					} label: {
 						Image(systemName: "light.beacon.max")
-							.font(.regular18)
 					}
 				}
 			}
@@ -154,10 +152,13 @@ struct PostDetailView: View {
 		.fullScreenCover(isPresented: $isReportPresented) {
 			PostReportView(isReportPresented: $isReportPresented)
 		}
+		.onAppear {
+			print(postUserType)
+		}
 	}
 }
 
-//#Preview {
-//	PostDetailView(postUserType: .writter, nickName: "hrmi", isLike: .constant(false), likeCount: .constant(45))
-//}
+#Preview {
+	PostDetailView(postUserType: .writter, nickName: "hrmi", isLike: .constant(false), likeCount: .constant(45))
+}
 

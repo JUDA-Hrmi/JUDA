@@ -23,6 +23,7 @@ struct PostDrinkRating: View {
 			ForEach(0..<postDrinks.count, id:\.self) { index in
 				NavigationLink {
 					// TODO: DrinkInfoView Linking code
+					DrinkDetailView()
 				} label: {
 					HStack(spacing: 2) {
 						Text(postDrinks[index])

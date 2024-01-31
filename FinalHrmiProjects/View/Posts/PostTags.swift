@@ -8,22 +8,30 @@
 import SwiftUI
 
 struct PostTags: View {
-	
-	let tags: [String]
+	@Binding var tags: [String]
+	@State private var tag = ""
 	let windowWidth: CGFloat
 	
-    var body: some View {
+	var body: some View {
 		VStack(alignment: .leading, spacing: 10) {
 			ForEach(TagHandler.getRows(tags: tags,
 									   spacing: 15,
 									   fontSize: 14,
 									   windowWidth: windowWidth,
 									   tagString: "# "), id: \.self) { row in
-				NavigationLink {
-					// TODO: PostView Linking code
-				} label: {
-					HStack(spacing: 15) {
-						ForEach(row, id: \.self) { tag in
+				HStack(spacing: 15) {
+					ForEach(row, id: \.self) { tag in
+						NavigationLink {
+							// TODO: PostView Linking code
+							// TODO: 태그값 받아서 바인딩 해줘야하는데...
+							NavigationPostsView(postSearchText: Binding<String>(
+								get: { tag },
+								set: { newValue in
+									// If you need to perform any action when the value is set
+									// Otherwise, you can omit this closure
+								}
+							))
+						} label: {
 							Text("# \(tag)")
 								.font(.semibold14)
 								.foregroundStyle(.mainAccent04)
@@ -33,7 +41,7 @@ struct PostTags: View {
 			}
 		}
 		.frame(width: windowWidth, alignment: .leading)
-    }
+	}
 }
 
 //#Preview {
