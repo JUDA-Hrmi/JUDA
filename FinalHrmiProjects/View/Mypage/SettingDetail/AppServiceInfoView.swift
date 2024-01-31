@@ -10,10 +10,10 @@ import SafariServices
 
 // 웹뷰로 넘어가야하는 경우 사용하는 구조체
 struct AppServiceInfoView: View {
-    var text: String // 항목 이름
-    var urlString: String // 해당 항목의 url주소
+    let text: String // 항목 이름
+    let urlString: String // 해당 항목의 url주소
     
-    @State var isShowWebView: Bool
+    @State var isShowWebView: Bool = false
     
     var body: some View {
         Button {

@@ -12,7 +12,6 @@ struct SettingView: View {
     private let optionNameList = ["라이트 모드", "다크 모드", "시스템 모드"] // 화면 모드 설정 옵션 이름 리스트
     private let webViewNameList = ["서비스 이용약관", "개인정보 처리방침", "위치정보 처리방침"] // 웹뷰로 보여줘야하는 항목 이름 리스트
     private let webViewurlList = [ "https://bit.ly/HrmiService", "https://bit.ly/HrmiPrivacyPolicy", "https://bit.ly/HrmiLocationPolicy"] // webViewNameList에 해당하는 url 주소
-    private var isShowWebView = false // 웹뷰 시트 올라오기
     
     @Environment(\.dismiss) private var dismiss
 
@@ -89,7 +88,7 @@ struct SettingView: View {
                     
                     // MARK: 이용약관 및 정보 처리 방침
                     ForEach(0..<webViewNameList.count, id: \.self) { index in
-                        AppServiceInfoView(text: webViewNameList[index], urlString: webViewurlList[index], isShowWebView: isShowWebView)
+                        AppServiceInfoView(text: webViewNameList[index], urlString: webViewurlList[index])
                     }
         
                     // MARK: 버전 정보
