@@ -40,8 +40,9 @@ struct StarRating: View {
                     }
             }
             if starRatingType == .withText {
-                Text(formattedStarRatingCount(rating: rating))
+                Text(Formatter.formattedStarRatingCount(rating: rating))
                     .font(fontSize)
+                    .foregroundStyle(.mainBlack)
                     .padding(.leading, 10)
             }
         }
