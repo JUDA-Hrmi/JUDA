@@ -34,10 +34,9 @@ struct CustomChangeStyleSegment: View {
     
     var body: some View {
         HStack {
-            HStack(spacing: 14) {
+            HStack(spacing: 10) {
                 ForEach(0..<cellStyleSymbolList.count, id: \.self) { index in
                     Image(cellStyleSymbolList[index])
-                        .font(.medium18)
                         .foregroundStyle(index == selectedSymbolIndex ? .mainBlack : .gray01)
                         .onTapGesture {
                             selectedSymbolIndex = index
