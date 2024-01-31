@@ -19,7 +19,8 @@ struct PostCell: View {
 				// 게시글 사진리스트의 첫 번째 사진
 				Image("foodEx3")
 					.resizable()
-					.frame(height: 170)
+                    .aspectRatio(1.0, contentMode: .fill)
+					.frame(maxWidth: 170)
 				
 				// 게시글 사진이 2장 이상일 경우, 상자 아이콘이 사진의 trailing 상단에 보여짐
 				Image(systemName: "square.on.square.fill")
@@ -61,7 +62,7 @@ struct PostCell: View {
 			}
 			.frame(height: 30)
 		}
-		.frame(width: 170, height: 200)
+        .frame(maxWidth: 170, maxHeight: 200)
 	}
 	
 	// 좋아요 버튼 액션 메서드

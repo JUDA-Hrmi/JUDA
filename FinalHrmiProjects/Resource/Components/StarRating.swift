@@ -35,6 +35,7 @@ struct StarRating: View {
             }
             Text(Formatter.formattedStarRatingCount(rating: rating))
                 .font(fontSize)
+                .foregroundStyle(.mainBlack)
                 .padding(.leading, 10)
         }
     }
