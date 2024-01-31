@@ -55,7 +55,6 @@
 		B14B5C432B6A118600239A78 /* CustomBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B127A4212B64EB53001F005D /* CustomBottomSheet.swift */; };
 		B14B5C442B6A118600239A78 /* CustomDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09254CA62B637C9900569D94 /* CustomDivider.swift */; };
 		B14B5C452B6A118600239A78 /* PagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0914DEAC2B66453E0014E102 /* PagerView.swift */; };
-		B14B5C462B6A118600239A78 /* CustomDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14B5C192B69FB7500239A78 /* CustomDialog.swift */; };
 		B1B8FE812B5EA9DA00921BBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */; };
 		B1B8FE842B5EA9DA00921BBE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1B8FE832B5EA9DA00921BBE /* Preview Assets.xcassets */; };
 		B1B8FE8D2B5EAAAB00921BBE /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1B8FE8C2B5EAAAB00921BBE /* Colors.xcassets */; };
@@ -93,7 +92,6 @@
 		B127A4212B64EB53001F005D /* CustomBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheet.swift; sourceTree = "<group>"; };
 		B14771F62B62019B0036A4A9 /* View +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View +.swift"; sourceTree = "<group>"; };
 		B14B5C172B69F41100239A78 /* MypageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageView.swift; sourceTree = "<group>"; };
-		B14B5C192B69FB7500239A78 /* CustomDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDialog.swift; sourceTree = "<group>"; };
 		B158F83A2B6539FC00E33C47 /* EnabledBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnabledBottomSheetView.swift; sourceTree = "<group>"; };
 		B158F83E2B657A9000E33C47 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoSegment.swift; sourceTree = "<group>"; };
@@ -394,7 +392,6 @@
 				B127A4212B64EB53001F005D /* CustomBottomSheet.swift */,
 				09254CA62B637C9900569D94 /* CustomDivider.swift */,
 				0914DEAC2B66453E0014E102 /* PagerView.swift */,
-				B14B5C192B69FB7500239A78 /* CustomDialog.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -496,7 +493,6 @@
 				B14B5C432B6A118600239A78 /* CustomBottomSheet.swift in Sources */,
 				B14B5C442B6A118600239A78 /* CustomDivider.swift in Sources */,
 				B14B5C452B6A118600239A78 /* PagerView.swift in Sources */,
-				B14B5C462B6A118600239A78 /* CustomDialog.swift in Sources */,
 				B14B5C3B2B6A118000239A78 /* DrinkListCell.swift in Sources */,
 				B14B5C3A2B6A117D00239A78 /* DrinkGridCell.swift in Sources */,
 				B14B5C392B6A117900239A78 /* SearchBar.swift in Sources */,
