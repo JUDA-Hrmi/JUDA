@@ -42,6 +42,7 @@ extension View {
 
 
 // MARK: - 새로운 키보드 숨기기 코드
+
 extension UIApplication {   // 탭 제스처를 추가하는 메서드
     
     func addTapGestureRecognizer() {
