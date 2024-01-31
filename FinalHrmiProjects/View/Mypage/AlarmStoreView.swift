@@ -44,9 +44,11 @@ struct AlarmStoreView: View {
         VStack(spacing: 0) {
             // TODO: CustomScrollView 로 수정 예정
             ScrollView {
-                ForEach(Alarm.alarmList, id: \.self) { alarm in
-                    AlarmStoreListCell(alarm: alarm)
-                    CustomDivider()
+                ForEach(0..<Alarm.alarmList.count, id: \.self) { index in
+                    AlarmStoreListCell(alarm: Alarm.alarmList[index])
+                    if index != Alarm.alarmList.count - 1 {
+                        CustomDivider()
+                    }
                 }
             }
             .scrollIndicators(.hidden)
@@ -93,17 +95,19 @@ struct AlarmStoreListCell: View {
             }
             Spacer()
             // TODO: 해당 게시글로 이동
-            NavigationLink(value: "게시글") {
+            NavigationLink {
+                //
+            } label: {
                 Image(alarm.postImageName)
                     .resizable()
                     .aspectRatio(1.0, contentMode: .fill)
-                    .frame(maxWidth: 50, maxHeight: 50)
+                    .frame(maxWidth: 60, maxHeight: 60)
                     .clipShape(.rect(cornerRadius: 5))
             }
             .buttonStyle(EmptyActionStyle())
         }
         .padding(.horizontal, 10)
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, maxHeight: 80, alignment: .leading)
         .padding(.horizontal, 20)
     }
 }
