@@ -9,14 +9,7 @@ import SwiftUI
 
 struct MypageView: View {
     var body: some View {
-//        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-        NavigationStack {
-            NavigationLink {
-                AlarmStoreView()
-            } label: {
-                Text("이동")
-            }
-        }
+        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
