@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     @State private var isLoggedIn = true
+	
     var body: some View {
         NavigationView {
             VStack(alignment:.center) {
