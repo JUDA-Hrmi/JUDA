@@ -8,22 +8,11 @@
 import SwiftUI
 
 struct MainView: View {
-    @State private var isLoggedIn = false
     var body: some View {
-        NavigationView {
-            VStack(alignment:.center) {
-                VStack(alignment:.center, spacing: 20) {
-                    WeatherView(isLoggedIn: $isLoggedIn)
-                        .padding(.bottom, 20)
-                }
-                SuggestDrinkView(isLoggedIn: $isLoggedIn)
-            }
-        }
-        .padding(.horizontal, 20)
+        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
 #Preview {
     MainView()
 }
-
