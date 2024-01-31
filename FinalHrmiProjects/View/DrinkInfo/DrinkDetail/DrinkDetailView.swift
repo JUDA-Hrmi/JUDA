@@ -31,8 +31,6 @@ struct DrinkDummyData: Identifiable {
 }
 
 struct DrinkDetailView: View {
-    @Environment(\.dismiss) private var dismiss
-    
     var body: some View {
         // 세로 스크롤
         ScrollView {
@@ -55,17 +53,18 @@ struct DrinkDetailView: View {
         }
         // 스크롤 인디케이터 X
         .scrollIndicators(.hidden)
-        .navigationBarBackButtonHidden()
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    // TODO: 뒤로가기
-                    dismiss()
-                } label: {
-                    Image(systemName: "chevron.backward")
-                }
+        // 커스텀 네비게이션
+        .customNavigationBar(
+            leadingView: {
+            Button {
+                // TODO: 뒤로가기
+            } label: {
+                Image(systemName: "chevron.backward")
+                    .font(.semibold18)
             }
-            ToolbarItem(placement: .topBarTrailing) {
+            .tint(.mainBlack)
+        }, trailingView: [
+            .trailing: {
                 // 공유하기
                 ShareLink(item: "Test", // TODO: 실제 공유하려는 내용으로 변경 필요
                           subject: Text("이 링크를 확인해보세요."),
@@ -76,10 +75,11 @@ struct DrinkDetailView: View {
                             image: Image("canuca")) // TODO: 해당 술의 이미지로 변경
                 ) {
                     Image(systemName: "square.and.arrow.up")
+                        .font(.semibold18)
                 }
+                .tint(.mainBlack)
             }
-        }
-        .tint(.mainBlack)
+        ])
     }
 }
 
