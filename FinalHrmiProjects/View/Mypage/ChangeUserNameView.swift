@@ -31,6 +31,9 @@ struct UserProfileView1: View {
             ChangeUserNameView(userNickName: $userName, isEditing: $isEditing)
         } label: {
             Text("닉네임 수정")
+                .font(.light14)
+                .foregroundStyle(.gray01)
+            
         }
         .disabled(isEditing)
     }
@@ -51,6 +54,7 @@ struct ChangeUserNameView: View {
                 Text("수정할 닉네임을 작성해주세요")
                 HStack {
                     TextField(userNickName, text: $userChangeNickName)
+                        .font(.medium16)
                         .focused($isFocused)
                         .textInputAutocapitalization(.never)
                         .onTapGesture {
@@ -66,7 +70,8 @@ struct ChangeUserNameView: View {
                 
                 if isEditing && userChangeNickName.isEmpty {
                     Text("닉네임을 2자~10자 이내로 적어주세요.")
-                        .foregroundColor(.gray)
+                        .font(.light14)
+                        .foregroundStyle(.mainAccent01)
                 }
                 
                 Spacer()
@@ -85,23 +90,22 @@ struct ChangeUserNameView: View {
                         dismiss()
                     }, label: {
                         Text("변경 완료")
+                            .font(.medium20)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 5)
+                        
                     })
                     .disabled(userChangeNickName.isEmpty || userNickName == userChangeNickName)
-                    .foregroundColor(userChangeNickName.isEmpty || userNickName == userChangeNickName ? .gray : .orange)
+                    .foregroundColor(userChangeNickName.isEmpty || userNickName == userChangeNickName ? .gray01 : .white)
                 }
-                .padding(10)
-                .frame(width: 353, alignment: .center)
-                .background()
-                .cornerRadius(10)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color(red: 1, green: 0.48, blue: 0.21), lineWidth: 1)
-                )
+                .buttonStyle(.borderedProminent)
+                .tint(.mainAccent03)
+                .padding(.bottom, 10)
             }
         }
         .padding(.horizontal, 20)
         .navigationBarHidden(true)
-        .navigationBarBackButtonHidden()
+        
         .customNavigationBar(
             centerView: {
                 Text("닉네임 수정")
@@ -112,6 +116,7 @@ struct ChangeUserNameView: View {
                     dismiss()
                 } label: {
                     Image(systemName: "chevron.left")
+                        .foregroundStyle(.mainBlack)
                 }
             },
             trailingView: [
