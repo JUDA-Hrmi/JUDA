@@ -43,8 +43,11 @@ struct DrinkListCell: View {
                     }
                     .foregroundStyle(.gray01)
                     // 별점
-                    StarRating(rating: drinkRating, color: .mainAccent05,
-                               starSize: .semibold14, fontSize: .semibold14)
+                    StarRating(rating: drinkRating, 
+                               color: .mainAccent05,
+                               starSize: .semibold14, 
+                               fontSize: .semibold14,
+                               starRatingType: .withText)
                 }
             }
             Spacer()

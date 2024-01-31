@@ -7,13 +7,19 @@
 
 import SwiftUI
 
+// 평점 Text 추가 여부 확인용 enum type
+enum StarRatingType {
+    case none, withText
+}
+
 struct StarRating: View {
     // 평점
     let rating: Double
     // 별점 크기, 색상, 평점 텍스트 사이즈
     let color: Color
     let starSize: Font
-    let fontSize: Font
+    let fontSize: Font?
+    let starRatingType: StarRatingType
     // full color로 채워지는 별의 개수
     private var fullStar: Int { Int(rating) }
     
@@ -33,9 +39,11 @@ struct StarRating: View {
                         }
                     }
             }
-            Text(Formatter.formattedStarRatingCount(rating: rating))
-                .font(fontSize)
-                .padding(.leading, 10)
+            if starRatingType == .withText {
+                Text(formattedStarRatingCount(rating: rating))
+                    .font(fontSize)
+                    .padding(.leading, 10)
+            }
         }
     }
 }
@@ -43,5 +51,5 @@ struct StarRating: View {
 #Preview {
 //    StarRating(rating: 4.3, color: .mainAccent05, starSize: .regular14, fontSize: .regular14)
     
-    StarRating(rating: 3.7, color: .mainAccent02, starSize: .regular18, fontSize: .regular18)
+    StarRating(rating: 3.7, color: .mainAccent02, starSize: .regular18, fontSize: .regular18, starRatingType: .withText)
 }
