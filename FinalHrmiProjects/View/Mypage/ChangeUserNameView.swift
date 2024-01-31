@@ -15,7 +15,9 @@ struct MypageView1: View {
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 10)
+           
         }
+        
     }
 }
 
@@ -67,7 +69,7 @@ struct ChangeUserNameView: View {
                 .padding(EdgeInsets(top: 15, leading: 10, bottom: 15, trailing: 20))
                 .background(Color(red: 0.46, green: 0.46, blue: 0.50).opacity(0.12))
                 .cornerRadius(10)
-                
+            
                 if isEditing && userChangeNickName.isEmpty {
                     Text("닉네임을 2자~10자 이내로 적어주세요.")
                         .font(.light14)
@@ -102,10 +104,12 @@ struct ChangeUserNameView: View {
                 .tint(.mainAccent03)
                 .padding(.bottom, 10)
             }
+            
         }
+        .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
         .padding(.horizontal, 20)
         .navigationBarHidden(true)
-        
+   
         .customNavigationBar(
             centerView: {
                 Text("닉네임 수정")
@@ -125,9 +129,9 @@ struct ChangeUserNameView: View {
                 }
             ]
         )
+       
     }
 }
-
 
 #Preview {
     MypageView1()
