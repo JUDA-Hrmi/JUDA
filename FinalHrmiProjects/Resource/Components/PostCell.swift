@@ -41,7 +41,7 @@ struct PostCell: View {
 						.lineLimit(1)
 						.font(.regular14)
 				}
-				.padding(.leading, 10)
+				.padding(.leading, 5)
 				
 				Spacer()
 				
@@ -55,7 +55,7 @@ struct PostCell: View {
 						.foregroundStyle(.gray01)
 				}
 				.font(.regular14)
-				.padding(.trailing, 10)
+				.padding(.trailing, 5)
 				.onTapGesture {
 					likeButtonAction()
 				}
