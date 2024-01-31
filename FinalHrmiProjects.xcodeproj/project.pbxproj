@@ -22,7 +22,6 @@
 		B14B5C4F2B6A1E3600239A78 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E0E1292B688EDF008FA3B6 /* SettingView.swift */; };
 		B14B5C502B6A1E3600239A78 /* ProfilePhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B058092B68B119003C419A /* ProfilePhotoPicker.swift */; };
 		B14B5C512B6A1E3600239A78 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B0580B2B68C1A4003C419A /* UserProfileView.swift */; };
-		B14B5C522B6A1E3600239A78 /* ChangeUserNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B0580D2B68CF5B003C419A /* ChangeUserNameView.swift */; };
 		B14B5C532B6A1E3600239A78 /* LikedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24892B614464007F68B0 /* LikedView.swift */; };
 		B14B5C542B6A1E3600239A78 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE248B2B61446A007F68B0 /* RecordView.swift */; };
 		B14B5C552B6A1E3600239A78 /* PostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE248D2B614470007F68B0 /* PostsView.swift */; };
@@ -97,7 +96,6 @@
 		B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoSegment.swift; sourceTree = "<group>"; };
 		B1B058092B68B119003C419A /* ProfilePhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePhotoPicker.swift; sourceTree = "<group>"; };
 		B1B0580B2B68C1A4003C419A /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
-		B1B0580D2B68CF5B003C419A /* ChangeUserNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeUserNameView.swift; sourceTree = "<group>"; };
 		B1B8FE792B5EA9D900921BBE /* FinalHrmiProjects.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalHrmiProjects.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1B8FE7C2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalHrmiProjectsApp.swift; sourceTree = "<group>"; };
 		B1B8FE7E2B5EA9D900921BBE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -220,7 +218,6 @@
 			children = (
 				B1B058092B68B119003C419A /* ProfilePhotoPicker.swift */,
 				B1B0580B2B68C1A4003C419A /* UserProfileView.swift */,
-				B1B0580D2B68CF5B003C419A /* ChangeUserNameView.swift */,
 			);
 			path = MypageDetail;
 			sourceTree = "<group>";
@@ -495,7 +492,6 @@
 				B14B5C4F2B6A1E3600239A78 /* SettingView.swift in Sources */,
 				B14B5C502B6A1E3600239A78 /* ProfilePhotoPicker.swift in Sources */,
 				B14B5C512B6A1E3600239A78 /* UserProfileView.swift in Sources */,
-				B14B5C522B6A1E3600239A78 /* ChangeUserNameView.swift in Sources */,
 				B14B5C532B6A1E3600239A78 /* LikedView.swift in Sources */,
 				B14B5C542B6A1E3600239A78 /* RecordView.swift in Sources */,
 				B14B5C552B6A1E3600239A78 /* PostsView.swift in Sources */,

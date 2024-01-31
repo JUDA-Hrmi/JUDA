@@ -56,7 +56,7 @@ struct UserProfileView: View {
                 Spacer()
                 
                 NavigationLink {
-                    ChangeUserNameView(userNickName: $userNickName)
+//                    ChangeUserNameView(userNickName: $userNickName)
                 } label: {
                     Text("닉네임 수정")
                         .font(.light14)
