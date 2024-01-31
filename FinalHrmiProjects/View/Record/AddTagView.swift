@@ -67,25 +67,24 @@ struct AddTagView: View {
                 DrinkTagScroll(drinkTags: $drinkTags)
             }
         }
-        .customNavigationBar(
-            leadingView: {
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
                 Button {
                     // TODO: PostsView로 돌아가기
                 } label: {
-                    Image(systemName: "chevron.left")
-                        .font(.semibold18)
+                    Image(systemName: "chevron.backward")
                 }
-            }, trailingView: [
-                .trailing: {
-                    Button {
-                        // TODO: 사진 없는 경우, 툴바 "다음" 못 누르게 하기
-                        // TODO: WritingView로 이동
-                    } label: {
-                        Text("다음")
-                            .font(.semibold18)
-                    }
+                .tint(.mainBlack)
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink {
+                    // TODO: WritingView 이동
+                } label: {
+                    Text("다음")
                 }
-            ])
+            }
+        }
         .foregroundStyle(.mainBlack)
         // SearchTageView Sheet
         .sheet(isPresented: $isShowTagSearch) {
