@@ -70,7 +70,7 @@ struct PostDetailView: View {
 			}
 		}
 		.task {
-			windowWidth = TagHandler.getScreenWidth(padding: 20)
+			windowWidth = TagHandler.getScreenWidthWithoutPadding(padding: 20)
 		}
 	}
 }

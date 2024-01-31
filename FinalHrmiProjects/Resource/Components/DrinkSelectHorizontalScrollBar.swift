@@ -44,7 +44,6 @@ struct DrinkSelectHorizontalScrollBar: View {
         }
         // 스크롤 인디케이터 X
         .scrollIndicators(.hidden)
-//        .padding(20)
         .padding(.horizontal, 16)
         .padding(.bottom, 14)
         .padding(.top, 20)
