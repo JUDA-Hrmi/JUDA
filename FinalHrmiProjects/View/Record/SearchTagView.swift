@@ -13,7 +13,7 @@ struct SearchTagView: View {
     // Sheet 상태 변수
     @Binding var isShowTagSearch: Bool
     // 찜 목록 가져오는 배열
-    private let likeds: [String] = ["1","2","3"]
+    private let likeds: [String] = ["1","2","3","4","5","6","7","8"]
 
     var body: some View {
         VStack {
@@ -49,8 +49,14 @@ struct SearchTagView: View {
                         DrinkListCell()
                     }
                 }
+                // 스크롤 했을 때, 키보드 사라지기
+                .scrollDismissesKeyboard(.immediately)
             }
 
+        }
+        // 화면 탭했을 때, 키보드 사라지기
+        .onTapGesture {
+            hideKeyboard()
         }
     }
 }
