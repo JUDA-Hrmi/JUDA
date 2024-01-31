@@ -81,7 +81,6 @@ struct AlarmStoreListCell: View {
         HStack(alignment: .center) {
             VStack(alignment: .leading, spacing: 2) {
                 Group {
-                    // TODO: 해당 유저 프로필로 이동
                     Text(alarm.likedUserName)
                         .font(.medium14)
                     +
@@ -89,14 +88,23 @@ struct AlarmStoreListCell: View {
                         .font(.regular14)
                 }
                 .foregroundStyle(.mainBlack)
+                .overlay(alignment: .topLeading) {
+                    NavigationLink {
+                        // TODO: 해당 유저 프로필로 이동
+                    } label: {
+                        Text(alarm.likedUserName)
+                            .font(.medium14)
+                            .foregroundStyle(.mainBlack)
+                    }
+                    .buttonStyle(EmptyActionStyle())
+                }
                 Text(Formatter.formattedDateBeforeStyle(pastDate: alarm.likedTime))
                     .font(.regular12)
                     .foregroundStyle(.gray01)
             }
             Spacer()
-            // TODO: 해당 게시글로 이동
             NavigationLink {
-                //
+                // TODO: 해당 게시글로 이동
             } label: {
                 Image(alarm.postImageName)
                     .resizable()
