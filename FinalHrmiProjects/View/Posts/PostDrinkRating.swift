@@ -42,7 +42,7 @@ struct PostDrinkRating: View {
 										.foregroundStyle(.mainAccent03)
 								}
 							}
-							Text(String(format: "%.1F", postDrinksStarRating[index]))
+							Text(Formatter.formattedStarRatingCount(rating: postDrinksStarRating[index]))
 								.font(.semibold14)
 							Image(systemName: "chevron.forward")
 						}

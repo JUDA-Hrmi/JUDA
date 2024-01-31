@@ -46,7 +46,7 @@ struct PostInfo: View {
 				Image(systemName: isLike ? "heart.fill" : "heart")
 					.foregroundStyle(isLike ? .mainAccent01 : .gray01)
 				// TODO: fomat 변경
-				Text("\(likeCount)")
+				Text(Formatter.formattedPostLikesCount(likeCount))
 					.foregroundStyle(.gray01)
 			}
 			.font(.regular16)

@@ -1,11 +1,7 @@
 {
   "images" : [
     {
-<<<<<<< HEAD
       "filename" : "canuca.png",
-=======
-      "filename" : "제목 5.png",
->>>>>>> ce0a71b ([Edit & Add] Navigation용 PostView 추가, RootView TabView 설정코드 추가, PostDetailView 네비게이션 수정 #37)
       "idiom" : "universal",
       "scale" : "1x"
     },

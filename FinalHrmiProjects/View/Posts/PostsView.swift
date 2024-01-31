@@ -27,7 +27,6 @@ struct PostsView: View {
 				// 인기, 최신 순으로 선택하여 정렬하기 위한 CustomSegment
 				CustomTextSegment(segments: PostOrLiked.post,
 								  selectedSegmentIndex: $selectedSegmentIndex)
-				.frame(width: 88)
 				
 				Spacer()
 				
