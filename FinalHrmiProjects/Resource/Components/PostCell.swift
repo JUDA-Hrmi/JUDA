@@ -40,6 +40,7 @@ struct PostCell: View {
 					Text("hrmi")
 						.lineLimit(1)
 						.font(.regular14)
+						.foregroundStyle(.mainBlack)
 				}
 				.padding(.leading, 5)
 				
@@ -51,7 +52,7 @@ struct PostCell: View {
 					// 좋아요를 해제 -> 테두리가 회색인 하트
 					Image(systemName: isLike ? "heart.fill" : "heart")
 						.foregroundStyle(isLike ? .mainAccent01 : .gray01)
-					Text("\(likeCount)")
+					Text(Formatter.formattedPostLikesCount(likeCount))
 						.foregroundStyle(.gray01)
 				}
 				.font(.regular14)

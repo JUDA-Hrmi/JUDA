@@ -38,6 +38,8 @@ struct SearchTagView: View {
     // 찜 목록 배열 ( 더미데이터를 넣어서 테스트 함 )
     private let likeds: [DrinkInfo] = DrinkInfo.drinkInfos
 
+	@State private var tagSearchText = ""
+	
     var body: some View {
         ZStack {
             VStack {

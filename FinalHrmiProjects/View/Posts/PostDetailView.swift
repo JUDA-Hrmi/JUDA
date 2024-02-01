@@ -13,6 +13,8 @@ enum PostUserType {
 
 struct PostDetailView: View {
 	
+	@Environment(\.dismiss) var dismiss
+	
 	let postUserType: PostUserType
 	
 	let nickName: String
@@ -36,41 +38,121 @@ struct PostDetailView: View {
 양식과 한식, 다양한 조리법을 통해 방어를 다양하게 즐길 수 있으니 자신의 취향에 맞게 시도해보세요!
 """
 	
-	private let tags = ["대방어", "새우튀김", "광어", "우럭", "이거 한 줄에 몇개 넣어야 할까?", "정렬 문제도", "뭘까", "짬뽕", "짜장", "탕수육", "팔보채", "치킨", "피자", "족발"]
+	@State private var tags = ["대방어", "새우튀김", "광어", "우럭", "이거 한 줄에 몇개 넣어야 할까?", "정렬 문제도", "뭘까", "짬뽕", "짜장", "탕수육", "팔보채", "치킨", "피자", "족발", "콜라", "사이다", "맥콜", "데자와"]
 	
 	@State private var currentPage = 0
 	
 	@State private var windowWidth: CGFloat = 0
 	
+	@State private var isReportPresented = false
+	
+	@State private var isDeleteDialogPresented = false
+	
 	var body: some View {
 		NavigationStack {
-			VStack {
-				ScrollView {
-					PostInfo(userName: "hrmi",
-							 profileImageName: "appIcon",
-							 postUploadDate: "2023.12.08",
-							 isLike: $isLike,
-							 likeCount: $likeCount)
-					
-					PostPhotoScroll(postPhotos: postPhotos)
-					
-					VStack(spacing: 20) {
-						PostDrinkRating(userName: "hrmi",
-										postDrinks: postDrinks,
-										postDrinksStarRating: postDrinksStarRating)
-						CustomDivider()
+			ZStack {
+				VStack {
+					ScrollView {
+						// Bar 형태로 된 게시글 정보를 보여주는 뷰
+						PostInfo(userName: "hrmi",
+								 profileImageName: "appIcon",
+								 postUploadDate: "2023.12.08",
+								 isLike: $isLike,
+								 likeCount: $likeCount)
 						
-						Text(postContent)
-							.font(.regular16)
+						// 게시글의 사진을 페이징 스크롤 형식으로 보여주는 뷰
+						PostPhotoScroll(postPhotos: postPhotos)
 						
-						PostTags(tags: tags, windowWidth: windowWidth)
+						VStack(spacing: 20) {
+							PostDrinkRating(userName: "hrmi",
+											postDrinks: postDrinks,
+											postDrinksStarRating: postDrinksStarRating)
+							CustomDivider()
+							
+							Text(postContent)
+								.font(.regular16)
+							
+							PostTags(tags: $tags, windowWidth: windowWidth)
+						}
+						.padding(.horizontal, 20)
 					}
-					.padding(.horizontal, 20)
+				}
+				
+				// 삭제 버튼 눌렸을 시 삭제에 대한 다이얼로그 출력
+				if isDeleteDialogPresented {
+					CustomAlert(message: "삭제하시겠습니까?",
+								leftButtonLabel: "취소",
+								leftButtonAction: {
+						isDeleteDialogPresented = false
+					}, rightButtonLabel: "삭제") {
+						isDeleteDialogPresented = false
+						// TODO: write view dismiss code
+					}
 				}
 			}
 		}
 		.task {
 			windowWidth = TagHandler.getScreenWidthWithoutPadding(padding: 20)
+		}
+		.navigationBarBackButtonHidden()
+		.toolbar {
+			ToolbarItem(placement: .topBarLeading) {
+				Button {
+					// TODO: NavigationStack path remove
+					dismiss()
+				} label: {
+					Image(systemName: "chevron.left")
+				}
+			}
+			switch postUserType {
+			case .writter:
+				ToolbarItem(placement: .topBarTrailing) {
+					Button {
+						// TODO: Share Post Content
+					} label: {
+						Image(systemName: "square.and.arrow.up")
+					}
+				}
+				
+				ToolbarItem(placement: .topBarTrailing) {
+					Button {
+						// TODO: Edit Post Content
+					} label: {
+						Image(systemName: "pencil")
+					}
+				}
+				
+				ToolbarItem(placement: .topBarTrailing) {
+					Button {
+						isDeleteDialogPresented = true
+					} label: {
+						Image(systemName: "trash")
+					}
+				}
+			case .reader:
+				ToolbarItem(placement: .topBarTrailing) {
+					Button {
+						// TODO: Share Post Content
+					} label: {
+						Image(systemName: "square.and.arrow.up")
+							.font(.regular14)
+					}
+				}
+				
+				ToolbarItem(placement: .topBarTrailing) {
+					Button {
+						// 버튼 탭 할 경우 신고뷰 출력
+						isReportPresented = true
+					} label: {
+						Image(systemName: "light.beacon.max")
+					}
+				}
+			}
+		}
+		.foregroundStyle(.mainBlack)
+		// 신고뷰를 풀스크린커버로 아래에서 위로 올라오는 뷰
+		.fullScreenCover(isPresented: $isReportPresented) {
+			PostReportView(isReportPresented: $isReportPresented)
 		}
 	}
 }

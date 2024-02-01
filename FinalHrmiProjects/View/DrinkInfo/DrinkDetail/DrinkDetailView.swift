@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+
 // UITest - Drink Dummy Data
 // TODO: 데이터 들어오면 ObservableObject 로 만들어질 데이터로 예상
 struct DrinkDummyData: Identifiable {
@@ -19,6 +20,7 @@ struct DrinkDummyData: Identifiable {
     let tastingNotesList = ["Aroma", "Taste", "Finish"]
     let tastingNotes: [String: [String]]
     let wellMatchedFoods: [String]
+
     static let sample = DrinkDummyData(
         image: "canuca", name: "카누카 칵테일 700ml", origin: "스페인",
         abv: "15%", price: "35,000원", rating: 4.7, tastingNotes: ["Aroma": ["달콤한", "라임"],

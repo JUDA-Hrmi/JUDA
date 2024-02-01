@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SearchBar: View {
-    @State private var inputText: String = ""
+    @Binding var inputText: String
 //    @FocusState private var isFocused: Bool
     var body: some View {
         HStack {
@@ -43,6 +43,6 @@ struct SearchBar: View {
     }
 }
 
-#Preview {
-    SearchBar()
-}
+//#Preview {
+//    SearchBar()
+//}

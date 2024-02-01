@@ -12,13 +12,18 @@ struct PostGrid: View {
 	@Binding var isLike: Bool
 	@Binding var likeCount: Int
 	
+	let postUserType: PostUserType
+	
     var body: some View {
 		// TODO: navigationLink 및 navigationDestination을 통한 RecordDetailView 전환 구현
 		ScrollView {
 			LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
 				ForEach(0..<12, id: \.self) { _ in
 					NavigationLink {
-//								PostDetailView(isLike: $isLike, likeCount: $likeCount)
+						PostDetailView(postUserType: postUserType,
+									   nickName: "hrmi",
+									   isLike: $isLike,
+									   likeCount: $likeCount)
 					} label: {
 						PostCell(isLike: $isLike, likeCount: $likeCount)
 					}
@@ -35,5 +40,5 @@ struct PostGrid: View {
 }
 
 #Preview {
-	PostGrid(isLike: .constant(false), likeCount: .constant(45))
+	PostGrid(isLike: .constant(false), likeCount: .constant(45), postUserType: PostUserType.reader)
 }
