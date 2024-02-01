@@ -7,19 +7,11 @@
 
 import SwiftUI
 
-struct RoundedCorners: Shape {
-    var radius: CGFloat = .infinity
-    var corners: UIRectCorner = .allCorners
-    
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        return Path(path.cgPath)
-    }
-}
-
+// MARK: CustomBottomSheet
 struct CustomBottomSheet: View {
-    @Binding var isShowingSheet: Bool
     var content: AnyView
+    
+    @Binding var isShowingSheet: Bool
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -45,6 +37,7 @@ struct CustomBottomSheet: View {
     }
 }
 
+// content에 같이 들어갈 '닫기' 버튼
 struct DismissButton: View {
     var background: Color = .white
     var textColor: Color = .black.opacity(0.9)
