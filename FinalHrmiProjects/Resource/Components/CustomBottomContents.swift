@@ -56,26 +56,3 @@ struct BottomSheetContentView: View{
         }
     }
 }
-
-// 적용 예시
-struct Content2View: View {
-    private let optionNameList = ["시스템 모드", "라이트 모드", "다크 모드"]
- 
-    @State private var selectedSortingOption: String = "시스템 모드"
-    @State var isShowingBottomSheet = false
-    
-    var body: some View {
-        ZStack{
-            CustomSortingButton(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingBottomSheet)
-            
-            // BottomSheetType을 활용하여 Content 뷰 부르기
-            CustomBottomSheet(isShowingSheet: $isShowingBottomSheet) {
-                BottomSheetContentView(optionNameList: optionNameList, isShowingSheet: $isShowingBottomSheet, selectedSortingOption: $selectedSortingOption, text: BottomSheetType.displaySetting.description)
-            }
-        }
-    }
-}
-
-#Preview {
-    Content2View()
-}
