@@ -15,8 +15,8 @@ struct SuggestDrinkCell: View {
             VStack(alignment:.leading, spacing: 10) {
                 Text("오늘의 추천 술")
                     .font(.semibold18)
-
-                TodayDrinkRecommendedView()
+				
+				TodayDrinkRecommendedView(isLoggedIn: $isLoggedIn)
                     .opacity(isLoggedIn ? 1.0 : 0.8)
                     .blur(radius: isLoggedIn ? 0 : 3)
             }

@@ -22,12 +22,22 @@ let TodayDrinkData: [TodayDrink] = [
 
 // MARK: - 오늘의 추천 술 뷰
 struct TodayDrinkRecommendedView: View {
+	@Binding var isLoggedIn: Bool
     let todayDrink: [TodayDrink] = TodayDrinkData
+	
     var body: some View {
         VStack {
             HStack(spacing: 10) {
-                ForEach(todayDrink, id: \.self) { sul in
-                    TodayDrinkRecommendedCell(todayDrink: sul)
+                ForEach(todayDrink, id: \.self) { drink in
+					if isLoggedIn {
+						NavigationLink {
+							DrinkDetailView()
+						} label: {
+							TodayDrinkRecommendedCell(todayDrink: drink)
+						}
+					} else {
+						TodayDrinkRecommendedCell(todayDrink: drink)
+					}
                 }
             }
         }
@@ -35,7 +45,7 @@ struct TodayDrinkRecommendedView: View {
 }
 
 #Preview {
-    TodayDrinkRecommendedView()
+	TodayDrinkRecommendedView(isLoggedIn: .constant(true))
 }
 
 // MARK: - 오늘의 추천 술 뷰셀
@@ -48,6 +58,7 @@ struct TodayDrinkRecommendedCell: View {
             
             Text(todayDrink.title)
                 .font(.regular12)
+				.foregroundStyle(.mainBlack)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)               ///술 이름은 2줄이 최대로?
         }
