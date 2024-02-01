@@ -1,5 +1,5 @@
 //
-//  FoodTagVerticalScroll.swift
+//  FoodTagVertical.swift
 //  FinalHrmiProjects
 //
 //  Created by 정인선 on 1/30/24.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-// 추가된 음식 태그를 보여주는 Scroll View
-struct FoodTagVerticalScroll: View {
+// 추가된 음식 태그를 보여주는 View
+struct FoodTagVertical: View {
     // 음식 태그 배열
     @Binding var foodTags: [FoodTag]
     // 태그 결과를 보여주는 이차원 배열
@@ -92,5 +92,5 @@ struct FoodTagVerticalScroll: View {
 
 
 //#Preview {
-//    FoodTagVerticalScroll()
+//    FoodTagVertical()
 //}

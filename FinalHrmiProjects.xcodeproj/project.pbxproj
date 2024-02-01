@@ -17,7 +17,7 @@
 		2C2044E82B63B9D600773266 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2044E72B63B9D600773266 /* RootView.swift */; };
 		2C2AD5012B689CA500C681F4 /* SelectedPhotoHorizontalScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2AD5002B689CA500C681F4 /* SelectedPhotoHorizontalScroll.swift */; };
 		2C2AD5032B68A15E00C681F4 /* FoodTagAddTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2AD5022B68A15E00C681F4 /* FoodTagAddTextField.swift */; };
-		2C2AD5052B68A1AF00C681F4 /* FoodTagVerticalScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2AD5042B68A1AF00C681F4 /* FoodTagVerticalScroll.swift */; };
+		2C2AD5052B68A1AF00C681F4 /* FoodTagVertical.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2AD5042B68A1AF00C681F4 /* FoodTagVertical.swift */; };
 		2C2AD5072B68A22A00C681F4 /* FoodTagXmarkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2AD5062B68A22A00C681F4 /* FoodTagXmarkButton.swift */; };
 		2C2FF2982B63916700B2301A /* StarRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2FF2972B63916700B2301A /* StarRating.swift */; };
 		2C63DD522B676E1000770E3A /* TabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD512B676E1000770E3A /* TabItem.swift */; };
@@ -77,7 +77,7 @@
 		2C2044E72B63B9D600773266 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		2C2AD5002B689CA500C681F4 /* SelectedPhotoHorizontalScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedPhotoHorizontalScroll.swift; sourceTree = "<group>"; };
 		2C2AD5022B68A15E00C681F4 /* FoodTagAddTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTagAddTextField.swift; sourceTree = "<group>"; };
-		2C2AD5042B68A1AF00C681F4 /* FoodTagVerticalScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTagVerticalScroll.swift; sourceTree = "<group>"; };
+		2C2AD5042B68A1AF00C681F4 /* FoodTagVertical.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTagVertical.swift; sourceTree = "<group>"; };
 		2C2AD5062B68A22A00C681F4 /* FoodTagXmarkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTagXmarkButton.swift; sourceTree = "<group>"; };
 		2C2FF2972B63916700B2301A /* StarRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarRating.swift; sourceTree = "<group>"; };
 		2C63DD512B676E1000770E3A /* TabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItem.swift; sourceTree = "<group>"; };
@@ -292,7 +292,7 @@
 			children = (
 				2C63DD662B67EB1B00770E3A /* WritingView.swift */,
 				2C2AD5062B68A22A00C681F4 /* FoodTagXmarkButton.swift */,
-				2C2AD5042B68A1AF00C681F4 /* FoodTagVerticalScroll.swift */,
+				2C2AD5042B68A1AF00C681F4 /* FoodTagVertical.swift */,
 				2C2AD5022B68A15E00C681F4 /* FoodTagAddTextField.swift */,
 				2C2AD5002B689CA500C681F4 /* SelectedPhotoHorizontalScroll.swift */,
 			);
@@ -518,7 +518,7 @@
 				2C2AD5012B689CA500C681F4 /* SelectedPhotoHorizontalScroll.swift in Sources */,
 				AC1FEAAE2B639781006E9E65 /* CustomAlert.swift in Sources */,
 				2C2AD5032B68A15E00C681F4 /* FoodTagAddTextField.swift in Sources */,
-				2C2AD5052B68A1AF00C681F4 /* FoodTagVerticalScroll.swift in Sources */,
+				2C2AD5052B68A1AF00C681F4 /* FoodTagVertical.swift in Sources */,
 				B158F83F2B657A9000E33C47 /* Theme.swift in Sources */,
 				B1EE24882B61445E007F68B0 /* MypageView.swift in Sources */,
 				AC502D712B62A21700C2BD6A /* CustomNavigation.swift in Sources */,
@@ -656,7 +656,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FinalHrmiProjects/Preview Content\"";
-				DEVELOPMENT_TEAM = K3FD3VZL37;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FinalHrmiProjects/Info.plist;
@@ -671,7 +671,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hrmi.FinalHrmiProject;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hrmi.FinalHrmiProjects;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -687,7 +687,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FinalHrmiProjects/Preview Content\"";
-				DEVELOPMENT_TEAM = K3FD3VZL37;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FinalHrmiProjects/Info.plist;
@@ -702,7 +702,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hrmi.FinalHrmiProject;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hrmi.FinalHrmiProjects;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

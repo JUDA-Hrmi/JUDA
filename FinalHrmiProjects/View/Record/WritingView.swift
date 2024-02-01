@@ -79,7 +79,7 @@ struct WritingView: View {
                         // 음식 태그 추가 TextField
                         FoodTagAddTextField(foodTags: $foodTags, textField: textField, isFocusedTextField: $isFocusedTextField, proxy: proxy)
                         // 추가된 음식 태그를 보여주는 Scroll View
-                        FoodTagVerticalScroll(foodTags: $foodTags, windowWidth: windowWidth)
+                        FoodTagVertical(foodTags: $foodTags, windowWidth: windowWidth)
                     }
                     .padding(.bottom, 5)
                     // ScrollView focusing을 위한 VStack에 id 부여
