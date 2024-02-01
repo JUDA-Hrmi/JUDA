@@ -12,21 +12,21 @@ struct CustomBottomSheet: View {
     @Binding var isShowingSheet: Bool // CustomBottomSheet 호출 시, 함수 동작을 더 잘 나타내기 위해 상태변수 먼저 작성
     
     var content: AnyView
-    
+    @Environment(\.colorScheme) var scheme
     var body: some View {
         ZStack(alignment: .bottom) {
-            if (isShowingSheet) {
-                Color.black
+            if (isShowingSheet) { // Sheet활성화 됐을 때 뒷배경
+                Color.gray01
                     .opacity(0.3)
                     .ignoresSafeArea()
                     .onTapGesture {
                         isShowingSheet.toggle()
                     }
-                content
+                content // Sheet에 올라갈 Content 내용
                     .padding(.bottom, 42)
                     .transition(.move(edge: .bottom))
                     .background(
-                        Color(uiColor: .white)
+                        Theme.backgroundColor(scheme: scheme)
                     )
                     .clipShape(
                         .rect(topLeadingRadius: 16.0, topTrailingRadius: 16.0)
@@ -42,7 +42,7 @@ struct CustomBottomSheet: View {
 // content에 같이 들어갈 '닫기' 버튼
 struct DismissButton: View {
     var background: Color = .white
-    var textColor: Color = .black.opacity(0.9)
+    var textColor: Color = .mainBlack
     var action: (() -> ())
     let cornorRadius: CGFloat = 8
     

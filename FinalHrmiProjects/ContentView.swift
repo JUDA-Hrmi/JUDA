@@ -23,14 +23,7 @@ struct ContentView: View {
 //                .font(.system(size: 20))
 //        }
 //        .padding()
-<<<<<<< HEAD
-//        RootView()
-        NavigationStack {
-            NavigationLink("d") { AddTagView() }
-        }
-=======
-        Content2View()
->>>>>>> de2f959 ([Feat] 바인딩 변수끼리 연결 #35)
+        RootView()
     }
 }
 

@@ -100,7 +100,7 @@ struct Content2View: View {
             CustomSortingButton(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingBottomSheet)
             
             // BottomSheetType을 활용하여 Content 뷰 부르기
-            CustomBottomSheet(isShowingSheet: $isShowingBottomSheet, content: BottomSheetType.displaySetting.view(optionNameList: optionNameList, isShowingSheet: $isShowingBottomSheet, selectedSortingOption: $selectedSortingOption))
+            CustomBottomSheet(isShowingSheet: $isShowingBottomSheet, content: BottomSheetType.drinkInfo.view(optionNameList: optionNameList, isShowingSheet: $isShowingBottomSheet, selectedSortingOption: $selectedSortingOption))
         }
     }
 }
