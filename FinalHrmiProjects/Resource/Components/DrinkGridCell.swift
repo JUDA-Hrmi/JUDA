@@ -54,8 +54,11 @@ struct DrinkGridCell: View {
                 VStack(spacing: 0) {
                     Spacer()
                     // 별
-                    StarRating(rating: drinkRating, color: .mainAccent05,
-                               starSize: .semibold14, fontSize: .semibold14)
+                    StarRating(rating: drinkRating, 
+                               color: .mainAccent05,
+                               starSize: .semibold14, 
+                               fontSize: .semibold14,
+                               starRatingType: .withText)
                 }
             }
         }

@@ -18,14 +18,15 @@ struct DrinkInfoView: View {
         "전체", "우리술", "맥주", "위스키", "와인", "브랜디", "리큐르", "럼", "사케", "기타"
     ]
     @State private var selectedDrinkTypeIndex = 0
-
-
+	
+	@State private var searchText = ""
+	
     var body: some View {
         NavigationStack {
             ZStack {
                 VStack(spacing: 0) {
                     // 검색 창
-                    SearchBar()
+					SearchBar(inputText: $searchText)
                     ScrollViewReader { value in
                         Group {
                             // 술 종류 가로 스크롤
@@ -50,15 +51,12 @@ struct DrinkInfoView: View {
                                         }
                                     }
                                 }
+                                .onChange(of: selectedDrinkTypeIndex) { _ in
+                                    value.scrollTo(0, anchor: .center) // 술 종류 이동 시, 스크롤 상단 고정
+                                }
                             }
                         }
-                        .onChange(of: selectedDrinkTypeIndex) { newValue in
-                            withAnimation {
-                                value.scrollTo(newValue, anchor: .top) // 술 종류 이동 시, 스크롤 상단 고정
-                            }
-                        }
-                        .animation(.spring, value: selectedDrinkTypeIndex)
-                    }
+                    }.ignoresSafeArea()
                 }
                 // DrinkInfoSegment 클릭 시 띄워지는 CustomSheet뷰
                 EnabledBottomSheetView(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
@@ -66,7 +64,6 @@ struct DrinkInfoView: View {
         }
     }
 }
-
 #Preview {
     DrinkInfoView()
 }

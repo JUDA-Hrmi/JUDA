@@ -32,11 +32,13 @@ extension Font {
     static let regular18: Font = .custom(FontType.Regular.name, size: 18)
     static let regular16: Font = .custom(FontType.Regular.name, size: 16)
     static let regular14: Font = .custom(FontType.Regular.name, size: 14)
+    static let regular12: Font = .custom(FontType.Regular.name, size: 12)
     // Light
     static let light20: Font = .custom(FontType.Light.name, size: 20)
     static let light18: Font = .custom(FontType.Light.name, size: 18)
     static let light16: Font = .custom(FontType.Light.name, size: 16)
     static let light14: Font = .custom(FontType.Light.name, size: 14)
+    static let light12: Font = .custom(FontType.Light.name, size: 12)
     // Thin
     static let thin20: Font = .custom(FontType.Thin.name, size: 20)
     static let thin18: Font = .custom(FontType.Thin.name, size: 18)
