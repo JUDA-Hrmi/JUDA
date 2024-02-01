@@ -21,28 +21,28 @@ enum BottomSheetType {
     case drinkInfo
     case displaySetting
     
-    func view(optionNameList: [String] ,isShowing: Binding<Bool>, selectedSortingOption: Binding<String>) -> AnyView {
+    func view(optionNameList: [String] ,isShowingSheet: Binding<Bool>, selectedSortingOption: Binding<String>) -> AnyView {
         switch self {
         case .drinkInfo:
-            return AnyView(DrinkInfoSortingBottomSheet(optionNameList: optionNameList, isShowing: isShowing, selectedSortingOption: selectedSortingOption))
+            return AnyView(DrinkInfoSortingBottomSheet(optionNameList: optionNameList, isShowingSheet: isShowingSheet, selectedSortingOption: selectedSortingOption))
         case .displaySetting:
-            return AnyView(DisplaySettingBottomSheet(optionNameList: optionNameList, isShowing: isShowing, selectedSortingOption: selectedSortingOption))
+            return AnyView(DisplaySettingBottomSheet(optionNameList: optionNameList, isShowingSheet: isShowingSheet, selectedSortingOption: selectedSortingOption))
         }
     }
 }
 
 struct BottomSheet: View {
-    @Binding var isShowing: Bool
+    @Binding var isShowingSheet: Bool
     var content: AnyView
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            if (isShowing) {
+            if (isShowingSheet) {
                 Color.black
                     .opacity(0.3)
                     .ignoresSafeArea()
                     .onTapGesture {
-                        isShowing.toggle()
+                        isShowingSheet.toggle()
                     }
                 content
                     .padding(.bottom, 42)
@@ -55,7 +55,7 @@ struct BottomSheet: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
         .ignoresSafeArea()
-        .animation(.interactiveSpring, value: isShowing)
+        .animation(.interactiveSpring, value: isShowingSheet)
     }
 }
 
@@ -84,7 +84,7 @@ struct DrinkInfoSortingBottomSheet: View{
     let buttonHeight: CGFloat = 55
     let optionNameList: [String]
     
-    @Binding var isShowing: Bool
+    @Binding var isShowingSheet: Bool
     @Binding var selectedSortingOption: String
     
     var body: some View{
@@ -97,11 +97,13 @@ struct DrinkInfoSortingBottomSheet: View{
             .padding(.top, 16)
             .padding(.bottom, 4)
             
-            SortingOptionsList(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowing)
+            SortingOptionsList(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
+            
             CustomDivider()
                 .padding(.bottom, 10)
+            
             DismissButton {
-                isShowing.toggle()
+                isShowingSheet.toggle()
             }
             .frame(height: buttonHeight - 30)
         }
@@ -112,7 +114,7 @@ struct DisplaySettingBottomSheet: View{
     let buttonHeight: CGFloat = 55
     let optionNameList: [String]
     
-    @Binding var isShowing: Bool
+    @Binding var isShowingSheet: Bool
     @Binding var selectedSortingOption: String
     
     var body: some View{
@@ -125,11 +127,14 @@ struct DisplaySettingBottomSheet: View{
             }
             .padding(.top, 16)
             .padding(.bottom, 4)
-            SortingOptionsList(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowing)
+            
+            SortingOptionsList(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
+            
             CustomDivider()
                 .padding(.bottom, 10)
+            
             DismissButton(action: {
-                isShowing.toggle()
+                isShowingSheet.toggle()
             })
             .frame(height: buttonHeight - 30)
         }
@@ -147,7 +152,7 @@ struct Content2View: View {
         ZStack{
             CustomSortingButton(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingBottomSheet)
             
-            BottomSheet(isShowing: $isShowingBottomSheet, content: BottomSheetType.displaySetting.view(optionNameList: optionNameList, isShowing: $isShowingBottomSheet, selectedSortingOption: $selectedSortingOption))
+            BottomSheet(isShowingSheet: $isShowingBottomSheet, content: BottomSheetType.displaySetting.view(optionNameList: optionNameList, isShowingSheet: $isShowingBottomSheet, selectedSortingOption: $selectedSortingOption))
         }
     }
 }
