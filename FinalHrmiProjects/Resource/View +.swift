@@ -70,9 +70,3 @@ extension UIApplication: UIGestureRecognizerDelegate {
         // false 반환: 다른 제스처 동작 중에는 탭을 인식하지 않음
     }
 }
-
-extension View {
-    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
-        clipShape( RoundedCorners(radius: radius, corners: corners) )
-    }
-}

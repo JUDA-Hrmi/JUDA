@@ -9,9 +9,9 @@ import SwiftUI
 
 // MARK: CustomBottomSheet
 struct CustomBottomSheet: View {
-    var content: AnyView
+    @Binding var isShowingSheet: Bool // CustomBottomSheet 호출 시, 함수 동작을 더 잘 나타내기 위해 상태변수 먼저 작성
     
-    @Binding var isShowingSheet: Bool
+    var content: AnyView
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -28,7 +28,9 @@ struct CustomBottomSheet: View {
                     .background(
                         Color(uiColor: .white)
                     )
-                    .cornerRadius(16, corners: [.topLeft, .topRight])
+                    .clipShape(
+                        .rect(topLeadingRadius: 16.0, topTrailingRadius: 16.0)
+                    )
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
