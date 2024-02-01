@@ -12,7 +12,7 @@ struct SelectedPhotoHorizontalScroll: View {
     @Binding var images: [String]
 
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
+        ScrollView(.horizontal) {
             LazyHStack(spacing: 10) {
                 ForEach(0..<images.count, id: \.self) { index in
                     ZStack(alignment: .topTrailing) {
@@ -42,7 +42,7 @@ struct SelectedPhotoHorizontalScroll: View {
         .frame(height: 100)
         .padding(.leading, 20)
         .padding(.vertical, 10)
-
+		.scrollIndicators(.hidden)
     }
 }
 

@@ -46,7 +46,7 @@ struct AlarmStoreView: View {
             ScrollView {
                 ForEach(0..<Alarm.alarmList.count, id: \.self) { index in
                     NavigationLink {
-                        // TODO: 해당 게시글로 이동
+						PostDetailView(postUserType: .writter, nickName: "Hrmi", isLike: .constant(false), likeCount: .constant(45))
                     } label: {
                         AlarmStoreListCell(alarm: Alarm.alarmList[index])
                     }
@@ -72,7 +72,7 @@ struct AlarmStoreView: View {
             }
             ToolbarItem(placement: .principal) {
                 Text("알림")
-                    .font(.medium18)
+                    .font(.regular16)
                     .foregroundStyle(.mainBlack)
             }
         }

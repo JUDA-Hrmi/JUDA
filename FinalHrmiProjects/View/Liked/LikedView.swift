@@ -12,7 +12,7 @@ struct LikedView: View {
     @State private var selectedSegmentIndex = 0
 
     var body: some View {
-        NavigationStack {
+        VStack {
             // 세그먼트 (술찜 리스트 / 술상 리스트)
             CustomTextSegment(segments: PostOrLiked.liked, selectedSegmentIndex: $selectedSegmentIndex)
                 .padding(.vertical, 14)

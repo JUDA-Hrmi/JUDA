@@ -16,7 +16,7 @@ struct DrinkTagScroll: View {
     @Binding var isShowRatingDialog: Bool
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
+        ScrollView {
             ForEach(drinkTags) { drinkTag in
                 DrinkTagCell(drinkTags: $drinkTags, drinkTag: drinkTag)
                     .onTapGesture {
@@ -27,6 +27,7 @@ struct DrinkTagScroll: View {
                     }
             }
         }
+		.scrollIndicators(.hidden)
     }
 }
 

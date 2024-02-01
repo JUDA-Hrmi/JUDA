@@ -9,21 +9,20 @@ import SwiftUI
 
 struct MainView: View {
     @State private var isLoggedIn = true
+	@Binding var selectedTabIndex: Int
 	
     var body: some View {
-        NavigationView {
-            VStack(alignment:.center) {
-                VStack(alignment:.center, spacing: 20) {
-                    WeatherView(isLoggedIn: $isLoggedIn)
-                        .padding(.bottom, 20)
-                }
-                SuggestDrinkView(isLoggedIn: $isLoggedIn)
-            }
-        }
+		VStack(alignment: .center) {
+			VStack(alignment: .center, spacing: 20) {
+				WeatherView(isLoggedIn: $isLoggedIn)
+					.padding(.bottom, 20)
+			}
+			SuggestDrinkView(isLoggedIn: $isLoggedIn, selectedTabIndex: $selectedTabIndex)
+		}
         .padding(.horizontal, 20)
     }
 }
 
 #Preview {
-    MainView()
+	MainView(selectedTabIndex: .constant(0))
 }

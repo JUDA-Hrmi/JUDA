@@ -30,6 +30,7 @@ struct CustomScrollView<Content: View>: View {
                 )
             }
             .scrollIndicators(.hidden)
+			.scrollDismissesKeyboard(.immediately)
         }
     }
 }

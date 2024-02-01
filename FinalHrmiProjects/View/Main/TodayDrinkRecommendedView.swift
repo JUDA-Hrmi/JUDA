@@ -22,12 +22,22 @@ let TodayDrinkData: [TodayDrink] = [
 
 // MARK: - 오늘의 추천 술 뷰
 struct TodayDrinkRecommendedView: View {
+	@Binding var isLoggedIn: Bool
     let todayDrink: [TodayDrink] = TodayDrinkData
+	
     var body: some View {
         VStack {
-            HStack(spacing: 10) {
-                ForEach(todayDrink, id: \.self) { sul in
-                    TodayDrinkRecommendedCell(todayDrink: sul)
+			HStack(alignment: .top, spacing: 10) {
+                ForEach(todayDrink, id: \.self) { drink in
+					if isLoggedIn {
+						NavigationLink {
+							DrinkDetailView()
+						} label: {
+							TodayDrinkRecommendedCell(todayDrink: drink)
+						}
+					} else {
+						TodayDrinkRecommendedCell(todayDrink: drink)
+					}
                 }
             }
         }
@@ -35,7 +45,7 @@ struct TodayDrinkRecommendedView: View {
 }
 
 #Preview {
-    TodayDrinkRecommendedView()
+	TodayDrinkRecommendedView(isLoggedIn: .constant(true))
 }
 
 // MARK: - 오늘의 추천 술 뷰셀
@@ -44,10 +54,14 @@ struct TodayDrinkRecommendedCell: View {
     var body: some View {
         VStack {
             Image(todayDrink.image)
-                .padding()
+				.resizable()
+				.aspectRatio(contentMode: .fit)
+				.frame(width: 70, height: 103.48)
+				.padding(.bottom, 10)
             
             Text(todayDrink.title)
                 .font(.regular12)
+				.foregroundStyle(.mainBlack)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)               ///술 이름은 2줄이 최대로?
         }

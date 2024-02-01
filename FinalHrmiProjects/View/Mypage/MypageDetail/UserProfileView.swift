@@ -9,7 +9,6 @@ import SwiftUI
 
 struct UserProfileView: View {
     @State private var userNickName: String = "sayHong" // 사용자 닉네임
-    @State private var isEditing: Bool = false
     
     @State private var isLibraryPresented: Bool = false // PhotoPicker - 라이브러리에서 선택
     @State private var userProfilePhoto: UIImage? // 사용자 프로필 이미지
@@ -45,11 +44,11 @@ struct UserProfileView: View {
                             .frame(width: 20, height: 20)
                             .foregroundStyle(.gray01)
                     })
-                    .fullScreenCover(isPresented: $isLibraryPresented, content: {
-                        ProfilePhotoPicker(selectedPhoto: $userProfilePhoto,
-                                           isLibraryPresented: $isLibraryPresented)
-                    })
-                    
+					.fullScreenCover(isPresented: $isLibraryPresented) {
+						ProfilePhotoPicker(selectedPhoto: $userProfilePhoto,
+										   isLibraryPresented: $isLibraryPresented)
+					}
+					.tint(.mainBlack)
                 }
                 // MARK: 사용자 닉네임 표시
                 Text(userNickName)
@@ -57,7 +56,7 @@ struct UserProfileView: View {
                 Spacer()
                 
                 NavigationLink {
-                    ChangeUserNameView(userNickName: $userNickName, isEditing: $isEditing)
+                    ChangeUserNameView(userNickName: $userNickName)
                 } label: {
                     Text("닉네임 수정")
                         .font(.light14)

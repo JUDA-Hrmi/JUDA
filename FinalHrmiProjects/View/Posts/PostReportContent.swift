@@ -24,7 +24,7 @@ struct PostReportContent: View {
 							reportContents[index].check.toggle()
 						}
 					Text(reportContents[index].content)
-						.font(.light18)
+						.font(.regular16)
 				}
 			}
 		}
@@ -38,10 +38,12 @@ struct PostReportContent: View {
 				TextEditor(text: $etcReportText)
 					.scrollContentBackground(.hidden)
 					.background(.gray06)
+					.font(.regular16)
 					.focused($isFocused)
 					.disabled(check ? false : true)
 					.clipShape(RoundedRectangle(cornerRadius: 10))
 					.frame(height: 180)
+					.textInputAutocapitalization(.never) // 자동 대문자 설정 기능 비활성화
 			}
 			Text("\(etcReportText.count) / 200")
 				.font(.light14)

@@ -53,7 +53,7 @@ struct RootView: View {
     private func tabItemView(viewType: ViewType) -> some View {
         switch viewType {
         case .main:
-            MainView()
+			MainView(selectedTabIndex: $selectedTabIndex)
         case .drinkInfo:
             DrinkInfoView()
         case .posts:

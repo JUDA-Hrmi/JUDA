@@ -61,12 +61,13 @@ struct PhotoSelectPagingTab: View {
                 .tabViewStyle(.page)
             }
         }
-        .sheet(isPresented: $isLibraryPresented) {
+        .fullScreenCover(isPresented: $isLibraryPresented) {
             let remainingSpaces = getRemainigSpaces()
             PhotoPicker(selectedPhotos: $selectedPhotos,
                         isLibraryPresented: $isLibraryPresented,
                         remainingSpaces: remainingSpaces)
         }
+		.tint(.mainBlack)
         // selectedPhotos에 사진이 추가될 때, 탭뷰 selectedIndex를 마지막 사진의 인덱스로 변경
         .onChange(of: selectedPhotos) { newValue in
             if let index = newValue.lastIndex(where: { $0 != nil }) {

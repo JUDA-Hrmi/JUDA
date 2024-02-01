@@ -31,7 +31,11 @@ struct TaggedTrendingPosts: View {
         VStack(spacing: 0) {
             // TODO: 각각의 셀마다 네비게이션으로 이동할 수 있도록 변경 예정
             ForEach(sampleDataList) { data in
-                PostListCell(postDummyData: data)
+				NavigationLink {
+					PostDetailView(postUserType: .reader, nickName: data.author, isLike: .constant(false), likeCount: .constant(data.postLikesCount))
+				} label: {
+					PostListCell(postDummyData: data)
+				}
             }
         }
     }

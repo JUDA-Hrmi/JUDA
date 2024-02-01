@@ -9,23 +9,28 @@ import SwiftUI
 
 // MARK: - 하단 로그인 OR 비로그인 상태에 따른 뷰 전환
 struct SuggestDrinkView: View {
+	
     @Binding var isLoggedIn: Bool
+	@Binding var selectedTabIndex: Int
+	
     var body: some View {
         if isLoggedIn {
             VStack(alignment: .leading, spacing: 10) {
                 SuggestDrinkCell(isLoggedIn: $isLoggedIn)
                 Text("다른 사람들은 어떻게 먹었을까?")
                     .font(.medium16)
-                NavigationLink {
-                    DrinkInfoView()
-                } label: {
-                    Text("추천 술상 보러가기")
-                        .font(.medium16)
-                        .foregroundStyle(.mainAccent03)
-                        .underline()
-                }
+
+				Text("추천 술상 보러가기")
+					.font(.medium16)
+					.foregroundStyle(.mainAccent03)
+					.underline()
+					.onTapGesture {
+						// 해당 텍스트 탭 할 경우
+						// 술상 탭뷰로 이동
+						selectedTabIndex = 2
+					}
+				
             }
-            .padding(.top, 20)
         } else {
             VStack(alignment: .center, spacing: 10) {
                 SuggestDrinkCell(isLoggedIn: $isLoggedIn)
@@ -42,10 +47,9 @@ struct SuggestDrinkView: View {
                     .padding(.horizontal, 20)
                     .padding(.vertical, 10)
                     .background(.mainAccent03.opacity(0.2))
-                    .cornerRadius(10)
+					.clipShape(.rect(cornerRadius: 10))
                 }
             }
-            .padding(.top, 20)
         }
     }
 }

@@ -24,13 +24,7 @@ struct PostTags: View {
 						NavigationLink {
 							// TODO: PostView Linking code
 							// TODO: 태그값 받아서 바인딩 해줘야하는데...
-							NavigationPostsView(postSearchText: Binding<String>(
-								get: { tag },
-								set: { newValue in
-									// If you need to perform any action when the value is set
-									// Otherwise, you can omit this closure
-								}
-							))
+							NavigationPostsView(postSearchText: .constant(tag))
 						} label: {
 							Text("# \(tag)")
 								.font(.semibold14)

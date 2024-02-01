@@ -12,12 +12,12 @@ struct PostReportTitle: View {
 		VStack {
 			HStack {
 				Text("게시글을 신고하는")
-					.font(.medium20)
+					.font(.medium18)
 				Spacer()
 			}
 			HStack {
 				Text("이유를 알려주세요!")
-					.font(.medium20)
+					.font(.medium18)
 				Spacer()
 			}
 		}

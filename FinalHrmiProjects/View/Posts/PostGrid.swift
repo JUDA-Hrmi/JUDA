@@ -14,9 +14,12 @@ struct PostGrid: View {
 	
 	let postUserType: PostUserType
 	
+	@State private var scrollAxis: Axis.Set = .vertical
+	@State private var vHeight = 0.0
+	
     var body: some View {
 		// TODO: navigationLink 및 navigationDestination을 통한 RecordDetailView 전환 구현
-		ScrollView {
+		CustomScrollView(scrollAxis: $scrollAxis, vHeight: $vHeight) {
 			LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
 				ForEach(0..<12, id: \.self) { _ in
 					NavigationLink {
@@ -32,7 +35,6 @@ struct PostGrid: View {
 			}
 		}
 		.padding(.horizontal, 20)
-		.scrollIndicators(.hidden)
 		.refreshable {
 			// TODO: write post data refresh code
 		}

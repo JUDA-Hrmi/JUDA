@@ -49,7 +49,7 @@ struct PostDetailView: View {
 	@State private var isDeleteDialogPresented = false
 	
 	var body: some View {
-		NavigationStack {
+		VStack {
 			ZStack {
 				VStack {
 					ScrollView {
@@ -76,11 +76,12 @@ struct PostDetailView: View {
 						}
 						.padding(.horizontal, 20)
 					}
+					.scrollIndicators(.hidden)
 				}
 				
 				// 삭제 버튼 눌렸을 시 삭제에 대한 다이얼로그 출력
 				if isDeleteDialogPresented {
-					CustomAlert(message: "삭제하시겠습니까?",
+					CustomSettingDialog(message: "삭제하시겠습니까?",
 								leftButtonLabel: "취소",
 								leftButtonAction: {
 						isDeleteDialogPresented = false
@@ -107,9 +108,15 @@ struct PostDetailView: View {
 			switch postUserType {
 			case .writter:
 				ToolbarItem(placement: .topBarTrailing) {
-					Button {
-						// TODO: Share Post Content
-					} label: {
+					// 공유하기
+					ShareLink(item: "Test", // TODO: 실제 공유하려는 내용으로 변경 필요
+							  subject: Text("이 링크를 확인해보세요."),
+							  message: Text("Hrmi 앱에서 술상 게시물을 공유했어요!"),
+							  // 미리보기
+							  preview: SharePreview(
+								Text(postContent), // TODO: 해당 게시물 이름으로 변경
+								image: Image("foodEx1")) // TODO: 해당 술상의 이미지로 변경
+					) {
 						Image(systemName: "square.and.arrow.up")
 					}
 				}
@@ -131,11 +138,16 @@ struct PostDetailView: View {
 				}
 			case .reader:
 				ToolbarItem(placement: .topBarTrailing) {
-					Button {
-						// TODO: Share Post Content
-					} label: {
+					// 공유하기
+					ShareLink(item: "Test", // TODO: 실제 공유하려는 내용으로 변경 필요
+							  subject: Text("이 링크를 확인해보세요."),
+							  message: Text("Hrmi 앱에서 술상 게시물을 공유했어요!"),
+							  // 미리보기
+							  preview: SharePreview(
+								Text(postContent), // TODO: 해당 게시물 이름으로 변경
+								image: Image("foodEx1")) // TODO: 해당 술상의 이미지로 변경
+					) {
 						Image(systemName: "square.and.arrow.up")
-							.font(.regular14)
 					}
 				}
 				
