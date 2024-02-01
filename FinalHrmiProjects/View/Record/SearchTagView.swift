@@ -34,7 +34,7 @@ struct SearchTagView: View {
     // SearchTagView Sheet를 띄워주는 상태 프로퍼티
     @Binding var isShowSearchTag: Bool
     // 점수
-    @State private var rating: Int = 0
+    @State private var rating: Double = 0
     // 찜 목록 배열 ( 더미데이터를 넣어서 테스트 함 )
     private let likeds: [DrinkInfo] = DrinkInfo.drinkInfos
 

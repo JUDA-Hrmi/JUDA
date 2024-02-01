@@ -12,9 +12,9 @@ struct CustomRatingDialog: View {
     let leftButtonLabel: String         // 왼쪽 버튼 라벨
     let leftButtonAction: () -> Void    // 왼쪽 버튼 액션
     let rightButtonLabel: String        // 오른쪽 버튼 라벨
-    let rightButtonAction: (() -> Void) // 오른쪽 버튼 액션
+    let rightButtonAction: () -> Void // 오른쪽 버튼 액션
     // 점수
-    @Binding var rating: Int
+    @Binding var rating: Double
     
     var body: some View {
         ZStack {
@@ -34,14 +34,14 @@ struct CustomRatingDialog: View {
                             Image(systemName: "star.fill")
                                 .font(.system(size: 35))
                                 // 선택된 이미지까지 색 변경
-                                .foregroundStyle(number > rating ? .gray01 : .mainAccent02)
+                                .foregroundStyle(Double(number) > rating ? .gray01 : .mainAccent03)
                                 .onTapGesture {
                                     // 첫번째 별만 채워져 있을 때, 한 번 더 탭하면 0점이 됨
                                     if rating == 1 && number == 1 {
                                         rating = 0
                                     } else {
                                         // 선택된 별의 개수만큼 점수를 바꿔줌
-                                        rating = number
+                                        rating = Double(number)
                                     }
                                 }
                         }

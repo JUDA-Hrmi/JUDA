@@ -53,7 +53,7 @@ struct DrinkTagCell: View {
                     Text("나의 평가")
                         .font(.regular16)
                     StarRating(rating: Double(drinkTag.rating),
-                               color: .mainAccent02,
+                               color: .mainAccent03,
                                starSize: .regular20,
                                fontSize: nil,
                                starRatingType: .none)

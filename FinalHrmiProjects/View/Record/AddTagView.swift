@@ -11,7 +11,7 @@ import SwiftUI
 struct DrinkTag: Identifiable, Hashable {
     var id = UUID()
     var name: String
-    var rating: Int
+    var rating: Double
 }
 
 struct AddTagView: View {
