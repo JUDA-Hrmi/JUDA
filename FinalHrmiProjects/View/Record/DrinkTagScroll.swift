@@ -10,17 +10,27 @@ import SwiftUI
 struct DrinkTagScroll: View {
     // 술 태그 배열
     @Binding var drinkTags: [DrinkTag]
+    // 선택된 술 태그의 정보를 담는 프로퍼티
+    @Binding var selectedTagDrink: DrinkTag
+    // CustomRatingDialog를 띄워주는 상태 프로퍼티
+    @Binding var isShowRatingDialog: Bool
+    
     var body: some View {
-        ScrollView() {
+        ScrollView(showsIndicators: false) {
             ForEach(drinkTags) { drinkTag in
                 DrinkTagCell(drinkTags: $drinkTags, drinkTag: drinkTag)
+                    .onTapGesture {
+                        // 현재 선택된 DrinkTagCell의 술 태그 정보 받아오기
+                        selectedTagDrink = drinkTag
+                        // CustomRatingDialog 띄우기
+                        isShowRatingDialog.toggle()
+                    }
             }
         }
-        .scrollIndicators(.hidden)
     }
 }
 
-// TODO: LongPressGesture로 별점 다이얼로그 눌러서 수정할 수 있게 하기
+// Mark: onTapGesture로 별점 다이얼로그 눌러서 수정할 수 있게 하기
 struct DrinkTagCell: View {
     // 술 태그 배열
     @Binding var drinkTags: [DrinkTag]
@@ -42,8 +52,8 @@ struct DrinkTagCell: View {
                 HStack(alignment: .center) {
                     Text("나의 평가")
                         .font(.regular16)
-                    StarRating(rating: drinkTag.rating,
-                               color: .mainAccent02,
+                    StarRating(rating: Double(drinkTag.rating),
+                               color: .mainAccent03,
                                starSize: .regular20,
                                fontSize: nil,
                                starRatingType: .none)

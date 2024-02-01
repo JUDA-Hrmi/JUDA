@@ -14,7 +14,7 @@ struct EmptyActionStyle: ButtonStyle {
 	}
 }
 
-// Image Xmark button
+// Image Xmark button Image
 struct XmarkOnGrayCircle: View {
     var body: some View {
         Image(systemName: "xmark.circle.fill")
