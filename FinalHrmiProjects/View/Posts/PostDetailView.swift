@@ -141,6 +141,7 @@ struct PostDetailView: View {
 				
 				ToolbarItem(placement: .topBarTrailing) {
 					Button {
+						// 버튼 탭 할 경우 신고뷰 출력
 						isReportPresented = true
 					} label: {
 						Image(systemName: "light.beacon.max")
@@ -149,11 +150,9 @@ struct PostDetailView: View {
 			}
 		}
 		.foregroundStyle(.mainBlack)
+		// 신고뷰를 풀스크린커버로 아래에서 위로 올라오는 뷰
 		.fullScreenCover(isPresented: $isReportPresented) {
 			PostReportView(isReportPresented: $isReportPresented)
-		}
-		.onAppear {
-			print(postUserType)
 		}
 	}
 }

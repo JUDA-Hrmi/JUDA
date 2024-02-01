@@ -15,6 +15,7 @@ struct PostPhotoScroll: View {
 	@State private var isFullSizePhotoPresented = false
 	
     var body: some View {
+		// 사진 페이징 스크롤 형식
 		TabView(selection: $selectedIndex) {
 			ForEach(0..<postPhotos.count, id: \.self) { index in
 				Image(postPhotos[index])
@@ -42,6 +43,7 @@ struct PostPhotoScroll: View {
 				.tabViewStyle(.page)
 				
 				Button {
+					// X버튼 탭 할 경우 해당 뷰 내려줌
 					isFullSizePhotoPresented = false
 				} label: {
 					Image(systemName: "xmark")

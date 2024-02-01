@@ -31,19 +31,8 @@ struct PostDrinkRating: View {
 							.lineLimit(1)
 						Spacer()
 						
-						// TODO: need StarRating code modify
-						let rating = postDrinksStarRating[index]
-						let fullStars = Int(rating)
-						let hasHalfStar = (rating - Double(fullStars)) >= 0.5
 						HStack(spacing: 5) {
-							HStack(spacing: 0) {
-								ForEach(0..<5) { index in
-									Image(systemName: index < fullStars ? "star.fill" : (hasHalfStar && index == fullStars ? "star.leadinghalf.filled" : "star"))
-										.foregroundStyle(.mainAccent03)
-								}
-							}
-							Text(Formatter.formattedStarRatingCount(rating: postDrinksStarRating[index]))
-								.font(.semibold14)
+							StarRating(rating: postDrinksStarRating[index], color: .mainAccent02, starSize: .regular16, fontSize: .semibold14, starRatingType: .withText)
 							Image(systemName: "chevron.forward")
 						}
 					}

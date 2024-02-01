@@ -56,23 +56,6 @@ struct PostReportView: View {
 					}
 					.scrollIndicators(.hidden)
 					.scrollDismissesKeyboard(.immediately)
-					.onChange(of: reportContents.last?.check) { newValue in
-						if let newValue = newValue {
-							// 마지막 체크박스를 체크했을 시 TextEditor에 Focusing
-							if newValue {
-								isFocused = true
-							} else {
-								// 체크박스 해제 시 Focusing 해제
-								isFocused = false
-							}
-						}
-					}
-					.onChange(of: etcReportText) { newValue in
-						// 입력된 텍스트 수 200자 제한
-						if etcReportText.count > 200 {
-							etcReportText = String(etcReportText.prefix(200))
-						}
-					}
 				}
 				// 신고하기 버튼
 				PostReportButton(reportContents: $reportContents, isReportDialogPresented: $isReportDialogPresented)
@@ -80,6 +63,7 @@ struct PostReportView: View {
 			.padding(.horizontal, 20)
 			.onAppear {
 				// TextEditor에 기본적으로 들어가있는 백그라운드 컬러를 .clear로 변경
+				// TextEditor에 내가 원하는 백그라운드 컬러를 주기 위함.
 				UITextView.appearance().backgroundColor = .clear
 			}
 			

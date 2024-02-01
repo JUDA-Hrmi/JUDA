@@ -23,6 +23,7 @@ struct PostReportButton: View {
 		}
 		.buttonStyle(.borderedProminent)
 		.tint(.mainAccent03)
+		// 체크박스가 하나라도 체크가 돼있지 않다면 버튼 비활성화
 		.disabled(reportContents.filter { $0.check }.count > 0 ? false : true)
 		.padding(.bottom, 10)
     }

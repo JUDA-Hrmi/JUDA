@@ -12,6 +12,7 @@ struct PostReportContent: View {
 	@Binding var reportContents: [ReportContent]
 	@Binding var etcReportText: String
 	
+	// FocusState 바인딩
 	@FocusState var isFocused: Bool
 	
     var body: some View {
@@ -31,6 +32,8 @@ struct PostReportContent: View {
 		.padding(.bottom, 20)
 		
 		ZStack(alignment: .bottomTrailing) {
+			// 마지막 순서의 체크박스에 체크가 돼있지않다면 textEditor 비활성화
+			// 마지막 순서의 체크박스에 체크가 돼있다면 textEditor 활성화
 			if let check = reportContents.last?.check {
 				TextEditor(text: $etcReportText)
 					.scrollContentBackground(.hidden)
@@ -44,6 +47,23 @@ struct PostReportContent: View {
 				.font(.light14)
 				.foregroundStyle(.gray01)
 				.padding(10)
+		}
+		.onChange(of: reportContents.last?.check) { newValue in
+			if let newValue = newValue {
+				// 마지막 체크박스를 체크했을 시 TextEditor에 Focusing
+				if newValue {
+					isFocused = true
+				} else {
+					// 체크박스 해제 시 Focusing 해제
+					isFocused = false
+				}
+			}
+		}
+		.onChange(of: etcReportText) { newValue in
+			// 입력된 텍스트 수 200자 제한
+			if etcReportText.count > 200 {
+				etcReportText = String(etcReportText.prefix(200))
+			}
 		}
     }
 }
