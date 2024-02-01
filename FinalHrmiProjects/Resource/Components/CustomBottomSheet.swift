@@ -111,7 +111,6 @@ struct BottomSheetContentCell: View {
                     Text(sortingOptionName)
                         .font(.medium18)
                     Spacer()
-                    Text("")
 
                 }
                 .foregroundStyle(.mainBlack)

@@ -40,11 +40,14 @@ struct SearchTagView: View {
 
 	@State private var tagSearchText = ""
 	
+	@State private var scrollAxis: Axis.Set = .vertical
+	@State private var vHeight = 0.0
+	
     var body: some View {
         ZStack {
             VStack {
                 HStack(alignment: .center, spacing: 0) {
-                    SearchBar()
+					SearchBar(inputText: $tagSearchText)
                     // Sheet 내려주기
                     Button {
                         isShowSearchTag.toggle()
@@ -66,7 +69,7 @@ struct SearchTagView: View {
                     Spacer()
                 } else {
                     // 찜 목록이 있을 때, DrinkListCell 리스트로 보여주기
-                    ScrollView {
+                    CustomScrollView(scrollAxis: $scrollAxis, vHeight: $vHeight) {
                         ForEach(likeds, id: \.self) { drinkInfo in
                             DrinkListCell()
                                 .onTapGesture {
@@ -77,10 +80,7 @@ struct SearchTagView: View {
                                 }
                         }
                     }
-                    // 스크롤 했을 때, 키보드 사라지기
-                    .scrollDismissesKeyboard(.immediately)
                 }
-                
             }
             // 상태 프로퍼티에 따라 CustomRatingDialog 띄워주기
             if isShowRatingDialog {
@@ -117,11 +117,6 @@ struct SearchTagView: View {
                 }
             }
         }
-        // 화면 탭했을 때, 키보드 사라지기
-        .onTapGesture {
-            hideKeyboard()
-        }
-
     }
 }
 

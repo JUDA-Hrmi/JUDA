@@ -27,12 +27,13 @@ struct CustomRatingDialog: View {
                         .multilineTextAlignment(.leading)
                         .lineSpacing(10)
                         .frame(width: 224)
+						.font(.medium18)
 
                     // MARK: 별점 매기는 부분
                     HStack(spacing: 0) {
                         ForEach(1...5, id: \.self) { number in
                             Image(systemName: "star.fill")
-                                .font(.system(size: 35))
+                                .font(.system(size: 32))
                                 // 선택된 이미지까지 색 변경
                                 .foregroundStyle(Double(number) > rating ? .gray01 : .mainAccent03)
                                 .onTapGesture {
@@ -57,7 +58,7 @@ struct CustomRatingDialog: View {
                         self.leftButtonAction()
                     }, label: {
                         Text(leftButtonLabel)
-//                            .font(.medium16)
+                            .font(.medium16)
                             .foregroundColor(.gray)
                             .padding(.horizontal, 16)
                     })
@@ -66,7 +67,7 @@ struct CustomRatingDialog: View {
                         self.rightButtonAction()
                     }, label: {
                         Text(rightButtonLabel)
-//                            .font(.medium16)
+                            .font(.medium16)
                             .foregroundColor(.orange)
                             .padding(.horizontal, 16)
 

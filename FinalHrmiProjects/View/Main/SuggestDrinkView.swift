@@ -31,7 +31,6 @@ struct SuggestDrinkView: View {
 					}
 				
             }
-            .padding(.top, 20)
         } else {
             VStack(alignment: .center, spacing: 10) {
                 SuggestDrinkCell(isLoggedIn: $isLoggedIn)
@@ -51,7 +50,6 @@ struct SuggestDrinkView: View {
                     .cornerRadius(10)
                 }
             }
-            .padding(.top, 20)
         }
     }
 }

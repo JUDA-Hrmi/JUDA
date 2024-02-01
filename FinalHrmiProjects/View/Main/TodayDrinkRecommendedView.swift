@@ -27,7 +27,7 @@ struct TodayDrinkRecommendedView: View {
 	
     var body: some View {
         VStack {
-            HStack(spacing: 10) {
+			HStack(alignment: .top, spacing: 10) {
                 ForEach(todayDrink, id: \.self) { drink in
 					if isLoggedIn {
 						NavigationLink {
@@ -54,7 +54,10 @@ struct TodayDrinkRecommendedCell: View {
     var body: some View {
         VStack {
             Image(todayDrink.image)
-                .padding()
+				.resizable()
+				.aspectRatio(contentMode: .fit)
+				.frame(width: 70, height: 103.48)
+				.padding(.bottom, 10)
             
             Text(todayDrink.title)
                 .font(.regular12)

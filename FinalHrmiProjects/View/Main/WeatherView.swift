@@ -18,8 +18,9 @@ struct WeatherView: View {
         //            .frame(height: 200)
         
         VStack(alignment: .center, spacing: 10) {
-            Image("sun")
+            Image("rain")
                 .resizable()
+				.aspectRatio(1.0, contentMode: .fill)
                 .frame(width: 200, height: 200)
             
             Text(isLoggedIn ? "오늘은 비가 와요." : "오늘의 날씨와 어울리는")

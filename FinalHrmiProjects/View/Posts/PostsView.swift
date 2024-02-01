@@ -32,7 +32,7 @@ struct PostsView: View {
 				
 				// TODO: navigationLink 및 navigationDestination을 통한 RecordView 전환 구현
 				NavigationLink {
-					Text("새글 작성하기")
+					AddTagView()
 				} label: {
 					Text("새글 작성하기")
 						.font(.medium16)
@@ -54,9 +54,7 @@ struct PostsView: View {
 							}
 						}
 						.onChange(of: selectedSegmentIndex) { newValue in
-							withAnimation() {
-								value.scrollTo(newValue, anchor: .center)
-							}
+							value.scrollTo(newValue, anchor: .center)
 						}
 					}
 				}

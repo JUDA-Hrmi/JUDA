@@ -26,7 +26,11 @@ struct LikedPostGrid: View {
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(0..<8, id: \.self) { _ in
                     // TODO: 추후에 네비게이션으로 해당 술상의 Detail 로 이동 연결
-                    PostCell(isLike: $isLikePost, likeCount: $postLikeCount)
+					NavigationLink {
+						PostDetailView(postUserType: .reader, nickName: "Hrmi", isLike: $isLikePost, likeCount: $postLikeCount)
+					} label: {
+						PostCell(isLike: $isLikePost, likeCount: $postLikeCount)
+					}
                 }
             }
             .padding(.horizontal, 20)

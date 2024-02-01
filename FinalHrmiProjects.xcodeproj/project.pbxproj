@@ -35,14 +35,10 @@
 		2C2AD5072B68A22A00C681F4 /* FoodTagXmarkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2AD5062B68A22A00C681F4 /* FoodTagXmarkButton.swift */; };
 		2C2FF2982B63916700B2301A /* StarRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2FF2972B63916700B2301A /* StarRating.swift */; };
 		2C5B0F422B6B10CF005F1A99 /* CustomRatingDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5B0F412B6B10CF005F1A99 /* CustomRatingDialog.swift */; };
-		2C63DD522B676E1000770E3A /* TabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD512B676E1000770E3A /* TabItem.swift */; };
 		2C63DD612B67D5EB00770E3A /* PhotoSelectPagingTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD602B67D5EB00770E3A /* PhotoSelectPagingTab.swift */; };
 		2C63DD632B67D60C00770E3A /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD622B67D60C00770E3A /* PhotoPicker.swift */; };
 		2C63DD652B67DFA400770E3A /* DrinkTagScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD642B67DFA400770E3A /* DrinkTagScroll.swift */; };
 		2C63DD672B67EB1B00770E3A /* WritingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD662B67EB1B00770E3A /* WritingView.swift */; };
-		2CDF3E2C2B6A3EE800112F23 /* FinalHrmiProjectsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8FE7C2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift */; };
-		2CDF3E2D2B6A3EE800112F23 /* AddTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE248B2B61446A007F68B0 /* AddTagView.swift */; };
-		2CDF3E2E2B6A3EE800112F23 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE249F2B6144E3007F68B0 /* MainViewModel.swift */; };
 		7B5174922B69EAB300915793 /* NavigationPostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5174912B69EAB300915793 /* NavigationPostsView.swift */; };
 		7B6D76A72B677A8F00601B55 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76A62B677A8F00601B55 /* Button.swift */; };
 		7B6D76AB2B67CE3D00601B55 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76AA2B67CE3D00601B55 /* PostDetailView.swift */; };
@@ -50,7 +46,6 @@
 		7B6D76B12B67D1E100601B55 /* PostPhotoScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76B02B67D1E100601B55 /* PostPhotoScroll.swift */; };
 		7B6D76B32B67D3B700601B55 /* PostDrinkRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76B22B67D3B700601B55 /* PostDrinkRating.swift */; };
 		7B6D76B52B67D5F900601B55 /* PostTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76B42B67D5F900601B55 /* PostTags.swift */; };
-		7B6D76B72B68972000601B55 /* PostGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76B62B68972000601B55 /* PostGrid.swift */; };
 		7B6D76B92B68D9C900601B55 /* PostReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76B82B68D9C900601B55 /* PostReportView.swift */; };
 		7B904C662B6168C60052384A /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B904C652B6168C60052384A /* PostCell.swift */; };
 		7B904C682B6184560052384A /* CustomTextSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B904C672B6184560052384A /* CustomTextSegment.swift */; };
@@ -58,14 +53,15 @@
 		7B92656D2B692F0700840095 /* PostReportContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B92656C2B692F0700840095 /* PostReportContent.swift */; };
 		7B92656F2B69303F00840095 /* PostReportButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B92656E2B69303F00840095 /* PostReportButton.swift */; };
 		7B9265712B6941D000840095 /* PostReportToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9265702B6941D000840095 /* PostReportToolbar.swift */; };
-		7BBDFF682B6A0A1D0036FB8B /* AddTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE248B2B61446A007F68B0 /* AddTagView.swift */; };
-		7BBDFF692B6A0A2E0036FB8B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE249F2B6144E3007F68B0 /* MainViewModel.swift */; };
-		7BBDFF6B2B6A0A630036FB8B /* FinalHrmiProjectsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8FE7C2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift */; };
-		7BBDFF6D2B6A50060036FB8B /* PostGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76B62B68972000601B55 /* PostGrid.swift */; };
+		7BBDFF6E2B6B90EB0036FB8B /* FinalHrmiProjectsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8FE7C2B5EA9D900921BBE /* FinalHrmiProjectsApp.swift */; };
+		7BBDFF6F2B6B90EB0036FB8B /* AddTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE248B2B61446A007F68B0 /* AddTagView.swift */; };
+		7BBDFF702B6B90EB0036FB8B /* PostGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76B62B68972000601B55 /* PostGrid.swift */; };
+		7BBDFF712B6B90EB0036FB8B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE249F2B6144E3007F68B0 /* MainViewModel.swift */; };
+		7BBDFF722B6B912C0036FB8B /* TabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD512B676E1000770E3A /* TabItem.swift */; };
+		7BBDFF732B6B912C0036FB8B /* DrinkInfoSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */; };
 		AC110B532B68BBFA005390BB /* CustomDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC110B522B68BBFA005390BB /* CustomDialog.swift */; };
 		AC110B572B69658C005390BB /* ChangeUserNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC110B562B69658C005390BB /* ChangeUserNameView.swift */; };
 		AC1FEAAE2B639781006E9E65 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1FEAAD2B639781006E9E65 /* CustomAlert.swift */; };
-		AC502D712B62A21700C2BD6A /* CustomNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC502D702B62A21700C2BD6A /* CustomNavigation.swift */; };
 		AC6D12842B6A8D6100169B23 /* SuggestDrinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12832B6A8D6100169B23 /* SuggestDrinkCell.swift */; };
 		AC6D12862B6A8D7800169B23 /* SuggestDrinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12852B6A8D7800169B23 /* SuggestDrinkView.swift */; };
 		AC6D12882B6A8DD300169B23 /* TodayDrinkRecommendedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12872B6A8DD300169B23 /* TodayDrinkRecommendedView.swift */; };
@@ -86,9 +82,8 @@
 		B12BEE4B2B6A9E3B00580D29 /* NoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12BEE4A2B6A9E3B00580D29 /* NoticeView.swift */; };
 		B12BEE4D2B6AA29000580D29 /* CustomBottomContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12BEE4C2B6AA29000580D29 /* CustomBottomContents.swift */; };
 		B12BEE4F2B6B7BDA00580D29 /* Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12BEE4E2B6B7BDA00580D29 /* Handler.swift */; };
-		B14771F72B62019B0036A4A9 /* View +.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14771F62B62019B0036A4A9 /* View +.swift */; };
+		B14771F72B62019B0036A4A9 /* UIApplication +.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14771F62B62019B0036A4A9 /* UIApplication +.swift */; };
 		B158F83F2B657A9000E33C47 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B158F83E2B657A9000E33C47 /* Theme.swift */; };
-		B16EB85C2B63859800E920A3 /* DrinkInfoSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */; };
 		B1B8FE812B5EA9DA00921BBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */; };
 		B1B8FE842B5EA9DA00921BBE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1B8FE832B5EA9DA00921BBE /* Preview Assets.xcassets */; };
 		B1B8FE8D2B5EAAAB00921BBE /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1B8FE8C2B5EAAAB00921BBE /* Colors.xcassets */; };
@@ -165,7 +160,6 @@
 		AC110B522B68BBFA005390BB /* CustomDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDialog.swift; sourceTree = "<group>"; };
 		AC110B562B69658C005390BB /* ChangeUserNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeUserNameView.swift; sourceTree = "<group>"; };
 		AC1FEAAD2B639781006E9E65 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
-		AC502D702B62A21700C2BD6A /* CustomNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigation.swift; sourceTree = "<group>"; };
 		AC6D12832B6A8D6100169B23 /* SuggestDrinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestDrinkCell.swift; sourceTree = "<group>"; };
 		AC6D12852B6A8D7800169B23 /* SuggestDrinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestDrinkView.swift; sourceTree = "<group>"; };
 		AC6D12872B6A8DD300169B23 /* TodayDrinkRecommendedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayDrinkRecommendedView.swift; sourceTree = "<group>"; };
@@ -187,7 +181,7 @@
 		B12BEE4A2B6A9E3B00580D29 /* NoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeView.swift; sourceTree = "<group>"; };
 		B12BEE4C2B6AA29000580D29 /* CustomBottomContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomContents.swift; sourceTree = "<group>"; };
 		B12BEE4E2B6B7BDA00580D29 /* Handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Handler.swift; sourceTree = "<group>"; };
-		B14771F62B62019B0036A4A9 /* View +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View +.swift"; sourceTree = "<group>"; };
+		B14771F62B62019B0036A4A9 /* UIApplication +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication +.swift"; sourceTree = "<group>"; };
 		B158F83E2B657A9000E33C47 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoSegment.swift; sourceTree = "<group>"; };
 		B1B8FE792B5EA9D900921BBE /* FinalHrmiProjects.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalHrmiProjects.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -258,7 +252,7 @@
 				B12BEE4E2B6B7BDA00580D29 /* Handler.swift */,
 				7B6D76A62B677A8F00601B55 /* Button.swift */,
 				B121A5712B5F8EE100667D42 /* Font +.swift */,
-				B14771F62B62019B0036A4A9 /* View +.swift */,
+				B14771F62B62019B0036A4A9 /* UIApplication +.swift */,
 				B158F83E2B657A9000E33C47 /* Theme.swift */,
 				09F869922B68E36800A56A4C /* Formatter.swift */,
 				B1EE24A32B614508007F68B0 /* Components */,
@@ -535,7 +529,6 @@
 				09CDADA42B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift */,
 				2C2FF2972B63916700B2301A /* StarRating.swift */,
 				AC1FEAAD2B639781006E9E65 /* CustomAlert.swift */,
-				AC502D702B62A21700C2BD6A /* CustomNavigation.swift */,
 				B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */,
 				B127A4212B64EB53001F005D /* CustomBottomSheet.swift */,
 				09254CA62B637C9900569D94 /* CustomDivider.swift */,
@@ -635,16 +628,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BBDFF722B6B912C0036FB8B /* TabItem.swift in Sources */,
+				7BBDFF732B6B912C0036FB8B /* DrinkInfoSegment.swift in Sources */,
+				7BBDFF6E2B6B90EB0036FB8B /* FinalHrmiProjectsApp.swift in Sources */,
+				7BBDFF6F2B6B90EB0036FB8B /* AddTagView.swift in Sources */,
+				7BBDFF702B6B90EB0036FB8B /* PostGrid.swift in Sources */,
+				7BBDFF712B6B90EB0036FB8B /* MainViewModel.swift in Sources */,
 				2C5B0F422B6B10CF005F1A99 /* CustomRatingDialog.swift in Sources */,
 				B12BEE4B2B6A9E3B00580D29 /* NoticeView.swift in Sources */,
-				2CDF3E2C2B6A3EE800112F23 /* FinalHrmiProjectsApp.swift in Sources */,
-				2CDF3E2D2B6A3EE800112F23 /* AddTagView.swift in Sources */,
-				2CDF3E2E2B6A3EE800112F23 /* MainViewModel.swift in Sources */,
 				09F869BD2B6A4AAE00A56A4C /* LikedPostGrid.swift in Sources */,
-				7BBDFF6D2B6A50060036FB8B /* PostGrid.swift in Sources */,
-				7BBDFF6B2B6A0A630036FB8B /* FinalHrmiProjectsApp.swift in Sources */,
-				7BBDFF692B6A0A2E0036FB8B /* MainViewModel.swift in Sources */,
-				7BBDFF682B6A0A1D0036FB8B /* AddTagView.swift in Sources */,
 				2C2FF2982B63916700B2301A /* StarRating.swift in Sources */,
 				2C63DD612B67D5EB00770E3A /* PhotoSelectPagingTab.swift in Sources */,
 				7B6D76B92B68D9C900601B55 /* PostReportView.swift in Sources */,
@@ -670,10 +662,8 @@
 				7B904C682B6184560052384A /* CustomTextSegment.swift in Sources */,
 				2C2AD4FD2B68891C00C681F4 /* SearchTagView.swift in Sources */,
 				B1EE24A22B6144EA007F68B0 /* LogInViewModel.swift in Sources */,
-				B14771F72B62019B0036A4A9 /* View +.swift in Sources */,
+				B14771F72B62019B0036A4A9 /* UIApplication +.swift in Sources */,
 				AC6D12842B6A8D6100169B23 /* SuggestDrinkCell.swift in Sources */,
-				B1B8FE7F2B5EA9D900921BBE /* ContentView.swift in Sources */,
-				7B6D76A92B677D2000601B55 /* Handler.swift in Sources */,
 				2C63DD632B67D60C00770E3A /* PhotoPicker.swift in Sources */,
 				7B6D76A72B677A8F00601B55 /* Button.swift in Sources */,
 				09F8699E2B68E4E400A56A4C /* PeferencesChart.swift in Sources */,
@@ -691,13 +681,9 @@
 				09CDADA52B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift in Sources */,
 				AC6D128A2B6A8ED100169B23 /* WeatherView.swift in Sources */,
 				2C2044E82B63B9D600773266 /* RootView.swift in Sources */,
-				2C63DD522B676E1000770E3A /* TabItem.swift in Sources */,
-				B16EB85C2B63859800E920A3 /* DrinkInfoSegment.swift in Sources */,
 				B12BEE4F2B6B7BDA00580D29 /* Handler.swift in Sources */,
 				B12330472B6A998C00DE2A93 /* SettingPhotoPicker.swift in Sources */,
 				09F869932B68E36800A56A4C /* Formatter.swift in Sources */,
-				2C63DD522B676E1000770E3A /* TabItem.swift in Sources */,
-				B16EB85C2B63859800E920A3 /* DrinkInfoSegment.swift in Sources */,
 				B123304E2B6A9A0300DE2A93 /* UserProfileView.swift in Sources */,
 				0914DEAD2B66453E0014E102 /* PagerView.swift in Sources */,
 				0961B7972B6624D300A9F553 /* DrinkInfoList.swift in Sources */,
@@ -709,7 +695,6 @@
 				B1EE249C2B6144CD007F68B0 /* PostsViewModel.swift in Sources */,
 				2C2AD5072B68A22A00C681F4 /* FoodTagXmarkButton.swift in Sources */,
 				2C63DD652B67DFA400770E3A /* DrinkTagScroll.swift in Sources */,
-				7B6D76B72B68972000601B55 /* PostGrid.swift in Sources */,
 				B1EE24A52B614872007F68B0 /* SearchBar.swift in Sources */,
 				B1EE24942B614485007F68B0 /* LogInView.swift in Sources */,
 				B1EE248E2B614470007F68B0 /* PostsView.swift in Sources */,
@@ -723,7 +708,6 @@
 				09F869A22B68E51600A56A4C /* PostListCell.swift in Sources */,
 				B1EE24882B61445E007F68B0 /* MypageView.swift in Sources */,
 				09F869A02B68E50000A56A4C /* TaggedTrendingPosts.swift in Sources */,
-				AC502D712B62A21700C2BD6A /* CustomNavigation.swift in Sources */,
 				7B6D76B52B67D5F900601B55 /* PostTags.swift in Sources */,
 				7B904C662B6168C60052384A /* PostCell.swift in Sources */,
 				AC110B572B69658C005390BB /* ChangeUserNameView.swift in Sources */,

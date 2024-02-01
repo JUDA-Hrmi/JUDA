@@ -12,8 +12,8 @@ struct MainView: View {
 	@Binding var selectedTabIndex: Int
 	
     var body: some View {
-		VStack(alignment:.center) {
-			VStack(alignment:.center, spacing: 20) {
+		VStack(alignment: .center) {
+			VStack(alignment: .center, spacing: 20) {
 				WeatherView(isLoggedIn: $isLoggedIn)
 					.padding(.bottom, 20)
 			}

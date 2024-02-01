@@ -14,7 +14,7 @@ struct PostReportToolbar: View {
     var body: some View {
 		ZStack(alignment: .trailing) {
 			Text("신고하기")
-				.font(.medium16)
+				.font(.regular16)
 				.frame(maxWidth: .infinity)
 			
 			Button {

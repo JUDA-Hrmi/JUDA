@@ -86,7 +86,7 @@ struct CheckBox: View {
 	let isCheck: Bool
 	var body: some View {
 		Image(systemName: "checkmark.square.fill")
-			.font(.medium36)
+			.font(.medium26)
 			.foregroundStyle(isCheck ? .mainAccent03 : .gray04)
 	}
 }

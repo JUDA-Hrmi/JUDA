@@ -12,6 +12,7 @@ struct NoticeView: View {
     var body: some View {
         VStack {
             Text("공지사항 뷰입니다. ")
+				.font(.medium18)
         }
         .navigationBarBackButtonHidden()
         .toolbar {
@@ -26,7 +27,7 @@ struct NoticeView: View {
             }
             ToolbarItem(placement: .principal) {
                 Text("공지사항")
-                    .font(.medium18)
+                    .font(.regular16)
                     .foregroundStyle(.mainBlack)
             }
         }
