@@ -101,10 +101,7 @@ struct WritingView: View {
 				}
 			}
 			.task {
-				let scenes = UIApplication.shared.connectedScenes
-				let windowScene = scenes.first as? UIWindowScene
-				let window = windowScene?.windows.first
-				windowWidth = (window?.screen.bounds.width ?? 0) - 40
+				windowWidth = TagHandler.getScreenWidthWithoutPadding(padding: 20)
 			}
 		}
 		.navigationBarBackButtonHidden()

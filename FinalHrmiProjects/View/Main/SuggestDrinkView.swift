@@ -47,7 +47,7 @@ struct SuggestDrinkView: View {
                     .padding(.horizontal, 20)
                     .padding(.vertical, 10)
                     .background(.mainAccent03.opacity(0.2))
-                    .cornerRadius(10)
+					.clipShape(.rect(cornerRadius: 10))
                 }
             }
         }

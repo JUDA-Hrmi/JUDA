@@ -59,7 +59,7 @@ struct CustomRatingDialog: View {
                     }, label: {
                         Text(leftButtonLabel)
                             .font(.medium16)
-                            .foregroundColor(.gray)
+                            .foregroundColor(.gray01)
                             .padding(.horizontal, 16)
                     })
 
@@ -68,7 +68,7 @@ struct CustomRatingDialog: View {
                     }, label: {
                         Text(rightButtonLabel)
                             .font(.medium16)
-                            .foregroundColor(.orange)
+							.foregroundColor(.mainAccent03)
                             .padding(.horizontal, 16)
 
                     })
