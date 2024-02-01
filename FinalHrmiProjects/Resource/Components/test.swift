@@ -23,7 +23,7 @@ struct RoundedCorners: Shape {
     }
 }
 
-enum BottomSheetType: Int {
+enum BottomSheetType {
     case drinkInfo
     case displaySetting
     
@@ -77,13 +77,15 @@ struct DismissButton: View {
                 action()
             }, label: {
                 Text("닫기")
+                    .font(.medium18)
+                    .foregroundStyle(.mainBlack)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             })
         }
     }
 }
 
-// BottomSheet 안의 내용
+// BottomSheet 위에 띄워질 뷰
 struct DrinkInfoSortingBottomSheet: View{
     let buttonHeight: CGFloat = 55
     let optionNameList: [String]
@@ -92,13 +94,11 @@ struct DrinkInfoSortingBottomSheet: View{
     @Binding var selectedSortingOption: String
     
     var body: some View{
-        VStack(alignment: .leading) {
+        VStack(alignment: .center) {
             HStack {
                 Text("정렬 방식 선택")
-                    .foregroundColor(.black.opacity(0.9))
+                    .foregroundColor(.mainBlack)
                     .font(.light14)
-
-                Spacer()
             }
             .padding(.top, 16)
             .padding(.bottom, 4)
@@ -112,7 +112,7 @@ struct DrinkInfoSortingBottomSheet: View{
         .padding(.horizontal, 16)
     }
 }
-
+// BottomSheet 위에 띄워질 뷰
 struct DisplaySettingBottomSheet: View{
     let buttonHeight: CGFloat = 55
     let optionNameList: [String]
@@ -124,7 +124,7 @@ struct DisplaySettingBottomSheet: View{
         VStack(alignment: .center) {
             HStack {
                 Text("화면 모드 선택")
-                    .foregroundColor(.black.opacity(0.9))
+                    .foregroundColor(.mainBlack)
                     .font(.light14)
                 
             }
@@ -152,7 +152,7 @@ struct Content2View: View {
         ZStack{
             CustomSortingButton(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingBottomSheet)
             
-            BottomSheet(isShowing: $isShowingBottomSheet, content: BottomSheetType.displaySetting.view(optionNameList: optionNameList, isShowing: $isShowingBottomSheet, selectedSortingOption: $selectedSortingOption))
+            BottomSheet(isShowing: $isShowingBottomSheet, content: BottomSheetType.drinkInfo.view(optionNameList: optionNameList, isShowing: $isShowingBottomSheet, selectedSortingOption: $selectedSortingOption))
         }
     }
 }
