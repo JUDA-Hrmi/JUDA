@@ -104,7 +104,9 @@ struct SettingView: View {
                 
                 // 화면 모드 설정 클릭 시 띄워지는 CustomBottomSheet
                 // BottomSheetType -> .displaySetting
-                CustomBottomSheet(isShowingSheet: $isShowingSheet, content: BottomSheetType.displaySetting.view(optionNameList: optionNameList, isShowingSheet: $isShowingSheet, selectedSortingOption: $selectedSortingOption))
+                CustomBottomSheet(isShowingSheet: $isShowingSheet) {
+                    BottomSheetContentView(optionNameList: optionNameList, isShowingSheet: $isShowingSheet, selectedSortingOption: $selectedSortingOption, text: BottomSheetType.displaySetting.description)
+                }
                 
                 // 로그아웃 버튼 클릭 시 띄워지는 CustomAlert
                 if isLogoutClicked {

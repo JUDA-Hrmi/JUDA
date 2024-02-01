@@ -8,11 +8,17 @@
 import SwiftUI
 
 // MARK: CustomBottomSheet
-struct CustomBottomSheet: View {
+struct CustomBottomSheet<Content : View> : View {
     @Binding var isShowingSheet: Bool // CustomBottomSheet 호출 시, 함수 동작을 더 잘 나타내기 위해 상태변수 먼저 작성
     
-    var content: AnyView
+    let content: Content
     @Environment(\.colorScheme) var scheme
+    
+    init(isShowingSheet: Binding<Bool>, @ViewBuilder contentBuilder: () -> Content) {
+        self._isShowingSheet = isShowingSheet
+        self.content = contentBuilder()
+    }
+    
     var body: some View {
         ZStack(alignment: .bottom) {
             if (isShowingSheet) { // Sheet활성화 됐을 때 뒷배경
