@@ -12,7 +12,11 @@ struct FoodTagAddTextField: View {
     @State private var foodTagName: String = ""
     // 음식 태그 배열
     @Binding var foodTags: [FoodTag]
+    // VStack에 부여된 id 값 바인딩
+    var textField: Namespace.ID
+    // TextField focus 상태 프로퍼티 바인딩
     var isFocusedTextField: FocusState<Bool>.Binding
+    // WritingView의 ScrollView porxy 바인딩
     let proxy: ScrollViewProxy
     
     var body: some View {
@@ -22,16 +26,15 @@ struct FoodTagAddTextField: View {
                 .opacity(0.7)
             
             TextField("음식 이름", text: $foodTagName)
-//                .onTapGesture {
-//                    withAnimation {
-//                        proxy.scrollTo("TextField", anchor: .center)
-//                    }
-//                }
                 .focused(isFocusedTextField)
                 .onChange(of: isFocusedTextField.wrappedValue) { newValue in
                     if newValue {
-                        withAnimation {
-                            proxy.scrollTo("TextField", anchor: .top)
+                        // focusState의 Scroll 우선순위로 인하여 시간차를 두고 실행
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            withAnimation {
+                                // WritingView의 ScrollView가 음식 태그 Vstack에 포커싱되도록 하기
+                                proxy.scrollTo(textField, anchor: .center)
+                            }
                         }
                     }
                 }
@@ -48,19 +51,11 @@ struct FoodTagAddTextField: View {
             // tint color 안 들어가게 버튼 스타일 변경
             .buttonStyle(.plain)
         }
-//        .id("TextField")
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
         .background(.mainAccent03.opacity(0.2))
         .clipShape(.rect(cornerRadius: 10))
         .padding(.horizontal, 20)
-//        .onChange(of: isFocusedTextField.wrappedValue) { _ in
-//            if isFocusedTextField.wrappedValue {
-//                print("...")
-//                proxy.scrollTo("TextField", anchor: .center)
-//            }
-//        }
-
     }
     
     // 입력된 음식 태그 이름을 음식 태그 배열 foodTags에 추가해주는 함수
@@ -73,7 +68,8 @@ struct FoodTagAddTextField: View {
         foodTagName = ""
         
         withAnimation {
-            proxy.scrollTo("TextField", anchor: .center)
+            // WritingView의 ScrollView가 음식 태그 Vstack에 포커싱
+            proxy.scrollTo(textField, anchor: .center)
         }
     }
 }

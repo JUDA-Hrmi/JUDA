@@ -20,11 +20,7 @@ struct ContentView: View {
 //                .font(.system(size: 20))
 //        }
 //        .padding()
-//        RootView()
-        NavigationStack {
-            NavigationLink("WritingView") { WritingView() }
-        }
-
+        RootView()
     }
 }
 

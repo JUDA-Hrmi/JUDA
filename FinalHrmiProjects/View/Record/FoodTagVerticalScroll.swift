@@ -15,58 +15,24 @@ struct FoodTagVerticalScroll: View {
     @State private var foodTagRows: [[FoodTag]] = []
     // 화면 너비
     let windowWidth: CGFloat
-//    let proxy: ScrollViewProxy
-//    var isFocusedTextField: FocusState<Bool>.Binding
-    
-    // View를 식별하기 위해 부여
-//    @Namespace var lastHStack
     
     var body: some View {
-//        ScrollViewReader { proxy in
-//            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 15) {
-                    ForEach(foodTagRows, id: \.self) { row in                        
-                        HStack(spacing: 20) {
-                            ForEach(row, id: \.self) { tag in
-                                // foodTagRows의 마지막 줄의 첫번째일 때, FoodTagXmarkButtom에 id 부여
-                                if tag == foodTagRows.last?.first {
-                                    // "X 음식태그" 형태를 가진 버튼
-                                    FoodTagXmarkButton(foodTags: $foodTags, foodTag: tag)
-//                                        .id(lastHStack)
-                                } else {
-                                    FoodTagXmarkButton(foodTags: $foodTags, foodTag: tag)
-                                }
-                            }
-                        }
+        VStack(alignment: .leading, spacing: 15) {
+            ForEach(foodTagRows, id: \.self) { row in
+                HStack(spacing: 20) {
+                    ForEach(row, id: \.self) { tag in
+                        // "X 음식태그" 형태를 가진 버튼
+                        FoodTagXmarkButton(foodTags: $foodTags, foodTag: tag)
                     }
                 }
-//                .id("TextField")
-                .padding(.vertical, 10)
-//            }
-            .frame(width: windowWidth, /*height: 150,*/ alignment: .leading)
-//            .padding(.top, 10)
-//            .padding(.bottom, 5)
-            // 음식 태그 배열에 변경사항이 있을 때마다 width에 맞게 2차원 배열로 매핑
-            .onChange(of: foodTags) { _ in
-//                DispatchQueue.main.async {
-                    foodTagRows = getRows(tags: foodTags, spacing: 35, fontSize: 14, windowWidth: windowWidth)
-//                }
-//                // Scroll View 포커싱에 애니메이션 추가
-//                withAnimation {
-//                    // Scroll View가 마지막 줄에 포커싱 되도록 하기
-//                    proxy.scrollTo(lastHStack, anchor: .center)
-//                }
             }
-//            .onChange(of: isFocusedTextField.wrappedValue) { newValue in
-//                if newValue {
-//                    print("\(newValue)")
-//                    withAnimation {
-//                        // Scroll View가 마지막 줄에 포커싱 되도록 하기
-//                        proxy.scrollTo("TextField", anchor: .center)
-//                    }
-//                }
-//            }
-//        }
+        }
+        .padding(.vertical, 10)
+        .frame(width: windowWidth, alignment: .leading)
+        // 음식 태그 배열에 변경사항이 있을 때마다 width에 맞게 2차원 배열로 매핑
+        .onChange(of: foodTags) { _ in
+            foodTagRows = getRows(tags: foodTags, spacing: 35, fontSize: 14, windowWidth: windowWidth)
+        }
     }
     
     // TODO: 핸들러 메서드 사용

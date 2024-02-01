@@ -22,8 +22,14 @@ struct WritingView: View {
     @State private var foodTags: [FoodTag] = []
     // 화면 너비
     @State private var windowWidth: CGFloat = 0
+    // TextEditor focus 상태 프로퍼티
     @FocusState private var isFocusedTextEditor: Bool
+    // TextField focus 상태 프로퍼티
     @FocusState private var isFocusedTextField: Bool
+    // VStack에 id 값을 부여하기 위한 네임스페이스
+    @Namespace private var textField
+    // Navigation을 위한 환경 프로퍼티
+    @Environment(\.dismiss) private var dismiss
     // TextEditor에서 사용되는 placeholder
     private let placeholder = """
                     사진에 대해 설명해주세요.
@@ -47,11 +53,12 @@ struct WritingView: View {
                                 .padding(.top, 10)
                                 .foregroundStyle(.gray01)
                                 .onTapGesture {
+                                    // 오버레이 된 Text를 탭할 시, TextEditor focus 상태 변경
                                     isFocusedTextEditor = true
                                 }
                             
                         }
-                        .frame(height: 350)
+                        .frame(height: 300)
                         .padding(.horizontal, 20)
                         .padding(.vertical, 10)
                         .scrollIndicators(.hidden)
@@ -70,16 +77,24 @@ struct WritingView: View {
                         .padding(.bottom, 5)
                         
                         // 음식 태그 추가 TextField
-                        FoodTagAddTextField(foodTags: $foodTags, isFocusedTextField: $isFocusedTextField, proxy: proxy)
+                        FoodTagAddTextField(foodTags: $foodTags, textField: textField, isFocusedTextField: $isFocusedTextField, proxy: proxy)
                         // 추가된 음식 태그를 보여주는 Scroll View
-                        FoodTagVerticalScroll(foodTags: $foodTags, windowWidth: windowWidth/*, proxy: proxy, isFocusedTextField: $isFocusedTextField*/)
+                        FoodTagVerticalScroll(foodTags: $foodTags, windowWidth: windowWidth)
                     }
                     .padding(.bottom, 5)
-                    .id("TextField")
+                    // ScrollView focusing을 위한 VStack에 id 부여
+                    .id(textField)
                 }
+                // 스크롤 했을 때, 키보드 사라지기
                 .scrollDismissesKeyboard(.automatic)
+                // 탭했을 때, focus 상태 변경
                 .onTapGesture {
-                    hideKeyboard()
+                    if isFocusedTextEditor {
+                        isFocusedTextEditor = false
+                    }
+                    if isFocusedTextField {
+                        isFocusedTextField = false
+                    }
                 }
             }
             .task {
@@ -93,7 +108,8 @@ struct WritingView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    // TODO: AddTagView로 돌아가기
+                    // AddTagView로 돌아가기
+                    dismiss()
                 } label: {
                     Image(systemName: "chevron.left")
                 }
