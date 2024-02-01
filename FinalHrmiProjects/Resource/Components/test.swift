@@ -98,12 +98,13 @@ struct DrinkInfoSortingBottomSheet: View{
             .padding(.bottom, 4)
             
             SortingOptionsList(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowing)
+            CustomDivider()
+                .padding(.bottom, 10)
             DismissButton {
                 isShowing.toggle()
             }
-            .frame(height: buttonHeight)
+            .frame(height: buttonHeight - 30)
         }
-        .padding(.horizontal, 16)
     }
 }
 // BottomSheet 위에 띄워질 뷰
@@ -126,12 +127,12 @@ struct DisplaySettingBottomSheet: View{
             .padding(.bottom, 4)
             SortingOptionsList(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowing)
             CustomDivider()
+                .padding(.bottom, 10)
             DismissButton(action: {
                 isShowing.toggle()
             })
-            .frame(height: buttonHeight - 10)
+            .frame(height: buttonHeight - 30)
         }
-        .padding(.horizontal, 16)
     }
 }
 
@@ -146,7 +147,7 @@ struct Content2View: View {
         ZStack{
             CustomSortingButton(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingBottomSheet)
             
-            BottomSheet(isShowing: $isShowingBottomSheet, content: BottomSheetType.drinkInfo.view(optionNameList: optionNameList, isShowing: $isShowingBottomSheet, selectedSortingOption: $selectedSortingOption))
+            BottomSheet(isShowing: $isShowingBottomSheet, content: BottomSheetType.displaySetting.view(optionNameList: optionNameList, isShowing: $isShowingBottomSheet, selectedSortingOption: $selectedSortingOption))
         }
     }
 }

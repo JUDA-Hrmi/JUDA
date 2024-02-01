@@ -110,7 +110,7 @@ struct SortingOptionCell: View {
                 .foregroundStyle(.mainBlack)
             }
         })
-//        .padding(.horizontal, 20)
+        .padding(.horizontal, 20)
         .padding(.vertical, 15)
     }
 }
