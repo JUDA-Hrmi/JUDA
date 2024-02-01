@@ -23,10 +23,7 @@ struct ContentView: View {
 //                .font(.system(size: 20))
 //        }
 //        .padding()
-//        RootView()
-        NavigationStack {
-            NavigationLink("d") { AddTagView() }
-        }
+        RootView()
     }
 }
 

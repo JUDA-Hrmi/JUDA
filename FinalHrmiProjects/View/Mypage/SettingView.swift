@@ -102,9 +102,11 @@ struct SettingView: View {
                     Spacer()
                 }
                 
-                // TODO: CustomBottomSheet 수정에 따른 변화 있을 것
-                // 화면 모드 설정 클릭 시 띄워지는 CustomBottomSheetView
-                EnabledBottomSheetView(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
+                // 화면 모드 설정 클릭 시 띄워지는 CustomBottomSheet
+                // BottomSheetType -> .displaySetting
+                CustomBottomSheet(isShowingSheet: $isShowingSheet) {
+                    BottomSheetContentView(optionNameList: optionNameList, isShowingSheet: $isShowingSheet, selectedSortingOption: $selectedSortingOption, text: BottomSheetType.displaySetting.description)
+                }
                 
                 // 로그아웃 버튼 클릭 시 띄워지는 CustomAlert
                 if isLogoutClicked {
