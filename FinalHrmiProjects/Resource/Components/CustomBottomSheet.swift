@@ -7,61 +7,67 @@
 
 import SwiftUI
 
-// MARK: - 커스텀 sheet
-struct CustomBottomSheet<Content>: View where Content: View {
-    public var height: CGFloat
-    public var content: Content
+struct RoundedCorners: Shape {
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
     
-    @Environment(\.colorScheme) var scheme
-    @Binding private var isShowingSheet: Bool
-    @GestureState private var translation: CGFloat = .zero - 50
-    
-    public init(_ isShowingSheet: Binding<Bool>, height: CGFloat, content: () -> Content) {
-        self._isShowingSheet = isShowingSheet
-        self.height = height
-        self.content = content()
-    }
-    
-    var body: some View {
-        VStack(spacing: .zero) {
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Theme.backgroundColor(scheme: scheme))
-                .frame(height: 50)
-                .overlay(
-                    Text("정렬 방식 선택")
-                        .font(.light14)
-                )
-            
-            self.content
-                .frame(height: self.height)
-        }
-        .frame(height: self.height + 10)
-        .background(
-            Rectangle()
-                .fill(Theme.backgroundColor(scheme: scheme))
-                .ignoresSafeArea(.all, edges: [.bottom, .horizontal])
-        )
-        .transition(.opacity.combined(with: .move(edge: .bottom)))
-        .offset(y: translation + height) // 화면의 하단으로부터 얼마나 떨어질지.
-        .gesture(
-            DragGesture()
-                .updating($translation, body: { value, state, _ in
-                    if 0 <= value.translation.height {
-                        let translation = min(self.height, max(-self.height, value.translation.height))
-                        state = translation
-                    }
-                })
-                .onEnded({ value in
-                    if value.translation.height >= height/3 {
-                        self.isShowingSheet.toggle()
-                    }
-                })
-        )
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        return Path(path.cgPath)
     }
 }
 
+struct CustomBottomSheet: View {
+    @Binding var isShowingSheet: Bool
+    var content: AnyView
+    
+    var body: some View {
+        ZStack(alignment: .bottom) {
+            if (isShowingSheet) {
+                Color.black
+                    .opacity(0.3)
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        isShowingSheet.toggle()
+                    }
+                content
+                    .padding(.bottom, 42)
+                    .transition(.move(edge: .bottom))
+                    .background(
+                        Color(uiColor: .white)
+                    )
+                    .cornerRadius(16, corners: [.topLeft, .topRight])
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+        .ignoresSafeArea()
+        .animation(.interactiveSpring, value: isShowingSheet)
+    }
+}
+
+struct DismissButton: View {
+    var background: Color = .white
+    var textColor: Color = .black.opacity(0.9)
+    var action: (() -> ())
+    let cornorRadius: CGFloat = 8
+    
+    var body: some View {
+        VStack {
+            Button(action: {
+                action()
+            }, label: {
+                Text("닫기")
+                    .font(.medium18)
+                    .foregroundStyle(.mainBlack)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            })
+        }
+    }
+}
+
+
 // MARK: -  CustomBottomSheet 안에 띄워질 Content뷰
-struct SortingOptionsList: View {
+struct BottomSheetContentsList: View {
     let optionNameList: [String] // 정렬옵션 이름이 담겨진 리스트
     
     @Binding var selectedSortingOption: String // 선택된 항목 이름
@@ -71,14 +77,14 @@ struct SortingOptionsList: View {
         VStack {
             // CustomBottomSheet 안에 보여줄 항목 리스트 형태로 그리기.
             ForEach(optionNameList, id: \.self) { option in
-                SortingOptionCell(sortingOptionName: option, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
+                BottomSheetContentCell(sortingOptionName: option, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
             }
         }
     }
 }
 
-// MARK: -  SortingOptionsView 구성 Cell
-struct SortingOptionCell: View {
+// MARK: -  BottomSheetContentsList 구성 Cell
+struct BottomSheetContentCell: View {
     let sortingOptionName: String // 정렬 옵션 항목 이름
     
     @Binding var selectedSortingOption: String // 선택된 항목 이름

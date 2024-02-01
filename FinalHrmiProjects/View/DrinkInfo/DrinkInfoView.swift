@@ -59,8 +59,7 @@ struct DrinkInfoView: View {
                     }.ignoresSafeArea()
                 }
                 // DrinkInfoSegment 클릭 시 띄워지는 CustomSheet뷰
-//                EnabledBottomSheetView(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
-                BottomSheet(isShowingSheet: $isShowingSheet, content: BottomSheetType.drinkInfo.view(optionNameList: optionNameList, isShowingSheet: $isShowingSheet, selectedSortingOption: $selectedSortingOption))
+                CustomBottomSheet(isShowingSheet: $isShowingSheet, content: BottomSheetType.drinkInfo.view(optionNameList: optionNameList, isShowingSheet: $isShowingSheet, selectedSortingOption: $selectedSortingOption))
             }
         }
     }

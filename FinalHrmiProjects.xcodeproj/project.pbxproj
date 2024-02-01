@@ -89,9 +89,8 @@
 		B127A4222B64EB53001F005D /* CustomBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B127A4212B64EB53001F005D /* CustomBottomSheet.swift */; };
 		B12BEE472B6A9E1000580D29 /* AppServiceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12BEE462B6A9E1000580D29 /* AppServiceInfoView.swift */; };
 		B12BEE4B2B6A9E3B00580D29 /* NoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12BEE4A2B6A9E3B00580D29 /* NoticeView.swift */; };
-		B12BEE4D2B6AA29000580D29 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12BEE4C2B6AA29000580D29 /* test.swift */; };
+		B12BEE4D2B6AA29000580D29 /* CustomBottomContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12BEE4C2B6AA29000580D29 /* CustomBottomContents.swift */; };
 		B14771F72B62019B0036A4A9 /* View +.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14771F62B62019B0036A4A9 /* View +.swift */; };
-		B158F83B2B6539FC00E33C47 /* EnabledBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B158F83A2B6539FC00E33C47 /* EnabledBottomSheetView.swift */; };
 		B158F83F2B657A9000E33C47 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B158F83E2B657A9000E33C47 /* Theme.swift */; };
 		B16EB85C2B63859800E920A3 /* DrinkInfoSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */; };
 		B1B8FE7F2B5EA9D900921BBE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8FE7E2B5EA9D900921BBE /* ContentView.swift */; };
@@ -196,9 +195,8 @@
 		B127A4212B64EB53001F005D /* CustomBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheet.swift; sourceTree = "<group>"; };
 		B12BEE462B6A9E1000580D29 /* AppServiceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppServiceInfoView.swift; sourceTree = "<group>"; };
 		B12BEE4A2B6A9E3B00580D29 /* NoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeView.swift; sourceTree = "<group>"; };
-		B12BEE4C2B6AA29000580D29 /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
+		B12BEE4C2B6AA29000580D29 /* CustomBottomContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomContents.swift; sourceTree = "<group>"; };
 		B14771F62B62019B0036A4A9 /* View +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View +.swift"; sourceTree = "<group>"; };
-		B158F83A2B6539FC00E33C47 /* EnabledBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnabledBottomSheetView.swift; sourceTree = "<group>"; };
 		B158F83E2B657A9000E33C47 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoSegment.swift; sourceTree = "<group>"; };
 		B1B8FE792B5EA9D900921BBE /* FinalHrmiProjects.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalHrmiProjects.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -420,7 +418,6 @@
 				B1EE248F2B614477007F68B0 /* DrinkInfoView.swift */,
 				0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */,
 				0961B7962B6624D300A9F553 /* DrinkInfoList.swift */,
-				B158F83A2B6539FC00E33C47 /* EnabledBottomSheetView.swift */,
 				09F869942B68E44A00A56A4C /* DrinkDetail */,
 			);
 			path = DrinkInfo;
@@ -554,6 +551,7 @@
 				AC502D702B62A21700C2BD6A /* CustomNavigation.swift */,
 				B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */,
 				B127A4212B64EB53001F005D /* CustomBottomSheet.swift */,
+				B12BEE4C2B6AA29000580D29 /* CustomBottomContents.swift */,
 				09254CA62B637C9900569D94 /* CustomDivider.swift */,
 				0914DEAC2B66453E0014E102 /* PagerView.swift */,
 				09F869B82B6A48E900A56A4C /* CustomScrollView.swift */,
@@ -749,7 +747,7 @@
 				7B904C662B6168C60052384A /* PostCell.swift in Sources */,
 				AC110B572B69658C005390BB /* ChangeUserNameView.swift in Sources */,
 				09F8699A2B68E4B600A56A4C /* TastingNotes.swift in Sources */,
-				B12BEE4D2B6AA29000580D29 /* test.swift in Sources */,
+				B12BEE4D2B6AA29000580D29 /* CustomBottomContents.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

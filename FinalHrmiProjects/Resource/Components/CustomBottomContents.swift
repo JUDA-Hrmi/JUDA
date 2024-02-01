@@ -5,21 +5,13 @@
 //  Created by 홍세희 on 2024/02/01.
 //
 
+// MARK: CustomBottomContents -> CustomBottomSheet에 들어갈 contents View 모음집 입니다.
+
 import SwiftUI
 
-struct RoundedCorners: Shape {
-
-    var radius: CGFloat = .infinity
-    var corners: UIRectCorner = .allCorners
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        return Path(path.cgPath)
-    }
-}
-
 enum BottomSheetType {
-    case drinkInfo
-    case displaySetting
+    case drinkInfo // DrinkInfoView에서 쓰는 bottomSheet
+    case displaySetting // 'SettingView - 화면 모드 설정' 에서 쓰는 bottomSheet
     
     func view(optionNameList: [String] ,isShowingSheet: Binding<Bool>, selectedSortingOption: Binding<String>) -> AnyView {
         switch self {
@@ -31,55 +23,9 @@ enum BottomSheetType {
     }
 }
 
-struct BottomSheet: View {
-    @Binding var isShowingSheet: Bool
-    var content: AnyView
-    
-    var body: some View {
-        ZStack(alignment: .bottom) {
-            if (isShowingSheet) {
-                Color.black
-                    .opacity(0.3)
-                    .ignoresSafeArea()
-                    .onTapGesture {
-                        isShowingSheet.toggle()
-                    }
-                content
-                    .padding(.bottom, 42)
-                    .transition(.move(edge: .bottom))
-                    .background(
-                        Color(uiColor: .white)
-                    )
-                    .cornerRadius(16, corners: [.topLeft, .topRight])
-            }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-        .ignoresSafeArea()
-        .animation(.interactiveSpring, value: isShowingSheet)
-    }
-}
-
-struct DismissButton: View {
-    var background: Color = .white
-    var textColor: Color = .black.opacity(0.9)
-    var action: (() -> ())
-    let cornorRadius: CGFloat = 8
-    
-    var body: some View {
-        VStack {
-            Button(action: {
-                action()
-            }, label: {
-                Text("닫기")
-                    .font(.medium18)
-                    .foregroundStyle(.mainBlack)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            })
-        }
-    }
-}
-
 // BottomSheet 위에 띄워질 뷰
+// BottomSheet의 content 부분.
+// 여기서 원하는 내용으로 만들어서 쓰면 된다.
 struct DrinkInfoSortingBottomSheet: View{
     let buttonHeight: CGFloat = 55
     let optionNameList: [String]
@@ -97,7 +43,7 @@ struct DrinkInfoSortingBottomSheet: View{
             .padding(.top, 16)
             .padding(.bottom, 4)
             
-            SortingOptionsList(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
+            BottomSheetContentsList(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
             
             CustomDivider()
                 .padding(.bottom, 10)
@@ -109,6 +55,7 @@ struct DrinkInfoSortingBottomSheet: View{
         }
     }
 }
+
 // BottomSheet 위에 띄워질 뷰
 struct DisplaySettingBottomSheet: View{
     let buttonHeight: CGFloat = 55
@@ -128,7 +75,7 @@ struct DisplaySettingBottomSheet: View{
             .padding(.top, 16)
             .padding(.bottom, 4)
             
-            SortingOptionsList(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
+            BottomSheetContentsList(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
             
             CustomDivider()
                 .padding(.bottom, 10)
@@ -152,7 +99,8 @@ struct Content2View: View {
         ZStack{
             CustomSortingButton(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingBottomSheet)
             
-            BottomSheet(isShowingSheet: $isShowingBottomSheet, content: BottomSheetType.displaySetting.view(optionNameList: optionNameList, isShowingSheet: $isShowingBottomSheet, selectedSortingOption: $selectedSortingOption))
+            // BottomSheetType을 활용하여 Content 뷰 부르기
+            CustomBottomSheet(isShowingSheet: $isShowingBottomSheet, content: BottomSheetType.displaySetting.view(optionNameList: optionNameList, isShowingSheet: $isShowingBottomSheet, selectedSortingOption: $selectedSortingOption))
         }
     }
 }
