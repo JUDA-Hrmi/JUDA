@@ -15,10 +15,12 @@ struct SearchTagView: View {
     // 찜 목록 가져오는 배열
     private let likeds: [String] = ["1","2","3","4","5","6","7","8"]
 
+	@State private var tagSearchText = ""
+	
     var body: some View {
         VStack {
             HStack(alignment: .center, spacing: 0) {
-                SearchBar()
+				SearchBar(inputText: $tagSearchText)
                 // Sheet 내려주기
                 // TODO: XmarkOnGrayCircle로 변경
                 Button {
