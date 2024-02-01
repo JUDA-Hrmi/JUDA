@@ -49,13 +49,13 @@ struct PostReportView: View {
 											  etcReportText: $etcReportText,
 											  isFocused: _isFocused)
 						}
-						.onTapGesture {
-							// 다른 뷰를 탭했을 경우 Focusing 해제
-							isFocused = false
-						}
 					}
 					.scrollIndicators(.hidden)
 					.scrollDismissesKeyboard(.immediately)
+					.onTapGesture {
+						// 다른 뷰를 탭했을 경우 Focusing 해제
+						isFocused = false
+					}
 				}
 				// 신고하기 버튼
 				PostReportButton(reportContents: $reportContents, isReportDialogPresented: $isReportDialogPresented)
