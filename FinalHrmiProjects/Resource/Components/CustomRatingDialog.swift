@@ -18,7 +18,7 @@ struct CustomRatingDialog: View {
     
     var body: some View {
         ZStack {
-            Color.gray
+            Color.gray01
                 .opacity(0.5)
                 .ignoresSafeArea()
             VStack {
@@ -34,7 +34,7 @@ struct CustomRatingDialog: View {
                             Image(systemName: "star.fill")
                                 .font(.system(size: 35))
                                 // 선택된 이미지까지 색 변경
-                                .foregroundStyle(number > rating ? .gray : .orange)
+                                .foregroundStyle(number > rating ? .gray01 : .mainAccent02)
                                 .onTapGesture {
                                     // 첫번째 별만 채워져 있을 때, 한 번 더 탭하면 0점이 됨
                                     if rating == 1 && number == 1 {
