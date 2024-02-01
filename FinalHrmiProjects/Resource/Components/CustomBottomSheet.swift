@@ -73,15 +73,6 @@ struct SortingOptionsList: View {
             ForEach(optionNameList, id: \.self) { option in
                 SortingOptionCell(sortingOptionName: option, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
             }
-            Divider()
-            Button(action: {
-                isShowingSheet.toggle()
-            }, label: {
-                Text("닫기")
-                    .font(.bold20)
-                    .foregroundStyle(.mainBlack)
-            })
-            .padding(.bottom, 50)
         }
     }
 }
@@ -119,7 +110,7 @@ struct SortingOptionCell: View {
                 .foregroundStyle(.mainBlack)
             }
         })
-        .padding(.horizontal, 20)
-        .padding(.vertical, 10)
+//        .padding(.horizontal, 20)
+        .padding(.vertical, 15)
     }
 }
