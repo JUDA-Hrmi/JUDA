@@ -16,7 +16,7 @@ struct FoodTagAddTextField: View {
 	var textField: Namespace.ID
 	// TextField focus 상태 프로퍼티 바인딩
 	var isFocusedTextField: FocusState<Bool>.Binding
-	// WritingView의 ScrollView porxy 바인딩
+	// RecordView의 ScrollView porxy 바인딩
 	let proxy: ScrollViewProxy
 	
 	var body: some View {
@@ -34,7 +34,7 @@ struct FoodTagAddTextField: View {
 						// focusState의 Scroll 우선순위로 인하여 시간차를 두고 실행
 						DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
 							withAnimation {
-								// WritingView의 ScrollView가 음식 태그 Vstack에 포커싱되도록 하기
+								// RecordView의 ScrollView가 음식 태그 Vstack에 포커싱되도록 하기
 								proxy.scrollTo(textField, anchor: .center)
 							}
 						}
@@ -71,7 +71,7 @@ struct FoodTagAddTextField: View {
 		foodTagName = ""
 		DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
 			withAnimation {
-				// WritingView의 ScrollView가 음식 태그 Vstack에 포커싱
+				// RecordView의 ScrollView가 음식 태그 Vstack에 포커싱
 				proxy.scrollTo(textField, anchor: .center)
 			}
 		}

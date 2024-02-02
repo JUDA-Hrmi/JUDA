@@ -112,9 +112,8 @@ struct AddTagView: View {
 				.tint(.mainBlack)
 			}
 			ToolbarItem(placement: .topBarTrailing) {
-				NavigationLink {
-					// TODO: WritingView 이동
-					WritingView()
+				NavigationLink {					
+                    RecordView(recordType: RecordType.add)
 				} label: {
 					Text("다음")
 						.font(.regular16)
