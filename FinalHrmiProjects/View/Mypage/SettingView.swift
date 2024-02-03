@@ -106,7 +106,7 @@ struct SettingView: View {
 			// 화면 모드 설정 클릭 시 띄워지는 CustomBottomSheet
 			// BottomSheetType -> .displaySetting
             .sheet(isPresented: $isShowingSheet) {
-                CustomBottomSheetContent(optionNameList: optionNameList, isShowingSheet: $isShowingSheet, selectedSortingOption: $selectedSortingOption, bottomSheetType: .displaySetting)
+                CustomBottomSheetContent(optionNameList: optionNameList, isShowingSheet: $isShowingSheet, selectedSortingOption: $selectedSortingOption, bottomSheetTypeText: BottomSheetType.displaySetting)
                     .presentationDetents([.displaySetting])
                     .presentationDragIndicator(.hidden) // 시트 상단 인디케이터 비활성화
                     .interactiveDismissDisabled() // 내려서 닫기 비활성화

@@ -7,18 +7,9 @@
 
 import SwiftUI
 
-enum BottomSheetType: String {
-    case drinkInfo // DrinkInfoView에서 쓰는 bottomSheet
-    case displaySetting // 'SettingView - 화면 모드 설정' 에서 쓰는 bottomSheet
-    
-    var description: String {
-        switch self {
-        case .drinkInfo:
-            "정렬 옵션 설정"
-        case .displaySetting:
-            "화면 모드 설정"
-        }
-    }
+enum BottomSheetType {
+    static let drinkInfo = "정렬 옵션 설정" // DrinkInfoView에서 쓰는 bottomSheet
+    static let displaySetting = "화면 모드 설정" // 'SettingView - 화면 모드 설정' 에서 쓰는 bottomSheet
 }
 
 // Sheet 의 content 부분.
@@ -27,12 +18,12 @@ struct CustomBottomSheetContent: View{
     
     @Binding var isShowingSheet: Bool
     @Binding var selectedSortingOption: String
-    let bottomSheetType: BottomSheetType
+    let bottomSheetTypeText: String
     
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
             // 정렬 타이틀
-            Text(bottomSheetType.description)
+            Text(bottomSheetTypeText)
                 .foregroundColor(.mainBlack)
                 .font(.light14)
             
