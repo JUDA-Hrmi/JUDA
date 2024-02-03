@@ -57,11 +57,14 @@ struct DrinkInfoView: View {
 					}
 				}.ignoresSafeArea()
 			}
-			// DrinkInfoSegment 클릭 시 띄워지는 CustomSheet뷰
-			// BottomSheetType -> .drinkInfo
-			CustomBottomSheet(isShowingSheet: $isShowingSheet) {
-				BottomSheetContentView(optionNameList: optionNameList, isShowingSheet: $isShowingSheet, selectedSortingOption: $selectedSortingOption, text: BottomSheetType.drinkInfo.description)
-			}
+            // DrinkInfoSegment 클릭 시 띄워지는 CustomSheet뷰
+            // BottomSheetType -> .drinkInfo
+            .sheet(isPresented: $isShowingSheet) {
+                CustomBottomSheetContent(optionNameList: optionNameList, isShowingSheet: $isShowingSheet, selectedSortingOption: $selectedSortingOption, bottomSheetType: .drinkInfo)
+                    .presentationDetents([.drinkInfo])
+                    .presentationDragIndicator(.hidden) // 시트 상단 인디케이터 비활성화
+                    .interactiveDismissDisabled() // 내려서 닫기 비활성화
+            }
 		}
 	}
 }
