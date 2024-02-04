@@ -9,8 +9,7 @@ import SwiftUI
 
 // MARK: content 가 가 화면 크기를 넘어가야만 scrollView 작동하도록하는 커스텀 스크롤 뷰
 struct CustomScrollView<Content: View>: View {
-    @Binding var scrollAxis: Axis.Set
-    @Binding var vHeight: Double
+    @State private var scrollAxis: Axis.Set = .vertical
     let content: () -> Content
     
     var body: some View {
@@ -20,11 +19,10 @@ struct CustomScrollView<Content: View>: View {
                 .background(
                     GeometryReader { contentGeo in
                         Color.clear
-                            .onAppear {
-                                vHeight = Double(contentGeo.size.height)
-                            }
-                            .onChange(of: scrollGeo.size.height) {
-                                scrollAxis = contentGeo.size.height > $0 ? .vertical : []
+                            .task {
+                                if contentGeo.size.height <= scrollGeo.size.height {
+                                    scrollAxis = []
+                                }
                             }
                     }
                 )

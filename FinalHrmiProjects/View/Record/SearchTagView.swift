@@ -39,9 +39,6 @@ struct SearchTagView: View {
 
 	@State private var tagSearchText = ""
 	
-	@State private var scrollAxis: Axis.Set = .vertical
-	@State private var vHeight = 0.0
-	
     var body: some View {
         ZStack {
             VStack {
@@ -68,17 +65,30 @@ struct SearchTagView: View {
                     Spacer()
                 } else {
                     // 찜 목록이 있을 때, DrinkListCell 리스트로 보여주기
-                    CustomScrollView(scrollAxis: $scrollAxis, vHeight: $vHeight) {
-                        ForEach(likeds, id: \.self) { drinkInfo in
-                            DrinkListCell()
-                                .onTapGesture {
-                                    // 현재 선택된 DrinkListCell의 술 정보를 받아오기
-                                    selectedDrink = drinkInfo
-                                    // CustomRatingDialog 띄우기
-                                    isShowRatingDialog.toggle()
-                                }
+                    // MARK: iOS 16.4 이상
+                    if #available(iOS 16.4, *) {
+                        ScrollView() {
+                            SearchTagListContent(selectedDrink: $selectedDrink,
+                                                 isShowRatingDialog: $isShowRatingDialog)
+                        }
+                        .scrollBounceBehavior(.basedOnSize, axes: .vertical)
+                        .scrollIndicators(.hidden)
+                        .scrollDismissesKeyboard(.immediately)
+                    // MARK: iOS 16.4 미만
+                    } else {
+                        ViewThatFits(in: .vertical) {
+                            SearchTagListContent(selectedDrink: $selectedDrink,
+                                                 isShowRatingDialog: $isShowRatingDialog)
+                                .frame(maxHeight: .infinity, alignment: .top)
+                            ScrollView {
+                                SearchTagListContent(selectedDrink: $selectedDrink,
+                                                     isShowRatingDialog: $isShowRatingDialog)
+                            }
+                            .scrollIndicators(.hidden)
+                            .scrollDismissesKeyboard(.immediately)
                         }
                     }
+
                 }
             }
             // 상태 프로퍼티에 따라 CustomRatingDialog 띄워주기
@@ -119,6 +129,30 @@ struct SearchTagView: View {
     }
 }
 
-//#Preview {
-//    SearchTagView(isShowSearchTag: .constant(true))
-//}
+// MARK: - 스크롤 뷰 or 뷰 로 보여질 태그 추가 시, 찜 목록이 있을 때 DrinkListCell 리스트
+struct SearchTagListContent: View {
+    // DrinkListCell 선택 시 DrinkInfo 데이터를 받는 프로퍼티
+    @Binding var selectedDrink: DrinkInfo?
+    // CostomRatingDialog를 띄워주는 상태 프로퍼티
+    @Binding var isShowRatingDialog: Bool
+    // 찜 목록 배열 ( 더미데이터를 넣어서 테스트 함 )
+    private let likeds: [DrinkInfo] = DrinkInfo.drinkInfos
+    
+    var body: some View {
+        LazyVStack {
+            ForEach(likeds, id: \.self) { drinkInfo in
+                DrinkListCell()
+                    .onTapGesture {
+                        // 현재 선택된 DrinkListCell의 술 정보를 받아오기
+                        selectedDrink = drinkInfo
+                        // CustomRatingDialog 띄우기
+                        isShowRatingDialog.toggle()
+                    }
+            }
+        }
+    }
+}
+
+#Preview {
+    SearchTagView(drinkTags: .constant([]), isShowSearchTag: .constant(true))
+}
