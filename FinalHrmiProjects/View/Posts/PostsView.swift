@@ -19,7 +19,7 @@ struct PostsView: View {
         VStack {
             // 상단 태그 검색바
             SearchBar(inputText: $postSearchText)
-            
+
             HStack {
                 // 인기, 최신 순으로 선택하여 정렬하기 위한 CustomSegment
                 CustomTextSegment(segments: PostOrLiked.post,
@@ -38,10 +38,10 @@ struct PostsView: View {
             }
             .padding(.vertical, 10)
             .padding(.horizontal, 20)
-
+            
             TabView(selection: $selectedSegmentIndex) {
                 ForEach(0..<PostOrLiked.post.count, id: \.self) { index in
-                    ScrollViewReader { proxy in
+                    ScrollViewReader { value in
                         Group {
                             if index == 0 {
                                 // 인기순
@@ -51,8 +51,8 @@ struct PostsView: View {
                                 PostGrid(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
                             }
                         }
-                        .onChange(of: selectedSegmentIndex) { _ in
-                            proxy.scrollTo(0, anchor: .center)
+                        .onChange(of: selectedSegmentIndex) { newValue in
+                            value.scrollTo(newValue, anchor: .center)
                         }
                     }
                 }
