@@ -10,7 +10,6 @@ import SwiftUI
 import SwiftUI
 
 struct PostsView: View {
-    
     @Binding var postSearchText: String
     
     @State private var selectedSegmentIndex = 0
@@ -35,12 +34,13 @@ struct PostsView: View {
                     NavigationLink {
                         AddTagView()
                     } label: {
-                        Text("새글 작성하기")
+                        Text("새 술상 올리기")
                             .font(.medium16)
                             .foregroundStyle(.mainBlack)
                     }
                 }
-                .padding(20)
+                .padding(.vertical, 10)
+                .padding(.horizontal, 20)
                 
                 PagerView(pageCount: PostOrLiked.post.count, currentIndex: $selectedSegmentIndex) {
                     ForEach(0..<PostOrLiked.post.count, id: \.self) { index in

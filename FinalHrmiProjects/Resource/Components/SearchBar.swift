@@ -37,7 +37,7 @@ struct SearchBar: View {
             }
         }
         .foregroundColor(.gray01)
-        .padding(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 20))
+        .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 20))
         .background(Color(red: 0.46, green: 0.46, blue: 0.50).opacity(0.12))
 		.clipShape(.rect(cornerRadius: 10))
 		.padding(.horizontal, 20) // 오토레이아웃을 위한 padding

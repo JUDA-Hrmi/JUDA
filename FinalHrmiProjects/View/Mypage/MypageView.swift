@@ -27,8 +27,8 @@ struct MypageView: View {
                         // 글 작성하는 페이지로 이동하기
                         AddTagView()
                     } label: {
-                        Text("새 글 작성하기")
-                            .font(.light14)
+                        Text("새 술상 올리기")
+                            .font(.medium16)
                             .foregroundStyle(.mainBlack)
                     }
                 }
@@ -60,7 +60,6 @@ struct MypageView: View {
                     Text("마이페이지")
                         .font(.semibold18)
                 }
-                
                 ToolbarItem(placement: .topBarTrailing) {
                     // MARK: - 알람 모아보는 뷰
                     NavigationLink {
@@ -70,7 +69,6 @@ struct MypageView: View {
                         Image(systemName: "bell")
                     }
                 }
-                
                 ToolbarItem(placement: .topBarTrailing) {
                     // MARK: - SettingView 이동을 위한 버튼
                     NavigationLink {
