@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0914DEAD2B66453E0014E102 /* PagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0914DEAC2B66453E0014E102 /* PagerView.swift */; };
 		09254CA72B637C9900569D94 /* CustomDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09254CA62B637C9900569D94 /* CustomDivider.swift */; };
 		095187972B6D1DE400B37BA3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 095187962B6D1DE400B37BA3 /* GoogleService-Info.plist */; };
 		0961B7972B6624D300A9F553 /* DrinkInfoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0961B7962B6624D300A9F553 /* DrinkInfoList.swift */; };
@@ -111,7 +110,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0914DEAC2B66453E0014E102 /* PagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagerView.swift; sourceTree = "<group>"; };
 		09254CA62B637C9900569D94 /* CustomDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDivider.swift; sourceTree = "<group>"; };
 		095187962B6D1DE400B37BA3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0961B7962B6624D300A9F553 /* DrinkInfoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoList.swift; sourceTree = "<group>"; };
@@ -539,7 +537,6 @@
 				B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */,
 				B127A4212B64EB53001F005D /* CustomBottomSheet.swift */,
 				09254CA62B637C9900569D94 /* CustomDivider.swift */,
-				0914DEAC2B66453E0014E102 /* PagerView.swift */,
 				09F869B82B6A48E900A56A4C /* CustomScrollView.swift */,
 				AC110B522B68BBFA005390BB /* CustomDialog.swift */,
 				2C5B0F412B6B10CF005F1A99 /* CustomRatingDialog.swift */,
@@ -694,7 +691,6 @@
 				B12330472B6A998C00DE2A93 /* SettingPhotoPicker.swift in Sources */,
 				09F869932B68E36800A56A4C /* Formatter.swift in Sources */,
 				B123304E2B6A9A0300DE2A93 /* UserProfileView.swift in Sources */,
-				0914DEAD2B66453E0014E102 /* PagerView.swift in Sources */,
 				0961B7972B6624D300A9F553 /* DrinkInfoList.swift in Sources */,
 				0961B7992B6624DD00A9F553 /* DrinkInfoGrid.swift in Sources */,
 				B1EE24902B614477007F68B0 /* DrinkInfoView.swift in Sources */,

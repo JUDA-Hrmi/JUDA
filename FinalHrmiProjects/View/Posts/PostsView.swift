@@ -42,9 +42,9 @@ struct PostsView: View {
                 .padding(.vertical, 10)
                 .padding(.horizontal, 20)
                 
-                PagerView(pageCount: PostOrLiked.post.count, currentIndex: $selectedSegmentIndex) {
+                TabView(selection: $selectedSegmentIndex) {
                     ForEach(0..<PostOrLiked.post.count, id: \.self) { index in
-                        ScrollViewReader { value in
+                        ScrollViewReader { proxy in
                             Group {
                                 if index == 0 {
                                     // 인기순
@@ -54,13 +54,13 @@ struct PostsView: View {
                                     PostGrid(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
                                 }
                             }
-                            .onChange(of: selectedSegmentIndex) { newValue in
-                                value.scrollTo(newValue, anchor: .center)
+                            .onChange(of: selectedSegmentIndex) { _ in
+                                proxy.scrollTo(0, anchor: .center)
                             }
                         }
                     }
                 }
-                .ignoresSafeArea()
+                .tabViewStyle(.page(indexDisplayMode: .never))
             }
         }
     }
