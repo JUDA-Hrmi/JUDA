@@ -7,10 +7,14 @@
 
 import SwiftUI
 
+enum UserType {
+    case user, otheruser
+}
+
 struct UserProfileView: View {
     @State private var userNickName: String = "sayHong" // 사용자 닉네임
-    
     @State private var isLibraryPresented: Bool = false // PhotoPicker - 라이브러리에서 선택
+    let userType: UserType
     @State private var userProfilePhoto: UIImage? // 사용자 프로필 이미지
     var body: some View {
         HStack {
@@ -35,34 +39,41 @@ struct UserProfileView: View {
                             .overlay(Circle().stroke(Color.gray01, lineWidth: 2))
                     }
                     // 프로필 사진 수정 버튼
-                    Button(action: {
-                        isLibraryPresented.toggle()
-                    }, label: {
-                        Image(systemName: "pencil.circle.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 20, height: 20)
-                            .foregroundStyle(.gray01)
-                    })
-					.fullScreenCover(isPresented: $isLibraryPresented) {
-						ProfilePhotoPicker(selectedPhoto: $userProfilePhoto,
-										   isLibraryPresented: $isLibraryPresented)
-					}
-					.tint(.mainBlack)
+                    if userType == .user {
+                        Button(action: {
+                            isLibraryPresented.toggle()
+                        }, label: {
+                            Image(systemName: "pencil.circle.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 20, height: 20)
+                                .foregroundStyle(.gray01)
+                        })
+                        .fullScreenCover(isPresented: $isLibraryPresented) {
+                            ProfilePhotoPicker(selectedPhoto: $userProfilePhoto,
+                                               isLibraryPresented: $isLibraryPresented)
+                        }
+                        .tint(.mainBlack)
+                    } else {
+                        
+                    }
+              
                 }
                 // MARK: 사용자 닉네임 표시
                 Text(userNickName)
                     .font(.medium18)
                 Spacer()
-                
-                NavigationLink {
-                    ChangeUserNameView(userNickName: $userNickName)
-                } label: {
-                    Text("닉네임 수정")
-                        .font(.light14)
-                        .foregroundStyle(.gray01)
+                if userType == .user {
+                    NavigationLink {
+                        ChangeUserNameView(userNickName: $userNickName)
+                    } label: {
+                        Text("닉네임 수정")
+                            .font(.light14)
+                            .foregroundStyle(.gray01)
+                    }
+                } else {
+                    
                 }
-
             }
         }
         .padding(.horizontal, 20)
@@ -71,5 +82,5 @@ struct UserProfileView: View {
 }
 
 #Preview {
-    UserProfileView()
+    UserProfileView(userType: .otheruser)
 }
