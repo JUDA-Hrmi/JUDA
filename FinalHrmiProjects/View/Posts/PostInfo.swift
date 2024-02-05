@@ -19,7 +19,7 @@ struct PostInfo: View {
         HStack {
             // 사용자의 프로필 사진
             NavigationLink(destination: {
-                NavigationProfileView(userType: UserType.otheruser)
+                NavigationProfileView(userType: UserType.otheruser, userName: userName)
             }, label: {
                 Image(profileImageName)
                     .resizable()

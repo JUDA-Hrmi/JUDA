@@ -45,6 +45,7 @@ struct DrinkGridContent: View {
                 // TODO: 추후에 네비게이션으로 해당 술의 Detail 로 이동 연결
                 NavigationLink {
                     DrinkDetailView()
+                        .modifier(TabBarHidden())
                 } label: {
                     DrinkGridCell()
                 }

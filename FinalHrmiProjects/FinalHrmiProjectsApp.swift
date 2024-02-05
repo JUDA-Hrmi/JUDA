@@ -23,6 +23,7 @@ struct FinalHrmiProjectsApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(AppViewModel())
         }
     }
 }

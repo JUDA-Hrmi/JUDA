@@ -50,6 +50,7 @@ struct LikedDrinkGridContent: View {
                 // TODO: 추후에 네비게이션으로 해당 술상의 Detail 로 이동 연결
                 NavigationLink {
                     PostDetailView(postUserType: .reader, nickName: "Hrmi", isLike: $isLikePost, likeCount: $postLikeCount)
+                        .modifier(TabBarHidden())
                 } label: {
                     PostCell(isLike: $isLikePost, likeCount: $postLikeCount)
                 }

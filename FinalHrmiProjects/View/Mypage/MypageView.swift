@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MypageView: View {
+    @EnvironmentObject private var appViewModel: AppViewModel
+    
     // MARK: 데이터 구조 정해지면 바꿔야되는 부분
     @State var isLike: Bool = true
     @State var likeCount: Int = 303
@@ -20,12 +22,13 @@ struct MypageView: View {
                 
                 // MARK: - [내가 작성한 게시물 -- '새 글 작성하기']
                 HStack {
-                    Text("내가 작성한 게시글")
+                    Text("내가 작성한 술상")
                         .font(.semibold18)
                     Spacer()
                     NavigationLink {
                         // 글 작성하는 페이지로 이동하기
                         AddTagView()
+                            .modifier(TabBarHidden())
                     } label: {
                         Text("새 술상 올리기")
                             .font(.medium16)
@@ -43,6 +46,7 @@ struct MypageView: View {
                     }
                     .scrollBounceBehavior(.basedOnSize, axes: .vertical)
                     .scrollIndicators(.hidden)
+                    .padding(.horizontal, 20)
                     // MARK: iOS 16.4 미만
                 } else {
                     ViewThatFits(in: .vertical) {
@@ -53,6 +57,7 @@ struct MypageView: View {
                         }
                         .scrollIndicators(.hidden)
                     }
+                    .padding(.horizontal, 20)
                 }
             }
             // MARK: - [마이페이지 -- '알림' | '설정']
@@ -66,6 +71,7 @@ struct MypageView: View {
                     NavigationLink {
                         // TODO: AlarmStoreView 파일 있을 때 주석 제거하기
                         AlarmStoreView()
+                            .modifier(TabBarHidden())
                     } label: {
                         Image(systemName: "bell")
                     }
@@ -74,13 +80,18 @@ struct MypageView: View {
                     // MARK: - SettingView 이동을 위한 버튼
                     NavigationLink {
                         SettingView()
+                            .modifier(TabBarHidden())
                     } label: {
                         Image(systemName: "gearshape")
                     }
                 }
             }
             .foregroundStyle(.mainBlack)
+            .onAppear {
+                appViewModel.tabBarState = .visible
+            }
         }
+        .toolbar(appViewModel.tabBarState, for: .tabBar)
     }
 }
 

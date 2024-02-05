@@ -66,13 +66,12 @@ struct UserProfileView: View {
                 if userType == .user {
                     NavigationLink {
                         ChangeUserNameView(userNickName: $userNickName)
+                            .modifier(TabBarHidden())
                     } label: {
                         Text("닉네임 수정")
                             .font(.light14)
                             .foregroundStyle(.gray01)
                     }
-                } else {
-                    
                 }
             }
         }

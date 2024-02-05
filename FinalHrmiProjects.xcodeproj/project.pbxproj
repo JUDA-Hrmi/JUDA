@@ -12,6 +12,7 @@
 		0961B7992B6624DD00A9F553 /* DrinkInfoGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */; };
 		096E63182B616886009246CE /* DrinkListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096E63172B616886009246CE /* DrinkListCell.swift */; };
 		096E631A2B616F31009246CE /* DrinkGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096E63192B616F31009246CE /* DrinkGridCell.swift */; };
+		09A6AD722B70B46E00606585 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD712B70B46E00606585 /* AppViewModel.swift */; };
 		09B4A0452B6E5DAE0082B235 /* PresentationDetent +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B4A0442B6E5DAE0082B235 /* PresentationDetent +.swift */; };
 		09CDADA52B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDADA42B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift */; };
 		09F869932B68E36800A56A4C /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869922B68E36800A56A4C /* Formatter.swift */; };
@@ -115,6 +116,7 @@
 		0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoGrid.swift; sourceTree = "<group>"; };
 		096E63172B616886009246CE /* DrinkListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkListCell.swift; sourceTree = "<group>"; };
 		096E63192B616F31009246CE /* DrinkGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkGridCell.swift; sourceTree = "<group>"; };
+		09A6AD712B70B46E00606585 /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		09B4A0442B6E5DAE0082B235 /* PresentationDetent +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PresentationDetent +.swift"; sourceTree = "<group>"; };
 		09CDADA42B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkSelectHorizontalScrollBar.swift; sourceTree = "<group>"; };
 		09F869922B68E36800A56A4C /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 				B1EE24842B6143E4007F68B0 /* DrinkInfo */,
 				B1EE24852B6143EA007F68B0 /* Main */,
 				B1EE24862B6143EF007F68B0 /* LogIn */,
+				09A6AD712B70B46E00606585 /* AppViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -647,6 +650,7 @@
 				B1EE248A2B614464007F68B0 /* LikedView.swift in Sources */,
 				B127A4222B64EB53001F005D /* CustomBottomSheet.swift in Sources */,
 				7B5174922B69EAB300915793 /* NavigationPostsView.swift in Sources */,
+				09A6AD722B70B46E00606585 /* AppViewModel.swift in Sources */,
 				7B6D76B32B67D3B700601B55 /* PostDrinkRating.swift in Sources */,
 				7B6D76B12B67D1E100601B55 /* PostPhotoScroll.swift in Sources */,
 				09F869B52B6A47B700A56A4C /* AlarmStoreListCell.swift in Sources */,
