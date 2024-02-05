@@ -1,5 +1,5 @@
 //
-//  RootView.swift
+//  ContentView.swift
 //  FinalHrmiProjects
 //
 //  Created by 정인선 on 1/26/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RootView: View {
+struct ContentView: View {
     // 현재 선택된 탭의 인덱스. 초기값 0
     @State private var selectedTabIndex = 0
     @State private var postSearchText = ""
@@ -66,5 +66,5 @@ struct RootView: View {
 }
 
 #Preview {
-    RootView()
+    ContentView()
 }
