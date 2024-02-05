@@ -60,25 +60,28 @@ struct MypageView: View {
                     Text("마이페이지")
                         .font(.semibold18)
                 }
-                ToolbarItemGroup(placement: .topBarTrailing) {
-                    HStack(spacing: 16) {
-                        // MARK: - 알람 모아보는 뷰
-                        NavigationLink {
-                            // TODO: AlarmStoreView 파일 있을 때 주석 제거하기
-                            AlarmStoreView()
-                        } label: {
-                            Image(systemName: "bell")
-                        }
-                        // MARK: - SettingView 이동을 위한 버튼
-                        NavigationLink {
-                            SettingView()
-                        } label: {
-                            Image(systemName: "gearshape")
-                        }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    // MARK: - 알람 모아보는 뷰
+                    NavigationLink {
+                        // TODO: AlarmStoreView 파일 있을 때 주석 제거하기
+                        AlarmStoreView()
+                    } label: {
+                        Image(systemName: "bell")
                     }
-                    .foregroundStyle(.mainBlack)
                 }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    // MARK: - SettingView 이동을 위한 버튼
+                    NavigationLink {
+                        SettingView()
+                    } label: {
+                        Image(systemName: "gearshape")
+                    }
+                }
+               
             }
+            .foregroundStyle(.mainBlack)
         }
     }
 }

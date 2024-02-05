@@ -14,44 +14,13 @@ struct NavigationProfileView: View {
     @Environment(\.dismiss) private var dismiss
     var body: some View {
         VStack {
-            // MARK: - [마이페이지 -- '알림' | '설정']
-            HStack {
-                userType == .user ? Text("마이페이지") : Text("sayHong님의 페이지")
-                    .font(.semibold18)
-                
-                Spacer()
-                
-                if userType == .user {
-                    HStack(spacing: 16) {
-                        // MARK: - 알람 모아보는 뷰
-                        NavigationLink {
-                            // TODO: AlarmStoreView 파일 있을 때 주석 제거하기
-                            AlarmStoreView()
-                        } label: {
-                            Image(systemName: "bell")
-                        }
-                        // MARK: - SettingView 이동을 위한 버튼
-                        NavigationLink {
-                            SettingView()
-                        } label: {
-                            Image(systemName: "gearshape")
-                        }
-                    }
-                    .foregroundStyle(.mainBlack)
-                } else {
-                    
-                }
-            }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 10)
-            
             // MARK: - [프로필 사진 -- 닉네임 -- '수정']
             
             UserProfileView(userType: .otheruser)
             
             // MARK: - [내가 작성한 게시물 -- '새 글 작성하기']
             HStack {
-                userType == .user ? Text("내가 작성한 게시물") : Text("sayHong님이 작성한 페이지")
+                userType == .user ? Text("내가 작성한 게시물") : Text("sayHong님이 작성한 게시물")
                     .font(.semibold18)
                 Spacer()
                 
@@ -91,13 +60,17 @@ struct NavigationProfileView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
+            ToolbarItem(placement: .topBarLeading) {
                 Button {
                     dismiss()
                 } label: {
                     Image(systemName: "chevron.backward")
                         .foregroundStyle(Color.mainBlack)
                 }
+            }
+            ToolbarItem(placement: .topBarLeading) {
+                userType == .user ? Text("마이페이지") : Text("sayHong님의 페이지")
+                    .font(.semibold18)
             }
         }
         .navigationBarBackButtonHidden()
