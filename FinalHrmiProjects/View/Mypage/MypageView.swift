@@ -35,23 +35,24 @@ struct MypageView: View {
                 .padding(.horizontal, 20)
                 .padding(.top, 20)
                 
-                // MARK: - [LazyVGrid - 사용자가 작성한 글]
-                ScrollView {
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
-                        ForEach(0..<4) { _ in
-                            NavigationLink {
-                                // TODO: PostCell에 해당하는 DetailView로 이동하기
-                                PostDetailView(postUserType: .writter, nickName: "hrmi", isLike: .constant(false), likeCount: .constant(45))
-                            } label: {
-                                // TODO: 네비게이션 루트 설정
-                                // 글 누르고 back눌렀을 때 마이페이지로 다시 돌아올지 PostsView에서 있을지 루트 잘 설정해야할 듯
-                                PostCell(isLike: $isLike, likeCount: $likeCount)
-                            }
-                            // Blinking 애니메이션 삭제
-                            .buttonStyle(EmptyActionStyle())
-                        }
+                // 사용자가 작성한 글
+                // MARK: iOS 16.4 이상
+                if #available(iOS 16.4, *) {
+                    ScrollView() {
+                        PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
                     }
-                    .padding(.horizontal, 20)
+                    .scrollBounceBehavior(.basedOnSize, axes: .vertical)
+                    .scrollIndicators(.hidden)
+                    // MARK: iOS 16.4 미만
+                } else {
+                    ViewThatFits(in: .vertical) {
+                        PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
+                            .frame(maxHeight: .infinity, alignment: .top)
+                        ScrollView {
+                            PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
+                        }
+                        .scrollIndicators(.hidden)
+                    }
                 }
             }
             // MARK: - [마이페이지 -- '알림' | '설정']
@@ -77,7 +78,6 @@ struct MypageView: View {
                         Image(systemName: "gearshape")
                     }
                 }
-               
             }
             .foregroundStyle(.mainBlack)
         }

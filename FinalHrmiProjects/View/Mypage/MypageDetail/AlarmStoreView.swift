@@ -42,22 +42,27 @@ struct AlarmStoreView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            // TODO: CustomScrollView 로 수정 예정
-            ScrollView {
-                ForEach(0..<Alarm.alarmList.count, id: \.self) { index in
-                    NavigationLink {
-						PostDetailView(postUserType: .writter, nickName: "Hrmi", isLike: .constant(false), likeCount: .constant(45))
-                    } label: {
-                        AlarmStoreListCell(alarm: Alarm.alarmList[index])
-                    }
-
-                    if index != Alarm.alarmList.count - 1 {
-                        CustomDivider()
-                    }
+            // 알람 리스트
+            // MARK: iOS 16.4 이상
+            if #available(iOS 16.4, *) {
+                ScrollView() {
+                    AlarmListContent()
                 }
+                .scrollBounceBehavior(.basedOnSize, axes: .vertical)
+                .scrollIndicators(.hidden)
+                .padding(.top, 10)
+            // MARK: iOS 16.4 미만
+            } else {
+                ViewThatFits(in: .vertical) {
+                    AlarmListContent()
+                        .frame(maxHeight: .infinity, alignment: .top)
+                    ScrollView {
+                        AlarmListContent()
+                    }
+                    .scrollIndicators(.hidden)
+                }
+                .padding(.top, 10)
             }
-            .scrollIndicators(.hidden)
-            .padding(.top, 10)
         }
         .navigationBarBackButtonHidden()
         .toolbar {
@@ -74,6 +79,25 @@ struct AlarmStoreView: View {
                 Text("알림")
                     .font(.regular16)
                     .foregroundStyle(.mainBlack)
+            }
+        }
+    }
+}
+
+// MARK: - 스크롤 뷰 or 뷰 로 보여질 알람 리스트
+struct AlarmListContent: View {
+    var body: some View {
+        LazyVStack {
+            ForEach(0..<Alarm.alarmList.count, id: \.self) { index in
+                NavigationLink {
+                    PostDetailView(postUserType: .writter, nickName: "Hrmi", isLike: .constant(false), likeCount: .constant(45))
+                } label: {
+                    AlarmStoreListCell(alarm: Alarm.alarmList[index])
+                }
+                
+                if index != Alarm.alarmList.count - 1 {
+                    CustomDivider()
+                }
             }
         }
     }
