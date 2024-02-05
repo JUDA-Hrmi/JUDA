@@ -18,7 +18,6 @@ struct DrinkInfo: Identifiable, Hashable {
         DrinkInfo(name: "술 이름 3"),
         DrinkInfo(name: "술 이름 4"),
         DrinkInfo(name: "술 이름 5")
-        
     ]
 }
 

@@ -19,7 +19,7 @@ struct LikedView: View {
                 .padding(.horizontal, 20)
                 .frame(maxWidth: .infinity, alignment: .leading)
             // Likes
-            PagerView(pageCount: PostOrLiked.liked.count, currentIndex: $selectedSegmentIndex) {
+            TabView(selection: $selectedSegmentIndex) {
                 ForEach(0..<PostOrLiked.liked.count, id: \.self) { idx in
                     ScrollViewReader { value in
                         Group {
@@ -37,11 +37,11 @@ struct LikedView: View {
                     }
                 }
             }
-            .ignoresSafeArea()
+            .tabViewStyle(.page(indexDisplayMode: .never))
         }
     }
 }
 
 #Preview {
-LikedView()
+    LikedView()
 }
