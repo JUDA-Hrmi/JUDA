@@ -122,8 +122,8 @@ struct PostDetailView: View {
 				}
 				
 				ToolbarItem(placement: .topBarTrailing) {
-					Button {
-						// TODO: Edit Post Content
+					NavigationLink {
+                        RecordView(recordType: RecordType.edit)
 					} label: {
 						Image(systemName: "pencil")
 					}
