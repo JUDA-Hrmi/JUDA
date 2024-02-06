@@ -14,7 +14,7 @@ struct DrinkDummyData: Identifiable {
     let image: String
     let name: String
     let origin: String
-    let abv: String
+    let abv: Double
     let price: String
     let rating: Double
     let tastingNotesList = ["Aroma", "Taste", "Finish"]
@@ -23,7 +23,7 @@ struct DrinkDummyData: Identifiable {
 
     static let sample = DrinkDummyData(
         image: "canuca", name: "카누카 칵테일 700ml", origin: "스페인",
-        abv: "15%", price: "35,000원", rating: 4.7, tastingNotes: ["Aroma": ["달콤한", "라임"],
+        abv: 15, price: "35,000원", rating: 4.7, tastingNotes: ["Aroma": ["달콤한", "라임"],
                                                                     "Taste": ["라임 모히또"],
                                                                     "Finish": ["상큼한", "쌉쌀한"]],
         wellMatchedFoods: ["피자", "타코", "갈릭 쉬림프"]

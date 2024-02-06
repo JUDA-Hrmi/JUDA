@@ -34,7 +34,7 @@ struct DrinkDetails: View {
                     Text(sampleData.origin)
                         .font(.regular16)
                     // 도수
-                    Text(sampleData.abv)
+                    Text(Formatter.formattedABVCount(abv: sampleData.abv))
                         .font(.regular16)
                 }
                 // 가격

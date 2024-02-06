@@ -12,7 +12,7 @@ struct DrinkGridCell: View {
     private let drinkImage = "canuca"
     private let drinkName = "카누카 칵테일 700ml"
     private let drinkOrigin = "스페인"
-    private let drinkABV = "15%"
+    private let drinkABV: Double = 15
     private let drinkRating = 4.7
     // UITest - Drink 하트
     @State private var isLiked = false
@@ -46,7 +46,7 @@ struct DrinkGridCell: View {
                 HStack(spacing: 10) {
                     Text(drinkOrigin)
                         .font(.semibold14)
-                    Text(drinkABV)
+                    Text(Formatter.formattedABVCount(abv: drinkABV))
                         .font(.semibold14)
                 }
                 .foregroundStyle(.gray01)

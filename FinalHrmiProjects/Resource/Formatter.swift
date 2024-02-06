@@ -30,6 +30,15 @@ enum Formatter {
         String(format: "%.1f", rating)
     }
     
+    // 술 도수 소수점 첫번째 자리까지 String으로 변환해주는 함수
+    static func formattedABVCount(abv: Double) -> String {
+        if abv.truncatingRemainder(dividingBy: 1.0) == 0 {
+            return String(Int(abv)) + "%"
+        } else {
+            return String(format: "%.1f", abv) + "%"
+        }
+    }
+    
     // 현재 시간과 비교하여, x시간 전, x일 전, x주 전, x달 전, x년 전 으로 보여주는 함수
     static func formattedDateBeforeStyle(pastDate: Date) -> String {
         let calendar = Calendar.current
