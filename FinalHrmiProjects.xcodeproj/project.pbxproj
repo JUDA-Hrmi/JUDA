@@ -81,7 +81,6 @@
 		B12BEE472B6A9E1000580D29 /* AppServiceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12BEE462B6A9E1000580D29 /* AppServiceInfoView.swift */; };
 		B12BEE4B2B6A9E3B00580D29 /* NoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12BEE4A2B6A9E3B00580D29 /* NoticeView.swift */; };
 		B12BEE4F2B6B7BDA00580D29 /* Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12BEE4E2B6B7BDA00580D29 /* Handler.swift */; };
-		B14771F72B62019B0036A4A9 /* UIApplication +.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14771F62B62019B0036A4A9 /* UIApplication +.swift */; };
 		B158F83F2B657A9000E33C47 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B158F83E2B657A9000E33C47 /* Theme.swift */; };
 		B1B8FE812B5EA9DA00921BBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */; };
 		B1B8FE842B5EA9DA00921BBE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1B8FE832B5EA9DA00921BBE /* Preview Assets.xcassets */; };
@@ -179,7 +178,6 @@
 		B12BEE462B6A9E1000580D29 /* AppServiceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppServiceInfoView.swift; sourceTree = "<group>"; };
 		B12BEE4A2B6A9E3B00580D29 /* NoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeView.swift; sourceTree = "<group>"; };
 		B12BEE4E2B6B7BDA00580D29 /* Handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Handler.swift; sourceTree = "<group>"; };
-		B14771F62B62019B0036A4A9 /* UIApplication +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication +.swift"; sourceTree = "<group>"; };
 		B158F83E2B657A9000E33C47 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoSegment.swift; sourceTree = "<group>"; };
 		B1B8FE792B5EA9D900921BBE /* FinalHrmiProjects.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalHrmiProjects.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -251,7 +249,6 @@
 				B12BEE4E2B6B7BDA00580D29 /* Handler.swift */,
 				7B6D76A62B677A8F00601B55 /* Button.swift */,
 				B121A5712B5F8EE100667D42 /* Font +.swift */,
-				B14771F62B62019B0036A4A9 /* UIApplication +.swift */,
 				09B4A0442B6E5DAE0082B235 /* PresentationDetent +.swift */,
 				B158F83E2B657A9000E33C47 /* Theme.swift */,
 				09F869922B68E36800A56A4C /* Formatter.swift */,
@@ -660,7 +657,6 @@
 				7B904C682B6184560052384A /* CustomTextSegment.swift in Sources */,
 				2C2AD4FD2B68891C00C681F4 /* SearchTagView.swift in Sources */,
 				B1EE24A22B6144EA007F68B0 /* LogInViewModel.swift in Sources */,
-				B14771F72B62019B0036A4A9 /* UIApplication +.swift in Sources */,
 				AC6D12842B6A8D6100169B23 /* SuggestDrinkCell.swift in Sources */,
 				09B4A0452B6E5DAE0082B235 /* PresentationDetent +.swift in Sources */,
 				7B6D76A72B677A8F00601B55 /* Button.swift in Sources */,
