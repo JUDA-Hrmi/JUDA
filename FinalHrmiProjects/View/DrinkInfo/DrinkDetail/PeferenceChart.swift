@@ -1,5 +1,5 @@
 //
-//  PeferencesChart.swift
+//  PeferenceChart.swift
 //  FinalHrmiProjects
 //
 //  Created by phang on 1/30/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PeferencesChart: View {
+struct PeferenceChart: View {
     // UITest - 원형 차트 모델 + 데이터
     struct PieModel: Identifiable {
         var type: String
@@ -28,10 +28,10 @@ struct PeferencesChart: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 10) {
             // Preferences
             // TODO: 추후 NameSpace 로 이동하면 좋을 String 값
-            Text("Preferences")
+            Text("선호도 차트")
                 .font(.semibold18)
                 .frame(maxWidth: .infinity, alignment: .leading)
             // 차트
@@ -145,5 +145,5 @@ struct PeferencesChart: View {
 }
 
 #Preview {
-    PeferencesChart()
+    PeferenceChart()
 }

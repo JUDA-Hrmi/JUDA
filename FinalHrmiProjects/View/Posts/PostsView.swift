@@ -35,7 +35,7 @@ struct PostsView: View {
                         AddTagView()
                             .modifier(TabBarHidden())
                     } label: {
-                        Text("새 술상 올리기")
+                        Text("술상 올리기")
                             .font(.medium16)
                             .foregroundStyle(.mainBlack)
                     }

@@ -12,10 +12,10 @@ struct TastingNotes: View {
     private let sampleData = DrinkDummyData.sample
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 10) {
             // Tasting Notes
             // TODO: 추후 NameSpace 로 이동하면 좋을 String 값
-            Text("Tasting Notes")
+            Text("향 / 맛 / 여운")
                 .font(.semibold18)
             // Aroma, Taste, Finish
             ForEach(sampleData.tastingNotesList, id: \.self) { title in

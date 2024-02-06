@@ -47,7 +47,7 @@ struct DrinkDetailView: View {
                 WellMatched()
                 CustomDivider()
                 // 차트 - 선호하는 연령, 성별
-                PeferencesChart()
+                PeferenceChart()
                 CustomDivider()
                 // 태그된 인기 게시물
                 TaggedTrendingPosts()
