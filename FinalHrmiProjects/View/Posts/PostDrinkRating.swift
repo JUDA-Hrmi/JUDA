@@ -24,6 +24,7 @@ struct PostDrinkRating: View {
 				NavigationLink {
 					// TODO: DrinkInfoView Linking code
 					DrinkDetailView()
+                        .modifier(TabBarHidden())
 				} label: {
 					HStack(spacing: 2) {
 						Text(postDrinks[index])

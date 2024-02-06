@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct LogInView: View {
+    @Environment(\.dismiss) private var dismiss
+
     var body: some View {
         // MARK: - 상위 뷰
         ZStack {
@@ -49,6 +51,17 @@ struct LogInView: View {
                 Text("2024, HrMi all rights reserved.\nPowered by PJ3T7_HrMi")
                     .font(.thin12)
                     .multilineTextAlignment(.center)
+            }
+        }
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.backward")
+                }
+                .foregroundStyle(.mainBlack)
             }
         }
     }

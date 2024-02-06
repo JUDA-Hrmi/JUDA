@@ -38,6 +38,7 @@ struct SuggestDrinkView: View {
                     .font(.medium16)
                 NavigationLink {
                     LogInView()
+                        .modifier(TabBarHidden())
                 } label: {
                     HStack(alignment: .center) {
                         Text("로그인 하러가기")

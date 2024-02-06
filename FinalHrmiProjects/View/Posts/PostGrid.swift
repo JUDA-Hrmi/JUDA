@@ -70,6 +70,7 @@ struct PostGridContent: View {
                                    nickName: "hrmi",
                                    isLike: $isLike,
                                    likeCount: $likeCount)
+                        .modifier(TabBarHidden())
                 } label: {
                     PostCell(isLike: $isLike, likeCount: $likeCount)
                 }

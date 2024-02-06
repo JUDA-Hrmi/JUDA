@@ -32,6 +32,7 @@ struct TodayDrinkRecommendedView: View {
 					if isLoggedIn {
 						NavigationLink {
 							DrinkDetailView()
+                                .modifier(TabBarHidden())
 						} label: {
 							TodayDrinkRecommendedCell(todayDrink: drink)
 						}

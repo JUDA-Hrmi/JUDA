@@ -11,16 +11,17 @@ struct NavigationProfileView: View {
     @State var isLike: Bool = true
     @State var likeCount: Int = 303
     let userType: UserType
+    let userName: String
     @Environment(\.dismiss) private var dismiss
+    
     var body: some View {
         VStack {
             // MARK: - [프로필 사진 -- 닉네임 -- '수정']
-            
             UserProfileView(userType: .otheruser)
             
             // MARK: - [내가 작성한 게시물 -- '새 글 작성하기']
             HStack {
-                userType == .user ? Text("내가 작성한 게시물") : Text("sayHong님이 작성한 게시물")
+                userType == .user ? Text("내가 작성한 술상") : Text("\(userName) 님이 작성한 술상")
                     .font(.semibold18)
                 Spacer()
                 
@@ -28,33 +29,35 @@ struct NavigationProfileView: View {
                     NavigationLink {
                         // 글 작성하는 페이지로 이동하기
                         AddTagView()
+                            .modifier(TabBarHidden())
                     } label: {
-                        Text("새 글 작성하기")
+                        Text("새 술상 올리기")
                             .font(.light14)
                             .foregroundStyle(.mainBlack)
                     }
-                } else {
-                    
                 }
             }
             .padding(.horizontal, 20)
             .padding(.top, 20)
             
-            // MARK: - [LazyVGrid - 사용자가 작성한 글]
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
-                    ForEach(0..<4) { _ in
-                        NavigationLink {
-                            // TODO: PostCell에 해당하는 DetailView로 이동하기
-                            PostDetailView(postUserType: .writter, nickName: "hrmi", isLike: .constant(false), likeCount: .constant(45))
-                        } label: {
-                            // TODO: 네비게이션 루트 설정
-                            // 글 누르고 back눌렀을 때 마이페이지로 다시 돌아올지 PostsView에서 있을지 루트 잘 설정해야할 듯
-                            PostCell(isLike: $isLike, likeCount: $likeCount)
-                        }
-                        // Blinking 애니메이션 삭제
-                        .buttonStyle(EmptyActionStyle())
+            // 사용자가 작성한 글
+            // MARK: iOS 16.4 이상
+            if #available(iOS 16.4, *) {
+                ScrollView() {
+                    PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
+                }
+                .scrollBounceBehavior(.basedOnSize, axes: .vertical)
+                .scrollIndicators(.hidden)
+                .padding(.horizontal, 20)
+                // MARK: iOS 16.4 미만
+            } else {
+                ViewThatFits(in: .vertical) {
+                    PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
+                        .frame(maxHeight: .infinity, alignment: .top)
+                    ScrollView {
+                        PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
                     }
+                    .scrollIndicators(.hidden)
                 }
                 .padding(.horizontal, 20)
             }
@@ -68,8 +71,8 @@ struct NavigationProfileView: View {
                         .foregroundStyle(Color.mainBlack)
                 }
             }
-            ToolbarItem(placement: .topBarLeading) {
-                userType == .user ? Text("마이페이지") : Text("sayHong님의 페이지")
+            ToolbarItem(placement: .principal) {
+                userType == .user ? Text("마이페이지") : Text("\(userName) 님의 페이지")
                     .font(.semibold18)
             }
         }
@@ -78,5 +81,5 @@ struct NavigationProfileView: View {
 }
 
 #Preview {
-    NavigationProfileView(userType: UserType.otheruser)
+    NavigationProfileView(userType: UserType.otheruser, userName: "sayHong")
 }
