@@ -8,12 +8,6 @@
 import SwiftUI
 import PhotosUI
 
-// MARK: - Photos Data
-struct PhotoData: Identifiable {
-    let id = UUID()
-    var image: UIImage?
-}
-
 enum ImageLoadingError: Error {
     case invalidImageData
 }
@@ -25,8 +19,11 @@ struct PhotoSelectPagingTab: View {
     @Binding var images: [UIImage]
     // photo picker로 선택된 사진 배열
     @Binding var selectedPhotos: [PhotosPickerItem]
+    // 이미지 가져오다가 에러나면 띄워줄 alert
+    @State private var showAlert = false
+    // 이미지 사이즈
     let imageSize: CGFloat
-    
+    // 최대로 고를 수 있는 이미지 개수
     private let maxImages = 10
     
     var body: some View {
@@ -77,7 +74,11 @@ struct PhotoSelectPagingTab: View {
                 .tabViewStyle(.page(indexDisplayMode: .automatic))
                 .onChange(of: selectedPhotos) { _ in
                     Task {
-                        await updateImage()
+                        do {
+                            try await updateImage()
+                        } catch {
+                            // TODO: 이미지 로드 실패 alert 띄워주기
+                        }
                     }
                 }
                 .onChange(of: images) { _ in
@@ -90,7 +91,7 @@ struct PhotoSelectPagingTab: View {
         .tint(.mainBlack)
     }
     
-    private func updateImage() async {
+    private func updateImage() async throws {
         guard !selectedPhotos.isEmpty else {
             self.images = []
             return
@@ -100,11 +101,11 @@ struct PhotoSelectPagingTab: View {
             do {
                 guard let data = try await selectedPhoto.loadTransferable(type: Data.self),
                       let uiImage = UIImage(data: data) else {
-                    throw ImageLoadingError.invalidImageData
+                    return
                 }
                 images.append(uiImage)
             } catch let error {
-                print("Error loading image: \(error.localizedDescription)")
+                throw ImageLoadingError.invalidImageData
             }
         }
         self.images = images
