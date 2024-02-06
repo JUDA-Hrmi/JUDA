@@ -15,6 +15,7 @@
 		09A6AD722B70B46E00606585 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD712B70B46E00606585 /* AppViewModel.swift */; };
 		09A6AD782B71C23C00606585 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09A6AD772B71C23C00606585 /* GoogleService-Info.plist */; };
 		09A6AD7A2B71F6D800606585 /* LibraryPhotosPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD792B71F6D800606585 /* LibraryPhotosPicker.swift */; };
+		09A6AD7E2B72A53C00606585 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD7D2B72A53C00606585 /* Errors.swift */; };
 		09B4A0452B6E5DAE0082B235 /* PresentationDetent +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B4A0442B6E5DAE0082B235 /* PresentationDetent +.swift */; };
 		09CDADA52B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDADA42B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift */; };
 		09F869932B68E36800A56A4C /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869922B68E36800A56A4C /* Formatter.swift */; };
@@ -117,6 +118,7 @@
 		09A6AD712B70B46E00606585 /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		09A6AD772B71C23C00606585 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		09A6AD792B71F6D800606585 /* LibraryPhotosPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryPhotosPicker.swift; sourceTree = "<group>"; };
+		09A6AD7D2B72A53C00606585 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		09B4A0442B6E5DAE0082B235 /* PresentationDetent +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PresentationDetent +.swift"; sourceTree = "<group>"; };
 		09CDADA42B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkSelectHorizontalScrollBar.swift; sourceTree = "<group>"; };
 		09F869922B68E36800A56A4C /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 		B121A5652B5F8D2000667D42 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				09A6AD7D2B72A53C00606585 /* Errors.swift */,
 				B12BEE4E2B6B7BDA00580D29 /* Handler.swift */,
 				7B6D76A62B677A8F00601B55 /* Button.swift */,
 				B121A5712B5F8EE100667D42 /* Font +.swift */,
@@ -710,6 +713,7 @@
 				B1EE24882B61445E007F68B0 /* MypageView.swift in Sources */,
 				09F869A02B68E50000A56A4C /* TaggedTrendingPosts.swift in Sources */,
 				7B6D76B52B67D5F900601B55 /* PostTags.swift in Sources */,
+				09A6AD7E2B72A53C00606585 /* Errors.swift in Sources */,
 				7B904C662B6168C60052384A /* PostCell.swift in Sources */,
 				AC110B572B69658C005390BB /* ChangeUserNameView.swift in Sources */,
 				09F8699A2B68E4B600A56A4C /* TastingNotes.swift in Sources */,

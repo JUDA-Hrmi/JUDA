@@ -53,9 +53,12 @@ struct UserProfileView: View {
                                 .frame(width: 20, height: 20)
                                 .foregroundStyle(.gray01)
                         }
-                        .task(id: selectedPhotos) {
-                            await updateImage()
+                        .onChange(of: selectedPhotos) { _ in
+                            Task {
+                                await updateImage()
+                            }
                         }
+                        .tint(.mainBlack)
 //                        Image(systemName: "pencil.circle.fill")
 //                            .resizable()
 //                            .aspectRatio(contentMode: .fill)

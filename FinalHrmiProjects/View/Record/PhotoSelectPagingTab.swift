@@ -8,10 +8,6 @@
 import SwiftUI
 import PhotosUI
 
-enum ImageLoadingError: Error {
-    case invalidImageData
-}
-
 struct PhotoSelectPagingTab: View {
     // 현재 선택된 탭의 인덱스. 초기값 0
     @State private var selectedIndex = 0
@@ -104,8 +100,8 @@ struct PhotoSelectPagingTab: View {
                     return
                 }
                 images.append(uiImage)
-            } catch let error {
-                throw ImageLoadingError.invalidImageData
+            } catch {
+                throw PhotosPickerImageLoadingError.invalidImageData
             }
         }
         self.images = images
