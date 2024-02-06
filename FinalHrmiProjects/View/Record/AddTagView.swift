@@ -25,7 +25,7 @@ struct AddTagView: View {
 	@State private var drinkTags: [DrinkTag] = []
 	// DrinkTagCell의 술 태그의 정보를 담는 프로퍼티
 	@State private var selectedTagDrink: DrinkTag = DrinkTag(id: UUID(), name: "", rating: 0)
-	// SearchTagView Sheet를 띄워주는 상태 프로퍼티
+    // SearchTagView Sheet를 띄워주는 상태 프로퍼티
 	@State private var isShowSearchTag = false
     // CustomDialog - rating 을 띄워주는 상태 프로퍼티
     @State private var isShowRatingDialog: Bool = false
@@ -33,7 +33,11 @@ struct AddTagView: View {
 	@State private var isShowAlertDialog: Bool = false
 	// Navigation을 위한 환경 프로퍼티
 	@Environment(\.dismiss) private var dismiss
-	
+    // 숱 태그가 5개 이상인지 체크
+    var isTagsCountAboveFive: Bool {
+        self.drinkTags.count >= 5
+    }
+    
     var body: some View {
         GeometryReader { geo in
             ZStack {
@@ -48,23 +52,25 @@ struct AddTagView: View {
                     } label: {
                         Text("술 태그 추가하기")
                             .font(.medium20)
-                            .foregroundStyle(.mainAccent03)
+                            .foregroundStyle(isTagsCountAboveFive ? .gray01 : .mainAccent03)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 10)
                             .overlay {
                                 RoundedRectangle(cornerRadius: 10)
-                                    .stroke(.mainAccent03, lineWidth: 1)
+                                    .stroke(isTagsCountAboveFive ? .gray01 : .mainAccent03, lineWidth: 1)
                             }
                     }
+                    .disabled(isTagsCountAboveFive)
                     .padding(.horizontal, 20)
                     .padding(.vertical, 10)
                     
                     // 술 태그가 없을 때, 텍스트 보여주기
                     if drinkTags.isEmpty {
                         Spacer()
-                        Text("태그를 추가해보세요")
+                        Text("태그를 추가해보세요\n(최대 5개)")
                             .foregroundStyle(.gray01)
                             .font(.regular16)
+                            .multilineTextAlignment(.center)
                         Spacer()
                     } else {
                         // 술 태그가 있을 때, DrinkTagCellScrollView 보여주기
