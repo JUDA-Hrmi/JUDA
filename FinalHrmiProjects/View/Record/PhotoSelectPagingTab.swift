@@ -74,23 +74,30 @@ struct PhotoSelectPagingTab: View {
     
     @MainActor
     private func updateImages() async {
+        // 선택한 사진이 비어있으면 저장할 사진 목록 초기화하고 return
         guard !selectedPhotos.isEmpty else {
             images = Array(repeating: nil, count: 10)
             return
         }
+        // 저장할 목록의 크기만큼 순회
         for index in 0..<images.count {
+            // 선택할 사진들의 개수가 현재 index 보다 큰 경우,
             if selectedPhotos.count > index {
                 do {
+                    // 선택한 사진 index 접근
                     let selectedPhoto = selectedPhotos[index]
+                    // 데이터로 transfer
                     guard let data = try await selectedPhoto.loadTransferable(type: Data.self) else {
                         print("Error photo to data")
                         return
                     }
+                    // UIimage 로 변경
                     let image = UIImage(data: data)
                     images[index] = image
                 } catch let error {
                     print("Error loading image: \(error.localizedDescription)")
                 }
+            // 선택할 사진들의 개수가 현재 index 보다 작거나 같은 경우, 배열 비워주기
             } else {
                 images[index] = nil
             }
