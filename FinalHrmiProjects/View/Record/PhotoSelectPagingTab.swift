@@ -73,7 +73,8 @@ struct PhotoSelectPagingTab: View {
                         do {
                             try await updateImage()
                         } catch {
-                            // TODO: 이미지 로드 실패 alert 띄워주기
+                            // 이미지 로드 실패 alert 띄워주기
+                            showAlert = true
                         }
                     }
                 }
@@ -81,6 +82,10 @@ struct PhotoSelectPagingTab: View {
                     Task {
                         selectedIndex = self.images.count
                     }
+                }
+                .alert(isPresented: $showAlert) {
+                    Alert(title: Text("사진을 불러오는데 실패했어요\n다시 시도해주세요"),
+                          dismissButton: .default(Text("확인"), action: { showAlert = false }))
                 }
             }
         }
@@ -97,7 +102,7 @@ struct PhotoSelectPagingTab: View {
             do {
                 guard let data = try await selectedPhoto.loadTransferable(type: Data.self),
                       let uiImage = UIImage(data: data) else {
-                    return
+                    throw PhotosPickerImageLoadingError.invalidImageData
                 }
                 images.append(uiImage)
             } catch {
