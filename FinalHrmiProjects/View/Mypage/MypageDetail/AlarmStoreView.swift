@@ -50,7 +50,6 @@ struct AlarmStoreView: View {
                 }
                 .scrollBounceBehavior(.basedOnSize, axes: .vertical)
                 .scrollIndicators(.hidden)
-                .padding(.top, 10)
             // MARK: iOS 16.4 미만
             } else {
                 ViewThatFits(in: .vertical) {
@@ -61,7 +60,6 @@ struct AlarmStoreView: View {
                     }
                     .scrollIndicators(.hidden)
                 }
-                .padding(.top, 10)
             }
         }
         .navigationBarBackButtonHidden()
