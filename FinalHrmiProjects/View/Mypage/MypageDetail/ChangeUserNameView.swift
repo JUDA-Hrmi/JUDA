@@ -27,7 +27,6 @@ struct ChangeUserNameView: View {
                     .focused($isFocused)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled() // 자동 수정 비활성화
-                    .keyboardType(.alphabet)
                     .onChange(of: userChangeNickName) { _ in
                         isCompleted = userChangeNickName.count >= 2
                     }
