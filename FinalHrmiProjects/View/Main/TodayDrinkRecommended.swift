@@ -1,5 +1,5 @@
 //
-//  TodayDrinkRecommendedView.swift
+//  TodayDrinkRecommended.swift
 //  FinalHrmiProjects
 //
 //  Created by 백대홍 on 1/31/24.
@@ -21,7 +21,7 @@ let TodayDrinkData: [TodayDrink] = [
 ]
 
 // MARK: - 오늘의 추천 술 뷰
-struct TodayDrinkRecommendedView: View {
+struct TodayDrinkRecommended: View {
 	@Binding var isLoggedIn: Bool
     let todayDrink: [TodayDrink] = TodayDrinkData
 	
@@ -46,7 +46,7 @@ struct TodayDrinkRecommendedView: View {
 }
 
 #Preview {
-	TodayDrinkRecommendedView(isLoggedIn: .constant(true))
+    TodayDrinkRecommended(isLoggedIn: .constant(true))
 }
 
 // MARK: - 오늘의 추천 술 뷰셀

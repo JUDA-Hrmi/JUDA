@@ -64,10 +64,10 @@
 		AC110B572B69658C005390BB /* ChangeUserNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC110B562B69658C005390BB /* ChangeUserNameView.swift */; };
 		AC1FEAAE2B639781006E9E65 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1FEAAD2B639781006E9E65 /* CustomAlert.swift */; };
 		AC5778E52B6FC20C00F7B04B /* NavigationProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5778E42B6FC20C00F7B04B /* NavigationProfileView.swift */; };
-		AC6D12842B6A8D6100169B23 /* SuggestDrinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12832B6A8D6100169B23 /* SuggestDrinkCell.swift */; };
-		AC6D12862B6A8D7800169B23 /* SuggestDrinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12852B6A8D7800169B23 /* SuggestDrinkView.swift */; };
-		AC6D12882B6A8DD300169B23 /* TodayDrinkRecommendedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12872B6A8DD300169B23 /* TodayDrinkRecommendedView.swift */; };
-		AC6D128A2B6A8ED100169B23 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12892B6A8ED100169B23 /* WeatherView.swift */; };
+		AC6D12842B6A8D6100169B23 /* SuggestDrink.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12832B6A8D6100169B23 /* SuggestDrink.swift */; };
+		AC6D12862B6A8D7800169B23 /* PostOrLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12852B6A8D7800169B23 /* PostOrLogin.swift */; };
+		AC6D12882B6A8DD300169B23 /* TodayDrinkRecommended.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12872B6A8DD300169B23 /* TodayDrinkRecommended.swift */; };
+		AC6D128A2B6A8ED100169B23 /* WeatherAndFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12892B6A8ED100169B23 /* WeatherAndFood.swift */; };
 		B121A5722B5F8EE100667D42 /* Font +.swift in Sources */ = {isa = PBXBuildFile; fileRef = B121A5712B5F8EE100667D42 /* Font +.swift */; };
 		B121A5732B5F910900667D42 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B121A56C2B5F8D5D00667D42 /* Pretendard-Bold.otf */; };
 		B121A5742B5F910B00667D42 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = B121A56D2B5F8D5D00667D42 /* Pretendard-Light.otf */; };
@@ -160,10 +160,10 @@
 		AC110B562B69658C005390BB /* ChangeUserNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeUserNameView.swift; sourceTree = "<group>"; };
 		AC1FEAAD2B639781006E9E65 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		AC5778E42B6FC20C00F7B04B /* NavigationProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationProfileView.swift; sourceTree = "<group>"; };
-		AC6D12832B6A8D6100169B23 /* SuggestDrinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestDrinkCell.swift; sourceTree = "<group>"; };
-		AC6D12852B6A8D7800169B23 /* SuggestDrinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestDrinkView.swift; sourceTree = "<group>"; };
-		AC6D12872B6A8DD300169B23 /* TodayDrinkRecommendedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayDrinkRecommendedView.swift; sourceTree = "<group>"; };
-		AC6D12892B6A8ED100169B23 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
+		AC6D12832B6A8D6100169B23 /* SuggestDrink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestDrink.swift; sourceTree = "<group>"; };
+		AC6D12852B6A8D7800169B23 /* PostOrLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOrLogin.swift; sourceTree = "<group>"; };
+		AC6D12872B6A8DD300169B23 /* TodayDrinkRecommended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayDrinkRecommended.swift; sourceTree = "<group>"; };
+		AC6D12892B6A8ED100169B23 /* WeatherAndFood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAndFood.swift; sourceTree = "<group>"; };
 		B121A5692B5F8D5D00667D42 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		B121A56A2B5F8D5D00667D42 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		B121A56B2B5F8D5D00667D42 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
@@ -382,10 +382,10 @@
 			isa = PBXGroup;
 			children = (
 				B1EE24912B61447F007F68B0 /* MainView.swift */,
-				AC6D12832B6A8D6100169B23 /* SuggestDrinkCell.swift */,
-				AC6D12892B6A8ED100169B23 /* WeatherView.swift */,
-				AC6D12852B6A8D7800169B23 /* SuggestDrinkView.swift */,
-				AC6D12872B6A8DD300169B23 /* TodayDrinkRecommendedView.swift */,
+				AC6D12892B6A8ED100169B23 /* WeatherAndFood.swift */,
+				AC6D12832B6A8D6100169B23 /* SuggestDrink.swift */,
+				AC6D12872B6A8DD300169B23 /* TodayDrinkRecommended.swift */,
+				AC6D12852B6A8D7800169B23 /* PostOrLogin.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -643,6 +643,8 @@
 				7B6D76B12B67D1E100601B55 /* PostPhotoScroll.swift in Sources */,
 				09F869B52B6A47B700A56A4C /* AlarmStoreListCell.swift in Sources */,
 				AC6D12862B6A8D7800169B23 /* SuggestDrinkView.swift in Sources */,
+				09F869B92B6A48E900A56A4C /* CustomScrollView.swift in Sources */,
+				AC6D12862B6A8D7800169B23 /* PostOrLogin.swift in Sources */,
 				B1EE249A2B6144C5007F68B0 /* RecordViewModel.swift in Sources */,
 				B1EE24732B61431A007F68B0 /* DummyModel.swift in Sources */,
 				2C63DD672B67EB1B00770E3A /* RecordView.swift in Sources */,
@@ -651,13 +653,15 @@
 				B1EE249E2B6144DD007F68B0 /* DrinkInfoViewModel.swift in Sources */,
 				09F8699C2B68E4CA00A56A4C /* WellMatched.swift in Sources */,
 				096E631A2B616F31009246CE /* DrinkGridCell.swift in Sources */,
-				AC6D12882B6A8DD300169B23 /* TodayDrinkRecommendedView.swift in Sources */,
+				AC6D12882B6A8DD300169B23 /* TodayDrinkRecommended.swift in Sources */,
 				09F869982B68E48400A56A4C /* DrinkDetails.swift in Sources */,
 				B12330492B6A99B400DE2A93 /* SettingView.swift in Sources */,
 				7B904C682B6184560052384A /* CustomTextSegment.swift in Sources */,
 				2C2AD4FD2B68891C00C681F4 /* SearchTagView.swift in Sources */,
 				B1EE24A22B6144EA007F68B0 /* LogInViewModel.swift in Sources */,
 				AC6D12842B6A8D6100169B23 /* SuggestDrinkCell.swift in Sources */,
+				AC6D12842B6A8D6100169B23 /* SuggestDrink.swift in Sources */,
+				2C63DD632B67D60C00770E3A /* PhotoPicker.swift in Sources */,
 				09B4A0452B6E5DAE0082B235 /* PresentationDetent +.swift in Sources */,
 				7B6D76A72B677A8F00601B55 /* Button.swift in Sources */,
 				09F8699E2B68E4E400A56A4C /* PeferencesChart.swift in Sources */,
@@ -673,7 +677,7 @@
 				B1EE24922B61447F007F68B0 /* MainView.swift in Sources */,
 				7B92656B2B692E7200840095 /* PostReportTitle.swift in Sources */,
 				09CDADA52B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift in Sources */,
-				AC6D128A2B6A8ED100169B23 /* WeatherView.swift in Sources */,
+				AC6D128A2B6A8ED100169B23 /* WeatherAndFood.swift in Sources */,
 				2C2044E82B63B9D600773266 /* ContentView.swift in Sources */,
 				B12BEE4F2B6B7BDA00580D29 /* Handler.swift in Sources */,
 				09F869932B68E36800A56A4C /* Formatter.swift in Sources */,

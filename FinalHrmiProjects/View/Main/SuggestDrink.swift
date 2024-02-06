@@ -1,5 +1,5 @@
 //
-//  SuggestDrinkCell.swift
+//  SuggestDrink.swift
 //  FinalHrmiProjects
 //
 //  Created by 백대홍 on 1/31/24.
@@ -8,7 +8,7 @@
 import SwiftUI
 
 // MARK: - 오늘의 추천 술 전체 뷰
-struct SuggestDrinkCell: View {
+struct SuggestDrink: View {
     @Binding var isLoggedIn: Bool
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -16,7 +16,7 @@ struct SuggestDrinkCell: View {
                 Text("오늘의 추천 술")
                     .font(.semibold18)
 				
-				TodayDrinkRecommendedView(isLoggedIn: $isLoggedIn)
+                TodayDrinkRecommended(isLoggedIn: $isLoggedIn)
                     .opacity(isLoggedIn ? 1.0 : 0.8)
                     .blur(radius: isLoggedIn ? 0 : 3)
             }
