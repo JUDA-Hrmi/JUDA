@@ -14,12 +14,13 @@ enum UserType {
 
 struct UserProfileView: View {
     @State private var userNickName: String = "sayHong" // 사용자 닉네임
-    @State private var isLibraryPresented: Bool = false // PhotoPicker - 라이브러리에서 선택
     
     let userType: UserType
     
     @State private var selectedPhotos: [PhotosPickerItem] = []
     @State private var userProfileImage: UIImage? // 사용자 프로필 이미지
+    
+//    @State private var isPickerPresented = false
     
     var body: some View {
         HStack {
@@ -55,7 +56,34 @@ struct UserProfileView: View {
                         .task(id: selectedPhotos) {
                             await updateImage()
                         }
-                        .tint(.mainBlack)
+//                        Image(systemName: "pencil.circle.fill")
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fill)
+//                            .frame(width: 20, height: 20)
+//                            .foregroundStyle(.gray01)
+//                            .onTapGesture {
+//                                isPickerPresented = true
+//                            }
+//                            .photosPicker(isPresented: $isPickerPresented, selection: $selectedPhotos,
+//                                          maxSelectionCount: 1, selectionBehavior: .default,
+//                                          matching: .images, photoLibrary: .shared())
+//                            .onChange(of: selectedPhotos) { _ in
+//                                isPickerPresented = true
+//                                if let top = UIViewController.topMost() {
+//                                    let alertController = UIAlertController(title: "프로필 사진을\n선택한 사진으로 변경할까요?", message: "", preferredStyle: .alert)
+//                                    alertController.addAction(
+//                                        UIAlertAction(title: "변경하기", style: .default) { _ in
+//                                            isPickerPresented = false
+//                                            Task {
+//                                                await updateImage()
+//                                            }
+//                                        }
+//                                    )
+//                                    alertController.addAction(UIAlertAction(title: "취소", style: .cancel))
+//                                    top.present(alertController, animated: true, completion: nil)
+//                                }
+//                            }
+//                            .tint(.mainBlack)
                     }
                 }
                 // MARK: 사용자 닉네임 표시
@@ -98,3 +126,16 @@ struct UserProfileView: View {
 #Preview {
     UserProfileView(userType: .otheruser)
 }
+
+//extension UIViewController {
+//    static func topMost(_ root: UIViewController? = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController) -> UIViewController? {
+//        if let navigation = root as? UINavigationController {
+//            return topMost(navigation.visibleViewController)
+//        } else if let tabbar = root as? UITabBarController, let selected = tabbar.selectedViewController {
+//            return topMost(selected)
+//        } else if let presented = root?.presentedViewController {
+//            return topMost(presented)
+//        }
+//        return root
+//    }
+//}
