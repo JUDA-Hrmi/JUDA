@@ -14,6 +14,7 @@
 		096E631A2B616F31009246CE /* DrinkGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096E63192B616F31009246CE /* DrinkGridCell.swift */; };
 		09A6AD722B70B46E00606585 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD712B70B46E00606585 /* AppViewModel.swift */; };
 		09A6AD782B71C23C00606585 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09A6AD772B71C23C00606585 /* GoogleService-Info.plist */; };
+		09A6AD7A2B71F6D800606585 /* LibraryPhotosPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD792B71F6D800606585 /* LibraryPhotosPicker.swift */; };
 		09B4A0452B6E5DAE0082B235 /* PresentationDetent +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B4A0442B6E5DAE0082B235 /* PresentationDetent +.swift */; };
 		09CDADA52B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDADA42B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift */; };
 		09F869932B68E36800A56A4C /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869922B68E36800A56A4C /* Formatter.swift */; };
@@ -38,7 +39,6 @@
 		2C2FF2982B63916700B2301A /* StarRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2FF2972B63916700B2301A /* StarRating.swift */; };
 		2C5B0F422B6B10CF005F1A99 /* CustomRatingDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5B0F412B6B10CF005F1A99 /* CustomRatingDialog.swift */; };
 		2C63DD612B67D5EB00770E3A /* PhotoSelectPagingTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD602B67D5EB00770E3A /* PhotoSelectPagingTab.swift */; };
-		2C63DD632B67D60C00770E3A /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD622B67D60C00770E3A /* PhotoPicker.swift */; };
 		2C63DD652B67DFA400770E3A /* DrinkTagScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD642B67DFA400770E3A /* DrinkTagScroll.swift */; };
 		2C63DD672B67EB1B00770E3A /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD662B67EB1B00770E3A /* RecordView.swift */; };
 		7B5174922B69EAB300915793 /* NavigationPostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5174912B69EAB300915793 /* NavigationPostsView.swift */; };
@@ -76,9 +76,7 @@
 		B121A5762B5F911700667D42 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = B121A5692B5F8D5D00667D42 /* Pretendard-Regular.otf */; };
 		B121A5772B5F911900667D42 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B121A56A2B5F8D5D00667D42 /* Pretendard-SemiBold.otf */; };
 		B121A5782B5F911A00667D42 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = B121A56E2B5F8D5E00667D42 /* Pretendard-Thin.otf */; };
-		B12330472B6A998C00DE2A93 /* SettingPhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12330462B6A998C00DE2A93 /* SettingPhotoPicker.swift */; };
 		B12330492B6A99B400DE2A93 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12330482B6A99B400DE2A93 /* SettingView.swift */; };
-		B123304C2B6A99E900DE2A93 /* ProfilePhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B123304B2B6A99E900DE2A93 /* ProfilePhotoPicker.swift */; };
 		B123304E2B6A9A0300DE2A93 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B123304D2B6A9A0300DE2A93 /* UserProfileView.swift */; };
 		B127A4222B64EB53001F005D /* CustomBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B127A4212B64EB53001F005D /* CustomBottomSheet.swift */; };
 		B12BEE472B6A9E1000580D29 /* AppServiceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12BEE462B6A9E1000580D29 /* AppServiceInfoView.swift */; };
@@ -118,6 +116,7 @@
 		096E63192B616F31009246CE /* DrinkGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkGridCell.swift; sourceTree = "<group>"; };
 		09A6AD712B70B46E00606585 /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		09A6AD772B71C23C00606585 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		09A6AD792B71F6D800606585 /* LibraryPhotosPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryPhotosPicker.swift; sourceTree = "<group>"; };
 		09B4A0442B6E5DAE0082B235 /* PresentationDetent +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PresentationDetent +.swift"; sourceTree = "<group>"; };
 		09CDADA42B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkSelectHorizontalScrollBar.swift; sourceTree = "<group>"; };
 		09F869922B68E36800A56A4C /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
@@ -143,7 +142,6 @@
 		2C5B0F412B6B10CF005F1A99 /* CustomRatingDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRatingDialog.swift; sourceTree = "<group>"; };
 		2C63DD512B676E1000770E3A /* TabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItem.swift; sourceTree = "<group>"; };
 		2C63DD602B67D5EB00770E3A /* PhotoSelectPagingTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectPagingTab.swift; sourceTree = "<group>"; };
-		2C63DD622B67D60C00770E3A /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		2C63DD642B67DFA400770E3A /* DrinkTagScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkTagScroll.swift; sourceTree = "<group>"; };
 		2C63DD662B67EB1B00770E3A /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		7B5174912B69EAB300915793 /* NavigationPostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationPostsView.swift; sourceTree = "<group>"; };
@@ -177,9 +175,7 @@
 		B121A56E2B5F8D5E00667D42 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
 		B121A56F2B5F8DA100667D42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B121A5712B5F8EE100667D42 /* Font +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font +.swift"; sourceTree = "<group>"; };
-		B12330462B6A998C00DE2A93 /* SettingPhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPhotoPicker.swift; sourceTree = "<group>"; };
 		B12330482B6A99B400DE2A93 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
-		B123304B2B6A99E900DE2A93 /* ProfilePhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePhotoPicker.swift; sourceTree = "<group>"; };
 		B123304D2B6A9A0300DE2A93 /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		B127A4212B64EB53001F005D /* CustomBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheet.swift; sourceTree = "<group>"; };
 		B12BEE462B6A9E1000580D29 /* AppServiceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppServiceInfoView.swift; sourceTree = "<group>"; };
@@ -282,11 +278,9 @@
 		B123304A2B6A99C200DE2A93 /* MypageDetail */ = {
 			isa = PBXGroup;
 			children = (
-				B12330462B6A998C00DE2A93 /* SettingPhotoPicker.swift */,
 				AC110B562B69658C005390BB /* ChangeUserNameView.swift */,
 				09F869B42B6A47B700A56A4C /* AlarmStoreListCell.swift */,
 				09F869B62B6A47C700A56A4C /* AlarmStoreView.swift */,
-				B123304B2B6A99E900DE2A93 /* ProfilePhotoPicker.swift */,
 				B123304D2B6A9A0300DE2A93 /* UserProfileView.swift */,
 			);
 			path = MypageDetail;
@@ -443,7 +437,6 @@
 				B1EE248B2B61446A007F68B0 /* AddTagView.swift */,
 				2C63DD642B67DFA400770E3A /* DrinkTagScroll.swift */,
 				2C63DD602B67D5EB00770E3A /* PhotoSelectPagingTab.swift */,
-				2C63DD622B67D60C00770E3A /* PhotoPicker.swift */,
 			);
 			path = Record;
 			sourceTree = "<group>";
@@ -543,6 +536,7 @@
 				09F869B82B6A48E900A56A4C /* CustomScrollView.swift */,
 				AC110B522B68BBFA005390BB /* CustomDialog.swift */,
 				2C5B0F412B6B10CF005F1A99 /* CustomRatingDialog.swift */,
+				09A6AD792B71F6D800606585 /* LibraryPhotosPicker.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -672,11 +666,9 @@
 				B1EE24A22B6144EA007F68B0 /* LogInViewModel.swift in Sources */,
 				B14771F72B62019B0036A4A9 /* UIApplication +.swift in Sources */,
 				AC6D12842B6A8D6100169B23 /* SuggestDrinkCell.swift in Sources */,
-				2C63DD632B67D60C00770E3A /* PhotoPicker.swift in Sources */,
 				09B4A0452B6E5DAE0082B235 /* PresentationDetent +.swift in Sources */,
 				7B6D76A72B677A8F00601B55 /* Button.swift in Sources */,
 				09F8699E2B68E4E400A56A4C /* PeferencesChart.swift in Sources */,
-				B123304C2B6A99E900DE2A93 /* ProfilePhotoPicker.swift in Sources */,
 				096E63182B616886009246CE /* DrinkListCell.swift in Sources */,
 				09F869B72B6A47C700A56A4C /* AlarmStoreView.swift in Sources */,
 				7B9265712B6941D000840095 /* PostReportToolbar.swift in Sources */,
@@ -692,8 +684,8 @@
 				AC6D128A2B6A8ED100169B23 /* WeatherView.swift in Sources */,
 				2C2044E82B63B9D600773266 /* ContentView.swift in Sources */,
 				B12BEE4F2B6B7BDA00580D29 /* Handler.swift in Sources */,
-				B12330472B6A998C00DE2A93 /* SettingPhotoPicker.swift in Sources */,
 				09F869932B68E36800A56A4C /* Formatter.swift in Sources */,
+				09A6AD7A2B71F6D800606585 /* LibraryPhotosPicker.swift in Sources */,
 				B123304E2B6A9A0300DE2A93 /* UserProfileView.swift in Sources */,
 				0961B7972B6624D300A9F553 /* DrinkInfoList.swift in Sources */,
 				0961B7992B6624DD00A9F553 /* DrinkInfoGrid.swift in Sources */,
