@@ -33,9 +33,9 @@ struct SettingView: View {
 				
 				// MARK: 화면 모드 설정
 				// 버튼 클릭 시 반짝이는 애니메이션 제거 코드 추가하기
-				Button(action: {
+				Button {
 					isShowingSheet.toggle()
-				}, label: {
+				} label: {
 					HStack {
 						Text("화면 모드 설정")
 						Spacer()
@@ -45,30 +45,34 @@ struct SettingView: View {
 						CustomSortingButton(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
 					}
 					.modifier(CustomText())
-				})
+				}
 				
 				// MARK: 로그아웃
-				Button(action: {
+				Button {
 					isLogoutClicked.toggle() // 버튼 클릭 시, 커스텀 다이얼로그 활성화
-				}, label: {
+				} label: {
 					Text("로그아웃")
 						.font(.regular16)
 						.foregroundStyle(.mainAccent02)
 						.padding(.horizontal, 20)
 						.padding(.vertical, 10)
-				})
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(.background)
+				}
 				.buttonStyle(EmptyActionStyle())
 				
 				// MARK: 회원탈퇴
-				Button(action: {
+				Button {
 					isDeletAccount.toggle() // 버튼 클릭 시, 커스텀 다이얼로그 활성화
-				}, label: {
+				} label: {
 					Text("회원탈퇴")
 						.font(.regular16)
 						.foregroundStyle(.mainAccent02)
 						.padding(.horizontal, 20)
 						.padding(.vertical, 10)
-				})
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(.background)
+				}
 				.buttonStyle(EmptyActionStyle())
 				
 				CustomDivider()
