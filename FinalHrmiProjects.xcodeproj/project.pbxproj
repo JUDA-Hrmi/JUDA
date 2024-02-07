@@ -71,6 +71,8 @@
 		AC6D128A2B6A8ED100169B23 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12892B6A8ED100169B23 /* WeatherView.swift */; };
 		AC98D1CD2B735765006F6EC9 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = AC98D1CC2B735765006F6EC9 /* Lottie */; };
 		AC98D1CF2B7357DA006F6EC9 /* Lottie.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98D1CE2B7357DA006F6EC9 /* Lottie.swift */; };
+		AC98D1D22B73586F006F6EC9 /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = AC98D1D12B73586F006F6EC9 /* OpenAI */; };
+		AC98D1D42B7358AE006F6EC9 /* AiViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98D1D32B7358AE006F6EC9 /* AiViewModel.swift */; };
 		B121A5722B5F8EE100667D42 /* Font +.swift in Sources */ = {isa = PBXBuildFile; fileRef = B121A5712B5F8EE100667D42 /* Font +.swift */; };
 		B121A5732B5F910900667D42 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B121A56C2B5F8D5D00667D42 /* Pretendard-Bold.otf */; };
 		B121A5742B5F910B00667D42 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = B121A56D2B5F8D5D00667D42 /* Pretendard-Light.otf */; };
@@ -172,6 +174,7 @@
 		AC6D12872B6A8DD300169B23 /* TodayDrinkRecommendedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayDrinkRecommendedView.swift; sourceTree = "<group>"; };
 		AC6D12892B6A8ED100169B23 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
 		AC98D1CE2B7357DA006F6EC9 /* Lottie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lottie.swift; sourceTree = "<group>"; };
+		AC98D1D32B7358AE006F6EC9 /* AiViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AiViewModel.swift; sourceTree = "<group>"; };
 		B121A5692B5F8D5D00667D42 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		B121A56A2B5F8D5D00667D42 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		B121A56B2B5F8D5D00667D42 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
@@ -223,6 +226,7 @@
 				B1EE24642B613EB1007F68B0 /* FirebaseAnalytics in Frameworks */,
 				B1EE24662B613EB1007F68B0 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				B1EE246C2B613EB1007F68B0 /* FirebaseAppCheck in Frameworks */,
+				AC98D1D22B73586F006F6EC9 /* OpenAI in Frameworks */,
 				B1EE246A2B613EB1007F68B0 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				AC98D1CD2B735765006F6EC9 /* Lottie in Frameworks */,
 			);
@@ -401,6 +405,7 @@
 				AC6D12852B6A8D7800169B23 /* SuggestDrinkView.swift */,
 				AC6D12872B6A8DD300169B23 /* TodayDrinkRecommendedView.swift */,
 				AC98D1CE2B7357DA006F6EC9 /* Lottie.swift */,
+				AC98D1D32B7358AE006F6EC9 /* AiViewModel.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -575,6 +580,7 @@
 				B1EE24692B613EB1007F68B0 /* FirebaseAnalyticsWithoutAdIdSupport */,
 				B1EE246B2B613EB1007F68B0 /* FirebaseAppCheck */,
 				AC98D1CC2B735765006F6EC9 /* Lottie */,
+				AC98D1D12B73586F006F6EC9 /* OpenAI */,
 			);
 			productName = FinalHrmiProjects;
 			productReference = B1B8FE792B5EA9D900921BBE /* FinalHrmiProjects.app */;
@@ -607,6 +613,7 @@
 			packageReferences = (
 				B1EE24622B613EB1007F68B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				AC98D1CB2B735765006F6EC9 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				AC98D1D02B73586F006F6EC9 /* XCRemoteSwiftPackageReference "OpenAI" */,
 			);
 			productRefGroup = B1B8FE7A2B5EA9D900921BBE /* Products */;
 			projectDirPath = "";
@@ -724,6 +731,7 @@
 				09F869A22B68E51600A56A4C /* PostListCell.swift in Sources */,
 				B1EE24882B61445E007F68B0 /* MypageView.swift in Sources */,
 				09F869A02B68E50000A56A4C /* TaggedTrendingPosts.swift in Sources */,
+				AC98D1D42B7358AE006F6EC9 /* AiViewModel.swift in Sources */,
 				7B6D76B52B67D5F900601B55 /* PostTags.swift in Sources */,
 				7B904C662B6168C60052384A /* PostCell.swift in Sources */,
 				AC110B572B69658C005390BB /* ChangeUserNameView.swift in Sources */,
@@ -948,6 +956,14 @@
 				kind = branch;
 			};
 		};
+		AC98D1D02B73586F006F6EC9 /* XCRemoteSwiftPackageReference "OpenAI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MacPaw/OpenAI.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.2.5;
+			};
+		};
 		B1EE24622B613EB1007F68B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -963,6 +979,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AC98D1CB2B735765006F6EC9 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		AC98D1D12B73586F006F6EC9 /* OpenAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC98D1D02B73586F006F6EC9 /* XCRemoteSwiftPackageReference "OpenAI" */;
+			productName = OpenAI;
 		};
 		B1EE24632B613EB1007F68B0 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
