@@ -11,7 +11,8 @@ struct ContentView: View {
     // 현재 선택된 탭의 인덱스. 초기값 0
     @State private var selectedTabIndex = 0
     @State private var postSearchText = ""
-    
+    @StateObject var locationManager = LocationManager()
+    @StateObject var aiViewModel = AiViewModel()
     init() {
         UITabBar.appearance().shadowImage = UIImage()
         UITabBar.appearance().backgroundImage = UIImage()
@@ -53,6 +54,8 @@ struct ContentView: View {
         switch viewType {
         case .main:
             MainView(selectedTabIndex: $selectedTabIndex)
+                .environmentObject(locationManager)
+                .environmentObject(aiViewModel)
         case .drinkInfo:
             DrinkInfoView()
         case .posts:

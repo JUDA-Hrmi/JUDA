@@ -19,7 +19,7 @@ class AiViewModel: ObservableObject {
     var respond = ""
     
     init() {
-        guard let url = Bundle.main.url(forResource: "SecureAPIKEYS", withExtension: "plist") else { return }
+        guard let url = Bundle.main.url(forResource: "APIKEYS", withExtension: "plist") else { return }
         
         do {
             let data = try Data(contentsOf: url)
