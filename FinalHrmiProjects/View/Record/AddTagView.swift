@@ -27,8 +27,10 @@ struct AddTagView: View {
 	@State private var selectedTagDrink: DrinkTag = DrinkTag(id: UUID(), name: "", rating: 0)
 	// SearchTagView Sheet를 띄워주는 상태 프로퍼티
 	@State private var isShowSearchTag = false
-	// CustomRatingDialog를 띄워주는 상태 프로퍼티
-	@State private var isShowRatingDialog: Bool = false
+    // CustomDialog - rating 을 띄워주는 상태 프로퍼티
+    @State private var isShowRatingDialog: Bool = false
+    // CustomDialog - oneButton 을 띄워주는 상태 프로퍼티
+	@State private var isShowAlertDialog: Bool = false
 	// Navigation을 위한 환경 프로퍼티
 	@Environment(\.dismiss) private var dismiss
 	
@@ -37,7 +39,7 @@ struct AddTagView: View {
             ZStack {
                 VStack {
                     // 사진 선택 및 선택된 사진을 보여주는 수평 스크롤 이미지 뷰
-                    PhotoSelectPagingTab(images: $images, selectedPhotos: $selectedPhotos, imageSize: geo.size.width)
+                    PhotoSelectPagingTab(images: $images, selectedPhotos: $selectedPhotos, isShowAlert: $isShowAlertDialog, imageSize: geo.size.width)
                     
                     // 술 태그 추가 버튼
                     Button {
@@ -74,7 +76,7 @@ struct AddTagView: View {
                 }
                 // 상태 프로퍼티에 따라 CustomRatingDialog 띄워주기
                 if isShowRatingDialog {
-                    CustomRatingDialog(
+                    CustomDialog(type: .rating(
                         // 선택된 술 태그의 술 이름
                         drinkName: selectedTagDrink.name,
                         leftButtonLabel: "취소",
@@ -95,9 +97,18 @@ struct AddTagView: View {
                             }
                         },
                         // 선택된 술 태그의 점수를 CustomDialog에 반영해서 띄워주기 위함
-                        rating: $selectedTagDrink.rating
+                        rating: $selectedTagDrink.rating)
                     )
-                    
+                }
+                // 상태 프로퍼티에 따라 CustomDialog - oneButton 띄워주기
+                if isShowAlertDialog {
+                    CustomDialog(type: .oneButton(
+                        message: "사진을 불러오는데 실패했어요\n다시 시도해주세요",
+                        buttonLabel: "확인",
+                        action: {
+                            isShowAlertDialog = false
+                        })
+                    )
                 }
                 
             }

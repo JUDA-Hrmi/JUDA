@@ -81,14 +81,18 @@ struct PostDetailView: View {
 				
 				// 삭제 버튼 눌렸을 시 삭제에 대한 다이얼로그 출력
 				if isDeleteDialogPresented {
-					CustomSettingDialog(message: "삭제하시겠습니까?",
-								leftButtonLabel: "취소",
-								leftButtonAction: {
-						isDeleteDialogPresented = false
-					}, rightButtonLabel: "삭제") {
-						isDeleteDialogPresented = false
-						// TODO: write view dismiss code
-					}
+                    CustomDialog(type: .twoButton(
+                        message: "삭제하시겠습니까?",
+                        leftButtonLabel: "취소",
+                        leftButtonAction: {
+                            isDeleteDialogPresented = false
+                        },
+                        rightButtonLabel: "삭제",
+                        rightButtonAction: {
+                            isDeleteDialogPresented = false
+                            // TODO: write view dismiss code
+                        })
+                    )
 				}
 			}
 		}

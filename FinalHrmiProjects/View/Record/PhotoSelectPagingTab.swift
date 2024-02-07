@@ -16,7 +16,7 @@ struct PhotoSelectPagingTab: View {
     // photo picker로 선택된 사진 배열
     @Binding var selectedPhotos: [PhotosPickerItem]
     // 이미지 가져오다가 에러나면 띄워줄 alert
-    @State private var showAlert = false
+    @Binding var isShowAlert: Bool
     // 이미지 사이즈
     let imageSize: CGFloat
     // 최대로 고를 수 있는 이미지 개수
@@ -74,7 +74,7 @@ struct PhotoSelectPagingTab: View {
                             try await updateImage()
                         } catch {
                             // 이미지 로드 실패 alert 띄워주기
-                            showAlert = true
+                            isShowAlert = true
                         }
                     }
                 }
@@ -82,10 +82,6 @@ struct PhotoSelectPagingTab: View {
                     Task {
                         selectedIndex = self.images.count
                     }
-                }
-                .alert(isPresented: $showAlert) {
-                    Alert(title: Text("사진을 불러오는데 실패했어요\n다시 시도해주세요"),
-                          dismissButton: .default(Text("확인"), action: { showAlert = false }))
                 }
             }
         }

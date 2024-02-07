@@ -114,17 +114,33 @@ struct SettingView: View {
     
 			// 로그아웃 버튼 클릭 시 띄워지는 CustomAlert
 			if isLogoutClicked {
-				CustomSettingDialog(message: "로그아웃 하시겠습니까?", leftButtonLabel: "취소", leftButtonAction: {
-					isLogoutClicked.toggle()
-				}, rightButtonLabel: "로그아웃", rightButtonAction: {}) // TODO: 로그아웃 기능 추가하기
+                CustomDialog(type: .twoButton(
+                    message: "로그아웃 하시겠습니까?",
+                    leftButtonLabel: "취소",
+                    leftButtonAction: {
+                        isLogoutClicked.toggle()
+                    },
+                    rightButtonLabel: "로그아웃",
+                    rightButtonAction: {
+                        // TODO: 로그아웃 기능 추가하기
+                    })
+                )
 			}
 			
 			// 회원탈퇴 버튼 클릭 시 띄워지는 CustomAlert
 			// TODO: - 1. 탈퇴 문구 수정하기
 			if isDeletAccount {
-				CustomSettingDialog(message: "탈퇴하시겠습니까?", leftButtonLabel: "취소", leftButtonAction: {
-					isDeletAccount.toggle()
-				}, rightButtonLabel: "탈퇴하기", rightButtonAction: {}) // TODO: 회원탈퇴 기능 추가하기
+                CustomDialog(type: .twoButton(
+                    message: "탈퇴 하시겠습니까?",
+                    leftButtonLabel: "취소",
+                    leftButtonAction: {
+                        isDeletAccount.toggle()
+                    },
+                    rightButtonLabel: "탈퇴하기",
+                    rightButtonAction: {
+                        // 회원탈퇴: 로그아웃 기능 추가하기
+                    })
+                )
 			}
 		}
 		.navigationBarBackButtonHidden()
