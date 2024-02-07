@@ -71,7 +71,7 @@ struct WeatherView: View {
                         .frame(width: 200, height: 200)
                     Text(getKoreanWeatherDescription(for: weather.main))
                 } else {
-//                    LottieView(jsonName: "Loading")
+                    LottieView(jsonName: "Loading")
                 }
             }
             .onReceive(locationManager.$location) { location in
@@ -176,8 +176,8 @@ struct WeatherView: View {
                 return "Rain"
             case "Snow":
                 return "Sun"
-            case "Thunderstorm":
-                return "thunderstormAnimation"
+//            case "Thunderstorm":
+//                return "thunderstormAnimation"
             default:
                 return "unknownWeatherAnimation"
             }
