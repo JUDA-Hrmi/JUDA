@@ -10,6 +10,7 @@ import SwiftUI
 // MARK: - 오늘의 추천 술 전체 뷰
 struct SuggestDrink: View {
     @Binding var isLoggedIn: Bool
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             VStack(alignment:.leading, spacing: 10) {

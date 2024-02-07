@@ -52,15 +52,14 @@ struct CustomChangeStyleSegment: View {
 //MARK: - 정렬 옵션 버튼
 struct CustomSortingButton: View {
     let optionNameList: [String] // 정렬옵션 이름이 담겨진 리스트
-    
     @Binding var selectedSortingOption: String // 선택된 항목 이름
     @Binding var isShowingSheet: Bool
     
     var body: some View {
         HStack {
-            Button(action: {
+            Button {
                 isShowingSheet.toggle()
-            }) {
+            } label: {
                 HStack(spacing: 5) {
                     Text(selectedSortingOption)
                         .font(.medium16)

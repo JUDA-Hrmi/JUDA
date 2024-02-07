@@ -9,7 +9,6 @@ import SwiftUI
 
 // MARK: - 추천 술상 보러가기 or 로그인 하러가기
 struct PostOrLogin: View {
-    
     @Binding var isLoggedIn: Bool
     @Binding var selectedTabIndex: Int
     

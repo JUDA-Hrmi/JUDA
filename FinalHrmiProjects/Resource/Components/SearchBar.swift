@@ -10,6 +10,7 @@ import SwiftUI
 struct SearchBar: View {
     @Binding var inputText: String
 //    @FocusState private var isFocused: Bool
+    
     var body: some View {
         HStack {
             HStack(spacing: 5) {
@@ -44,7 +45,3 @@ struct SearchBar: View {
 		.padding(.horizontal, 20) // 오토레이아웃을 위한 padding
     }
 }
-
-//#Preview {
-//    SearchBar()
-//}

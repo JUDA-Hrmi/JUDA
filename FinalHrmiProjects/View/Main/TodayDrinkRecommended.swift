@@ -52,6 +52,7 @@ struct TodayDrinkRecommended: View {
 // MARK: - 오늘의 추천 술 뷰셀
 struct TodayDrinkRecommendedCell: View {
     let todayDrink: TodayDrink
+    
     var body: some View {
         VStack {
             Image(todayDrink.image)

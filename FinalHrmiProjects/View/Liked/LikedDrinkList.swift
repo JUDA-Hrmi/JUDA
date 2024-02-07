@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct LikedDrinkList: View {
-
     var body: some View {
         // MARK: iOS 16.4 이상
         if #available(iOS 16.4, *) {

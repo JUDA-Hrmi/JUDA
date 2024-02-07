@@ -9,16 +9,21 @@ import SwiftUI
 
 struct ChangeUserNameView: View {
 	@Environment(\.dismiss) var dismiss
+    
 	@FocusState var isFocused: Bool
+    
 	@Binding var userNickName: String
+    
 	@State private var userChangeNickName: String = ""
 	@State private var isCompleted: Bool = true
 	
     var body: some View {
         VStack(alignment: .center, spacing: 15) {
+            
             Text("수정할 닉네임을 작성해주세요")
                 .font(.medium16)
                 .frame(maxWidth: .infinity, alignment: .leading)
+            
             // TextField
             HStack {
                 TextField(userNickName, text: $userChangeNickName)
@@ -31,6 +36,7 @@ struct ChangeUserNameView: View {
                         isCompleted = userChangeNickName.count >= 2
                     }
                 Spacer()
+                
                 if !userChangeNickName.isEmpty {
                     Button {
                         isFocused = true
@@ -56,6 +62,7 @@ struct ChangeUserNameView: View {
             Rectangle()
                 .fill(.background)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            
             CustomDivider()
             
             Button {

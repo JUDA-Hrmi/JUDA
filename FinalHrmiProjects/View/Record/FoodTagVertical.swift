@@ -89,8 +89,3 @@ struct FoodTagVertical: View {
         return rows
     }
 }
-
-
-//#Preview {
-//    FoodTagVertical()
-//}

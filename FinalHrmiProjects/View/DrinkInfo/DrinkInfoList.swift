@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct DrinkInfoList: View {
-    
     var body: some View {
         // MARK: iOS 16.4 이상
         if #available(iOS 16.4, *) {
@@ -34,7 +33,6 @@ struct DrinkInfoList: View {
 }
 
 struct DrinkListContent: View {
-    
     var body: some View {
         // 리스트
         LazyVStack {

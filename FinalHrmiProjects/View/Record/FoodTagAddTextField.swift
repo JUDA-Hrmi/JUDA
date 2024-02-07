@@ -81,7 +81,3 @@ struct FoodTagAddTextField: View {
 		}
 	}
 }
-
-//#Preview {
-//    FoodTagAddTextField()
-//}

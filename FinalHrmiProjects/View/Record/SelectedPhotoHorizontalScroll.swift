@@ -45,7 +45,3 @@ struct SelectedPhotoHorizontalScroll: View {
         .scrollIndicators(.hidden)
     }
 }
-
-//#Preview {
-//    SelectedPhotoHorizontalScroll()
-//}

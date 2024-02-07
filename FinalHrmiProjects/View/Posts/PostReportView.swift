@@ -14,22 +14,20 @@ struct ReportContent: Hashable {
 }
 // TODO: Firebase 데이터 연결
 struct PostReportView: View {
-	
-	@Binding var isReportPresented: Bool
-	
-	@State private var reportContents: [ReportContent] = [
-		ReportContent(content: "욕설 및 비하", check: false),
-		ReportContent(content: "장난 및 도배", check: false),
-		ReportContent(content: "상업적 광고 및 판매", check: false),
-		ReportContent(content: "선정적인 게시물", check: false),
-		ReportContent(content: "게시판 성격에 부적절함", check: false),
-		ReportContent(content: "기타(하단 내용 작성)", check: false)
-	]
-	
-	@State private var etcReportText = ""
-	@State private var isReportDialogPresented = false
-	
-	@Namespace var textCount
+    @State private var reportContents: [ReportContent] = [
+        ReportContent(content: "욕설 및 비하", check: false),
+        ReportContent(content: "장난 및 도배", check: false),
+        ReportContent(content: "상업적 광고 및 판매", check: false),
+        ReportContent(content: "선정적인 게시물", check: false),
+        ReportContent(content: "게시판 성격에 부적절함", check: false),
+        ReportContent(content: "기타(하단 내용 작성)", check: false)
+    ]
+    @State private var etcReportText = ""
+    @State private var isReportDialogPresented = false
+    
+    @Namespace var textCount
+    
+    @Binding var isReportPresented: Bool
 	
 	@FocusState var isFocused: Bool
 	
@@ -69,14 +67,15 @@ struct PostReportView: View {
 			
 			// 신고버튼을 탭 했을 시, 신고에 대한 다이얼로그 출력
 			if isReportDialogPresented {
-				CustomAlert(message: "신고하시겠습니까?", 
+				CustomAlert(message: "신고하시겠습니까?",
 							leftButtonLabel: "취소",
 							leftButtonAction: {
-					isReportDialogPresented = false
-				}, rightButtonLabel: "신고") {
-					isReportDialogPresented = false
-					isReportPresented = false
-				}
+                                isReportDialogPresented = false},
+                            rightButtonLabel: "신고",
+                            rightButtonAction: {
+                                isReportDialogPresented = false
+                                isReportPresented = false
+                            })
 			}
 		}
 	}
@@ -84,6 +83,7 @@ struct PostReportView: View {
 
 struct CheckBox: View {
 	let isCheck: Bool
+    
 	var body: some View {
 		Image(systemName: "checkmark.square.fill")
 			.font(.medium26)

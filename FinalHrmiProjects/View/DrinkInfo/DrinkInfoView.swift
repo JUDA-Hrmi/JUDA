@@ -10,19 +10,19 @@ import SwiftUI
 struct DrinkInfoView: View {
     @EnvironmentObject private var appViewModel: AppViewModel
 
-	private let optionNameList = ["인기순", "도수 높은 순", "도수 낮은 순", "가격 높은 순", "가격 낮은 순"]
 	@State private var isShowingSheet: Bool = false
 	@State private var selectedSortingOption: String = "인기순"
 	// 세그먼트 선택 - isGridView ? 그리드 뷰 : 리스트 뷰
 	@State private var isGridView = true
+    @State private var selectedDrinkTypeIndex = 0
+    @State private var searchText = ""
+    
 	// UITest - Drink 종류 DummyData
 	private let typesOfDrink = [
 		"전체", "우리술", "맥주", "위스키", "와인", "브랜디", "리큐르", "럼", "사케", "기타"
 	]
-	@State private var selectedDrinkTypeIndex = 0
-	
-	@State private var searchText = ""
-	
+    private let optionNameList = ["인기순", "도수 높은 순", "도수 낮은 순", "가격 높은 순", "가격 낮은 순"]
+
 	var body: some View {
         NavigationStack {
             ZStack {

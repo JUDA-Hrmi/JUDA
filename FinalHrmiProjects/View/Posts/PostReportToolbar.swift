@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct PostReportToolbar: View {
-	
 	@Binding var isReportPresented: Bool
 	
     var body: some View {

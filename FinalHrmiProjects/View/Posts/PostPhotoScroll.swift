@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct PostPhotoScroll: View {
-	
+    @State private var selectedIndex = 0
+    @State private var isFullSizePhotoPresented = false
+    
 	let postPhotos: [String]
-	
-	@State private var selectedIndex = 0
-	@State private var isFullSizePhotoPresented = false
 	
     var body: some View {
 		// 사진 페이징 스크롤 형식

@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct PostGrid: View {
-	
+    @State private var scrollAxis: Axis.Set = .vertical
+    @State private var vHeight = 0.0
+    
 	@Binding var isLike: Bool
 	@Binding var likeCount: Int
 	
 	let postUserType: PostUserType
-	
-	@State private var scrollAxis: Axis.Set = .vertical
-	@State private var vHeight = 0.0
 	
     var body: some View {
         // MARK: iOS 16.4 이상

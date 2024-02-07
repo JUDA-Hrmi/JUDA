@@ -116,7 +116,3 @@ struct DrinkTagCell: View {
         CustomDivider()
     }
 }
-
-//#Preview {
-//    DrinkTagScroll()
-//}

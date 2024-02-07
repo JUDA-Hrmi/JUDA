@@ -13,8 +13,7 @@ struct CustomAlert: View {
     var leftButtonLabel: String      //왼쪽 버튼 라벨
     var leftButtonAction: () -> Void    //왼쪽 버튼 액션
     var rightButtonLabel: String        //오른쪽 버튼 라벨
-    var rightButtonAction: (() -> Void) //오른쪽 버튼 액션
-    
+    var rightButtonAction: () -> Void //오른쪽 버튼 액션
     
     var body: some View {
         ZStack {
@@ -32,22 +31,22 @@ struct CustomAlert: View {
                     .padding(.vertical)
                 
                 HStack(spacing: 75) {
-                    Button(action: {
+                    Button {
                         self.leftButtonAction()
-                    }, label: {
+                    } label: {
                         Text(leftButtonLabel)
                             .font(.medium16)
                             .foregroundColor(.gray01)
                             .padding(.horizontal, 16)
-                    })
-                    Button(action: {
+                    }
+                    Button {
                         self.rightButtonAction()
-                    }, label: {
+                    } label: {
                         Text(rightButtonLabel)
                             .font(.medium16)
                             .foregroundColor(.mainAccent03)
                             .padding(.horizontal, 16)
-                    })
+                    }
                     
                 }
                 .padding(.horizontal, 16)

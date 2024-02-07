@@ -114,7 +114,3 @@ struct PhotoSelectPagingTab: View {
         self.selectedPhotos.remove(at: index)
     }
 }
-
-//#Preview {
-//    PhotoSelectPagingTab()
-//}

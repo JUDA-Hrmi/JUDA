@@ -16,7 +16,6 @@ struct DrinkTag: Identifiable, Hashable {
 }
 
 struct AddTagView: View {
-	// TODO: 데이터 타입 변경 필요
     // 이미지 배열
     @State private var images: [UIImage] = []
     // 사진 배열
