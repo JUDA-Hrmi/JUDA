@@ -95,7 +95,7 @@ struct SearchTagView: View {
             if isShowRatingDialog {
                 // 선택된 Cell의 술 정보 데이터를 잘 받아왔을 때
                 if let selectedDrink = selectedDrink {
-                    CustomRatingDialog(
+                    CustomDialog(type: .rating(
                         // 선택된 술 정보의 술 이름
                         drinkName: selectedDrink.name,
                         leftButtonLabel: "취소",
@@ -123,6 +123,7 @@ struct SearchTagView: View {
                             }
                         },
                         rating: $rating)
+                    )
                 }
             }
         }
