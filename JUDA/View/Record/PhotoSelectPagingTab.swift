@@ -27,7 +27,7 @@ struct PhotoSelectPagingTab: View {
             HStack(alignment: .lastTextBaseline, spacing: 6) {
                 Text("사진 등록")
                     .font(.regular16)
-                Text("(최대 10장)")
+                Text("* 필수 (최대 10장)")
                     .font(.regular14)
                     .foregroundStyle(.gray01)
             }
