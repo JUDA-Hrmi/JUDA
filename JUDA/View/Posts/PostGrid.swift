@@ -1,6 +1,6 @@
 //
 //  PostGrid.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by Minjae Kim on 1/30/24.
 //

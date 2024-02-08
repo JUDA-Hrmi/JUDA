@@ -1,6 +1,6 @@
 //
 //  SearchTagView.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by 정인선 on 1/30/24.
 //

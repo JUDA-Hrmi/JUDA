@@ -1,6 +1,6 @@
 //
 //  NavigationProfileView.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by 백대홍 on 2/4/24.
 //

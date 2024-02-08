@@ -1,6 +1,6 @@
 //
 //  DrinkDetailView.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by phang on 1/30/24.
 //

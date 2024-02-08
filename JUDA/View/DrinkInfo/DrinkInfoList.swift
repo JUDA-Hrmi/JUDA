@@ -1,6 +1,6 @@
 //
 //  DrinkInfoList.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by phang on 1/28/24.
 //

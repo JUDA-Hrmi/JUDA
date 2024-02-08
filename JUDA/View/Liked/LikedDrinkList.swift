@@ -1,6 +1,6 @@
 //
 //  LikedDrinkList.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by phang on 1/31/24.
 //

@@ -1,6 +1,6 @@
 //
 //  Errors.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by phang on 2/7/24.
 //

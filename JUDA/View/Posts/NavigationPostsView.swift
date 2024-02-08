@@ -1,6 +1,6 @@
 //
 //  NavigationPostView.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by Minjae Kim on 1/31/24.
 //

@@ -1,6 +1,6 @@
 //
 //  CustomTextSegment.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by Minjae Kim on 1/25/24.
 //

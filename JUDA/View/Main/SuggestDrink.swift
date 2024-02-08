@@ -1,6 +1,6 @@
 //
 //  SuggestDrink.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by 백대홍 on 1/31/24.
 //
