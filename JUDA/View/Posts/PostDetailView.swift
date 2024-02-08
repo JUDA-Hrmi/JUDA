@@ -11,6 +11,7 @@ enum PostUserType {
 	case writter, reader
 }
 
+// MARK: - 술상 디테일 화면
 struct PostDetailView: View {
 	@Environment(\.dismiss) var dismiss
 	
@@ -41,52 +42,50 @@ struct PostDetailView: View {
                             """
 	
 	var body: some View {
-		VStack {
-			ZStack {
-				VStack {
-					ScrollView {
-						// Bar 형태로 된 게시글 정보를 보여주는 뷰
-						PostInfo(userName: "hrmi",
-								 profileImageName: "appIcon",
-								 postUploadDate: "2023.12.08",
-								 isLike: $isLike,
-								 likeCount: $likeCount)
-						
-						// 게시글의 사진을 페이징 스크롤 형식으로 보여주는 뷰
-						PostPhotoScroll(postPhotos: postPhotos)
-						
-						VStack(spacing: 20) {
-							PostDrinkRating(userName: "hrmi",
-											postDrinks: postDrinks,
-											postDrinksStarRating: postDrinksStarRating)
-							CustomDivider()
-							
-							Text(postContent)
-								.font(.regular16)
-							
-							PostTags(tags: $tags, windowWidth: windowWidth)
-						}
-						.padding(.horizontal, 20)
-					}
-					.scrollIndicators(.hidden)
-				}
-				
-				// 삭제 버튼 눌렸을 시 삭제에 대한 다이얼로그 출력
-				if isDeleteDialogPresented {
-                    CustomDialog(type: .twoButton(
-                        message: "삭제하시겠습니까?",
-                        leftButtonLabel: "취소",
-                        leftButtonAction: {
-                            isDeleteDialogPresented = false
-                        },
-                        rightButtonLabel: "삭제",
-                        rightButtonAction: {
-                            isDeleteDialogPresented = false
-                            // TODO: write view dismiss code
-                        })
-                    )
-				}
-			}
+        ZStack {
+            VStack {
+                ScrollView {
+                    // Bar 형태로 된 게시글 정보를 보여주는 뷰
+                    PostInfo(userName: "hrmi",
+                             profileImageName: "appIcon",
+                             postUploadDate: "2023.12.08",
+                             isLike: $isLike,
+                             likeCount: $likeCount)
+                    // 게시글의 사진을 페이징 스크롤 형식으로 보여주는 뷰
+                    PostPhotoScroll(postPhotos: postPhotos)
+                    // 술 평가 + 글 + 음식 태그
+                    VStack(spacing: 20) {
+                        // 술 평가
+                        PostDrinkRating(userName: "hrmi",
+                                        postDrinks: postDrinks,
+                                        postDrinksStarRating: postDrinksStarRating)
+                        //
+                        CustomDivider()
+                        // 술상 글 내용
+                        Text(postContent)
+                            .font(.regular16)
+                        // 음식 태그
+                        PostTags(tags: $tags, windowWidth: windowWidth)
+                    }
+                    .padding(.horizontal, 20)
+                }
+                .scrollIndicators(.hidden)
+            }
+            // 삭제 버튼 다이얼로그
+            if isDeleteDialogPresented {
+                CustomDialog(type: .twoButton(
+                    message: "삭제하시겠습니까?",
+                    leftButtonLabel: "취소",
+                    leftButtonAction: {
+                        isDeleteDialogPresented = false
+                    },
+                    rightButtonLabel: "삭제",
+                    rightButtonAction: {
+                        isDeleteDialogPresented = false
+                        // TODO: write view dismiss code
+                    })
+                )
+            }
 		}
 		.task {
 			windowWidth = TagHandler.getScreenWidthWithoutPadding(padding: 20)
@@ -95,7 +94,6 @@ struct PostDetailView: View {
 		.toolbar {
 			ToolbarItem(placement: .topBarLeading) {
 				Button {
-					// TODO: NavigationStack path remove
 					dismiss()
 				} label: {
 					Image(systemName: "chevron.left")
@@ -117,6 +115,7 @@ struct PostDetailView: View {
 					}
 				}
 				ToolbarItem(placement: .topBarTrailing) {
+                    // TODO: NavigationLink - value 로 수정
 					NavigationLink {
                         RecordView(recordType: RecordType.edit)
 					} label: {

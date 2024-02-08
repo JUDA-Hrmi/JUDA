@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 서치바
 struct SearchBar: View {
     @Binding var inputText: String
 //    @FocusState private var isFocused: Bool

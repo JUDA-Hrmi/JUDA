@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 잘 어울리는 음식
 struct WellMatched: View {
     // UITest - 추천 받은 음식 3가지
     private let sampleData = DrinkDummyData.sample
@@ -14,7 +15,6 @@ struct WellMatched: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             // Well Matched
-            // TODO: 추후 NameSpace 로 이동하면 좋을 String 값
             Text("잘 어울리는 음식")
                 .font(.semibold18)
             // 추천 받은 음식

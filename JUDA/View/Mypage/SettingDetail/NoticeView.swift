@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 공지사항 화면
 struct NoticeView: View {
     @Environment(\.dismiss) private var dismiss
     
@@ -19,7 +20,6 @@ struct NoticeView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    // TODO: 뒤로가기
                     dismiss()
                 } label: {
                     Image(systemName: "chevron.backward")

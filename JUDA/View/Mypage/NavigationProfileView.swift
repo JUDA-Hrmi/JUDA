@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 네비게이션 이동 시, 유저 프로필 화면
 struct NavigationProfileView: View {
     @Environment(\.dismiss) private var dismiss
 
@@ -18,18 +19,17 @@ struct NavigationProfileView: View {
     
     var body: some View {
         VStack {
-            // MARK: - [프로필 사진 -- 닉네임 -- '수정']
+            // 프로필 사진 -- 닉네임 -- 수정
             UserProfileView(userType: .otheruser)
-            
-            // MARK: - [내가 작성한 게시물 -- '새 글 작성하기']
+            // 내가 작성한 게시물 -- 술상 올리기
             HStack {
                 userType == .user ? Text("내가 작성한 술상") : Text("\(userName) 님이 작성한 술상")
                     .font(.semibold18)
                 Spacer()
                 
                 if userType == .user {
+                    // TODO: NavigationLink - value 로 수정
                     NavigationLink {
-                        // 글 작성하는 페이지로 이동하기
                         AddTagView()
                             .modifier(TabBarHidden())
                     } label: {
@@ -41,7 +41,6 @@ struct NavigationProfileView: View {
             }
             .padding(.horizontal, 20)
             .padding(.top, 20)
-            
             // 사용자가 작성한 글
             // MARK: iOS 16.4 이상
             if #available(iOS 16.4, *) {

@@ -14,10 +14,11 @@ struct PostOrLogin: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
+            // 로그인
             if isLoggedIn {
                 Text("다른 사람들은 어떻게 먹었을까?")
                     .font(.medium16)
-                
+                // 술상 탭 이동
                 Text("추천 술상 보러가기")
                     .font(.medium16)
                     .foregroundStyle(.mainAccent03)
@@ -27,9 +28,11 @@ struct PostOrLogin: View {
                         // 술상 탭뷰로 이동
                         selectedTabIndex = 2
                     }
+                // 비로그인
             } else {
                 Text("추천 안주와 술을 알고 싶다면?")
                     .font(.medium16)
+                // TODO: NavigationLink - value 로 수정
                 NavigationLink {
                     LogInView()
                         .modifier(TabBarHidden())

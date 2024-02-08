@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 술상 디테일에서, 음식 태그 부분
 struct PostTags: View {
 	@Binding var tags: [String]
 	@State private var tag = ""
@@ -23,8 +24,8 @@ struct PostTags: View {
 				HStack(spacing: 15) {
 					ForEach(row, id: \.self) { tag in
 						NavigationLink {
-							// TODO: PostView Linking code
-							// TODO: 태그값 받아서 바인딩 해줘야하는데...
+                            // TODO: NavigationLink - value 로 수정
+                            // TODO: 태그 값 서치바로 전달해서 검색된 화면으로..!
 							NavigationPostsView(postSearchText: "# \(tag)")
 						} label: {
 							Text("# \(tag)")

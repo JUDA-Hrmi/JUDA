@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 술상 기록 타입 : 작성 or 수정
 enum RecordType {
     case add, edit
 }
@@ -17,6 +18,7 @@ struct FoodTag: Identifiable, Hashable, Equatable {
     let name: String
 }
 
+// MARK: - 술상 기록 화면
 struct RecordView: View {
     let recordType: RecordType
     // 선택된 사진들을 담은 배열 (더미 데이터는 Assets을 사용하기 위해 작성)
@@ -89,26 +91,25 @@ struct RecordView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    // AddTagView로 돌아가기
                     dismiss()
                 } label: {
                     Image(systemName: "chevron.left")
                 }
             }
             ToolbarItem(placement: .topBarTrailing) {
-            //                NavigationLink {
-            //                    // TODO: PostDetailView로 이동
-            //                } label : {
-            //                    Text("완료")
-            //                }
-                Text("완료")
-                    .font(.regular16)
+                Button {
+                    // TODO: 술상 저장 후, 작성 or 수정 하기 전에 있었던 화면으로 이동 (path 조절)
+                } label: {
+                    Text("완료")
+                        .font(.regular16)
+                }
             }
         }
         .foregroundStyle(.mainBlack)
     }
 }
 
+// MARK: - 술상 기록 화면에 보여줄 내용
 struct RecordContent: View {
     let recordType: RecordType
     // 선택된 사진들을 담은 배열 (더미 데이터는 Assets을 사용하기 위해 작성)
@@ -134,9 +135,8 @@ struct RecordContent: View {
     
     var body: some View {
         LazyVStack {
-            // 선택된 사진들을 보여주는 Scroll View
-            SelectedPhotoHorizontalScroll(images: $images, recordType: recordType)
-            
+            // 선택된 사진들을 보여주는 가로 Scroll View
+            SelectedPhotoHorizontalScroll(images: $images)
             // 글 작성 TextEditor
             TextEditor(text: $content)
             // TextEditor에 Text를 오버레이하여 placeholder로 보여줌
@@ -160,10 +160,10 @@ struct RecordContent: View {
                 .focused(isFocusedTextEditor)
                 .textInputAutocapitalization(.never) // 자동 대문자 설정 기능 비활성화
                 .autocorrectionDisabled() // 자동 수정 비활성화
-            
+            //
             CustomDivider()
                 .padding(.vertical, 10)
-            
+            // 음식 태그
             VStack {
                 HStack(alignment: .lastTextBaseline) {
                     Text("음식 태그")
@@ -175,10 +175,9 @@ struct RecordContent: View {
                 }
                 .padding(.horizontal, 20)
                 .padding(.bottom, 5)
-                
                 // 음식 태그 추가 TextField
                 FoodTagAddTextField(foodTags: $foodTags, textField: textField, isFocusedTextField: isFocusedTextField, proxy: proxy)
-                // 추가된 음식 태그를 보여주는 Scroll View
+                // 추가된 음식 태그를 보여주는 하단부
                 FoodTagVertical(foodTags: $foodTags, windowWidth: windowWidth)
             }
             .padding(.bottom, 5)

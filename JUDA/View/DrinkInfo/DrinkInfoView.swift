@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 술장 탭
 struct DrinkInfoView: View {
     @EnvironmentObject private var appViewModel: AppViewModel
 
@@ -27,7 +28,7 @@ struct DrinkInfoView: View {
         NavigationStack {
             ZStack {
                 VStack(spacing: 0) {
-                    // 검색 창
+                    // 서치바
                     SearchBar(inputText: $searchText)
                     
                     ScrollViewReader { value in
@@ -35,10 +36,8 @@ struct DrinkInfoView: View {
                             // 술 종류 가로 스크롤
                             // TODO: 각 탭의 결과에 맞춰 보여줄 리스트 변경 필요
                             DrinkSelectHorizontalScrollBar(selectedDrinkTypeIndex: $selectedDrinkTypeIndex)
-                            
                             // 세그먼트 + 필터링
                             DrinkInfoSegment(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, isGridView: $isGridView)
-                            
                             // 술 뷰 - DrinkSelectHorizontalScrollBar 의 선택에 따라 자연스럽게 페이징으로 화면 전환
                             TabView(selection: $selectedDrinkTypeIndex) {
                                 // TODO: 각 술 타입에 맞는 리스트를 grid 와 list 에 뿌려줘야 함
@@ -69,8 +68,7 @@ struct DrinkInfoView: View {
                         }
                     }
                 }
-                // DrinkInfoSegment 클릭 시 띄워지는 CustomSheet뷰
-                // BottomSheetType -> .drinkInfo
+                // 정렬 방식 선택 CustomBottomSheet (.drinkInfo)
                 .sheet(isPresented: $isShowingSheet) {
                     CustomBottomSheetContent(optionNameList: optionNameList, isShowingSheet: $isShowingSheet, selectedSortingOption: $selectedSortingOption, bottomSheetTypeText: BottomSheetType.drinkInfo)
                         .presentationDetents([.drinkInfo])

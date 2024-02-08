@@ -26,7 +26,7 @@ struct DrinkInfoSegment: View {
     }
 }
 
-//MARK: - 리스트/그리드 정렬 버튼
+// MARK: - 리스트 / 그리드 아이콘 세그먼트
 struct CustomChangeStyleSegment: View {
     private let cellStyleSymbolList = ["grid.style", "list.style"]
     @State private var selectedSymbolIndex = 0 // 현재 뷰에서 어떤 이미지 tap 체크 변수
@@ -49,7 +49,7 @@ struct CustomChangeStyleSegment: View {
     }
 }
 
-//MARK: - 정렬 옵션 버튼
+// MARK: - 정렬 옵션 버튼
 struct CustomSortingButton: View {
     let optionNameList: [String] // 정렬옵션 이름이 담겨진 리스트
     @Binding var selectedSortingOption: String // 선택된 항목 이름

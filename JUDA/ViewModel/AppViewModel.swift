@@ -11,6 +11,7 @@ final class AppViewModel: ObservableObject {
     @Published var tabBarState: Visibility = .visible
 }
 
+// MARK: - 탭 바 숨기는 Modifier
 struct TabBarHidden: ViewModifier {
     @EnvironmentObject private var appViewModel: AppViewModel
 

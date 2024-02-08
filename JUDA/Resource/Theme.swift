@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 화면 테마
 struct Theme {
   static func backgroundColor(scheme: ColorScheme) -> Color {
     let lightColor = Color.white

@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-// NavigationLink: without Button blinking animation
+// MARK: - NavigationLink: without Button blinking animation
 struct EmptyActionStyle: ButtonStyle {
 	func makeBody(configuration: Configuration) -> some View {
 		configuration.label
 	}
 }
 
-// Image Xmark button Image
+// MARK: - Image Xmark button Image
 struct XmarkOnGrayCircle: View {
     var body: some View {
         Image(systemName: "xmark.circle.fill")

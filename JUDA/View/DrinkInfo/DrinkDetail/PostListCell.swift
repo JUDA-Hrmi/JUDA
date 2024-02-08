@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 태그된 인기 술상에 보여줄 술상 셀
 struct PostListCell: View {
     // UITest - Post DummyData
     let postDummyData: TaggedTrendingPostsDummyData

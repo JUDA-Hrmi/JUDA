@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 술 종류 스크롤 바
 struct DrinkSelectHorizontalScrollBar: View {
     // UITest - Drink 종류 DummyData
     private let typesOfDrink = [

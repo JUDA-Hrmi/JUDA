@@ -7,12 +7,13 @@
 
 import SwiftUI
 
-// PostView와 LikedView에서 세그먼트에서 사용될 문자열을 저장하는 namespace
+// MARK: - PostView와 LikedView의 세그먼트에서 사용될 문자열을 저장
 enum PostOrLiked {
 	static let post = ["인기", "최신"]
 	static let liked = ["술찜 리스트", "술상 리스트"]
 }
 
+// MARK: - 텍스트 형태 세그먼트
 struct CustomTextSegment: View {
 	let segments: [String]
 	@Binding var selectedSegmentIndex: Int

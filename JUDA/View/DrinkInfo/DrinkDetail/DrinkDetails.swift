@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 술 디테일에서 보여주는 상단의 술 정보 부분 (이미지, 이름, 가격 등)
 struct DrinkDetails: View {
     // UITest - Drink DummyData
     private let sampleData = DrinkDummyData.sample
@@ -44,7 +45,7 @@ struct DrinkDetails: View {
                 StarRating(rating: sampleData.rating, color: .mainAccent05,
                            starSize: .regular16, fontSize: .regular16, starRatingType: .withText)
                 // 태그된 게시물
-                // TODO: 해당 술을 태그한 게시글이 보이는 PostsView 로 이동하는 네비게이션으로 변경 예정
+                // TODO: NavigationLink - value 로 수정
                 NavigationLink {
 					NavigationPostsView(postSearchText: sampleData.name)
                 } label: {

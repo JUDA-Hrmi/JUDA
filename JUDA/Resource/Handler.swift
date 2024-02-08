@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// Tag 관련 Method 담고있는 namespace
+// MARK: - Tag 관련 Method 보관
 enum TagHandler {
     // horizontal에 들어가있는 (padding * 2)를 화면 width에서 뺄셈해준 width 값을 얻기 위한 메서드
     static func getScreenWidthWithoutPadding(padding: CGFloat) -> CGFloat {

@@ -21,7 +21,8 @@ struct DrinkInfo: Identifiable, Hashable {
     ]
 }
 
-// Defualt로 찜 목록 보여주기
+// MARK: - 술 태그 서치 시트 화면
+// Defualt로 술찜 목록 보여주기
 struct SearchTagView: View {
     // TODO: 데이터 타입 변경 필요
     // DrinkListCell 선택 시 DrinkInfo 데이터를 받는 프로퍼티
@@ -42,6 +43,7 @@ struct SearchTagView: View {
     var body: some View {
         ZStack {
             VStack {
+                // 서치바 + 시트 닫기 버튼
                 HStack(alignment: .center, spacing: 0) {
 					SearchBar(inputText: $tagSearchText)
                     // Sheet 내려주기
@@ -54,12 +56,11 @@ struct SearchTagView: View {
                     }
                 }
                 .padding(.top, 20)
-                
-                // 찜 목록이 없을 때, 임의의 텍스트 보여주기
+                // 찜 목록이 없을 때, 임의의 리스트 보여주기
                 if likeds.isEmpty {
                     Spacer()
-                    // TODO: 텍스트 내용 변경
-                    Text("술찜 없을 때 텍스트")
+                    // TODO: 텍스트 대신 리스트로 변경
+                    Text("술찜 없을 때 리스트")
                         .font(.regular14)
                         .foregroundStyle(.gray01)
                     Spacer()
@@ -90,7 +91,7 @@ struct SearchTagView: View {
                     }
                 }
             }
-            // 상태 프로퍼티에 따라 CustomRatingDialog 띄워주기
+            // CustomDialog - .rating
             if isShowRatingDialog {
                 // 선택된 Cell의 술 정보 데이터를 잘 받아왔을 때
                 if let selectedDrink = selectedDrink {

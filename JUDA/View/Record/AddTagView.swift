@@ -15,6 +15,7 @@ struct DrinkTag: Identifiable, Hashable {
 	var rating: Double
 }
 
+// MARK: - 글 작성 시, 사진 선택 및 술 태그 추가 화면
 struct AddTagView: View {
     // 이미지 배열
     @State private var images: [UIImage] = []
@@ -43,7 +44,6 @@ struct AddTagView: View {
                 VStack {
                     // 사진 선택 및 선택된 사진을 보여주는 수평 스크롤 이미지 뷰
                     PhotoSelectPagingTab(images: $images, selectedPhotos: $selectedPhotos, isShowAlert: $isShowAlertDialog, imageSize: geo.size.width)
-                    
                     // 술 태그 추가 버튼
                     Button {
                         // 클릭 시 SearchTagView Sheet 띄워주기
@@ -62,7 +62,6 @@ struct AddTagView: View {
                     .disabled(isTagsCountAboveFive)
                     .padding(.horizontal, 20)
                     .padding(.vertical, 10)
-                    
                     // 술 태그가 없을 때, 텍스트 보여주기
                     if drinkTags.isEmpty {
                         Spacer()
@@ -79,7 +78,7 @@ struct AddTagView: View {
                                        isShowRatingDialog: $isShowRatingDialog)
                     }
                 }
-                // 상태 프로퍼티에 따라 CustomRatingDialog 띄워주기
+                // CustomDialog - .rating
                 if isShowRatingDialog {
                     CustomDialog(type: .rating(
                         // 선택된 술 태그의 술 이름
@@ -121,7 +120,6 @@ struct AddTagView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
-                        // PostsView로 돌아가기
                         dismiss()
                     } label: {
                         Image(systemName: "chevron.backward")
@@ -129,6 +127,7 @@ struct AddTagView: View {
                     .foregroundStyle(.mainBlack)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
+                    // TODO: NavigationLink - value 로 수정
                     NavigationLink {
                         RecordView(recordType: RecordType.add)
                     } label: {
@@ -145,7 +144,6 @@ struct AddTagView: View {
                 SearchTagView(drinkTags: $drinkTags,
                               isShowSearchTag: $isShowSearchTag)
             }
-            
         }
     }
 }

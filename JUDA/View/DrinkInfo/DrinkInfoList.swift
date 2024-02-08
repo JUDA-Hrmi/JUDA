@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 술장 리스트 뷰
 struct DrinkInfoList: View {
     var body: some View {
         // MARK: iOS 16.4 이상
@@ -32,13 +33,14 @@ struct DrinkInfoList: View {
     }
 }
 
+// MARK: - 술장 리스트 뷰 내용
 struct DrinkListContent: View {
     var body: some View {
         // 리스트
         LazyVStack {
-            // TODO: 현재 더미데이터 10개를 보여주지만, 데이터 들어온 리스트로 ForEach 돌릴 예정
+            // TODO: 데이터 들어온 리스트로 ForEach
             ForEach(0..<10, id: \.self) { _ in
-                // TODO: 추후에 네비게이션으로 해당 술의 Detail 로 이동 연결
+                // TODO: NavigationLink - value 로 수정
                 NavigationLink {
                     DrinkDetailView()
                         .modifier(TabBarHidden())

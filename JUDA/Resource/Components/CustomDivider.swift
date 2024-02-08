@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 디바이더
 struct CustomDivider: View {
     var body: some View {
         Divider()

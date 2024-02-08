@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 하트 누른 술 + 술상 볼 수 있는 탭
 struct LikedView: View {
     @EnvironmentObject private var appViewModel: AppViewModel
 
@@ -21,7 +22,7 @@ struct LikedView: View {
                     .padding(.vertical, 14)
                     .padding(.horizontal, 20)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                // Likes
+                // 술찜 or 술상 탭 뷰
                 TabView(selection: $selectedSegmentIndex) {
                     ForEach(0..<PostOrLiked.liked.count, id: \.self) { idx in
                         ScrollViewReader { value in

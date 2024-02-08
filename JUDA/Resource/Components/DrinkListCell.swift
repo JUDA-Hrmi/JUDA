@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 술 리스트 셀
 struct DrinkListCell: View {
     // UITest - Drink DummyData
     private let drinkImage = "canuca"

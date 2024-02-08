@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 술상 디테일에서, 술 평가
 struct PostDrinkRating: View {
 	let userName: String
 	let postDrinks: [String]
@@ -14,23 +15,24 @@ struct PostDrinkRating: View {
 	
     var body: some View {
 		VStack(spacing: 20) {
-			HStack {
-				Text("\(userName)의 술평가")
-					.font(.bold16)
-				Spacer()
-			}
+            // 술 평가 텍스트
+            Text("\(userName)의 술평가")
+                .font(.bold16)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            // 각 술 이름 + 평점
 			ForEach(0..<postDrinks.count, id:\.self) { index in
-				NavigationLink {
-					// TODO: DrinkInfoView Linking code
+                // TODO: NavigationLink - value 로 수정
+                NavigationLink {
 					DrinkDetailView()
                         .modifier(TabBarHidden())
 				} label: {
 					HStack(spacing: 2) {
+                        // 술 이름
 						Text(postDrinks[index])
 							.font(.semibold16)
 							.lineLimit(1)
 						Spacer()
-						
+						// 술 평가 별점
 						HStack(spacing: 5) {
 							StarRating(rating: postDrinksStarRating[index], color: .mainAccent02, starSize: .regular16, fontSize: .semibold14, starRatingType: .withText)
 							Image(systemName: "chevron.forward")

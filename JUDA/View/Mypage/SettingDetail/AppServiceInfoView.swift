@@ -8,7 +8,7 @@
 import SwiftUI
 import SafariServices
 
-// 웹뷰로 넘어가야하는 경우 사용하는 구조체
+// MARK: - 웹뷰로 넘어가야하는 경우 사용하는 구조체
 struct AppServiceInfoView: View {
     @State var isShowWebView: Bool = false
 
@@ -32,7 +32,7 @@ struct AppServiceInfoView: View {
     }
 }
 
-// url에 해당하는 Safari 뷰로 연결
+// MARK: - url에 해당하는 Safari 뷰로 연결
 struct SafariView: UIViewControllerRepresentable {
     let url: URL
 
@@ -41,7 +41,6 @@ struct SafariView: UIViewControllerRepresentable {
     }
 
     func updateUIViewController(_ uiViewController: SFSafariViewController, context: UIViewControllerRepresentableContext<SafariView>) {
-
+        //
     }
-    
 }

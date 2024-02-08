@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 술상 디테일에서 상단에 유저 + 글 작성 시간 + 좋아요
 struct PostInfo: View {
     @Environment(\.dismiss) private var dismiss
 
@@ -19,15 +20,16 @@ struct PostInfo: View {
 
     var body: some View {
         HStack {
-            // 사용자의 프로필 사진
-            NavigationLink(destination: {
+            // 사용자의 프로필
+            NavigationLink {
+                // TODO: NavigationLink - value 로 수정
                 NavigationProfileView(userType: UserType.otheruser, userName: userName)
-            }, label: {
+            } label: {
+                // 이미지
                 Image(profileImageName)
                     .resizable()
                     .frame(width: 30, height: 30)
                     .clipShape(.circle)
-                
                 VStack(alignment: .leading) {
                     // 사용자의 닉네임
                     Text(userName)
@@ -39,17 +41,16 @@ struct PostInfo: View {
                         .font(.regular14)
                         .foregroundStyle(.gray01)
                 }
-            })
-            
+            }
+            //
             Spacer()
-            
             // 좋아요 버튼
             HStack(spacing: 3) {
                 // 좋아요를 등록 -> 빨간색이 채워진 하트
                 // 좋아요를 해제 -> 테두리가 회색인 하트
                 Image(systemName: isLike ? "heart.fill" : "heart")
                     .foregroundStyle(isLike ? .mainAccent01 : .gray01)
-                // TODO: fomat 변경
+                // 좋아요 수
                 Text(Formatter.formattedPostLikesCount(likeCount))
                     .foregroundStyle(.gray01)
             }

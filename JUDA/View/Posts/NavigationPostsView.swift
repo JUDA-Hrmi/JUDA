@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 네비게이션 이동 시, 술상 화면
 struct NavigationPostsView: View {
     @Environment(\.dismiss) var dismiss
     
@@ -23,7 +24,7 @@ struct NavigationPostsView: View {
                 .padding(.vertical, 14)
                 .padding(.horizontal, 20)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                
+            // 인기 or 최신 탭뷰
             TabView(selection: $selectedSegmentIndex) {
                 ForEach(0..<PostOrLiked.post.count, id: \.self) { index in
                     ScrollViewReader { value in
@@ -49,7 +50,6 @@ struct NavigationPostsView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    // TODO: NavigationStack path remove
                     dismiss()
                 } label: {
                     Image(systemName: "chevron.left")

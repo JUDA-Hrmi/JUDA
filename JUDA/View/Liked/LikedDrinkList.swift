@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 술찜 리스트 탭 화면
 struct LikedDrinkList: View {
     var body: some View {
         // MARK: iOS 16.4 이상
@@ -35,7 +36,7 @@ struct LikedDrinkListContent: View {
     var body: some View {
         LazyVStack {
             ForEach(0..<3, id: \.self) { _ in
-                // TODO: 추후에 네비게이션으로 해당 술의 Detail 로 이동 연결
+                // TODO: NavigationLink - value 로 수정
                 NavigationLink {
                     DrinkDetailView()
                         .modifier(TabBarHidden())

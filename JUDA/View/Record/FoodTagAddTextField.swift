@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 음식 태그 추가 텍스트 필드
 struct FoodTagAddTextField: View {
 	// TextField로 부터 입력받은 음식 태그 이름
 	@State private var foodTagName: String = ""
@@ -28,7 +29,7 @@ struct FoodTagAddTextField: View {
             Text("#")
                 .font(.regular16)
                 .opacity(0.7)
-            
+            // 텍스트 필드
             TextField("음식 이름", text: $foodTagName)
                 .font(.regular16)
                 .focused(isFocusedTextField)
@@ -45,7 +46,7 @@ struct FoodTagAddTextField: View {
                         }
                     }
                 }
-            
+            // 추가하기 버튼
             Button {
                 // 입력된 음식 태그 이름을 음식 태그 배열에 추가
                 addFoodTag()

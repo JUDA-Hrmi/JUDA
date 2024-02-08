@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 향 / 맛 / 여운
 struct TastingNotes: View {
     // UITest - Drink Detail DummyData
     private let sampleData = DrinkDummyData.sample
@@ -14,7 +15,6 @@ struct TastingNotes: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             // Tasting Notes
-            // TODO: 추후 NameSpace 로 이동하면 좋을 String 값
             Text("향 / 맛 / 여운")
                 .font(.semibold18)
             // Aroma, Taste, Finish

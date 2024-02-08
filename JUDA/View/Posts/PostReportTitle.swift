@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 신고하기 타이틀
 struct PostReportTitle: View {
     var body: some View {
 		VStack {

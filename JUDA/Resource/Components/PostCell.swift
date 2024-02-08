@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 술상 그리드 셀
 struct PostCell: View {
 	@Binding var isLike: Bool
 	@Binding var likeCount: Int

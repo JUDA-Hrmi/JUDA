@@ -8,7 +8,6 @@
 import SwiftUI
 
 // UITest - Drink Dummy Data
-// TODO: 데이터 들어오면 ObservableObject 로 만들어질 데이터로 예상
 struct DrinkDummyData: Identifiable {
     let id = UUID()
     let image: String
@@ -30,6 +29,7 @@ struct DrinkDummyData: Identifiable {
     )
 }
 
+// MARK: - 술 디테일 화면
 struct DrinkDetailView: View {
     @Environment(\.dismiss) private var dismiss
     
@@ -59,7 +59,6 @@ struct DrinkDetailView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    // TODO: 뒤로가기
                     dismiss()
                 } label: {
                     Image(systemName: "chevron.backward")

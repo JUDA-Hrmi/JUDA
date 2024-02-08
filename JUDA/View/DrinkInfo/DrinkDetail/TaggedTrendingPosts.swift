@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// MARK: - UITest - 해당 술이 태그된 인기 게시물 3개를 담은 리스트
+// UITest Data - 해당 술이 태그된 인기 게시물 3개를 담은 리스트
 struct TaggedTrendingPostsDummyData: Identifiable {
     let id = UUID()
     var image: String
@@ -22,7 +22,7 @@ struct TaggedTrendingPostsDummyData: Identifiable {
     ]
 }
 
-// MARK: - View
+// MARK: - 태그된 인기 술상
 struct TaggedTrendingPosts: View {
     // UITest - Post Dummy Data List
     private let sampleDataList = TaggedTrendingPostsDummyData.sampleDataList
@@ -34,8 +34,8 @@ struct TaggedTrendingPosts: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 20)
             VStack(spacing: 0) {
-                // TODO: 각각의 셀마다 네비게이션으로 이동할 수 있도록 변경 예정
                 ForEach(sampleDataList) { data in
+                    // TODO: NavigationLink - value 로 수정
                     NavigationLink {
                         PostDetailView(postUserType: .reader, nickName: data.author, isLike: .constant(false), likeCount: .constant(data.postLikesCount))
                     } label: {
