@@ -31,8 +31,3 @@ struct FoodTagXmarkButton: View {
         }
     }
 }
-
-
-//#Preview {
-//    FoodTagXmarkButton()
-//}

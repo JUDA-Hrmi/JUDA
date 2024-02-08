@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct PostInfo: View {
-    
+    @Environment(\.dismiss) private var dismiss
+
     let userName: String
     let profileImageName: String
     let postUploadDate: String
+    
     @Binding var isLike: Bool
     @Binding var likeCount: Int
-    @Environment(\.dismiss) private var dismiss
+
     var body: some View {
         HStack {
             // 사용자의 프로필 사진

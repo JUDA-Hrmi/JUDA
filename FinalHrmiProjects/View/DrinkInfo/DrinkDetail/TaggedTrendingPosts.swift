@@ -28,16 +28,23 @@ struct TaggedTrendingPosts: View {
     private let sampleDataList = TaggedTrendingPostsDummyData.sampleDataList
     
     var body: some View {
-        VStack(spacing: 0) {
-            // TODO: 각각의 셀마다 네비게이션으로 이동할 수 있도록 변경 예정
-            ForEach(sampleDataList) { data in
-				NavigationLink {
-					PostDetailView(postUserType: .reader, nickName: data.author, isLike: .constant(false), likeCount: .constant(data.postLikesCount))
-				} label: {
-					PostListCell(postDummyData: data)
-				}
+        VStack(alignment: .leading, spacing: 10) {
+            Text("태그된 인기 술상")
+                .font(.semibold18)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 20)
+            VStack(spacing: 0) {
+                // TODO: 각각의 셀마다 네비게이션으로 이동할 수 있도록 변경 예정
+                ForEach(sampleDataList) { data in
+                    NavigationLink {
+                        PostDetailView(postUserType: .reader, nickName: data.author, isLike: .constant(false), likeCount: .constant(data.postLikesCount))
+                    } label: {
+                        PostListCell(postDummyData: data)
+                    }
+                }
             }
         }
+        .padding(.vertical, 10)
     }
 }
 

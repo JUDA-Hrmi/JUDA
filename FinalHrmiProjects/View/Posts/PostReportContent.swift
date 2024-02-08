@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct PostReportContent: View {
-	
 	@Binding var reportContents: [ReportContent]
 	@Binding var etcReportText: String
 	
@@ -69,7 +68,3 @@ struct PostReportContent: View {
 		}
     }
 }
-
-//#Preview {
-//    PostReportContent()
-//}

@@ -14,7 +14,6 @@ enum PostOrLiked {
 }
 
 struct CustomTextSegment: View {
-	
 	let segments: [String]
 	@Binding var selectedSegmentIndex: Int
 	

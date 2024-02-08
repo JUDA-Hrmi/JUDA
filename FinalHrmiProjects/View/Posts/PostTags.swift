@@ -10,6 +10,7 @@ import SwiftUI
 struct PostTags: View {
 	@Binding var tags: [String]
 	@State private var tag = ""
+    
 	let windowWidth: CGFloat
 	
 	var body: some View {
@@ -37,7 +38,3 @@ struct PostTags: View {
 		.frame(width: windowWidth, alignment: .leading)
 	}
 }
-
-//#Preview {
-//    PostTags()
-//}

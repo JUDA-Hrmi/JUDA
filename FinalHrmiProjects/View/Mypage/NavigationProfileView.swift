@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct NavigationProfileView: View {
+    @Environment(\.dismiss) private var dismiss
+
     @State var isLike: Bool = true
     @State var likeCount: Int = 303
+    
     let userType: UserType
     let userName: String
-    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         VStack {
@@ -31,7 +33,7 @@ struct NavigationProfileView: View {
                         AddTagView()
                             .modifier(TabBarHidden())
                     } label: {
-                        Text("새 술상 올리기")
+                        Text("술상 올리기")
                             .font(.light14)
                             .foregroundStyle(.mainBlack)
                     }

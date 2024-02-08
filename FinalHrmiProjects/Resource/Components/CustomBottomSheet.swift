@@ -15,7 +15,6 @@ enum BottomSheetType {
 // Sheet 의 content 부분.
 struct CustomBottomSheetContent: View{
     let optionNameList: [String]
-    
     @Binding var isShowingSheet: Bool
     @Binding var selectedSortingOption: String
     let bottomSheetTypeText: String
@@ -53,7 +52,6 @@ struct CustomBottomSheetContent: View{
 // MARK: -  BottomSheetContentsList 구성 Cell
 struct BottomSheetContentListCell: View {
     let sortingOptionName: String // 정렬 옵션 항목 이름
-    
     @Binding var selectedSortingOption: String // 선택된 항목 이름
     @Binding var isShowingSheet: Bool
     

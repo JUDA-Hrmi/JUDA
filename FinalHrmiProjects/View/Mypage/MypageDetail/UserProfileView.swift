@@ -15,10 +15,10 @@ enum UserType {
 struct UserProfileView: View {
     @State private var userNickName: String = "sayHong" // 사용자 닉네임
     
-    let userType: UserType
-    
     @State private var selectedPhotos: [PhotosPickerItem] = []
     @State private var userProfileImage: UIImage? // 사용자 프로필 이미지
+    
+    let userType: UserType
     
     // 이미지 가져오다가 에러나면 띄워줄 alert
     @State private var showAlert = false
@@ -76,6 +76,7 @@ struct UserProfileView: View {
                     Text(userNickName)
                         .font(.medium18)
                     Spacer()
+                    
                     if userType == .user {
                         NavigationLink {
                             ChangeUserNameView(userNickName: $userNickName)

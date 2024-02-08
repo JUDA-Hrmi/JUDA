@@ -16,11 +16,16 @@ struct MainView: View {
     var body: some View {
         NavigationStack {
             VStack(alignment: .center) {
-                VStack(alignment: .center, spacing: 20) {
-                    WeatherView(isLoggedIn: $isLoggedIn)
-                        .padding(.bottom, 20)
-                }
-                SuggestDrinkView(isLoggedIn: $isLoggedIn, selectedTabIndex: $selectedTabIndex)
+                Spacer()
+
+                WeatherAndFood(isLoggedIn: $isLoggedIn)
+                Spacer()
+                
+                SuggestDrink(isLoggedIn: $isLoggedIn)
+                Spacer()
+                
+                PostOrLogin(isLoggedIn: $isLoggedIn, selectedTabIndex: $selectedTabIndex)
+                Spacer()
             }
             .padding(.horizontal, 20)
             .onAppear {

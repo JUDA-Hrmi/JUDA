@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct PostCell: View {
-	
 	@Binding var isLike: Bool
 	@Binding var likeCount: Int
 	

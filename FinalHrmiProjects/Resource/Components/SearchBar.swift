@@ -10,6 +10,7 @@ import SwiftUI
 struct SearchBar: View {
     @Binding var inputText: String
 //    @FocusState private var isFocused: Bool
+    
     var body: some View {
         HStack {
             HStack(spacing: 5) {
@@ -21,6 +22,7 @@ struct SearchBar: View {
 //                    .focused($isFocused)
 					.foregroundStyle(.mainBlack)
                     .textInputAutocapitalization(.never) // 자동 대문자 설정 기능 비활성화
+                    .autocorrectionDisabled() // 자동 수정 비활성화
                     .onSubmit {
                         // TODO: 리턴 시 수행될 함수 추가하기.
                         print("리턴이 눌러졌어요! <\(inputText)> 입력 됨.")
@@ -29,11 +31,11 @@ struct SearchBar: View {
             Spacer()
             
             if !inputText.isEmpty {
-                Button(action: {
+                Button {
                     inputText = ""
-                }, label: {
+                } label: {
                     Image(systemName: "xmark")
-                })
+                }
             }
         }
         .foregroundColor(.gray01)
@@ -43,7 +45,3 @@ struct SearchBar: View {
 		.padding(.horizontal, 20) // 오토레이아웃을 위한 padding
     }
 }
-
-//#Preview {
-//    SearchBar()
-//}

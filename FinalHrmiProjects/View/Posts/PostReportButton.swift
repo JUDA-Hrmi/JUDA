@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct PostReportButton: View {
-	
 	@Binding var reportContents: [ReportContent]
 	@Binding var isReportDialogPresented: Bool
 	
@@ -28,7 +27,3 @@ struct PostReportButton: View {
 		.padding(.bottom, 10)
     }
 }
-
-//#Preview {
-//    PostReportButton()
-//}

@@ -17,7 +17,7 @@ struct FoodTagVertical: View {
     let windowWidth: CGFloat
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 15) {
+        LazyVStack(alignment: .leading, spacing: 15) {
             ForEach(foodTagRows, id: \.self) { row in
                 HStack(spacing: 20) {
                     ForEach(row, id: \.self) { tag in
@@ -89,8 +89,3 @@ struct FoodTagVertical: View {
         return rows
     }
 }
-
-
-//#Preview {
-//    FoodTagVertical()
-//}

@@ -16,7 +16,44 @@ struct DrinkTagScroll: View {
     @Binding var isShowRatingDialog: Bool
     
     var body: some View {
-        ScrollView {
+        // MARK: iOS 16.4 이상
+        if #available(iOS 16.4, *) {
+            ScrollView {
+                DrinkTagContent(drinkTags: $drinkTags,
+                                selectedTagDrink: $selectedTagDrink,
+                                isShowRatingDialog: $isShowRatingDialog)
+            }
+            .scrollBounceBehavior(.basedOnSize, axes: .vertical)
+            .scrollIndicators(.hidden)
+        // MARK: iOS 16.4 미만
+        } else {
+            ViewThatFits(in: .vertical) {
+                DrinkTagContent(drinkTags: $drinkTags,
+                                selectedTagDrink: $selectedTagDrink,
+                                isShowRatingDialog: $isShowRatingDialog)
+                    .frame(maxHeight: .infinity, alignment: .top)
+                ScrollView {
+                    DrinkTagContent(drinkTags: $drinkTags,
+                                    selectedTagDrink: $selectedTagDrink,
+                                    isShowRatingDialog: $isShowRatingDialog)
+                }
+                .scrollIndicators(.hidden)
+            }
+        }
+    }
+}
+
+// MARK: DrinkTagScroll 로 보여줄 content
+struct DrinkTagContent: View {
+    // 술 태그 배열
+    @Binding var drinkTags: [DrinkTag]
+    // 선택된 술 태그의 정보를 담는 프로퍼티
+    @Binding var selectedTagDrink: DrinkTag
+    // CustomRatingDialog를 띄워주는 상태 프로퍼티
+    @Binding var isShowRatingDialog: Bool
+    
+    var body: some View {
+        LazyVStack {
             ForEach(drinkTags) { drinkTag in
                 DrinkTagCell(drinkTags: $drinkTags, drinkTag: drinkTag)
                     .onTapGesture {
@@ -27,11 +64,10 @@ struct DrinkTagScroll: View {
                     }
             }
         }
-		.scrollIndicators(.hidden)
     }
 }
 
-// Mark: onTapGesture로 별점 다이얼로그 눌러서 수정할 수 있게 하기
+// MARK: onTapGesture로 별점 다이얼로그 눌러서 수정할 수 있게 하기
 struct DrinkTagCell: View {
     // 술 태그 배열
     @Binding var drinkTags: [DrinkTag]
@@ -80,7 +116,3 @@ struct DrinkTagCell: View {
         CustomDivider()
     }
 }
-
-//#Preview {
-//    DrinkTagScroll()
-//}

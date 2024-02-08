@@ -12,13 +12,13 @@ struct WellMatched: View {
     private let sampleData = DrinkDummyData.sample
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 10) {
             // Well Matched
             // TODO: 추후 NameSpace 로 이동하면 좋을 String 값
-            Text("Well Matched")
+            Text("잘 어울리는 음식")
                 .font(.semibold18)
             // 추천 받은 음식
-            HStack(alignment: .center, spacing: 20) {
+            HStack(alignment: .center, spacing: 16) {
                 ForEach(sampleData.wellMatchedFoods, id: \.self) { food in
                     Text(food)
                         .font(.regular16)

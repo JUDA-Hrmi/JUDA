@@ -88,7 +88,6 @@ struct SearchTagView: View {
                             .scrollDismissesKeyboard(.immediately)
                         }
                     }
-
                 }
             }
             // 상태 프로퍼티에 따라 CustomRatingDialog 띄워주기

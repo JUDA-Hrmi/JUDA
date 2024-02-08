@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NoticeView: View {
     @Environment(\.dismiss) private var dismiss
+    
     var body: some View {
         VStack {
             Text("공지사항 뷰입니다. ")

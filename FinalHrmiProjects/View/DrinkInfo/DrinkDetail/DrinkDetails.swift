@@ -26,16 +26,15 @@ struct DrinkDetails: View {
             VStack(alignment: .leading, spacing: 10) {
                 // 이름
                 Text(sampleData.name)
-                    .font(.semibold20)
+                    .font(.semibold18)
                     .foregroundStyle(.mainBlack)
-
                     .lineLimit(2)
                 HStack {
                     // 나라
                     Text(sampleData.origin)
                         .font(.regular16)
                     // 도수
-                    Text(sampleData.abv)
+                    Text(Formatter.formattedABVCount(abv: sampleData.abv))
                         .font(.regular16)
                 }
                 // 가격

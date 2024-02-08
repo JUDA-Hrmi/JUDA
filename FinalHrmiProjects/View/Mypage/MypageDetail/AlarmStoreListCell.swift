@@ -32,11 +32,13 @@ struct AlarmStoreListCell: View {
                     }
                     .buttonStyle(EmptyActionStyle())
                 }
+                
                 Text(Formatter.formattedDateBeforeStyle(pastDate: alarm.likedTime))
                     .font(.regular12)
                     .foregroundStyle(.gray01)
             }
             Spacer()
+            
             Image(alarm.postImageName)
                 .resizable()
                 .aspectRatio(1.0, contentMode: .fill)

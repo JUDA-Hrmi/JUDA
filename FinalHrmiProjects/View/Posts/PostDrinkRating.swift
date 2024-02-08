@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct PostDrinkRating: View {
-	
 	let userName: String
 	let postDrinks: [String]
 	let postDrinksStarRating: [Double]
