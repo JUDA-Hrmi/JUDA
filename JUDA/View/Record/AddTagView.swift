@@ -126,7 +126,7 @@ struct AddTagView: View {
                     } label: {
                         Image(systemName: "chevron.backward")
                     }
-                    .tint(.mainBlack)
+                    .foregroundStyle(.mainBlack)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink {
@@ -135,9 +135,11 @@ struct AddTagView: View {
                         Text("다음")
                             .font(.regular16)
                     }
+                    // 선택된 사진이 없을 때, 다음 페이지 이동 불가
+                    .foregroundStyle(!selectedPhotos.isEmpty ? .mainBlack : .gray01)
+                    .disabled(selectedPhotos.isEmpty)
                 }
             }
-            .foregroundStyle(.mainBlack)
             // SearchTageView Sheet 띄워주기
             .sheet(isPresented: $isShowSearchTag) {
                 SearchTagView(drinkTags: $drinkTags,
