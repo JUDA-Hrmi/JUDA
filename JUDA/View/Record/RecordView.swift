@@ -122,7 +122,6 @@ struct RecordView: View {
     }
     
     private func isPostContentNotEmpty() {
-        print("isPostContentNotEmpty")
         let trimmedString = content.trimmingCharacters(in: .whitespacesAndNewlines) // 공백 + 개행문자 제외
         self.isPostContent = !trimmedString.isEmpty
     }
