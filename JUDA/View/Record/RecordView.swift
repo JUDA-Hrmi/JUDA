@@ -20,6 +20,9 @@ struct FoodTag: Identifiable, Hashable, Equatable {
 
 // MARK: - 술상 기록 화면
 struct RecordView: View {
+    // Navigation을 위한 환경 프로퍼티
+    @Environment(\.dismiss) private var dismiss
+    // 기록 타입 ( 작성 or 수정 )
     let recordType: RecordType
     // 선택된 사진들을 담은 배열 (더미 데이터는 Assets을 사용하기 위해 작성)
     @State private var images: [String] = ["foodEx1", "foodEx2", "foodEx3", "foodEx4", "foodEx5"]
@@ -35,8 +38,8 @@ struct RecordView: View {
     @FocusState private var isFocusedTextField: Bool
     // VStack에 id 값을 부여하기 위한 네임스페이스
     @Namespace private var textField
-    // Navigation을 위한 환경 프로퍼티
-    @Environment(\.dismiss) private var dismiss
+    // 글 작성 or 수정 기준 충족 ( 글 내용 필수 )
+    @State private var isPostContent: Bool = false
     
     var body: some View {
         VStack {
@@ -87,6 +90,14 @@ struct RecordView: View {
                 windowWidth = TagHandler.getScreenWidthWithoutPadding(padding: 20)
             }
         }
+        // 글 내용 유무 체크
+        .onAppear {
+            isPostContentNotEmpty()
+        }
+        // 글 내용 유무 체크
+        .onChange(of: content) { _ in
+            isPostContentNotEmpty()
+        }
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -95,6 +106,7 @@ struct RecordView: View {
                 } label: {
                     Image(systemName: "chevron.left")
                 }
+                .foregroundStyle(.mainBlack)
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
@@ -103,9 +115,16 @@ struct RecordView: View {
                     Text("완료")
                         .font(.regular16)
                 }
+                .foregroundStyle(isPostContent ? .mainBlack : .gray01)
+                .disabled(!isPostContent)
             }
         }
-        .foregroundStyle(.mainBlack)
+    }
+    
+    private func isPostContentNotEmpty() {
+        print("isPostContentNotEmpty")
+        let trimmedString = content.trimmingCharacters(in: .whitespacesAndNewlines) // 공백 + 개행문자 제외
+        self.isPostContent = !trimmedString.isEmpty
     }
 }
 
@@ -128,9 +147,9 @@ struct RecordContent: View {
     var textField: Namespace.ID
     // TextEditor에서 사용되는 placeholder
     private let placeholder = """
-     사진에 대해 설명해주세요.
-     음식과 함께 마신 술은 어땠나요?
-     """
+                             사진에 대해 설명해주세요.
+                             음식과 함께 마신 술은 어땠나요?
+                             """
     let proxy: ScrollViewProxy
     
     var body: some View {
