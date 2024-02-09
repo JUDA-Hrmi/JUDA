@@ -11,7 +11,7 @@ import SwiftUI
 struct WeatherAndFood: View {
     @Binding var isLoggedIn: Bool
     let food: [String] = ["해물파전", "안주"]
-    let sul: [String] = ["막걸리", "술"]
+    let drink: [String] = ["막걸리", "술"]
     
     var body: some View {
         //        LottieView(jsonName: "Sun")
@@ -33,7 +33,7 @@ struct WeatherAndFood: View {
                     Text(isLoggedIn ? food[0] : food[1])
                         .foregroundColor(.mainAccent02)
                     Text(isLoggedIn ? " + " : "와 ")
-                    Text(isLoggedIn ? sul[0] : sul[1])
+                    Text(isLoggedIn ? drink[0] : drink[1])
                         .foregroundColor(.mainAccent02)
                     Text(isLoggedIn ? "한 잔 어때요?" : "조합을 확인하세요")
                 }
