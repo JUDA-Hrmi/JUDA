@@ -27,7 +27,7 @@ struct TodayDrinkRecommended: View {
 	
     var body: some View {
         VStack {
-			HStack(alignment: .top, spacing: 10) {
+            HStack(alignment: .top, spacing: 20) {
                 ForEach(todayDrink, id: \.self) { drink in
 					if isLoggedIn {
                         // TODO: NavigationLink - value 로 수정
@@ -69,7 +69,8 @@ struct TodayDrinkRecommendedCell: View {
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
         }
-        .padding(20)
+        .padding(.top, 20)
+        .frame(maxWidth: .infinity)
     }
 }
 

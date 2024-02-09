@@ -13,7 +13,7 @@ struct PostOrLogin: View {
     @Binding var selectedTabIndex: Int
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: isLoggedIn ? .leading : .center, spacing: 10) {
             // 로그인
             if isLoggedIn {
                 Text("다른 사람들은 어떻게 먹었을까?")
@@ -42,13 +42,13 @@ struct PostOrLogin: View {
                             .font(.medium16)
                             .foregroundStyle(.mainAccent03)
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 10)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
                     .background(.mainAccent03.opacity(0.2))
                     .clipShape(.rect(cornerRadius: 10))
                 }
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, alignment: isLoggedIn ? .leading : .center)
     }
 }
