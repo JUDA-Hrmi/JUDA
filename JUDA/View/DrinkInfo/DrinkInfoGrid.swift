@@ -16,7 +16,6 @@ struct DrinkInfoGrid: View {
                 DrinkGridContent()
             }
             .scrollBounceBehavior(.basedOnSize, axes: .vertical)
-            .scrollIndicators(.hidden)
             .scrollDismissesKeyboard(.immediately)
         // MARK: iOS 16.4 미만
         } else {
@@ -26,7 +25,6 @@ struct DrinkInfoGrid: View {
                 ScrollView {
                     DrinkGridContent()
                 }
-                .scrollIndicators(.hidden)
                 .scrollDismissesKeyboard(.immediately)
             }
         }

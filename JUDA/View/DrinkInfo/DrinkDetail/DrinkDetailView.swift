@@ -53,8 +53,6 @@ struct DrinkDetailView: View {
                 TaggedTrendingPosts()
             }
         }
-        // 스크롤 인디케이터 X
-        .scrollIndicators(.hidden)
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {

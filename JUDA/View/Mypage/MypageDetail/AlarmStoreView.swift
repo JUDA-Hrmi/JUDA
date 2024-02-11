@@ -50,7 +50,6 @@ struct AlarmStoreView: View {
                     AlarmListContent()
                 }
                 .scrollBounceBehavior(.basedOnSize, axes: .vertical)
-                .scrollIndicators(.hidden)
             // MARK: iOS 16.4 미만
             } else {
                 ViewThatFits(in: .vertical) {
@@ -59,7 +58,6 @@ struct AlarmStoreView: View {
                     ScrollView {
                         AlarmListContent()
                     }
-                    .scrollIndicators(.hidden)
                 }
             }
         }

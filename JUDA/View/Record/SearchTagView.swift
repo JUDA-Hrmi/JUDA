@@ -73,7 +73,6 @@ struct SearchTagView: View {
                                                  isShowRatingDialog: $isShowRatingDialog)
                         }
                         .scrollBounceBehavior(.basedOnSize, axes: .vertical)
-                        .scrollIndicators(.hidden)
                         .scrollDismissesKeyboard(.immediately)
                     // MARK: iOS 16.4 미만
                     } else {
@@ -85,7 +84,6 @@ struct SearchTagView: View {
                                 SearchTagListContent(selectedDrink: $selectedDrink,
                                                      isShowRatingDialog: $isShowRatingDialog)
                             }
-                            .scrollIndicators(.hidden)
                             .scrollDismissesKeyboard(.immediately)
                         }
                     }

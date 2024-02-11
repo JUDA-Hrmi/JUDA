@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// MARK: - 
+// MARK: - 스크롤 뷰 or 뷰 로 보여질 post grid
 struct PostGrid: View {
     @State private var scrollAxis: Axis.Set = .vertical
     @State private var vHeight = 0.0
@@ -26,9 +26,7 @@ struct PostGrid: View {
                                       postUserType: postUserType)
             }
             .scrollBounceBehavior(.basedOnSize, axes: .vertical)
-            .scrollIndicators(.hidden)
             .scrollDismissesKeyboard(.immediately)
-            .padding(.horizontal, 20)
             .refreshable {
                 // TODO: write post data refresh code
             }
@@ -44,18 +42,16 @@ struct PostGrid: View {
                                           likeCount: $likeCount,
                                           postUserType: postUserType)
                 }
-                .scrollIndicators(.hidden)
                 .scrollDismissesKeyboard(.immediately)
                 .refreshable {
                     // TODO: write post data refresh code
                 }
             }
-            .padding(.horizontal, 20)
         }
     }
 }
 
-// MARK: - 스크롤 뷰 or 뷰 로 보여질 post grid
+// MARK: - 스크롤 뷰 or 뷰 로 보여질 post grid 내용 부분
 struct PostGridContent: View {
     @Binding var isLike: Bool
     @Binding var likeCount: Int
@@ -77,6 +73,7 @@ struct PostGridContent: View {
                 .buttonStyle(EmptyActionStyle())
             }
         }
+        .padding(.horizontal, 20)
     }
 }
 

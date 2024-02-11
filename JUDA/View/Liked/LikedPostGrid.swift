@@ -21,7 +21,6 @@ struct LikedPostGrid: View {
                 LikedDrinkGridContent(isLikePost: $isLikePost, postLikeCount: $postLikeCount)
             }
             .scrollBounceBehavior(.basedOnSize, axes: .vertical)
-            .scrollIndicators(.hidden)
         // MARK: iOS 16.4 미만
         } else {
             ViewThatFits(in: .vertical) {
@@ -30,7 +29,6 @@ struct LikedPostGrid: View {
                 ScrollView {
                     LikedDrinkGridContent(isLikePost: $isLikePost, postLikeCount: $postLikeCount)
                 }
-                .scrollIndicators(.hidden)
             }
         }
     }

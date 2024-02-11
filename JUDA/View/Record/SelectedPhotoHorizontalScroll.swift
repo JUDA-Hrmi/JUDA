@@ -25,6 +25,5 @@ struct SelectedPhotoHorizontalScroll: View {
         .frame(height: 100)
         .padding(.leading, 20)
         .padding(.vertical, 10)
-        .scrollIndicators(.hidden)
     }
 }

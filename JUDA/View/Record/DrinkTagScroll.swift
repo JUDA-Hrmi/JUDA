@@ -25,7 +25,6 @@ struct DrinkTagScroll: View {
                                 isShowRatingDialog: $isShowRatingDialog)
             }
             .scrollBounceBehavior(.basedOnSize, axes: .vertical)
-            .scrollIndicators(.hidden)
         // MARK: iOS 16.4 미만
         } else {
             ViewThatFits(in: .vertical) {
@@ -38,7 +37,6 @@ struct DrinkTagScroll: View {
                                     selectedTagDrink: $selectedTagDrink,
                                     isShowRatingDialog: $isShowRatingDialog)
                 }
-                .scrollIndicators(.hidden)
             }
         }
     }

@@ -45,7 +45,6 @@ struct PostDetailView: View {
                     PostDetailContent(isLike: $isLike, likeCount: $likeCount, postContent: postContent, windowWidth: windowWidth)
                 }
                 .scrollBounceBehavior(.basedOnSize, axes: .vertical)
-                .scrollIndicators(.hidden)
                 // MARK: iOS 16.4 미만
             } else {
                 ViewThatFits(in: .vertical) {
@@ -54,7 +53,6 @@ struct PostDetailView: View {
                     ScrollView {
                         PostDetailContent(isLike: $isLike, likeCount: $likeCount, postContent: postContent, windowWidth: windowWidth)
                     }
-                    .scrollIndicators(.hidden)
                 }
             }
             // 삭제 버튼 다이얼로그

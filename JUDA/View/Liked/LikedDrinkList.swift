@@ -16,7 +16,6 @@ struct LikedDrinkList: View {
                 LikedDrinkListContent()
             }
             .scrollBounceBehavior(.basedOnSize, axes: .vertical)
-            .scrollIndicators(.hidden)
         // MARK: iOS 16.4 미만
         } else {
             ViewThatFits(in: .vertical) {
@@ -25,7 +24,6 @@ struct LikedDrinkList: View {
                 ScrollView {
                     LikedDrinkListContent()
                 }
-                .scrollIndicators(.hidden)
             }
         }
     }

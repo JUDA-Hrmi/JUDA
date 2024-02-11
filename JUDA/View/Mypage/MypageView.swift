@@ -45,8 +45,6 @@ struct MypageView: View {
                         PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
                     }
                     .scrollBounceBehavior(.basedOnSize, axes: .vertical)
-                    .scrollIndicators(.hidden)
-                    .padding(.horizontal, 20)
                     // MARK: iOS 16.4 미만
                 } else {
                     ViewThatFits(in: .vertical) {
@@ -55,9 +53,7 @@ struct MypageView: View {
                         ScrollView {
                             PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
                         }
-                        .scrollIndicators(.hidden)
                     }
-                    .padding(.horizontal, 20)
                 }
             }
             .toolbar {

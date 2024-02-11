@@ -55,7 +55,6 @@ struct RecordView: View {
                     .scrollBounceBehavior(.basedOnSize, axes: .vertical)
                     // 스크롤 했을 때, 키보드 사라지기
                     .scrollDismissesKeyboard(.immediately)
-                    .scrollIndicators(.hidden)
                     // 탭했을 때, focus 상태 변경
                     .onTapGesture {
                         if isFocusedTextEditor {
@@ -74,7 +73,6 @@ struct RecordView: View {
                     }
                     // 스크롤 했을 때, 키보드 사라지기
                     .scrollDismissesKeyboard(.immediately)
-                    .scrollIndicators(.hidden)
                     // 탭했을 때, focus 상태 변경
                     .onTapGesture {
                         if isFocusedTextEditor {
@@ -174,7 +172,6 @@ struct RecordContent: View {
                 .frame(height: 300)
                 .padding(.horizontal, 20)
                 .padding(.vertical, 10)
-                .scrollIndicators(.hidden)
                 .focused(isFocusedTextEditor)
                 .textInputAutocapitalization(.never) // 자동 대문자 설정 기능 비활성화
                 .autocorrectionDisabled() // 자동 수정 비활성화
