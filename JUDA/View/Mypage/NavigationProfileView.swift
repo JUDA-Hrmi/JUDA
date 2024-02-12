@@ -48,7 +48,6 @@ struct NavigationProfileView: View {
                     PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
                 }
                 .scrollBounceBehavior(.basedOnSize, axes: .vertical)
-                .padding(.horizontal, 20)
                 // MARK: iOS 16.4 미만
             } else {
                 ViewThatFits(in: .vertical) {
@@ -58,7 +57,6 @@ struct NavigationProfileView: View {
                         PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
                     }
                 }
-                .padding(.horizontal, 20)
             }
         }
         .toolbar {
