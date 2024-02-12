@@ -18,6 +18,14 @@ struct KoreanTastingNotes: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
+            // Tasting Notes
+            HStack(alignment: .lastTextBaseline, spacing: 6) {
+                Text("술 평가")
+                    .font(.semibold18)
+                Text("(1 ~ 5)")
+                    .font(.regular14)
+                    .foregroundStyle(.gray01)
+            }
             // 단맛 / 신맛 / 청량 / 바디 / 탄산
             KoreanTastingNotesContent(title: "단맛", value: sweet)
             KoreanTastingNotesContent(title: "신맛", value: sour)
@@ -41,7 +49,11 @@ struct KoreanTastingNotesContent: View {
             Text(title)
                 .font(.medium16)
                 .frame(width: 50, alignment: .leading)
-            // 세부 내용 - 단맛 / 신맛 / 청량 / 바디 / 탄산
+            // 점수 - 단맛 / 신맛 / 청량 / 바디 / 탄산
+            Text(value == nil ? "-" : "\(value ?? 0)")
+                .font(.regular16)
+                .frame(width: 20, alignment: .center)
+            // 막대 - 단맛 / 신맛 / 청량 / 바디 / 탄산
             Rectangle()
                 .fill(.mainAccent05.opacity(0.8))
                 .frame(width: 30 * CGFloat(integerLiteral: value ?? 0), height: 12)
