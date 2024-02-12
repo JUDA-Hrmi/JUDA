@@ -23,7 +23,7 @@ struct PostDrinkRating: View {
 			ForEach(0..<postDrinks.count, id:\.self) { index in
                 // TODO: NavigationLink - value 로 수정
                 NavigationLink {
-					DrinkDetailView()
+                    DrinkDetailView(drink: Whiskey.whiskeySample02) // 임시 더미데이터
                         .modifier(TabBarHidden())
 				} label: {
 					HStack(spacing: 2) {

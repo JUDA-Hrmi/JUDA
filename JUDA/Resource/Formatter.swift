@@ -31,6 +31,16 @@ enum Formatter {
         String(format: "%.1f", rating)
     }
     
+    // 술 금액 10000 -> 10,000원 으로 변환해주는 함수
+    static func formattedPriceToString(price: Int?) -> String {
+        guard price != nil, let price = price else { return "-" }
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .currency
+        numberFormatter.currencySymbol = ""
+        guard let formattedPrice = numberFormatter.string(from: NSNumber(value: price)) else { return "\(price)원" }
+        return "\(formattedPrice)원"
+    }
+    
     // 술 도수 소수점 첫번째 자리까지 String으로 변환해주는 함수
     static func formattedABVCount(abv: Double) -> String {
         if abv.truncatingRemainder(dividingBy: 1.0) == 0 {

@@ -22,11 +22,11 @@ struct CustomTextSegment: View {
 	private let id = "CustomTextSegment" // 애니메이션을 주고싶은 뷰에 대한 id값 지정
 	
 	var body: some View {
-		HStack(spacing: 20) {
+		HStack(alignment: .center, spacing: 20) {
 			ForEach(0..<segments.count, id: \.self) { index in
 				// 세그먼트 텍스트
 				Text(segments[index])
-					.font(.medium16)
+                    .font(index == selectedSegmentIndex ? .semibold16 : .medium16)
 					.foregroundColor(selectedSegmentIndex == index ? .mainBlack : .gray01)
 					.onTapGesture {
 						// 세그먼트 전환 시, 부드럽게 전환하기위한 애니메이션

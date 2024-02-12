@@ -140,7 +140,7 @@ struct SearchTagListContent: View {
     var body: some View {
         LazyVStack {
             ForEach(likeds, id: \.self) { drinkInfo in
-                DrinkListCell()
+                DrinkListCell(drink: Whiskey.whiskeySample02) // 임시 더미데이터
                     .onTapGesture {
                         // 현재 선택된 DrinkListCell의 술 정보를 받아오기
                         selectedDrink = drinkInfo

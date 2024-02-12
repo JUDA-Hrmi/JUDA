@@ -16,11 +16,11 @@ struct LikedView: View {
 
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack(spacing: 0) {
                 // 세그먼트 (술찜 리스트 / 술상 리스트)
                 CustomTextSegment(segments: PostOrLiked.liked, selectedSegmentIndex: $selectedSegmentIndex)
-                    .padding(.vertical, 14)
-                    .padding(.horizontal, 20)
+                    .padding(.bottom, 14)
+                    .padding([.top, .horizontal], 20)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 // 술찜 or 술상 탭 뷰
                 TabView(selection: $selectedSegmentIndex) {

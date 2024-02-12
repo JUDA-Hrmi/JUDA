@@ -32,7 +32,7 @@ struct TodayDrinkRecommended: View {
 					if isLoggedIn {
                         // TODO: NavigationLink - value 로 수정
 						NavigationLink {
-							DrinkDetailView()
+                            DrinkDetailView(drink: Wine.wineSample01) // 임시 더미데이터
                                 .modifier(TabBarHidden())
 						} label: {
 							TodayDrinkRecommendedCell(todayDrink: drink)

@@ -18,7 +18,7 @@ struct NavigationPostsView: View {
     let postSearchText: String
     
     var body: some View {
-        VStack(spacing: 0) {
+        VStack {
             // 세그먼트 (인기 / 최신)
             CustomTextSegment(segments: PostOrLiked.post, selectedSegmentIndex: $selectedSegmentIndex)
                 .padding(.vertical, 14)

@@ -20,13 +20,15 @@ struct PostsView: View {
 	
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack(spacing: 0) {
                 // 상단 서치바
                 SearchBar(inputText: $postSearchText)
-                HStack {
+                HStack(alignment: .center) {
                     // 인기, 최신 순으로 선택하여 정렬하기 위한 CustomSegment
                     CustomTextSegment(segments: PostOrLiked.post,
                                       selectedSegmentIndex: $selectedSegmentIndex)
+                    .padding(.bottom, 14)
+                    .padding(.top, 20)
                     //
                     Spacer()
                     // TODO: NavigationLink - value 로 수정
@@ -39,7 +41,6 @@ struct PostsView: View {
                             .foregroundStyle(.mainBlack)
                     }
                 }
-                .padding(.vertical, 10)
                 .padding(.horizontal, 20)
                 // 인기 or 최신 탭뷰
                 TabView(selection: $selectedSegmentIndex) {

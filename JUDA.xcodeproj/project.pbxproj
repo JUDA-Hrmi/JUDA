@@ -21,7 +21,8 @@
 		09A6AD7A2B71F6D800606585 /* LibraryPhotosPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD792B71F6D800606585 /* LibraryPhotosPicker.swift */; };
 		09A6AD7E2B72A53C00606585 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD7D2B72A53C00606585 /* Errors.swift */; };
 		09B4A0452B6E5DAE0082B235 /* PresentationDetent +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B4A0442B6E5DAE0082B235 /* PresentationDetent +.swift */; };
-		09CDADA52B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDADA42B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift */; };
+		09BCC0B12B79EB5D00FF4D1B /* DrinkDummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BCC0B02B79EB5D00FF4D1B /* DrinkDummyData.swift */; };
+		09BCC0B32B7A2BE600FF4D1B /* KoreanTastingNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BCC0B22B7A2BE600FF4D1B /* KoreanTastingNotes.swift */; };
 		09F869932B68E36800A56A4C /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869922B68E36800A56A4C /* Formatter.swift */; };
 		09F869962B68E46500A56A4C /* DrinkDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869952B68E46500A56A4C /* DrinkDetailView.swift */; };
 		09F869982B68E48400A56A4C /* DrinkDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869972B68E48400A56A4C /* DrinkDetails.swift */; };
@@ -120,7 +121,8 @@
 		09A6AD792B71F6D800606585 /* LibraryPhotosPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryPhotosPicker.swift; sourceTree = "<group>"; };
 		09A6AD7D2B72A53C00606585 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		09B4A0442B6E5DAE0082B235 /* PresentationDetent +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PresentationDetent +.swift"; sourceTree = "<group>"; };
-		09CDADA42B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkSelectHorizontalScrollBar.swift; sourceTree = "<group>"; };
+		09BCC0B02B79EB5D00FF4D1B /* DrinkDummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDummyData.swift; sourceTree = "<group>"; };
+		09BCC0B22B7A2BE600FF4D1B /* KoreanTastingNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KoreanTastingNotes.swift; sourceTree = "<group>"; };
 		09F869922B68E36800A56A4C /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		09F869952B68E46500A56A4C /* DrinkDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailView.swift; sourceTree = "<group>"; };
 		09F869972B68E48400A56A4C /* DrinkDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetails.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				09F869952B68E46500A56A4C /* DrinkDetailView.swift */,
 				09F869972B68E48400A56A4C /* DrinkDetails.swift */,
 				09F869992B68E4B600A56A4C /* TastingNotes.swift */,
+				09BCC0B22B7A2BE600FF4D1B /* KoreanTastingNotes.swift */,
 				09F8699B2B68E4CA00A56A4C /* WellMatched.swift */,
 				09F8699D2B68E4E400A56A4C /* PeferenceChart.swift */,
 				09F8699F2B68E50000A56A4C /* TaggedTrendingPosts.swift */,
@@ -396,6 +399,7 @@
 		B1EE24762B614345007F68B0 /* DrinkInfo */ = {
 			isa = PBXGroup;
 			children = (
+				09BCC0B02B79EB5D00FF4D1B /* DrinkDummyData.swift */,
 				B1EE248F2B614477007F68B0 /* DrinkInfoView.swift */,
 				0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */,
 				0961B7962B6624D300A9F553 /* DrinkInfoList.swift */,
@@ -526,7 +530,6 @@
 				096E63172B616886009246CE /* DrinkListCell.swift */,
 				7B904C652B6168C60052384A /* PostCell.swift */,
 				7B904C672B6184560052384A /* CustomTextSegment.swift */,
-				09CDADA42B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift */,
 				2C2FF2972B63916700B2301A /* StarRating.swift */,
 				B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */,
 				B127A4212B64EB53001F005D /* CustomBottomSheet.swift */,
@@ -659,10 +662,12 @@
 				AC6D12882B6A8DD300169B23 /* TodayDrinkRecommended.swift in Sources */,
 				09F869982B68E48400A56A4C /* DrinkDetails.swift in Sources */,
 				B12330492B6A99B400DE2A93 /* SettingView.swift in Sources */,
+				09BCC0B12B79EB5D00FF4D1B /* DrinkDummyData.swift in Sources */,
 				7B904C682B6184560052384A /* CustomTextSegment.swift in Sources */,
 				2C2AD4FD2B68891C00C681F4 /* SearchTagView.swift in Sources */,
 				B1EE24A22B6144EA007F68B0 /* LogInViewModel.swift in Sources */,
 				09B4A0452B6E5DAE0082B235 /* PresentationDetent +.swift in Sources */,
+				09BCC0B32B7A2BE600FF4D1B /* KoreanTastingNotes.swift in Sources */,
 				7B6D76A72B677A8F00601B55 /* Button.swift in Sources */,
 				09F8699E2B68E4E400A56A4C /* PeferenceChart.swift in Sources */,
 				096E63182B616886009246CE /* DrinkListCell.swift in Sources */,
@@ -676,7 +681,6 @@
 				B1EE24962B6144A5007F68B0 /* MypageViewModel.swift in Sources */,
 				B1EE24922B61447F007F68B0 /* MainView.swift in Sources */,
 				7B92656B2B692E7200840095 /* PostReportTitle.swift in Sources */,
-				09CDADA52B6171C6007E51B1 /* DrinkSelectHorizontalScrollBar.swift in Sources */,
 				AC6D128A2B6A8ED100169B23 /* WeatherAndFood.swift in Sources */,
 				2C2044E82B63B9D600773266 /* ContentView.swift in Sources */,
 				B12BEE4F2B6B7BDA00580D29 /* Handler.swift in Sources */,

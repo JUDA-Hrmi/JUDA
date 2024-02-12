@@ -36,10 +36,10 @@ struct LikedDrinkListContent: View {
             ForEach(0..<3, id: \.self) { _ in
                 // TODO: NavigationLink - value 로 수정
                 NavigationLink {
-                    DrinkDetailView()
+                    DrinkDetailView(drink: Korean.koreanSample01) // 임시 더미데이터
                         .modifier(TabBarHidden())
                 } label: {
-                    DrinkListCell()
+                    DrinkListCell(drink: Korean.koreanSample01) // 임시 더미데이터
                 }
                 .buttonStyle(EmptyActionStyle())
             }

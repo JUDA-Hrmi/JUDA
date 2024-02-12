@@ -10,8 +10,8 @@ import SwiftUI
 // MARK: - 잘 어울리는 음식
 struct WellMatched: View {
     // UITest - 추천 받은 음식 3가지
-    private let sampleData = DrinkDummyData.sample
-    
+    let wellMatched: [String]?
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             // Well Matched
@@ -19,7 +19,7 @@ struct WellMatched: View {
                 .font(.semibold18)
             // 추천 받은 음식
             HStack(alignment: .center, spacing: 16) {
-                ForEach(sampleData.wellMatchedFoods, id: \.self) { food in
+                ForEach(wellMatched ?? ["-"], id: \.self) { food in
                     Text(food)
                         .font(.regular16)
                 }
@@ -32,5 +32,5 @@ struct WellMatched: View {
 }
 
 #Preview {
-    WellMatched()
+    WellMatched(wellMatched: ["해산물 파스타", "로스트 치킨", "회"])
 }
