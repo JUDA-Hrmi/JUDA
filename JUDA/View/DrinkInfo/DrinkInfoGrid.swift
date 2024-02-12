@@ -48,6 +48,7 @@ struct DrinkGridContent: View {
                 } label: {
                     DrinkGridCell()
                 }
+                .buttonStyle(EmptyActionStyle())
             }
         }
         .padding(.horizontal, 20)

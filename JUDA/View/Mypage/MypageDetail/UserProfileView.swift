@@ -85,7 +85,7 @@ struct UserProfileView: View {
                                 .modifier(TabBarHidden())
                         } label: {
                             Text("닉네임 수정")
-                                .font(.light14)
+                                .font(.regular14)
                                 .foregroundStyle(.gray01)
                         }
                     }

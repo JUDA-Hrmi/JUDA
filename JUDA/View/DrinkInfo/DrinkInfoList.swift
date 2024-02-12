@@ -45,6 +45,7 @@ struct DrinkListContent: View {
                 } label: {
                     DrinkListCell()
                 }
+                .buttonStyle(EmptyActionStyle())
             }
         }
     }

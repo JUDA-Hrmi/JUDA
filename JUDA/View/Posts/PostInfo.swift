@@ -21,21 +21,23 @@ struct PostInfo: View {
     var body: some View {
         HStack {
             // 사용자의 프로필
-            NavigationLink {
-                // TODO: NavigationLink - value 로 수정
-                NavigationProfileView(userType: UserType.otheruser, userName: userName)
-            } label: {
+            HStack(alignment: .center, spacing: 10) {
                 // 이미지
                 Image(profileImageName)
                     .resizable()
                     .frame(width: 30, height: 30)
                     .clipShape(.circle)
                 VStack(alignment: .leading) {
-                    // 사용자의 닉네임
-                    Text(userName)
-                        .lineLimit(1)
-                        .font(.regular18)
-                        .foregroundStyle(.mainBlack)
+                    NavigationLink {
+                        // TODO: NavigationLink - value 로 수정
+                        NavigationProfileView(userType: UserType.otheruser, userName: userName)
+                    } label: {
+                        // 사용자의 닉네임
+                        Text(userName)
+                            .lineLimit(1)
+                            .font(.regular18)
+                            .foregroundStyle(.mainBlack)
+                    }
                     // 게시글 올린 날짜
                     Text(postUploadDate)
                         .font(.regular14)
@@ -45,7 +47,7 @@ struct PostInfo: View {
             //
             Spacer()
             // 좋아요 버튼
-            HStack(spacing: 3) {
+            HStack(spacing: 4) {
                 // 좋아요를 등록 -> 빨간색이 채워진 하트
                 // 좋아요를 해제 -> 테두리가 회색인 하트
                 Image(systemName: isLike ? "heart.fill" : "heart")

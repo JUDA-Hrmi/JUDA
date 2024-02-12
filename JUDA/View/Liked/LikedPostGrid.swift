@@ -53,6 +53,7 @@ struct LikedDrinkGridContent: View {
                 } label: {
                     PostCell(isLike: $isLikePost, likeCount: $postLikeCount)
                 }
+                .buttonStyle(EmptyActionStyle())
             }
         }
         .padding(.horizontal, 20)

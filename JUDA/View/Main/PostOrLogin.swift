@@ -19,19 +19,19 @@ struct PostOrLogin: View {
                 Text("다른 사람들은 어떻게 먹었을까?")
                     .font(.medium16)
                 // 술상 탭 이동
-                Text("추천 술상 보러가기")
-                    .font(.medium16)
-                    .foregroundStyle(.mainAccent03)
-                    .underline()
-                    .onTapGesture {
-                        // 해당 텍스트 탭 할 경우
-                        // 술상 탭뷰로 이동
-                        selectedTabIndex = 2
-                    }
+                Button {
+                    // 술상 탭뷰로 이동
+                    selectedTabIndex = 2
+                } label: {
+                    Text("추천 술상 보러가기")
+                        .font(.medium16)
+                        .foregroundStyle(.mainAccent03)
+                        .underline()
+                }
                 // 비로그인
             } else {
                 Text("추천 안주와 술을 알고 싶다면?")
-                    .font(.medium16)
+                    .font(.semibold18)
                 // TODO: NavigationLink - value 로 수정
                 NavigationLink {
                     LogInView()
@@ -42,7 +42,7 @@ struct PostOrLogin: View {
                             .font(.medium16)
                             .foregroundStyle(.mainAccent03)
                     }
-                    .padding(.horizontal, 10)
+                    .padding(.horizontal, 20)
                     .padding(.vertical, 6)
                     .background(.mainAccent03.opacity(0.2))
                     .clipShape(.rect(cornerRadius: 10))

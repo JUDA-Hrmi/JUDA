@@ -59,7 +59,6 @@ struct SettingView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .background(.background)
 				}
-				.buttonStyle(EmptyActionStyle())
 				// 회원탈퇴
 				Button {
 					isDeletAccount.toggle() // 버튼 클릭 시, 커스텀 다이얼로그 활성화
@@ -72,7 +71,6 @@ struct SettingView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .background(.background)
 				}
-				.buttonStyle(EmptyActionStyle())
                 //
 				CustomDivider()
 				// 공지사항
