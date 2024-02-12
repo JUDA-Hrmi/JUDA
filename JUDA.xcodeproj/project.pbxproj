@@ -342,6 +342,7 @@
 			isa = PBXGroup;
 			children = (
 				B1EE24722B61431A007F68B0 /* DummyModel.swift */,
+				09BCC0B02B79EB5D00FF4D1B /* DrinkDummyData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -399,7 +400,6 @@
 		B1EE24762B614345007F68B0 /* DrinkInfo */ = {
 			isa = PBXGroup;
 			children = (
-				09BCC0B02B79EB5D00FF4D1B /* DrinkDummyData.swift */,
 				B1EE248F2B614477007F68B0 /* DrinkInfoView.swift */,
 				0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */,
 				0961B7962B6624D300A9F553 /* DrinkInfoList.swift */,
