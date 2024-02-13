@@ -36,6 +36,7 @@ struct DrinkGridCell: View {
                 .frame(maxWidth: .infinity)
                 // 술 이름 + 용량
                 Text(drink.name + " " + drink.amount)
+                    .multilineTextAlignment(.leading)
                     .lineLimit(2)
                     .font(.semibold16)
                     .foregroundStyle(.mainBlack)
@@ -46,20 +47,17 @@ struct DrinkGridCell: View {
                 default:
                     getCountryAndABV(drink)
                 }
-                // 별점
-                VStack(spacing: 0) {
-                    Spacer()
-                    // 별
-                    StarRating(rating: drink.rating,
-                               color: .mainAccent05,
-                               starSize: .semibold14, 
-                               fontSize: .semibold14,
-                               starRatingType: .withText)
-                }
+                Spacer()
+                // 별
+                StarRating(rating: drink.rating,
+                           color: .mainAccent05,
+                           starSize: .semibold14,
+                           fontSize: .semibold14,
+                           starRatingType: .withText)
             }
         }
-        .padding(10)
         .frame(height: 270)
+        .padding(10)
     }
     
     @ViewBuilder
