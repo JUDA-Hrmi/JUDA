@@ -1,12 +1,13 @@
 //
 //  PostReportContent.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by Minjae Kim on 1/30/24.
 //
 
 import SwiftUI
 
+// MARK: - 술상 신고하기 화면의 내용
 struct PostReportContent: View {
 	@Binding var reportContents: [ReportContent]
 	@Binding var etcReportText: String
@@ -15,9 +16,11 @@ struct PostReportContent: View {
 	@FocusState var isFocused: Bool
 	
     var body: some View {
+        // 신고 내용 항목
 		VStack(alignment: .leading, spacing: 20) {
 			ForEach(reportContents.indices, id: \.self) { index in
 				HStack(spacing: 5) {
+                    // 체크 박스
 					CheckBox(isCheck: reportContents[index].check)
 						.onTapGesture {
 							reportContents[index].check.toggle()
@@ -29,7 +32,7 @@ struct PostReportContent: View {
 		}
 		.padding(.top, 20)
 		.padding(.bottom, 20)
-		
+		// 텍스트 에디터
 		ZStack(alignment: .bottomTrailing) {
 			// 마지막 순서의 체크박스에 체크가 돼있지않다면 textEditor 비활성화
 			// 마지막 순서의 체크박스에 체크가 돼있다면 textEditor 활성화

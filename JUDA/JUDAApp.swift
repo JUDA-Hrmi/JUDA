@@ -1,6 +1,6 @@
 //
-//  FinalHrmiProjectsApp.swift
-//  FinalHrmiProjects
+//  JUDAApp.swift
+//  JUDA
 //
 //  Created by 홍세희 on 2024/01/22.
 //
@@ -17,7 +17,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 }
 
 @main
-struct FinalHrmiProjectsApp: App {
+struct JUDAApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     var body: some Scene {

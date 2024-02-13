@@ -1,12 +1,13 @@
 //
 //  LikedPostGrid.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by phang on 1/31/24.
 //
 
 import SwiftUI
 
+// MARK: - 술상 리스트 탭 화면
 struct LikedPostGrid: View {
     // 현재 유저가 해당 술 상을 좋아요 눌렀는지 bool
     @State private var isLikePost = true
@@ -20,7 +21,6 @@ struct LikedPostGrid: View {
                 LikedDrinkGridContent(isLikePost: $isLikePost, postLikeCount: $postLikeCount)
             }
             .scrollBounceBehavior(.basedOnSize, axes: .vertical)
-            .scrollIndicators(.hidden)
         // MARK: iOS 16.4 미만
         } else {
             ViewThatFits(in: .vertical) {
@@ -29,7 +29,6 @@ struct LikedPostGrid: View {
                 ScrollView {
                     LikedDrinkGridContent(isLikePost: $isLikePost, postLikeCount: $postLikeCount)
                 }
-                .scrollIndicators(.hidden)
             }
         }
     }
@@ -47,13 +46,14 @@ struct LikedDrinkGridContent: View {
     var body: some View {
         LazyVGrid(columns: columns, spacing: 10) {
             ForEach(0..<8, id: \.self) { _ in
-                // TODO: 추후에 네비게이션으로 해당 술상의 Detail 로 이동 연결
+                // TODO: NavigationLink - value 로 수정
                 NavigationLink {
                     PostDetailView(postUserType: .reader, nickName: "Hrmi", isLike: $isLikePost, likeCount: $postLikeCount)
                         .modifier(TabBarHidden())
                 } label: {
                     PostCell(isLike: $isLikePost, likeCount: $postLikeCount)
                 }
+                .buttonStyle(EmptyActionStyle())
             }
         }
         .padding(.horizontal, 20)

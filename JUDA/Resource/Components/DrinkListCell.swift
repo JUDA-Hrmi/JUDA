@@ -1,19 +1,16 @@
 //
 //  DrinkListCell.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by phang on 1/25/24.
 //
 
 import SwiftUI
 
+// MARK: - 술 리스트 셀
 struct DrinkListCell: View {
     // UITest - Drink DummyData
-    private let drinkImage = "canuca"
-    private let drinkName = "카누카 칵테일 700ml"
-    private let drinkOrigin = "스페인"
-    private let drinkABV: Double = 15
-    private let drinkRating = 4.7
+    let drink: Drink
     // UITest - Drink 하트
     @State private var isLiked = false
     
@@ -22,28 +19,34 @@ struct DrinkListCell: View {
             // 술 정보
             HStack(alignment: .center, spacing: 20) {
                 // 술 사진
-                Image(drinkImage)
+                Image(drink.image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 103.48)
                     .frame(width: 70)
                 // 술 이름 + 나라, 도수 + 별점
                 VStack(alignment: .leading, spacing: 10) {
-                    // 술 이름
-                    Text(drinkName)
+                    // 술 이름 + 용량
+                    Text(drink.name + " " + drink.amount)
                         .lineLimit(2)
                         .font(.semibold16)
                         .foregroundStyle(.mainBlack)
                     // 나라, 도수
-                    HStack(spacing: 10) {
-                        Text(drinkOrigin)
+                    HStack(spacing: 0) {
+                        Text(drink.country)
                             .font(.semibold14)
-                        Text(Formatter.formattedABVCount(abv: drinkABV))
+                        if drink.drinkType == .wine ,let wine = drink as? Wine {
+                            Text(wine.province)
+                                .font(.semibold14)
+                                .padding(.leading, 6)
+                        }
+                        Text(Formatter.formattedABVCount(abv: drink.abv))
                             .font(.semibold14)
+                            .padding(.leading, 10)
                     }
                     .foregroundStyle(.gray01)
                     // 별점
-                    StarRating(rating: drinkRating, 
+                    StarRating(rating: drink.rating,
                                color: .mainAccent05,
                                starSize: .semibold14, 
                                fontSize: .semibold14,
@@ -66,5 +69,5 @@ struct DrinkListCell: View {
 }
 
 #Preview {
-    DrinkListCell()
+    DrinkListCell(drink: Wine.wineSample01)
 }

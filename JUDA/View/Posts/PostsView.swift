@@ -1,12 +1,13 @@
 //
 //  PostsView.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by 홍세희 on 2024/01/24.
 //
 
 import SwiftUI
 
+// MARK: - 술상 탭
 struct PostsView: View {
     @EnvironmentObject private var appViewModel: AppViewModel
 
@@ -19,18 +20,18 @@ struct PostsView: View {
 	
     var body: some View {
         NavigationStack {
-            VStack {
-                // 상단 태그 검색바
+            VStack(spacing: 0) {
+                // 상단 서치바
                 SearchBar(inputText: $postSearchText)
-                
-                HStack {
+                HStack(alignment: .center) {
                     // 인기, 최신 순으로 선택하여 정렬하기 위한 CustomSegment
                     CustomTextSegment(segments: PostOrLiked.post,
                                       selectedSegmentIndex: $selectedSegmentIndex)
-                    
+                    .padding(.bottom, 14)
+                    .padding(.top, 20)
+                    //
                     Spacer()
-                    
-                    // TODO: navigationLink 및 navigationDestination을 통한 RecordView 전환 구현
+                    // TODO: NavigationLink - value 로 수정
                     NavigationLink {
                         AddTagView()
                             .modifier(TabBarHidden())
@@ -40,9 +41,8 @@ struct PostsView: View {
                             .foregroundStyle(.mainBlack)
                     }
                 }
-                .padding(.vertical, 10)
                 .padding(.horizontal, 20)
-                
+                // 인기 or 최신 탭뷰
                 TabView(selection: $selectedSegmentIndex) {
                     ForEach(0..<PostOrLiked.post.count, id: \.self) { index in
                         ScrollViewReader { value in

@@ -1,12 +1,13 @@
 //
 //  SearchBar.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by 홍세희 on 2024/01/24.
 //
 
 import SwiftUI
 
+// MARK: - 서치바
 struct SearchBar: View {
     @Binding var inputText: String
 //    @FocusState private var isFocused: Bool

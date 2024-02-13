@@ -1,12 +1,13 @@
 //
 //  RecordView.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by 정인선 on 1/29/24.
 //
 
 import SwiftUI
 
+// MARK: - 술상 기록 타입 : 작성 or 수정
 enum RecordType {
     case add, edit
 }
@@ -17,7 +18,11 @@ struct FoodTag: Identifiable, Hashable, Equatable {
     let name: String
 }
 
+// MARK: - 술상 기록 화면
 struct RecordView: View {
+    // Navigation을 위한 환경 프로퍼티
+    @Environment(\.dismiss) private var dismiss
+    // 기록 타입 ( 작성 or 수정 )
     let recordType: RecordType
     // 선택된 사진들을 담은 배열 (더미 데이터는 Assets을 사용하기 위해 작성)
     @State private var images: [String] = ["foodEx1", "foodEx2", "foodEx3", "foodEx4", "foodEx5"]
@@ -33,8 +38,8 @@ struct RecordView: View {
     @FocusState private var isFocusedTextField: Bool
     // VStack에 id 값을 부여하기 위한 네임스페이스
     @Namespace private var textField
-    // Navigation을 위한 환경 프로퍼티
-    @Environment(\.dismiss) private var dismiss
+    // 글 작성 or 수정 기준 충족 ( 글 내용 필수 )
+    @State private var isPostContent: Bool = false
     
     var body: some View {
         VStack {
@@ -50,7 +55,6 @@ struct RecordView: View {
                     .scrollBounceBehavior(.basedOnSize, axes: .vertical)
                     // 스크롤 했을 때, 키보드 사라지기
                     .scrollDismissesKeyboard(.immediately)
-                    .scrollIndicators(.hidden)
                     // 탭했을 때, focus 상태 변경
                     .onTapGesture {
                         if isFocusedTextEditor {
@@ -69,7 +73,6 @@ struct RecordView: View {
                     }
                     // 스크롤 했을 때, 키보드 사라지기
                     .scrollDismissesKeyboard(.immediately)
-                    .scrollIndicators(.hidden)
                     // 탭했을 때, focus 상태 변경
                     .onTapGesture {
                         if isFocusedTextEditor {
@@ -85,30 +88,44 @@ struct RecordView: View {
                 windowWidth = TagHandler.getScreenWidthWithoutPadding(padding: 20)
             }
         }
+        // 글 내용 유무 체크
+        .onAppear {
+            isPostContentNotEmpty()
+        }
+        // 글 내용 유무 체크
+        .onChange(of: content) { _ in
+            isPostContentNotEmpty()
+        }
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    // AddTagView로 돌아가기
                     dismiss()
                 } label: {
                     Image(systemName: "chevron.left")
                 }
+                .foregroundStyle(.mainBlack)
             }
             ToolbarItem(placement: .topBarTrailing) {
-            //                NavigationLink {
-            //                    // TODO: PostDetailView로 이동
-            //                } label : {
-            //                    Text("완료")
-            //                }
-                Text("완료")
-                    .font(.regular16)
+                Button {
+                    // TODO: 술상 저장 후, 작성 or 수정 하기 전에 있었던 화면으로 이동 (path 조절)
+                } label: {
+                    Text("완료")
+                        .font(.regular16)
+                }
+                .foregroundStyle(isPostContent ? .mainBlack : .gray01)
+                .disabled(!isPostContent)
             }
         }
-        .foregroundStyle(.mainBlack)
+    }
+    
+    private func isPostContentNotEmpty() {
+        let trimmedString = content.trimmingCharacters(in: .whitespacesAndNewlines) // 공백 + 개행문자 제외
+        self.isPostContent = !trimmedString.isEmpty
     }
 }
 
+// MARK: - 술상 기록 화면에 보여줄 내용
 struct RecordContent: View {
     let recordType: RecordType
     // 선택된 사진들을 담은 배열 (더미 데이터는 Assets을 사용하기 위해 작성)
@@ -127,16 +144,15 @@ struct RecordContent: View {
     var textField: Namespace.ID
     // TextEditor에서 사용되는 placeholder
     private let placeholder = """
-     사진에 대해 설명해주세요.
-     음식과 함께 마신 술은 어땠나요?
-     """
+                             사진에 대해 설명해주세요.
+                             음식과 함께 마신 술은 어땠나요?
+                             """
     let proxy: ScrollViewProxy
     
     var body: some View {
         LazyVStack {
-            // 선택된 사진들을 보여주는 Scroll View
-            SelectedPhotoHorizontalScroll(images: $images, recordType: recordType)
-            
+            // 선택된 사진들을 보여주는 가로 Scroll View
+            SelectedPhotoHorizontalScroll(images: $images)
             // 글 작성 TextEditor
             TextEditor(text: $content)
             // TextEditor에 Text를 오버레이하여 placeholder로 보여줌
@@ -156,14 +172,13 @@ struct RecordContent: View {
                 .frame(height: 300)
                 .padding(.horizontal, 20)
                 .padding(.vertical, 10)
-                .scrollIndicators(.hidden)
                 .focused(isFocusedTextEditor)
                 .textInputAutocapitalization(.never) // 자동 대문자 설정 기능 비활성화
                 .autocorrectionDisabled() // 자동 수정 비활성화
-            
+            //
             CustomDivider()
                 .padding(.vertical, 10)
-            
+            // 음식 태그
             VStack {
                 HStack(alignment: .lastTextBaseline) {
                     Text("음식 태그")
@@ -175,10 +190,9 @@ struct RecordContent: View {
                 }
                 .padding(.horizontal, 20)
                 .padding(.bottom, 5)
-                
                 // 음식 태그 추가 TextField
                 FoodTagAddTextField(foodTags: $foodTags, textField: textField, isFocusedTextField: isFocusedTextField, proxy: proxy)
-                // 추가된 음식 태그를 보여주는 Scroll View
+                // 추가된 음식 태그를 보여주는 하단부
                 FoodTagVertical(foodTags: $foodTags, windowWidth: windowWidth)
             }
             .padding(.bottom, 5)

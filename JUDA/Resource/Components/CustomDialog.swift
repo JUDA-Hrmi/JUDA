@@ -1,6 +1,6 @@
 //
 //  CustomDialog.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by 정인선 on 2/1/24.
 //
@@ -61,13 +61,14 @@ struct CustomDialog: View {
                                       buttonLabel: String,
                                       action: @escaping () -> Void) -> some View {
         Group {
+            // 메세지 텍스트
             Text(message)
                 .font(.medium16)
                 .multilineTextAlignment(.center)
                 .lineSpacing(10)
-            
+            //
             CustomDivider()
-            
+            // 가운데 버튼
             Button {
                 action()
             } label: {
@@ -84,14 +85,15 @@ struct CustomDialog: View {
                                       leftButtonLabel: String, leftButtonAction: @escaping () -> Void,
                                       rightButtonLabel: String, rightButtonAction: @escaping () -> Void) -> some View {
         Group {
+            // 메세지 텍스트
             Text(message)
                 .font(.medium16)
                 .multilineTextAlignment(.center)
                 .lineSpacing(10)
-            
+            //
             CustomDivider()
-            
             HStack(spacing: 0) {
+                // 왼쪽 버튼
                 Button {
                     leftButtonAction()
                 } label: {
@@ -100,7 +102,7 @@ struct CustomDialog: View {
                         .foregroundColor(.gray01)
                 }
                 .frame(width: 115)
-
+                // 오른쪽 버튼
                 Button {
                     rightButtonAction()
                 } label: {
@@ -121,12 +123,13 @@ struct CustomDialog: View {
                                    rightButtonLabel: String, rightButtonAction: @escaping () -> Void,
                                    rating: Binding<Double>) -> some View {
         Group {
+            // 술 이름
             Text(drinkName)
                 .multilineTextAlignment(.leading)
                 .lineSpacing(10)
                 .font(.medium18)
             
-            // MARK: 별점 매기는 부분
+            // 별점 매기는 부분
             HStack(spacing: 0) {
                 ForEach(1...5, id: \.self) { number in
                     Image(systemName: "star.fill")
@@ -144,10 +147,10 @@ struct CustomDialog: View {
                         }
                 }
             }
-            
+            //
             CustomDivider()
-            
             HStack(spacing: 0) {
+                // 왼쪽 버튼
                 Button {
                     leftButtonAction()
                 } label: {
@@ -156,7 +159,7 @@ struct CustomDialog: View {
                         .foregroundColor(.gray01)
                 }
                 .frame(width: 115)
-                
+                // 오른쪽 버튼
                 Button {
                     rightButtonAction()
                 } label: {

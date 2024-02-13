@@ -1,12 +1,13 @@
 //
 //  PostReportTitle.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by Minjae Kim on 1/30/24.
 //
 
 import SwiftUI
 
+// MARK: - 신고하기 타이틀
 struct PostReportTitle: View {
     var body: some View {
 		VStack {

@@ -1,6 +1,6 @@
 //
 //  PostReportView.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by Minjae Kim on 1/30/24.
 //
@@ -12,7 +12,8 @@ struct ReportContent: Hashable {
 	var content: String
 	var check: Bool
 }
-// TODO: Firebase 데이터 연결
+
+// MARK: - 술상 신고 화면
 struct PostReportView: View {
     @State private var reportContents: [ReportContent] = [
         ReportContent(content: "욕설 및 비하", check: false),
@@ -20,7 +21,7 @@ struct PostReportView: View {
         ReportContent(content: "상업적 광고 및 판매", check: false),
         ReportContent(content: "선정적인 게시물", check: false),
         ReportContent(content: "게시판 성격에 부적절함", check: false),
-        ReportContent(content: "기타(하단 내용 작성)", check: false)
+        ReportContent(content: "기타 (하단 내용 작성)", check: false)
     ]
     @State private var etcReportText = ""
     @State private var isReportDialogPresented = false
@@ -37,11 +38,11 @@ struct PostReportView: View {
 				VStack {
 					// Title과 X버튼을 보여주는 toolbar
 					PostReportToolbar(isReportPresented: $isReportPresented)
-					
+					// 타이틀 + 내용
 					ScrollView {
 						VStack(alignment: .leading, spacing: 5) {
+                            // 신고 타이틀
 							PostReportTitle()
-							
 							// 신고하기 뷰에서의 메인 내용 보여주는 뷰
 							PostReportContent(reportContents: $reportContents,
 											  etcReportText: $etcReportText,
@@ -64,30 +65,21 @@ struct PostReportView: View {
 				// TextEditor에 내가 원하는 백그라운드 컬러를 주기 위함.
 				UITextView.appearance().backgroundColor = .clear
 			}
-			
-			// 신고버튼을 탭 했을 시, 신고에 대한 다이얼로그 출력
+			// 신고 다이얼로그
 			if isReportDialogPresented {
-				CustomAlert(message: "신고하시겠습니까?",
-							leftButtonLabel: "취소",
-							leftButtonAction: {
-                                isReportDialogPresented = false},
-                            rightButtonLabel: "신고",
-                            rightButtonAction: {
-                                isReportDialogPresented = false
-                                isReportPresented = false
-                            })
+                CustomDialog(type: .twoButton(
+                    message: "신고하시겠습니까?",
+                    leftButtonLabel: "취소",
+                    leftButtonAction: {
+                        isReportDialogPresented = false},
+                    rightButtonLabel: "신고",
+                    rightButtonAction: {
+                        isReportDialogPresented = false
+                        isReportPresented = false
+                    })
+                 )
 			}
 		}
-	}
-}
-
-struct CheckBox: View {
-	let isCheck: Bool
-    
-	var body: some View {
-		Image(systemName: "checkmark.square.fill")
-			.font(.medium26)
-			.foregroundStyle(isCheck ? .mainAccent03 : .gray04)
 	}
 }
 

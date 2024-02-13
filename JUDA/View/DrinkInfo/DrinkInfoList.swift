@@ -1,55 +1,61 @@
 //
 //  DrinkInfoList.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by phang on 1/28/24.
 //
 
 import SwiftUI
 
+// MARK: - 술장 리스트 뷰
 struct DrinkInfoList: View {
+    let drinks: [Drink]
+
     var body: some View {
         // MARK: iOS 16.4 이상
         if #available(iOS 16.4, *) {
             ScrollView() {
-                DrinkListContent()
+                DrinkListContent(drinks: drinks)
             }
             .scrollBounceBehavior(.basedOnSize, axes: .vertical)
-            .scrollIndicators(.hidden)
             .scrollDismissesKeyboard(.immediately)
         // MARK: iOS 16.4 미만
         } else {
             ViewThatFits(in: .vertical) {
-                DrinkListContent()
+                DrinkListContent(drinks: drinks)
                     .frame(maxHeight: .infinity, alignment: .top)
                 ScrollView {
-                    DrinkListContent()
+                    DrinkListContent(drinks: drinks)
                 }
-                .scrollIndicators(.hidden)
                 .scrollDismissesKeyboard(.immediately)
             }
         }
     }
 }
 
+// MARK: - 술장 리스트 뷰 내용
 struct DrinkListContent: View {
+    let drinks: [Drink]
+
     var body: some View {
         // 리스트
         LazyVStack {
-            // TODO: 현재 더미데이터 10개를 보여주지만, 데이터 들어온 리스트로 ForEach 돌릴 예정
-            ForEach(0..<10, id: \.self) { _ in
-                // TODO: 추후에 네비게이션으로 해당 술의 Detail 로 이동 연결
+            // TODO: 데이터 들어온 리스트로 ForEach
+            ForEach(drinks.indices, id: \.self) { index in
+                let drink = drinks[index]
+                // TODO: NavigationLink - value 로 수정
                 NavigationLink {
-                    DrinkDetailView()
+                    DrinkDetailView(drink: drink)
                         .modifier(TabBarHidden())
                 } label: {
-                    DrinkListCell()
+                    DrinkListCell(drink: drink)
                 }
+                .buttonStyle(EmptyActionStyle())
             }
         }
     }
 }
 
 #Preview {
-    DrinkInfoList()
+    DrinkInfoList(drinks: Drinks.sampleData)
 }

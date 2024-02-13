@@ -1,12 +1,13 @@
 //
 //  FoodTagAddTextField.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by 정인선 on 1/30/24.
 //
 
 import SwiftUI
 
+// MARK: - 음식 태그 추가 텍스트 필드
 struct FoodTagAddTextField: View {
 	// TextField로 부터 입력받은 음식 태그 이름
 	@State private var foodTagName: String = ""
@@ -18,17 +19,15 @@ struct FoodTagAddTextField: View {
     var isFocusedTextField: FocusState<Bool>.Binding
 	// RecordView의 ScrollView porxy 바인딩
 	let proxy: ScrollViewProxy
-    // 음식 태그 10개 이상인지 체크
-    var isTagsCountAboveTen: Bool {
-        foodTags.count >= 10
-    }
+    // 음식 태그 10개를 넘어가는지 체크
+    @State private var isTagsCountAboveTen: Bool = false
 	
 	var body: some View {
         HStack {
             Text("#")
                 .font(.regular16)
                 .opacity(0.7)
-            
+            // 텍스트 필드
             TextField("음식 이름", text: $foodTagName)
                 .font(.regular16)
                 .focused(isFocusedTextField)
@@ -45,7 +44,7 @@ struct FoodTagAddTextField: View {
                         }
                     }
                 }
-            
+            // 추가하기 버튼
             Button {
                 // 입력된 음식 태그 이름을 음식 태그 배열에 추가
                 addFoodTag()
@@ -58,6 +57,14 @@ struct FoodTagAddTextField: View {
             .buttonStyle(.plain)
             .disabled(isTagsCountAboveTen)
         }
+        // 초기 화면 구성 시, 받아온 음식 태그의 개수가 10개 넘는지 확인 ( 수정의 경우 이미 10개 일수도 있음 )
+        .onAppear {
+            calculateIsFoodTagsCountAboveTen()
+        }
+        // 음식 태그 리스트에 변화가 있을때마다, 10개가 넘는지 확인
+        .onChange(of: foodTags) { _ in
+            calculateIsFoodTagsCountAboveTen()
+        }
         .padding(.vertical, 10)
         .padding(.horizontal, 20)
         .background(.mainAccent03.opacity(0.2))
@@ -65,6 +72,11 @@ struct FoodTagAddTextField: View {
         .padding(.horizontal, 20)
 	}
 	
+    // 음식 태그가 10개가 넘는지 확인하는 함수
+    private func calculateIsFoodTagsCountAboveTen() {
+        self.isTagsCountAboveTen = self.foodTags.count >= 10
+    }
+    
 	// 입력된 음식 태그 이름을 음식 태그 배열 foodTags에 추가해주는 함수
 	private func addFoodTag() {
 		// 중복 추가 불가

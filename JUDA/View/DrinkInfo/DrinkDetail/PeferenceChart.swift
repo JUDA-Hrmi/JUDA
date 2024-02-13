@@ -1,12 +1,13 @@
 //
 //  PeferenceChart.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by phang on 1/30/24.
 //
 
 import SwiftUI
 
+// MARK: - 선호도 차트
 struct PeferenceChart: View {
     // UITest - 원형 차트 모델 + 데이터
     struct PieModel: Identifiable {

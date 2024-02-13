@@ -1,12 +1,13 @@
 //
 //  ChangeUserNameView.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by 백대홍 on 1/31/24.
 //
 
 import SwiftUI
 
+// MARK: - 유저 닉네임 수정 화면
 struct ChangeUserNameView: View {
 	@Environment(\.dismiss) var dismiss
     
@@ -19,12 +20,10 @@ struct ChangeUserNameView: View {
 	
     var body: some View {
         VStack(alignment: .center, spacing: 15) {
-            
             Text("수정할 닉네임을 작성해주세요")
                 .font(.medium16)
                 .frame(maxWidth: .infinity, alignment: .leading)
-            
-            // TextField
+            // 유저 닉네임 수정 텍스트 필드
             HStack {
                 TextField(userNickName, text: $userChangeNickName)
                     .font(.medium16)
@@ -36,7 +35,7 @@ struct ChangeUserNameView: View {
                         isCompleted = userChangeNickName.count >= 2
                     }
                 Spacer()
-                
+                // 텍스트 한번에 지우는 xmark 버튼
                 if !userChangeNickName.isEmpty {
                     Button {
                         isFocused = true
@@ -51,20 +50,20 @@ struct ChangeUserNameView: View {
             .padding(.horizontal, 10)
             .background(.gray05)
             .clipShape(.rect(cornerRadius: 10))
-            
+            // 유저 닉네임 만족 기준
             if isFocused && (userChangeNickName.count <= 1 || userChangeNickName.count > 10) {
                 Text("닉네임을 2자~10자 이내로 적어주세요.")
                     .font(.light14)
                     .foregroundStyle(.mainAccent01)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
-            
+            // spacer 대용 (키보드 숨기기 onTapGesture 영역)
             Rectangle()
                 .fill(.background)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            
+            //
             CustomDivider()
-            
+            // 닉네임 변경 완료
             Button {
                 userNickName = userChangeNickName
                 dismiss()

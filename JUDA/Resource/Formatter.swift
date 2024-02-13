@@ -1,12 +1,13 @@
 //
 //  Formatter.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by phang on 1/30/24.
 //
 
 import Foundation
 
+// MARK: - 다양한 Formatter 모음
 enum Formatter {
     // 좋아요 숫자 1000 넘으면 k, 1000000 넘으면 m 으로 변경해주는 함수
     static func formattedPostLikesCount(_ count: Int) -> String {
@@ -28,6 +29,16 @@ enum Formatter {
     // 평점을 소수점 첫번째 자리까지 String으로 변환해주는 함수
     static func formattedStarRatingCount(rating: Double) -> String {
         String(format: "%.1f", rating)
+    }
+    
+    // 술 금액 10000 -> 10,000원 으로 변환해주는 함수
+    static func formattedPriceToString(price: Int?) -> String {
+        guard price != nil, let price = price else { return "-" }
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .currency
+        numberFormatter.currencySymbol = ""
+        guard let formattedPrice = numberFormatter.string(from: NSNumber(value: price)) else { return "\(price)원" }
+        return "\(formattedPrice)원"
     }
     
     // 술 도수 소수점 첫번째 자리까지 String으로 변환해주는 함수

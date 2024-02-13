@@ -1,6 +1,6 @@
 //
 //  UserProfileView.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by 홍세희 on 2024/02/01.
 //
@@ -12,6 +12,7 @@ enum UserType {
     case user, otheruser
 }
 
+// MARK: - 유저 프로필 (사진, 닉네임, 닉네임 수정)
 struct UserProfileView: View {
     @State private var userNickName: String = "sayHong" // 사용자 닉네임
     
@@ -76,14 +77,15 @@ struct UserProfileView: View {
                     Text(userNickName)
                         .font(.medium18)
                     Spacer()
-                    
+                    // 닉네임 수정
                     if userType == .user {
+                        // TODO: NavigationLink - value 로 수정
                         NavigationLink {
                             ChangeUserNameView(userNickName: $userNickName)
                                 .modifier(TabBarHidden())
                         } label: {
                             Text("닉네임 수정")
-                                .font(.light14)
+                                .font(.regular14)
                                 .foregroundStyle(.gray01)
                         }
                     }

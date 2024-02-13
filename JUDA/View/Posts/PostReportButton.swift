@@ -1,18 +1,20 @@
 //
 //  PostReportButton.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by Minjae Kim on 1/30/24.
 //
 
 import SwiftUI
 
+// MARK: - 신고하기 버튼
 struct PostReportButton: View {
 	@Binding var reportContents: [ReportContent]
 	@Binding var isReportDialogPresented: Bool
 	
     var body: some View {
 		Button {
+            // TODO: - 신고 데이터 서버에 보내기
 			isReportDialogPresented = true
 		} label: {
 			Text("신고하기")

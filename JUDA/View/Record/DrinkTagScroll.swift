@@ -1,12 +1,13 @@
 //
 //  DrinkTagScroll.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by 정인선 on 1/29/24.
 //
 
 import SwiftUI
 
+// MARK: - 기록 시, 태그 된 술 리스트
 struct DrinkTagScroll: View {
     // 술 태그 배열
     @Binding var drinkTags: [DrinkTag]
@@ -24,7 +25,6 @@ struct DrinkTagScroll: View {
                                 isShowRatingDialog: $isShowRatingDialog)
             }
             .scrollBounceBehavior(.basedOnSize, axes: .vertical)
-            .scrollIndicators(.hidden)
         // MARK: iOS 16.4 미만
         } else {
             ViewThatFits(in: .vertical) {
@@ -37,13 +37,12 @@ struct DrinkTagScroll: View {
                                     selectedTagDrink: $selectedTagDrink,
                                     isShowRatingDialog: $isShowRatingDialog)
                 }
-                .scrollIndicators(.hidden)
             }
         }
     }
 }
 
-// MARK: DrinkTagScroll 로 보여줄 content
+// MARK: - DrinkTagScroll 로 보여줄 내용
 struct DrinkTagContent: View {
     // 술 태그 배열
     @Binding var drinkTags: [DrinkTag]
@@ -67,7 +66,7 @@ struct DrinkTagContent: View {
     }
 }
 
-// MARK: onTapGesture로 별점 다이얼로그 눌러서 수정할 수 있게 하기
+// MARK: - 태그된 술 리스트 셀
 struct DrinkTagCell: View {
     // 술 태그 배열
     @Binding var drinkTags: [DrinkTag]
@@ -98,7 +97,6 @@ struct DrinkTagCell: View {
                 }
             }
             .frame(maxWidth: .infinity)
-            
             // Xmark 버튼
             Button {
                 // 클릭 시, 술 태그 배열에서 해당 술 태그 삭제
@@ -108,11 +106,10 @@ struct DrinkTagCell: View {
                     .foregroundStyle(.gray01)
                     .font(.regular14)
             }
-            
         }
         .padding(.vertical)
         .padding(.horizontal, 30)
-        
+        //
         CustomDivider()
     }
 }

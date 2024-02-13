@@ -1,18 +1,20 @@
 //
 //  AlarmStoreListCell.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by phang on 1/31/24.
 //
 
 import SwiftUI
 
+// MARK: - 알람 리스트 셀
 struct AlarmStoreListCell: View {
     let alarm: Alarm
     
     var body: some View {
         HStack(alignment: .center) {
             VStack(alignment: .leading, spacing: 2) {
+                // 게사물 좋아요 알람 내용
                 Group {
                     Text(alarm.likedUserName)
                         .font(.medium14)
@@ -23,8 +25,10 @@ struct AlarmStoreListCell: View {
                 .multilineTextAlignment(.leading)
                 .foregroundStyle(.mainBlack)
                 .overlay(alignment: .topLeading) {
+                    // TODO: NavigationLink - value 로 수정
                     NavigationLink {
-                        // TODO: 해당 유저 프로필로 이동
+                        NavigationProfileView(likeCount: 44, userType: .otheruser, userName: alarm.likedUserName)
+                            .modifier(TabBarHidden())
                     } label: {
                         Text(alarm.likedUserName)
                             .font(.medium14)
@@ -32,13 +36,13 @@ struct AlarmStoreListCell: View {
                     }
                     .buttonStyle(EmptyActionStyle())
                 }
-                
+                // 알람 왔던 시기
                 Text(Formatter.formattedDateBeforeStyle(pastDate: alarm.likedTime))
                     .font(.regular12)
                     .foregroundStyle(.gray01)
             }
             Spacer()
-            
+            // 해당 술상 이미지
             Image(alarm.postImageName)
                 .resizable()
                 .aspectRatio(1.0, contentMode: .fill)

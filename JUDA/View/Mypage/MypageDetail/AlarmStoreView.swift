@@ -1,6 +1,6 @@
 //
 //  AlarmStoreView.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by phang on 1/31/24.
 //
@@ -37,6 +37,7 @@ struct Alarm: Identifiable, Hashable {
     ]
 }
 
+// MARK: - 알람 쌓여있는 리스트 화면
 struct AlarmStoreView: View {
     @Environment(\.dismiss) private var dismiss
     
@@ -49,7 +50,6 @@ struct AlarmStoreView: View {
                     AlarmListContent()
                 }
                 .scrollBounceBehavior(.basedOnSize, axes: .vertical)
-                .scrollIndicators(.hidden)
             // MARK: iOS 16.4 미만
             } else {
                 ViewThatFits(in: .vertical) {
@@ -58,7 +58,6 @@ struct AlarmStoreView: View {
                     ScrollView {
                         AlarmListContent()
                     }
-                    .scrollIndicators(.hidden)
                 }
             }
         }
@@ -66,7 +65,6 @@ struct AlarmStoreView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    // TODO: 뒤로가기
                     dismiss()
                 } label: {
                     Image(systemName: "chevron.backward")
@@ -87,6 +85,7 @@ struct AlarmListContent: View {
     var body: some View {
         LazyVStack {
             ForEach(0..<Alarm.alarmList.count, id: \.self) { index in
+                // TODO: NavigationLink - value 로 수정
                 NavigationLink {
                     PostDetailView(postUserType: .writter, nickName: "Hrmi", isLike: .constant(false), likeCount: .constant(45))
                 } label: {

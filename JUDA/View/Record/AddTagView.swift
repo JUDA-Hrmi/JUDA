@@ -1,6 +1,6 @@
 //
 //  AddTagView.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by 홍세희 on 2024/01/24.
 //
@@ -15,6 +15,7 @@ struct DrinkTag: Identifiable, Hashable {
 	var rating: Double
 }
 
+// MARK: - 글 작성 시, 사진 선택 및 술 태그 추가 화면
 struct AddTagView: View {
     // 이미지 배열
     @State private var images: [UIImage] = []
@@ -32,10 +33,8 @@ struct AddTagView: View {
 	@State private var isShowAlertDialog: Bool = false
 	// Navigation을 위한 환경 프로퍼티
 	@Environment(\.dismiss) private var dismiss
-    // 숱 태그가 5개 이상인지 체크
-    var isTagsCountAboveFive: Bool {
-        self.drinkTags.count >= 5
-    }
+    // 숱 태그가 5개를 넘어가는지 확인하는 상태 프로퍼티
+    @State private var isTagsCountAboveFive: Bool = false
     
     var body: some View {
         GeometryReader { geo in
@@ -43,7 +42,6 @@ struct AddTagView: View {
                 VStack {
                     // 사진 선택 및 선택된 사진을 보여주는 수평 스크롤 이미지 뷰
                     PhotoSelectPagingTab(images: $images, selectedPhotos: $selectedPhotos, isShowAlert: $isShowAlertDialog, imageSize: geo.size.width)
-                    
                     // 술 태그 추가 버튼
                     Button {
                         // 클릭 시 SearchTagView Sheet 띄워주기
@@ -62,7 +60,6 @@ struct AddTagView: View {
                     .disabled(isTagsCountAboveFive)
                     .padding(.horizontal, 20)
                     .padding(.vertical, 10)
-                    
                     // 술 태그가 없을 때, 텍스트 보여주기
                     if drinkTags.isEmpty {
                         Spacer()
@@ -79,7 +76,7 @@ struct AddTagView: View {
                                        isShowRatingDialog: $isShowRatingDialog)
                     }
                 }
-                // 상태 프로퍼티에 따라 CustomRatingDialog 띄워주기
+                // CustomDialog - .rating
                 if isShowRatingDialog {
                     CustomDialog(type: .rating(
                         // 선택된 술 태그의 술 이름
@@ -117,34 +114,45 @@ struct AddTagView: View {
                 }
                 
             }
+            // 술 태그 리스트에 변화가 있을 때, 체크
+            .onChange(of: drinkTags) { _ in
+                // 태그가 5개를 넘어가는지 확인
+                calculateIsTagsCountAboveFive()
+            }
             .navigationBarBackButtonHidden()
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
-                        // PostsView로 돌아가기
                         dismiss()
                     } label: {
                         Image(systemName: "chevron.backward")
                     }
-                    .tint(.mainBlack)
+                    .foregroundStyle(.mainBlack)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
+                    // TODO: NavigationLink - value 로 수정
                     NavigationLink {
                         RecordView(recordType: RecordType.add)
                     } label: {
                         Text("다음")
                             .font(.regular16)
                     }
+                    // 선택된 사진이 없을 때, 다음 페이지 이동 불가
+                    .foregroundStyle(!selectedPhotos.isEmpty ? .mainBlack : .gray01)
+                    .disabled(selectedPhotos.isEmpty)
                 }
             }
-            .foregroundStyle(.mainBlack)
             // SearchTageView Sheet 띄워주기
             .sheet(isPresented: $isShowSearchTag) {
                 SearchTagView(drinkTags: $drinkTags,
                               isShowSearchTag: $isShowSearchTag)
             }
-            
         }
+    }
+    
+    // 술 태그가 5개를 넘는지 확인하는 함수
+    private func calculateIsTagsCountAboveFive() {
+        self.isTagsCountAboveFive = self.drinkTags.count >= 5
     }
 }
 

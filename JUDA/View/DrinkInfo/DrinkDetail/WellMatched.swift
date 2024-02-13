@@ -1,25 +1,30 @@
 //
 //  WellMatched.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by phang on 1/30/24.
 //
 
 import SwiftUI
 
+// MARK: - 잘 어울리는 음식
 struct WellMatched: View {
     // UITest - 추천 받은 음식 3가지
-    private let sampleData = DrinkDummyData.sample
-    
+    let wellMatched: [String]?
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             // Well Matched
-            // TODO: 추후 NameSpace 로 이동하면 좋을 String 값
-            Text("잘 어울리는 음식")
-                .font(.semibold18)
+            HStack(alignment: .lastTextBaseline, spacing: 10) {
+                Text("잘 어울리는 음식")
+                    .font(.semibold18)
+                Text("AI 추천 ✨")
+                    .font(.semibold16)
+                    .foregroundStyle(.mainAccent05)
+            }
             // 추천 받은 음식
             HStack(alignment: .center, spacing: 16) {
-                ForEach(sampleData.wellMatchedFoods, id: \.self) { food in
+                ForEach(wellMatched ?? ["-"], id: \.self) { food in
                     Text(food)
                         .font(.regular16)
                 }
@@ -32,5 +37,5 @@ struct WellMatched: View {
 }
 
 #Preview {
-    WellMatched()
+    WellMatched(wellMatched: ["해산물 파스타", "로스트 치킨", "회"])
 }

@@ -1,6 +1,6 @@
 //
 //  Font +.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by 홍세희 on 2024/01/23.
 //
@@ -16,6 +16,9 @@ extension Font {
     static let bold16: Font = .custom(FontType.Bold.name, size: 16)
     static let bold14: Font = .custom(FontType.Bold.name, size: 14)
     // SemiBold
+    static let semibold28: Font = .custom(FontType.SemiBold.name, size: 28)
+    static let semibold26: Font = .custom(FontType.SemiBold.name, size: 26)
+    static let semibold24: Font = .custom(FontType.SemiBold.name, size: 24)
     static let semibold20: Font = .custom(FontType.SemiBold.name, size: 20)
     static let semibold18: Font = .custom(FontType.SemiBold.name, size: 18)
     static let semibold16: Font = .custom(FontType.SemiBold.name, size: 16)

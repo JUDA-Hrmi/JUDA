@@ -1,6 +1,6 @@
 //
 //  PostDetailView.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by Minjae Kim on 1/29/24.
 //
@@ -11,6 +11,7 @@ enum PostUserType {
 	case writter, reader
 }
 
+// MARK: - 술상 디테일 화면
 struct PostDetailView: View {
 	@Environment(\.dismiss) var dismiss
 	
@@ -19,16 +20,11 @@ struct PostDetailView: View {
 	
 	@Binding var isLike: Bool
 	@Binding var likeCount: Int
-	
-	@State private var tags = ["대방어", "새우튀김", "광어", "우럭", "이거 한 줄에 몇개 넣어야 할까?", "정렬 문제도", "뭘까", "짬뽕", "짜장", "탕수육", "팔보채", "치킨", "피자", "족발", "콜라", "사이다", "맥콜", "데자와"]
+	    
 	@State private var currentPage = 0
 	@State private var windowWidth: CGFloat = 0
 	@State private var isReportPresented = false
 	@State private var isDeleteDialogPresented = false
-    
-    private let postPhotos = ["foodEx1", "foodEx2", "foodEx3", "foodEx4"]
-    private let postDrinks = ["카누카 칵테일 700ml", "글렌알라키 10년 캐스크 스트래쓰 700ml", "카누카 칵테일 700ml"]
-    private let postDrinksStarRating = [4.5, 4.0, 5.0]
     private let postContent = """
                             방어는 다양한 방법으로 맛있게 조리할 수 있습니다. 다음은 몇 가지 방어를 맛있게 먹는 방법들입니다:
 
@@ -39,54 +35,41 @@ struct PostDetailView: View {
 
                             양식과 한식, 다양한 조리법을 통해 방어를 다양하게 즐길 수 있으니 자신의 취향에 맞게 시도해보세요!
                             """
-	
+    
 	var body: some View {
-		VStack {
-			ZStack {
-				VStack {
-					ScrollView {
-						// Bar 형태로 된 게시글 정보를 보여주는 뷰
-						PostInfo(userName: "hrmi",
-								 profileImageName: "appIcon",
-								 postUploadDate: "2023.12.08",
-								 isLike: $isLike,
-								 likeCount: $likeCount)
-						
-						// 게시글의 사진을 페이징 스크롤 형식으로 보여주는 뷰
-						PostPhotoScroll(postPhotos: postPhotos)
-						
-						VStack(spacing: 20) {
-							PostDrinkRating(userName: "hrmi",
-											postDrinks: postDrinks,
-											postDrinksStarRating: postDrinksStarRating)
-							CustomDivider()
-							
-							Text(postContent)
-								.font(.regular16)
-							
-							PostTags(tags: $tags, windowWidth: windowWidth)
-						}
-						.padding(.horizontal, 20)
-					}
-					.scrollIndicators(.hidden)
-				}
-				
-				// 삭제 버튼 눌렸을 시 삭제에 대한 다이얼로그 출력
-				if isDeleteDialogPresented {
-                    CustomDialog(type: .twoButton(
-                        message: "삭제하시겠습니까?",
-                        leftButtonLabel: "취소",
-                        leftButtonAction: {
-                            isDeleteDialogPresented = false
-                        },
-                        rightButtonLabel: "삭제",
-                        rightButtonAction: {
-                            isDeleteDialogPresented = false
-                            // TODO: write view dismiss code
-                        })
-                    )
-				}
-			}
+        ZStack {
+            // 사용자, 글 정보 + 이미지 + 술 태그 + 글 내용 + 음식 태그
+            // MARK: iOS 16.4 이상
+            if #available(iOS 16.4, *) {
+                ScrollView {
+                    PostDetailContent(isLike: $isLike, likeCount: $likeCount, postContent: postContent, windowWidth: windowWidth)
+                }
+                .scrollBounceBehavior(.basedOnSize, axes: .vertical)
+                // MARK: iOS 16.4 미만
+            } else {
+                ViewThatFits(in: .vertical) {
+                    PostDetailContent(isLike: $isLike, likeCount: $likeCount, postContent: postContent, windowWidth: windowWidth)
+                        .frame(maxHeight: .infinity, alignment: .top)
+                    ScrollView {
+                        PostDetailContent(isLike: $isLike, likeCount: $likeCount, postContent: postContent, windowWidth: windowWidth)
+                    }
+                }
+            }
+            // 삭제 버튼 다이얼로그
+            if isDeleteDialogPresented {
+                CustomDialog(type: .twoButton(
+                    message: "삭제하시겠습니까?",
+                    leftButtonLabel: "취소",
+                    leftButtonAction: {
+                        isDeleteDialogPresented = false
+                    },
+                    rightButtonLabel: "삭제",
+                    rightButtonAction: {
+                        isDeleteDialogPresented = false
+                        // TODO: write view dismiss code
+                    })
+                )
+            }
 		}
 		.task {
 			windowWidth = TagHandler.getScreenWidthWithoutPadding(padding: 20)
@@ -95,7 +78,6 @@ struct PostDetailView: View {
 		.toolbar {
 			ToolbarItem(placement: .topBarLeading) {
 				Button {
-					// TODO: NavigationStack path remove
 					dismiss()
 				} label: {
 					Image(systemName: "chevron.left")
@@ -117,6 +99,7 @@ struct PostDetailView: View {
 					}
 				}
 				ToolbarItem(placement: .topBarTrailing) {
+                    // TODO: NavigationLink - value 로 수정
 					NavigationLink {
                         RecordView(recordType: RecordType.edit)
 					} label: {
@@ -160,6 +143,54 @@ struct PostDetailView: View {
 			PostReportView(isReportPresented: $isReportPresented)
 		}
 	}
+}
+
+// MARK: - 술상 디테일에서, 스크롤 안에 보여줄 내용 부분
+struct PostDetailContent: View {
+    @Binding var isLike: Bool
+    @Binding var likeCount: Int
+    let postContent: String
+    let windowWidth: CGFloat
+    
+    private let postPhotos = ["foodEx1", "foodEx2", "foodEx3", "foodEx4"]
+    private let postDrinks: [String] = ["카누카 칵테일 700ml", "글렌알라키 10년 캐스크 스트래쓰 700ml", "카누카 칵테일 700ml"]
+    private let postDrinksStarRating = [4.5, 4.0, 5.0]
+    @State private var tags: [String] = ["대방어", "새우튀김", "광어", "우럭", "이거 한 줄에 몇개 넣어야 할까?", "정렬 문제도", "뭘까", "짬뽕", "짜장", "탕수육", "팔보채", "치킨", "피자", "족발", "콜라", "사이다", "맥콜", "데자와"]
+
+    var body: some View {
+        VStack {
+            // Bar 형태로 된 게시글 정보를 보여주는 뷰
+            PostInfo(userName: "hrmi",
+                     profileImageName: "appIcon",
+                     postUploadDate: "2023.12.08",
+                     isLike: $isLike,
+                     likeCount: $likeCount)
+            // 게시글의 사진을 페이징 스크롤 형식으로 보여주는 뷰
+            PostPhotoScroll(postPhotos: postPhotos)
+            // 술 평가 + 글 + 음식 태그
+            VStack(alignment: .leading, spacing: 20) {
+                // 해당 게시글에 태그된 술이 있을 때,
+                if !postDrinks.isEmpty {
+                    // 술 평가
+                    PostDrinkRating(userName: "hrmi",
+                                    postDrinks: postDrinks,
+                                    postDrinksStarRating: postDrinksStarRating)
+                    //
+                    CustomDivider()
+                }
+                // 술상 글 내용
+                Text(postContent)
+                    .font(.regular16)
+                    .multilineTextAlignment(.leading)
+                // 해당 게시글에 음식 태그가 있을 때,
+                if !tags.isEmpty {
+                    // 음식 태그
+                    PostTags(tags: $tags, windowWidth: windowWidth)
+                }
+            }
+            .padding(.horizontal, 20)
+        }
+    }
 }
 
 #Preview {

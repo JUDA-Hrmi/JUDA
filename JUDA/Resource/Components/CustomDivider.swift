@@ -1,12 +1,13 @@
 //
 //  CustomDivider.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by phang on 1/26/24.
 //
 
 import SwiftUI
 
+// MARK: - 디바이더
 struct CustomDivider: View {
     var body: some View {
         Divider()

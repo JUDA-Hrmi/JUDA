@@ -1,18 +1,19 @@
 //
 //  CustomBottomSheet.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by 홍세희 on 2024/01/27.
 //
 
 import SwiftUI
 
+// MARK: - 바텀 시트 타입
 enum BottomSheetType {
     static let drinkInfo = "정렬 옵션 설정" // DrinkInfoView에서 쓰는 bottomSheet
     static let displaySetting = "화면 모드 설정" // 'SettingView - 화면 모드 설정' 에서 쓰는 bottomSheet
 }
 
-// Sheet 의 content 부분.
+// MARK: - .sheet 의 content 부분.
 struct CustomBottomSheetContent: View{
     let optionNameList: [String]
     @Binding var isShowingSheet: Bool
@@ -49,7 +50,7 @@ struct CustomBottomSheetContent: View{
     }
 }
 
-// MARK: -  BottomSheetContentsList 구성 Cell
+// MARK: - CustomBottomSheetContent 구성 Cell
 struct BottomSheetContentListCell: View {
     let sortingOptionName: String // 정렬 옵션 항목 이름
     @Binding var selectedSortingOption: String // 선택된 항목 이름

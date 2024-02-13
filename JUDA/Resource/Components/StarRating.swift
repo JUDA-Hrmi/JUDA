@@ -1,17 +1,18 @@
 //
 //  StarRating.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by 정인선 on 1/26/24.
 //
 
 import SwiftUI
 
-// 평점 Text 추가 여부 확인용 enum type
+// MARK: - 평점 Text 추가 여부 확인용 enum type
 enum StarRatingType {
     case none, withText
 }
 
+// MARK: - 별점
 struct StarRating: View {
     // 평점
     let rating: Double

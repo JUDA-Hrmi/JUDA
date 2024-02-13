@@ -1,13 +1,13 @@
 //
 //  FoodTagVertical.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by 정인선 on 1/30/24.
 //
 
 import SwiftUI
 
-// 추가된 음식 태그를 보여주는 View
+// MARK: - 추가된 음식 태그를 보여주는 부분
 struct FoodTagVertical: View {
     // 음식 태그 배열
     @Binding var foodTags: [FoodTag]
@@ -35,7 +35,7 @@ struct FoodTagVertical: View {
         }
     }
     
-    // TODO: 핸들러 메서드 사용
+    // TODO: - 핸들러 메서드 사용
     private func getScreenWidthWithoutPadding(padding: CGFloat) -> CGFloat {
         let scenes = UIApplication.shared.connectedScenes
         let windowScene = scenes.first as? UIWindowScene
@@ -51,7 +51,7 @@ struct FoodTagVertical: View {
         return size.width
     }
     
-    // MARK: tags 데이터 타입 [String] -> [FoodTag]로 변경
+    // tags 데이터 타입 [String] -> [FoodTag]로 변경
     private func getRows(tags: [FoodTag], spacing: CGFloat, fontSize: CGFloat, windowWidth: CGFloat, tagString: String = "") -> [[FoodTag]] {
         var rows: [[FoodTag]] = [] // tag 값을 담아주기 위한 2차원 배열 프로퍼티
         var currentRow: [FoodTag] = [] // 화면상의 width에 맞게 tag 배열을 잘라 2차원 배열에 담아줄 프로퍼티
@@ -60,7 +60,6 @@ struct FoodTagVertical: View {
         tags.forEach { tag in
             let fontSize = getFontSize(tag: tagString + tag.name, fontSize: fontSize) + spacing // size = tagString 문자열 + tag 문자열 + spacing
             totalWidth += fontSize
-            
             // 1. 총합 width가 화면 상의 width 보다 클 경우
             if totalWidth > windowWidth {
                 // 2. 잘라주며 담아준 1차원 배열을 2차원 배열에 append
@@ -77,7 +76,6 @@ struct FoodTagVertical: View {
                 currentRow.append(tag)
             }
         }
-        
         // 1. tag값이 담긴 1차원 배열에 데이터가 남아있는 경우
         if !currentRow.isEmpty {
             // 2. 2차원 배열에 1차원 배열을 append
@@ -85,7 +83,6 @@ struct FoodTagVertical: View {
             // 3. tag값이 담긴 1차원 배열의 데이터를 다 지워준다
             currentRow.removeAll()
         }
-        
         return rows
     }
 }

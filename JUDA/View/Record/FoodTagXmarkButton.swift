@@ -1,13 +1,13 @@
 //
 //  FoodTagXmarkButton.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by 정인선 on 1/30/24.
 //
 
 import SwiftUI
 
-// "X 음식태그" 형태를 가진 버튼
+// MARK: - "X 음식태그" 형태를 가진 버튼
 struct FoodTagXmarkButton: View {
     // 추가된 음식 태그 배열
     @Binding var foodTags: [FoodTag]
@@ -23,7 +23,6 @@ struct FoodTagXmarkButton: View {
                 Image(systemName: "xmark")
                     .font(.regular14)
                     .foregroundStyle(.mainAccent04)
-                // MARK: 태그 보여주는 순서 고민
                 Text("\(foodTag.name)")
                     .font(.semibold14)
                     .foregroundStyle(Color.mainAccent04)

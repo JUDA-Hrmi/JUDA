@@ -1,12 +1,13 @@
 //
 //  LikedView.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by 홍세희 on 2024/01/24.
 //
 
 import SwiftUI
 
+// MARK: - 하트 누른 술 + 술상 볼 수 있는 탭
 struct LikedView: View {
     @EnvironmentObject private var appViewModel: AppViewModel
 
@@ -15,13 +16,13 @@ struct LikedView: View {
 
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack(spacing: 0) {
                 // 세그먼트 (술찜 리스트 / 술상 리스트)
                 CustomTextSegment(segments: PostOrLiked.liked, selectedSegmentIndex: $selectedSegmentIndex)
-                    .padding(.vertical, 14)
-                    .padding(.horizontal, 20)
+                    .padding(.bottom, 14)
+                    .padding([.top, .horizontal], 20)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                // Likes
+                // 술찜 or 술상 탭 뷰
                 TabView(selection: $selectedSegmentIndex) {
                     ForEach(0..<PostOrLiked.liked.count, id: \.self) { idx in
                         ScrollViewReader { value in

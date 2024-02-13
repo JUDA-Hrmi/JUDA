@@ -1,6 +1,6 @@
 //
 //  PhotoSelectPagingTab.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by 정인선 on 1/29/24.
 //
@@ -8,6 +8,7 @@
 import SwiftUI
 import PhotosUI
 
+// MARK: - 글 작성 시, 선택된 사진들 페이징 뷰
 struct PhotoSelectPagingTab: View {
     // 현재 선택된 탭의 인덱스. 초기값 0
     @State private var selectedIndex = 0
@@ -24,64 +25,67 @@ struct PhotoSelectPagingTab: View {
     
     var body: some View {
         VStack(alignment: .leading) {
+            // 사진 등록 텍스트
             HStack(alignment: .lastTextBaseline, spacing: 6) {
                 Text("사진 등록")
                     .font(.regular16)
-                Text("(최대 10장)")
+                Text("* 필수 (최대 10장)")
                     .font(.regular14)
                     .foregroundStyle(.gray01)
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 10)
-            
-            HStack {
-                // 선택된 사진들을 탭뷰 페이징 형식으로 보여주기
-                TabView(selection: $selectedIndex) {
-                    Group {
-                        ForEach(images.indices, id: \.self) { index in
-                            Image(uiImage: images[index])
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: imageSize, height: imageSize)
-                                .clipped()
-                                .overlay(alignment: .topTrailing) {
-                                    Button {
-                                        removePhoto(index)
-                                    } label: {
-                                        XmarkOnGrayCircle()
-                                            .font(.title2)
-                                            .padding([.top, .trailing], 10)
-                                    }
+            // 선택된 사진들을 탭뷰 페이징 형식으로 보여주기
+            TabView(selection: $selectedIndex) {
+                Group {
+                    ForEach(images.indices, id: \.self) { index in
+                        // 이미지
+                        Image(uiImage: images[index])
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: imageSize, height: imageSize)
+                            .clipped()
+                            .overlay(alignment: .topTrailing) {
+                                Button {
+                                    removePhoto(index)
+                                } label: {
+                                    XmarkOnGrayCircle()
+                                        .font(.title2)
+                                        .padding([.top, .trailing], 10)
                                 }
-                                .tag(index + 1)
-                        }
-                        if images.count < maxImages {
-                            LibraryPhotosPicker(selectedPhotos: $selectedPhotos,
-                                                maxSelectionCount: maxImages) {
-                                Image(systemName: "plus.circle.fill")
-                                    .font(.largeTitle)
-                                    .frame(width: imageSize, height: imageSize)
-                                    .background(.gray06)
-                            }.tag(images.count + 1)
-                        }
+                            }
+                            .tag(index + 1)
+                    }
+                    // 선택된 사진이 10장보다 적을 때,
+                    if images.count < maxImages {
+                        // 사진 선택 (포토픽커)
+                        LibraryPhotosPicker(selectedPhotos: $selectedPhotos,
+                                            maxSelectionCount: maxImages) {
+                            Image(systemName: "plus.circle.fill")
+                                .font(.largeTitle)
+                                .frame(width: imageSize, height: imageSize)
+                                .background(.gray06)
+                        }.tag(images.count + 1)
                     }
                 }
-                .frame(height: imageSize)
-                .tabViewStyle(.page(indexDisplayMode: .automatic))
-                .onChange(of: selectedPhotos) { _ in
-                    Task {
-                        do {
-                            try await updateImage()
-                        } catch {
-                            // 이미지 로드 실패 alert 띄워주기
-                            isShowAlert = true
-                        }
+            }
+            .frame(height: imageSize)
+            .tabViewStyle(.page(indexDisplayMode: .automatic))
+            // 앨범에서 사진 선택 시, 화면에 보여줄 배열에 이미지 변환 및 업데이트
+            .onChange(of: selectedPhotos) { _ in
+                Task {
+                    do {
+                        try await updateImage()
+                    } catch {
+                        // 이미지 로드 실패 alert 띄워주기
+                        isShowAlert = true
                     }
                 }
-                .onChange(of: images) { _ in
-                    Task {
-                        selectedIndex = self.images.count
-                    }
+            }
+            // 현재 보이는 사진 맨 뒤 사진으로 수정
+            .onChange(of: images) { _ in
+                Task {
+                    selectedIndex = self.images.count
                 }
             }
         }
@@ -89,13 +93,15 @@ struct PhotoSelectPagingTab: View {
     }
     
     private func updateImage() async throws {
+        // 선택된 사진 하나도 없으면, 배열 비우고 바로 리턴
         guard !selectedPhotos.isEmpty else {
             self.images = []
             return
         }
-        var images = [UIImage]()
+        var images = [UIImage]() // 임시 배열 (작업 끝나면 배열채로 한번에 업데이트
         for selectedPhoto in selectedPhotos {
             do {
+                // 데이터로 변환 -> 이미지로 변환
                 guard let data = try await selectedPhoto.loadTransferable(type: Data.self),
                       let uiImage = UIImage(data: data) else {
                     throw PhotosPickerImageLoadingError.invalidImageData

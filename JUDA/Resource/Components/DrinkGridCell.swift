@@ -1,19 +1,16 @@
 //
 //  DrinkGridCell.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by phang on 1/25/24.
 //
 
 import SwiftUI
 
+// MARK: - 술 그리드 셀
 struct DrinkGridCell: View {
     // UITest - Drink DummyData
-    private let drinkImage = "canuca"
-    private let drinkName = "카누카 칵테일 700ml"
-    private let drinkOrigin = "스페인"
-    private let drinkABV: Double = 15
-    private let drinkRating = 4.7
+    let drink: Drink
     // UITest - Drink 하트
     @State private var isLiked = false
     
@@ -30,47 +27,70 @@ struct DrinkGridCell: View {
             VStack(alignment: .leading, spacing: 10) {
                 // 술 사진
                 VStack(alignment: .center) {
-                    Image(drinkImage)
+                    Image(drink.image)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(height: 103.48)
                         .frame(width: 70)
                 }
                 .frame(maxWidth: .infinity)
-                // 술 이름
-                Text(drinkName)
+                // 술 이름 + 용량
+                Text(drink.name + " " + drink.amount)
+                    .multilineTextAlignment(.leading)
                     .lineLimit(2)
                     .font(.semibold16)
                     .foregroundStyle(.mainBlack)
                 // 나라, 도수
-                HStack(spacing: 10) {
-                    Text(drinkOrigin)
-                        .font(.semibold14)
-                    Text(Formatter.formattedABVCount(abv: drinkABV))
-                        .font(.semibold14)
+                switch drink.drinkType {
+                case .wine:
+                    getCountryAndProvinceAndABV(drink as! Wine)
+                default:
+                    getCountryAndABV(drink)
                 }
-                .foregroundStyle(.gray01)
-                // 별점
-                VStack(spacing: 0) {
-                    Spacer()
-                    // 별
-                    StarRating(rating: drinkRating, 
-                               color: .mainAccent05,
-                               starSize: .semibold14, 
-                               fontSize: .semibold14,
-                               starRatingType: .withText)
-                }
+                Spacer()
+                // 별
+                StarRating(rating: drink.rating,
+                           color: .mainAccent05,
+                           starSize: .semibold14,
+                           fontSize: .semibold14,
+                           starRatingType: .withText)
             }
         }
+        .frame(height: 270)
         .padding(10)
-        .frame(height: 280)
+    }
+    
+    @ViewBuilder
+    private func getCountryAndABV(_ drink: Drink) -> some View {
+        HStack(spacing: 10) {
+            Text(drink.country)
+                .font(.semibold14)
+            Text(Formatter.formattedABVCount(abv: drink.abv))
+                .font(.semibold14)
+        }
+        .foregroundStyle(.gray01)
+    }
+    
+    @ViewBuilder
+    private func getCountryAndProvinceAndABV(_ drink: Wine) -> some View {
+        VStack(alignment: .leading) {
+            HStack(spacing: 6) {
+                Text(drink.country)
+                    .font(.semibold14)
+                Text(drink.province)
+                    .font(.semibold14)
+            }
+            Text(Formatter.formattedABVCount(abv: drink.abv))
+                .font(.semibold14)
+        }
+        .foregroundStyle(.gray01)
     }
 }
 
 #Preview {
     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
         ForEach(0..<3, id: \.self) { _ in
-            DrinkGridCell()
+            DrinkGridCell(drink: Korean.koreanSample01)
         }
     }
     .padding(.horizontal, 20)

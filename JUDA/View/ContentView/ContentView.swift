@@ -1,17 +1,20 @@
 //
 //  ContentView.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by 정인선 on 1/26/24.
 //
 
 import SwiftUI
 
+// MARK: - 앱 전체 스타트 탭 뷰
 struct ContentView: View {
     // 현재 선택된 탭의 인덱스. 초기값 0
     @State private var selectedTabIndex = 0
+    // post 서치바 텍스트
     @State private var postSearchText = ""
     
+    // Tabbar 불투명하게 설정 (색상 백그라운드)
     init() {
         UITabBar.appearance().shadowImage = UIImage()
         UITabBar.appearance().backgroundImage = UIImage()

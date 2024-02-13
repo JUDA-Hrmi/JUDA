@@ -1,18 +1,19 @@
 //
 //  CustomTextSegment.swift
-//  FinalHrmiProjects
+//  JUDA
 //
 //  Created by Minjae Kim on 1/25/24.
 //
 
 import SwiftUI
 
-// PostView와 LikedView에서 세그먼트에서 사용될 문자열을 저장하는 namespace
+// MARK: - PostView와 LikedView의 세그먼트에서 사용될 문자열을 저장
 enum PostOrLiked {
 	static let post = ["인기", "최신"]
 	static let liked = ["술찜 리스트", "술상 리스트"]
 }
 
+// MARK: - 텍스트 형태 세그먼트
 struct CustomTextSegment: View {
 	let segments: [String]
 	@Binding var selectedSegmentIndex: Int
@@ -21,11 +22,11 @@ struct CustomTextSegment: View {
 	private let id = "CustomTextSegment" // 애니메이션을 주고싶은 뷰에 대한 id값 지정
 	
 	var body: some View {
-		HStack(spacing: 20) {
+		HStack(alignment: .center, spacing: 20) {
 			ForEach(0..<segments.count, id: \.self) { index in
 				// 세그먼트 텍스트
 				Text(segments[index])
-					.font(.medium16)
+                    .font(index == selectedSegmentIndex ? .semibold16 : .medium16)
 					.foregroundColor(selectedSegmentIndex == index ? .mainBlack : .gray01)
 					.onTapGesture {
 						// 세그먼트 전환 시, 부드럽게 전환하기위한 애니메이션
