@@ -19,11 +19,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct JUDAApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject private var authService = AuthService()
+    @StateObject private var appViewModel = AppViewModel()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(AppViewModel())
+                .environmentObject(authService)
+                .environmentObject(appViewModel)
         }
     }
 }

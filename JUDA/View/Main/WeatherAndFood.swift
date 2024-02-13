@@ -9,7 +9,8 @@ import SwiftUI
 
 // MARK: - 날씨 & 술 + 음식 추천 뷰
 struct WeatherAndFood: View {
-    @Binding var isLoggedIn: Bool
+    @EnvironmentObject private var authService: AuthService
+
     let food: [String] = ["해물파전", "안주"]
     let drink: [String] = ["막걸리", "술"]
     @EnvironmentObject var locationManager: LocationManager
@@ -36,7 +37,7 @@ struct WeatherAndFood: View {
                     LottieView(jsonName: getAnimationName(for: weather.main))
                         .aspectRatio(1.0, contentMode: .fit)
                         .frame(width: 200, height: 200)
-                    if isLoggedIn {
+                    if authService.signInStatus {
                         Text(getKoreanWeatherDescription(for: weather.main))
                     } else {
                         Text("오늘의 날씨와 어울리는")
@@ -72,7 +73,7 @@ struct WeatherAndFood: View {
                 if isLoading {
                     ProgressView()
                 } else {
-                    if isLoggedIn {
+                    if authService.signInStatus {
                         HStack {
                             Text(aiViewModel.respond)
                                 .foregroundStyle(.mainAccent03)
@@ -91,7 +92,12 @@ struct WeatherAndFood: View {
                 }
             }
         }
+<<<<<<< HEAD
         .font(isLoggedIn ? .bold22 : .bold20)
+=======
+        .font(authService.signInStatus ? .bold22 : .bold20)
+        // TODO: - 나중에 develop에서 병합후에 폰트 수정
+>>>>>>> 25c0a42 ([Feat] AppleLogin 작성 중 #104)
     }
     
     // fetch타임 설정 TimeInterval 300 == 5분으로 설정
@@ -165,7 +171,6 @@ struct WeatherAndFood: View {
             return "Sun"
         }
     }
-
 }
 
 
