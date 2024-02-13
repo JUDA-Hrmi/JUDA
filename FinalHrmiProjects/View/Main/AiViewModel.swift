@@ -13,7 +13,6 @@ struct AiModel: Decodable {
     let openai: String
 }
 
-
 class AiViewModel: ObservableObject {
     var openAI: OpenAI?
     var respond = ""
@@ -31,13 +30,12 @@ class AiViewModel: ObservableObject {
         }
     }
     
+    // 프롬프트 request 함수
     func request(prompt: String) async throws -> String {
         let query = ChatQuery(model: .gpt3_5Turbo_16k, messages: [
             Chat(role: .system, content: "Please be sure to give recommendation answer in one word using Korean, only from each given list.And please print them out as 술 + 안주"),
             Chat(role: .assistant, content: "카스 + 계란찜"),
             Chat(role: .user, content: prompt),
-//            Chat(role: .assistant, content: "테라 + 닭발"),
-//            Chat(role: .user, content: prompt)
         ])
         
         do {
@@ -50,6 +48,7 @@ class AiViewModel: ObservableObject {
         }
     }
 
+    // 술 + 안주 respond 분리 함수
     private func parseAndSetResponse(_ response: String) {
         let components = response.components(separatedBy: " ")
         guard components.count == 4 else {

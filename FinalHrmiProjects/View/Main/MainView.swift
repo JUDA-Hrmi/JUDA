@@ -10,7 +10,6 @@ import Lottie
 
 struct MainView: View {
     @EnvironmentObject private var appViewModel: AppViewModel
-
     @State private var isLoggedIn = true
 	@Binding var selectedTabIndex: Int
 	

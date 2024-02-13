@@ -63,7 +63,13 @@
 		AC110B532B68BBFA005390BB /* CustomDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC110B522B68BBFA005390BB /* CustomDialog.swift */; };
 		AC110B572B69658C005390BB /* ChangeUserNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC110B562B69658C005390BB /* ChangeUserNameView.swift */; };
 		AC1FEAAE2B639781006E9E65 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1FEAAD2B639781006E9E65 /* CustomAlert.swift */; };
-		AC2C6F542B734EC900BE39EB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC2C6F532B734EC900BE39EB /* GoogleService-Info.plist */; };
+		AC4D4BE82B74BA0E003416BA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC4D4BE72B74BA0E003416BA /* GoogleService-Info.plist */; };
+		AC4D4C292B7BC2F9003416BA /* Clouds.json in Resources */ = {isa = PBXBuildFile; fileRef = AC4D4C242B7BC2F9003416BA /* Clouds.json */; };
+		AC4D4C2A2B7BC2F9003416BA /* Loading.json in Resources */ = {isa = PBXBuildFile; fileRef = AC4D4C252B7BC2F9003416BA /* Loading.json */; };
+		AC4D4C2B2B7BC2F9003416BA /* Snow.json in Resources */ = {isa = PBXBuildFile; fileRef = AC4D4C262B7BC2F9003416BA /* Snow.json */; };
+		AC4D4C2C2B7BC2F9003416BA /* Sun.json in Resources */ = {isa = PBXBuildFile; fileRef = AC4D4C272B7BC2F9003416BA /* Sun.json */; };
+		AC4D4C2D2B7BC2F9003416BA /* Rain.json in Resources */ = {isa = PBXBuildFile; fileRef = AC4D4C282B7BC2F9003416BA /* Rain.json */; };
+		AC4D4C2F2B7BC301003416BA /* Thunder.json in Resources */ = {isa = PBXBuildFile; fileRef = AC4D4C2E2B7BC301003416BA /* Thunder.json */; };
 		AC5778E52B6FC20C00F7B04B /* NavigationProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5778E42B6FC20C00F7B04B /* NavigationProfileView.swift */; };
 		AC6D12842B6A8D6100169B23 /* SuggestDrinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12832B6A8D6100169B23 /* SuggestDrinkCell.swift */; };
 		AC6D12862B6A8D7800169B23 /* SuggestDrinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12852B6A8D7800169B23 /* SuggestDrinkView.swift */; };
@@ -75,11 +81,6 @@
 		AC98D1D42B7358AE006F6EC9 /* AiViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98D1D32B7358AE006F6EC9 /* AiViewModel.swift */; };
 		AC98D1D62B73593D006F6EC9 /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC98D1D52B73593D006F6EC9 /* APIKEYS.plist */; };
 		AC98D1D82B7359CC006F6EC9 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98D1D72B7359CC006F6EC9 /* WeatherViewModel.swift */; };
-		AC98D1DE2B736476006F6EC9 /* Snow.json in Resources */ = {isa = PBXBuildFile; fileRef = AC98D1D92B736476006F6EC9 /* Snow.json */; };
-		AC98D1DF2B736476006F6EC9 /* Sun.json in Resources */ = {isa = PBXBuildFile; fileRef = AC98D1DA2B736476006F6EC9 /* Sun.json */; };
-		AC98D1E02B736476006F6EC9 /* Clouds.json in Resources */ = {isa = PBXBuildFile; fileRef = AC98D1DB2B736476006F6EC9 /* Clouds.json */; };
-		AC98D1E12B736476006F6EC9 /* Rain.json in Resources */ = {isa = PBXBuildFile; fileRef = AC98D1DC2B736476006F6EC9 /* Rain.json */; };
-		AC98D1E22B736476006F6EC9 /* Loading.json in Resources */ = {isa = PBXBuildFile; fileRef = AC98D1DD2B736476006F6EC9 /* Loading.json */; };
 		B121A5722B5F8EE100667D42 /* Font +.swift in Sources */ = {isa = PBXBuildFile; fileRef = B121A5712B5F8EE100667D42 /* Font +.swift */; };
 		B121A5732B5F910900667D42 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B121A56C2B5F8D5D00667D42 /* Pretendard-Bold.otf */; };
 		B121A5742B5F910B00667D42 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = B121A56D2B5F8D5D00667D42 /* Pretendard-Light.otf */; };
@@ -174,7 +175,13 @@
 		AC110B522B68BBFA005390BB /* CustomDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDialog.swift; sourceTree = "<group>"; };
 		AC110B562B69658C005390BB /* ChangeUserNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeUserNameView.swift; sourceTree = "<group>"; };
 		AC1FEAAD2B639781006E9E65 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
-		AC2C6F532B734EC900BE39EB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AC4D4BE72B74BA0E003416BA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AC4D4C242B7BC2F9003416BA /* Clouds.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Clouds.json; path = ../../../../../../Downloads/Clouds.json; sourceTree = "<group>"; };
+		AC4D4C252B7BC2F9003416BA /* Loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Loading.json; path = ../../../../../../Downloads/Loading.json; sourceTree = "<group>"; };
+		AC4D4C262B7BC2F9003416BA /* Snow.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Snow.json; path = ../../../../../../Downloads/Snow.json; sourceTree = "<group>"; };
+		AC4D4C272B7BC2F9003416BA /* Sun.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Sun.json; path = ../../../../../../Downloads/Sun.json; sourceTree = "<group>"; };
+		AC4D4C282B7BC2F9003416BA /* Rain.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Rain.json; path = ../../../../../../Downloads/Rain.json; sourceTree = "<group>"; };
+		AC4D4C2E2B7BC301003416BA /* Thunder.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Thunder.json; path = ../../../../../../Downloads/Thunder.json; sourceTree = "<group>"; };
 		AC5778E42B6FC20C00F7B04B /* NavigationProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationProfileView.swift; sourceTree = "<group>"; };
 		AC6D12832B6A8D6100169B23 /* SuggestDrinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestDrinkCell.swift; sourceTree = "<group>"; };
 		AC6D12852B6A8D7800169B23 /* SuggestDrinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestDrinkView.swift; sourceTree = "<group>"; };
@@ -184,11 +191,6 @@
 		AC98D1D32B7358AE006F6EC9 /* AiViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AiViewModel.swift; sourceTree = "<group>"; };
 		AC98D1D52B73593D006F6EC9 /* APIKEYS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = APIKEYS.plist; sourceTree = "<group>"; };
 		AC98D1D72B7359CC006F6EC9 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
-		AC98D1D92B736476006F6EC9 /* Snow.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Snow.json; path = ../../../WeatherKitTest/WeatherKitTest/Snow.json; sourceTree = "<group>"; };
-		AC98D1DA2B736476006F6EC9 /* Sun.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Sun.json; path = ../../../WeatherKitTest/WeatherKitTest/Sun.json; sourceTree = "<group>"; };
-		AC98D1DB2B736476006F6EC9 /* Clouds.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Clouds.json; path = ../../../WeatherKitTest/WeatherKitTest/Clouds.json; sourceTree = "<group>"; };
-		AC98D1DC2B736476006F6EC9 /* Rain.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Rain.json; path = ../../../WeatherKitTest/WeatherKitTest/Rain.json; sourceTree = "<group>"; };
-		AC98D1DD2B736476006F6EC9 /* Loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Loading.json; path = ../../../WeatherKitTest/WeatherKitTest/Loading.json; sourceTree = "<group>"; };
 		B121A5692B5F8D5D00667D42 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		B121A56A2B5F8D5D00667D42 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		B121A56B2B5F8D5D00667D42 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
@@ -272,14 +274,23 @@
 			path = ContentView;
 			sourceTree = "<group>";
 		};
+		AC4D4C232B7BC2E9003416BA /* Lottie */ = {
+			isa = PBXGroup;
+			children = (
+				AC4D4C2E2B7BC301003416BA /* Thunder.json */,
+				AC4D4C242B7BC2F9003416BA /* Clouds.json */,
+				AC4D4C252B7BC2F9003416BA /* Loading.json */,
+				AC4D4C282B7BC2F9003416BA /* Rain.json */,
+				AC4D4C262B7BC2F9003416BA /* Snow.json */,
+				AC4D4C272B7BC2F9003416BA /* Sun.json */,
+			);
+			path = Lottie;
+			sourceTree = "<group>";
+		};
 		B121A5652B5F8D2000667D42 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				AC98D1DB2B736476006F6EC9 /* Clouds.json */,
-				AC98D1DD2B736476006F6EC9 /* Loading.json */,
-				AC98D1DC2B736476006F6EC9 /* Rain.json */,
-				AC98D1D92B736476006F6EC9 /* Snow.json */,
-				AC98D1DA2B736476006F6EC9 /* Sun.json */,
+				AC4D4C232B7BC2E9003416BA /* Lottie */,
 				B12BEE4E2B6B7BDA00580D29 /* Handler.swift */,
 				7B6D76A62B677A8F00601B55 /* Button.swift */,
 				B121A5712B5F8EE100667D42 /* Font +.swift */,
@@ -354,9 +365,9 @@
 				B121A5652B5F8D2000667D42 /* Resource */,
 				B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */,
 				B1B8FE8C2B5EAAAB00921BBE /* Colors.xcassets */,
+				AC4D4BE72B74BA0E003416BA /* GoogleService-Info.plist */,
 				B121A56F2B5F8DA100667D42 /* Info.plist */,
 				AC98D1D52B73593D006F6EC9 /* APIKEYS.plist */,
-				AC2C6F532B734EC900BE39EB /* GoogleService-Info.plist */,
 				B1B8FE822B5EA9DA00921BBE /* Preview Content */,
 			);
 			path = FinalHrmiProjects;
@@ -651,21 +662,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1B8FE8D2B5EAAAB00921BBE /* Colors.xcassets in Resources */,
+				AC4D4C292B7BC2F9003416BA /* Clouds.json in Resources */,
+				AC4D4C2B2B7BC2F9003416BA /* Snow.json in Resources */,
+				AC4D4C2F2B7BC301003416BA /* Thunder.json in Resources */,
 				B121A5732B5F910900667D42 /* Pretendard-Bold.otf in Resources */,
-				AC98D1E22B736476006F6EC9 /* Loading.json in Resources */,
 				B1B8FE842B5EA9DA00921BBE /* Preview Assets.xcassets in Resources */,
-				AC98D1DF2B736476006F6EC9 /* Sun.json in Resources */,
 				AC98D1D62B73593D006F6EC9 /* APIKEYS.plist in Resources */,
 				B121A5782B5F911A00667D42 /* Pretendard-Thin.otf in Resources */,
 				B121A5772B5F911900667D42 /* Pretendard-SemiBold.otf in Resources */,
 				B121A5742B5F910B00667D42 /* Pretendard-Light.otf in Resources */,
+				AC4D4C2C2B7BC2F9003416BA /* Sun.json in Resources */,
+				AC4D4BE82B74BA0E003416BA /* GoogleService-Info.plist in Resources */,
+				AC4D4C2D2B7BC2F9003416BA /* Rain.json in Resources */,
+				AC4D4C2A2B7BC2F9003416BA /* Loading.json in Resources */,
 				B121A5762B5F911700667D42 /* Pretendard-Regular.otf in Resources */,
-				AC98D1DE2B736476006F6EC9 /* Snow.json in Resources */,
-				AC2C6F542B734EC900BE39EB /* GoogleService-Info.plist in Resources */,
-				AC98D1E12B736476006F6EC9 /* Rain.json in Resources */,
 				B1B8FE812B5EA9DA00921BBE /* Assets.xcassets in Resources */,
 				B121A5752B5F911500667D42 /* Pretendard-Medium.otf in Resources */,
-				AC98D1E02B736476006F6EC9 /* Clouds.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -895,10 +907,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FinalHrmiProjects/Preview Content\"";
-				DEVELOPMENT_TEAM = 8N7YRTC92N;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = CT6J74BCFP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FinalHrmiProjects/Info.plist;
@@ -915,8 +929,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hrmi.FinalHrmiProjects;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hrmi.juda;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = dev_JUDA;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -928,10 +944,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FinalHrmiProjects/Preview Content\"";
-				DEVELOPMENT_TEAM = 8N7YRTC92N;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = CT6J74BCFP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FinalHrmiProjects/Info.plist;
@@ -948,8 +966,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hrmi.FinalHrmiProjects;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hrmi.juda;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = dis_JUDA;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
