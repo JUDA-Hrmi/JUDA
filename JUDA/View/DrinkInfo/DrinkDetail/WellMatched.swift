@@ -15,8 +15,13 @@ struct WellMatched: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             // Well Matched
-            Text("잘 어울리는 음식")
-                .font(.semibold18)
+            HStack(alignment: .lastTextBaseline, spacing: 10) {
+                Text("잘 어울리는 음식")
+                    .font(.semibold18)
+                Text("AI 추천 ✨")
+                    .font(.semibold16)
+                    .foregroundStyle(.mainAccent05)
+            }
             // 추천 받은 음식
             HStack(alignment: .center, spacing: 16) {
                 ForEach(wellMatched ?? ["-"], id: \.self) { food in
