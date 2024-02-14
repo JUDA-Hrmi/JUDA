@@ -32,17 +32,35 @@ struct UserAgreementView: View {
     ]
     // 전체 동의 체크박스
     @State private var allChecked: Bool = false
+    // 상위 뷰 체인지를 위함
+    @Binding var viewType: TermsOrVerification
     
-    @State private var nextView: Bool = false
-
     var body: some View {
         VStack(alignment: .leading, spacing: 25) {
+            // 상단 바
+            ZStack(alignment: .trailing) {
+                Text("이용약관")
+                    .font(.medium16)
+                    .frame(maxWidth: .infinity)
+                // 신고하기 화면 닫기 버튼
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(.medium16)
+                }
+            }
+            .padding(.top, 10)
+            .foregroundStyle(.mainBlack)
             ForEach(termsOfServiceContents.indices, id: \.self) { index in
                 HStack(spacing: 5) {
                     // 체크 박스
                     CheckBox(isCheck: termsOfServiceContents[index].check)
                         .onTapGesture {
                             termsOfServiceContents[index].check.toggle()
+                            if termsOfServiceContents[index].check == false {
+                                allChecked = false
+                            }
                         }
                         .padding(.trailing, 5)
                     // 필수 or 선택
@@ -95,8 +113,8 @@ struct UserAgreementView: View {
             Spacer()
             Button {
                 // TODO: - 약관 및 알림 동의 처리 ( 서버 )
-                // TODO: NavigationLink - value 로 수정
-                nextView = true
+                // 뷰 교체
+                viewType = .IdentityVerification
             } label: {
                 Text("다음")
                     .font(.medium20)
@@ -108,30 +126,16 @@ struct UserAgreementView: View {
             // 필수 약관 체크 되어야 버튼 보이도록
             .disabled(!termsOfServiceContents.filter { $0.essential }.allSatisfy { $0.check })
             .padding(.bottom, 10)
-        }
-        .padding([.top, .horizontal], 20)
-        .navigationBarBackButtonHidden()
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "chevron.backward")
+            .onChange(of: termsOfServiceContents) { _ in
+                if termsOfServiceContents.allSatisfy({ $0.check }) {
+                    allChecked = true
                 }
-                .foregroundStyle(.mainBlack)
-            }
-            ToolbarItem(placement: .principal) {
-                Text("이용약관")
-                    .font(.medium16)
-                    .foregroundStyle(.mainBlack)
             }
         }
-        .navigationDestination(isPresented: $nextView) {
-            IdentityVerificationView()
-        }
+        .padding(.horizontal, 20)
     }
 }
 
 #Preview {
-    UserAgreementView()
+    UserAgreementView(viewType: .constant(TermsOrVerification.TermsOfService))
 }

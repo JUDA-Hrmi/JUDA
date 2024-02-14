@@ -61,6 +61,7 @@ struct LogInView: View {
                         }
                         authService.appleAuthenticate(credential: credential)
                     case  .failure(let error):
+                        authService.signInButtonClicked = false
                         print("Fail - \(error.localizedDescription)")
                     }
                 }
@@ -97,16 +98,15 @@ struct LogInView: View {
         // 로그인 완료 시 화면 이동
         .onChange(of: authService.signInStatus) { newValue in
             if newValue == true {
+                authService.signInButtonClicked = false
                 // 기존 유저의 경우, 뒤로 가기 ( 메인 뷰로 이동 )
 //                dismiss()
                 // TODO: 신규 유저의 경우, 이용약관 뷰 이동
                 nextView = true
-                //
-                authService.signInButtonClicked = false
             }
         }
-        .navigationDestination(isPresented: $nextView) {
-            UserAgreementView()
+        .fullScreenCover(isPresented: $nextView) {
+            TermsAndVerificationView()
         }
     }
 }

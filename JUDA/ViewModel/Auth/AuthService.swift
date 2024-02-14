@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseCore
 import FirebaseAuth
+import FirebaseFirestore
 import CryptoKit
 import AuthenticationServices
 
@@ -46,8 +47,59 @@ final class AuthService: ObservableObject {
             withAnimation(.easeInOut) {
                 self.signInStatus = true
             }
+            // 로그인 정보 firestore 에 저장
+            self.storeUserInformation()
         }
     }
+    
+    // 로그아웃
+    func signOut() {
+        let firebaseAuth = Auth.auth()
+        do {
+          try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+          print("Error signing out: %@", signOutError)
+        }
+        self.signInStatus = false
+    }
+    
+    // firestore 에 저장
+    func storeUserInformation() {
+        guard let uid = Auth.auth().currentUser?.uid else { 
+            print("current User X")
+            return
+        }
+        let userData: [String: Any] = ["name": "phang", "gender": "male", "age": 32] // TODO: - 실제 유저 데이터로 변경 필요
+        Firestore.firestore().collection("users")
+            .document(uid).setData(userData) { error in
+                if let error = error {
+                    print("유저 정보 저장 에러 : \(error.localizedDescription)")
+                    return
+                }
+                print("Success - 유저 정보 저장")
+            }
+    }
+    
+    // 탈퇴
+//    func deleteCurrentUser() {
+//      do {
+//        let nonce = try CryptoUtils.randomNonceString()
+//        currentNonce = nonce
+//        let appleIDProvider = ASAuthorizationAppleIDProvider()
+//        let request = appleIDProvider.createRequest()
+//        request.requestedScopes = [.fullName, .email]
+//        request.nonce = CryptoUtils.sha256(nonce)
+//
+//        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+//        authorizationController.delegate = self
+//        authorizationController.presentationContextProvider = self
+//        authorizationController.performRequests()
+//      } catch {
+//        // In the unlikely case that nonce generation fails, show error view.
+//        displayError(error)
+//      }
+//    }
+
 }
 
 // MARK: - Apple Sign In Helper

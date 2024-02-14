@@ -10,6 +10,8 @@ import WebKit
 
 // MARK: - 환경설정 세팅 화면
 struct SettingView: View {
+    @EnvironmentObject private var authService: AuthService
+
 	private let optionNameList = ["라이트 모드", "다크 모드", "시스템 모드"] // 화면 모드 설정 옵션 이름 리스트
 	private let webViewNameList = ["서비스 이용약관", "개인정보 처리방침", "위치정보 처리방침"] // 웹뷰로 보여줘야하는 항목 이름 리스트
 	private let webViewurlList = ["https://bit.ly/HrmiService",
@@ -122,7 +124,9 @@ struct SettingView: View {
                     },
                     rightButtonLabel: "로그아웃",
                     rightButtonAction: {
-                        // TODO: 로그아웃 기능 추가하기
+                        // 로그아웃 - AppStorage 에서 변경
+                        authService.signOut()
+                        // TODO: MainView 로 보내기
                     })
                 )
 			}

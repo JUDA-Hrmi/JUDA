@@ -34,6 +34,8 @@
 		09BCC1542B7C7E2900FF4D1B /* Clouds.json in Resources */ = {isa = PBXBuildFile; fileRef = 09BCC14E2B7C7E2900FF4D1B /* Clouds.json */; };
 		09BCC1582B7C805400FF4D1B /* UserAgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BCC1572B7C805400FF4D1B /* UserAgreementView.swift */; };
 		09BCC15A2B7C8CD300FF4D1B /* IdentityVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BCC1592B7C8CD300FF4D1B /* IdentityVerificationView.swift */; };
+		09BCC15D2B7CF2CB00FF4D1B /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 09BCC15C2B7CF2CB00FF4D1B /* FirebaseFirestore */; };
+		09BCC15F2B7CFC7E00FF4D1B /* TermsAndVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BCC15E2B7CFC7E00FF4D1B /* TermsAndVerificationView.swift */; };
 		09F869932B68E36800A56A4C /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869922B68E36800A56A4C /* Formatter.swift */; };
 		09F869962B68E46500A56A4C /* DrinkDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869952B68E46500A56A4C /* DrinkDetailView.swift */; };
 		09F869982B68E48400A56A4C /* DrinkDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869972B68E48400A56A4C /* DrinkDetails.swift */; };
@@ -153,6 +155,7 @@
 		09BCC1562B7C802600FF4D1B /* JUDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JUDA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09BCC1572B7C805400FF4D1B /* UserAgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgreementView.swift; sourceTree = "<group>"; };
 		09BCC1592B7C8CD300FF4D1B /* IdentityVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityVerificationView.swift; sourceTree = "<group>"; };
+		09BCC15E2B7CFC7E00FF4D1B /* TermsAndVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndVerificationView.swift; sourceTree = "<group>"; };
 		09F869922B68E36800A56A4C /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		09F869952B68E46500A56A4C /* DrinkDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailView.swift; sourceTree = "<group>"; };
 		09F869972B68E48400A56A4C /* DrinkDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetails.swift; sourceTree = "<group>"; };
@@ -251,7 +254,7 @@
 				B1EE24642B613EB1007F68B0 /* FirebaseAnalytics in Frameworks */,
 				B1EE24662B613EB1007F68B0 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				AC98D1D22B73586F006F6EC9 /* OpenAI in Frameworks */,
-				ACCFECBC2B7FAA50009E5E9C /* FirebaseFirestore in Frameworks */,
+				09BCC15D2B7CF2CB00FF4D1B /* FirebaseFirestore in Frameworks */,
 				B1EE246A2B613EB1007F68B0 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				AC98D1CD2B735765006F6EC9 /* Lottie in Frameworks */,
 			);
@@ -443,6 +446,7 @@
 			isa = PBXGroup;
 			children = (
 				B1EE24932B614485007F68B0 /* LogInView.swift */,
+				09BCC15E2B7CFC7E00FF4D1B /* TermsAndVerificationView.swift */,
 				09BCC1572B7C805400FF4D1B /* UserAgreementView.swift */,
 				09BCC1592B7C8CD300FF4D1B /* IdentityVerificationView.swift */,
 			);
@@ -633,6 +637,7 @@
 				AC98D1D12B73586F006F6EC9 /* OpenAI */,
 				ACCFECBB2B7FAA50009E5E9C /* FirebaseFirestore */,
 				09BCC13B2B7B99FF00FF4D1B /* FirebaseAuth */,
+				09BCC15C2B7CF2CB00FF4D1B /* FirebaseFirestore */,
 			);
 			productName = FinalHrmiProjects;
 			productReference = 09BCC1562B7C802600FF4D1B /* JUDA.app */;
@@ -718,6 +723,7 @@
 				7BBDFF702B6B90EB0036FB8B /* PostGrid.swift in Sources */,
 				7BBDFF712B6B90EB0036FB8B /* MainViewModel.swift in Sources */,
 				2C5B0F422B6B10CF005F1A99 /* CustomDialog.swift in Sources */,
+				09BCC15F2B7CFC7E00FF4D1B /* TermsAndVerificationView.swift in Sources */,
 				09BCC15A2B7C8CD300FF4D1B /* IdentityVerificationView.swift in Sources */,
 				B12BEE4B2B6A9E3B00580D29 /* NoticeView.swift in Sources */,
 				09F869BD2B6A4AAE00A56A4C /* LikedPostGrid.swift in Sources */,
@@ -1062,6 +1068,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B1EE24622B613EB1007F68B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		09BCC15C2B7CF2CB00FF4D1B /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B1EE24622B613EB1007F68B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
 		};
 		AC98D1CC2B735765006F6EC9 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
