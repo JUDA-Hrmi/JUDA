@@ -14,8 +14,8 @@ struct ContentView: View {
     // post 서치바 텍스트
     @State private var postSearchText = ""
     @StateObject var locationManager = LocationManager()
-    @StateObject var aiViewModel = AiViewModel()
-    
+    @StateObject var aiViewModel = AiViewModel() // 메인뷰 AIModel
+    @StateObject var aiWellMatchViewModel = AiWellMatchViewModel()
     // Tabbar 불투명하게 설정 (색상 백그라운드)
     init() {
         UITabBar.appearance().shadowImage = UIImage()
@@ -62,6 +62,7 @@ struct ContentView: View {
                 .environmentObject(aiViewModel)
         case .drinkInfo:
             DrinkInfoView()
+                .environmentObject(aiWellMatchViewModel)
         case .posts:
             PostsView(postSearchText: $postSearchText)
         case .liked:

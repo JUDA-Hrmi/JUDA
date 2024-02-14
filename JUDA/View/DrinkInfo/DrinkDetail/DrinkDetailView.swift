@@ -12,7 +12,7 @@ struct DrinkDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var windowWidth: CGFloat = 0
     let drink: Drink
-    
+    @StateObject var aiWellMatchViewModel = AiWellMatchViewModel() // wellmatch AIModel
     var body: some View {
         // 세로 스크롤
         ScrollView {
@@ -46,6 +46,7 @@ struct DrinkDetailView: View {
                 CustomDivider()
                 // 잘어울리는 음식
                 WellMatched()
+                
                 CustomDivider()
                 // 차트 - 선호하는 연령, 성별
                 PeferenceChart()
