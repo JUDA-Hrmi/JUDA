@@ -6,11 +6,11 @@
 //
 
 import SwiftUI
+import Lottie
 
 // MARK: - 메인 탭
 struct MainView: View {
     @EnvironmentObject private var appViewModel: AppViewModel
-
     @State private var isLoggedIn = true
 	@Binding var selectedTabIndex: Int
 	

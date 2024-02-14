@@ -13,6 +13,8 @@ struct ContentView: View {
     @State private var selectedTabIndex = 0
     // post 서치바 텍스트
     @State private var postSearchText = ""
+    @StateObject var locationManager = LocationManager()
+    @StateObject var aiViewModel = AiViewModel()
     
     // Tabbar 불투명하게 설정 (색상 백그라운드)
     init() {
@@ -56,6 +58,8 @@ struct ContentView: View {
         switch viewType {
         case .main:
             MainView(selectedTabIndex: $selectedTabIndex)
+                .environmentObject(locationManager)
+                .environmentObject(aiViewModel)
         case .drinkInfo:
             DrinkInfoView()
         case .posts:
