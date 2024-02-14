@@ -19,7 +19,7 @@ struct MainView: View {
             VStack(alignment: .center, spacing: 0) {
                 Spacer()
                 // 날씨 와 어울리는 술 + 안주
-                WeatherAndFood(isLoggedIn: $isLoggedIn)
+//                WeatherAndFood(isLoggedIn: $isLoggedIn)
                 Spacer()
                 // 오늘의 추천 술
                 SuggestDrink(isLoggedIn: $isLoggedIn)

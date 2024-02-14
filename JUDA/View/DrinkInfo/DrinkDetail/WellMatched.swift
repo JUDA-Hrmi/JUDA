@@ -10,8 +10,11 @@ import SwiftUI
 // MARK: - 잘 어울리는 음식
 struct WellMatched: View {
     // UITest - 추천 받은 음식 3가지
-    let wellMatched: [String]?
-
+    @EnvironmentObject var aiWellMatchViewModel: AiWellMatchViewModel
+    let drink = [
+        "하이네켄",
+        "막걸리"
+    ]
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             // Well Matched
@@ -24,18 +27,24 @@ struct WellMatched: View {
             }
             // 추천 받은 음식
             HStack(alignment: .center, spacing: 16) {
-                ForEach(wellMatched ?? ["-"], id: \.self) { food in
-                    Text(food)
-                        .font(.regular16)
-                }
+                Text(aiWellMatchViewModel.respond)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
+        .onAppear {
+            Task {
+                do {
+                    try await aiWellMatchViewModel.request(prompt: "Please recommend 3 foods that go well with you. Only food except drinks. List below --- Beverages List: \(drink)")
+                } catch {
+                    print("Error fetching recommendations: \(error)")
+                }
+            }
+        }
     }
 }
 
 #Preview {
-    WellMatched(wellMatched: ["해산물 파스타", "로스트 치킨", "회"])
+    WellMatched()
 }
