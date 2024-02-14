@@ -26,6 +26,12 @@
 		09BCC13C2B7B99FF00FF4D1B /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 09BCC13B2B7B99FF00FF4D1B /* FirebaseAuth */; };
 		09BCC1452B7C78FE00FF4D1B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09BCC1432B7C78FE00FF4D1B /* GoogleService-Info.plist */; };
 		09BCC1462B7C78FE00FF4D1B /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09BCC1442B7C78FE00FF4D1B /* APIKEYS.plist */; };
+		09BCC14F2B7C7E2900FF4D1B /* Loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 09BCC1492B7C7E2900FF4D1B /* Loading.json */; };
+		09BCC1502B7C7E2900FF4D1B /* Thunder.json in Resources */ = {isa = PBXBuildFile; fileRef = 09BCC14A2B7C7E2900FF4D1B /* Thunder.json */; };
+		09BCC1512B7C7E2900FF4D1B /* Sun.json in Resources */ = {isa = PBXBuildFile; fileRef = 09BCC14B2B7C7E2900FF4D1B /* Sun.json */; };
+		09BCC1522B7C7E2900FF4D1B /* Rain.json in Resources */ = {isa = PBXBuildFile; fileRef = 09BCC14C2B7C7E2900FF4D1B /* Rain.json */; };
+		09BCC1532B7C7E2900FF4D1B /* Snow.json in Resources */ = {isa = PBXBuildFile; fileRef = 09BCC14D2B7C7E2900FF4D1B /* Snow.json */; };
+		09BCC1542B7C7E2900FF4D1B /* Clouds.json in Resources */ = {isa = PBXBuildFile; fileRef = 09BCC14E2B7C7E2900FF4D1B /* Clouds.json */; };
 		09F869932B68E36800A56A4C /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869922B68E36800A56A4C /* Formatter.swift */; };
 		09F869962B68E46500A56A4C /* DrinkDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869952B68E46500A56A4C /* DrinkDetailView.swift */; };
 		09F869982B68E48400A56A4C /* DrinkDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869972B68E48400A56A4C /* DrinkDetails.swift */; };
@@ -73,12 +79,6 @@
 		AC5778E52B6FC20C00F7B04B /* NavigationProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5778E42B6FC20C00F7B04B /* NavigationProfileView.swift */; };
 		AC6D12882B6A8DD300169B23 /* TodayDrinkRecommended.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12872B6A8DD300169B23 /* TodayDrinkRecommended.swift */; };
 		AC6D128A2B6A8ED100169B23 /* WeatherAndFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12892B6A8ED100169B23 /* WeatherAndFood.swift */; };
-		AC91327B2B7C5BFD00528039 /* Loading.json in Resources */ = {isa = PBXBuildFile; fileRef = AC9132752B7C5BFD00528039 /* Loading.json */; };
-		AC91327C2B7C5BFD00528039 /* Clouds.json in Resources */ = {isa = PBXBuildFile; fileRef = AC9132762B7C5BFD00528039 /* Clouds.json */; };
-		AC91327D2B7C5BFD00528039 /* Snow.json in Resources */ = {isa = PBXBuildFile; fileRef = AC9132772B7C5BFD00528039 /* Snow.json */; };
-		AC91327E2B7C5BFD00528039 /* Sun.json in Resources */ = {isa = PBXBuildFile; fileRef = AC9132782B7C5BFD00528039 /* Sun.json */; };
-		AC91327F2B7C5BFD00528039 /* Thunder.json in Resources */ = {isa = PBXBuildFile; fileRef = AC9132792B7C5BFD00528039 /* Thunder.json */; };
-		AC9132802B7C5BFD00528039 /* Rain.json in Resources */ = {isa = PBXBuildFile; fileRef = AC91327A2B7C5BFD00528039 /* Rain.json */; };
 		AC98D1CD2B735765006F6EC9 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = AC98D1CC2B735765006F6EC9 /* Lottie */; };
 		AC98D1CF2B7357DA006F6EC9 /* Lottie.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98D1CE2B7357DA006F6EC9 /* Lottie.swift */; };
 		AC98D1D22B73586F006F6EC9 /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = AC98D1D12B73586F006F6EC9 /* OpenAI */; };
@@ -142,6 +142,13 @@
 		09BCC1382B7B99D600FF4D1B /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		09BCC1432B7C78FE00FF4D1B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		09BCC1442B7C78FE00FF4D1B /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = APIKEYS.plist; sourceTree = "<group>"; };
+		09BCC1492B7C7E2900FF4D1B /* Loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Loading.json; sourceTree = "<group>"; };
+		09BCC14A2B7C7E2900FF4D1B /* Thunder.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Thunder.json; sourceTree = "<group>"; };
+		09BCC14B2B7C7E2900FF4D1B /* Sun.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Sun.json; sourceTree = "<group>"; };
+		09BCC14C2B7C7E2900FF4D1B /* Rain.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Rain.json; sourceTree = "<group>"; };
+		09BCC14D2B7C7E2900FF4D1B /* Snow.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Snow.json; sourceTree = "<group>"; };
+		09BCC14E2B7C7E2900FF4D1B /* Clouds.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Clouds.json; sourceTree = "<group>"; };
+		09BCC1552B7C7E6200FF4D1B /* JUDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = JUDA.app; path = "/Users/phang/Desktop/jjj/build/Debug-iphoneos/JUDA.app"; sourceTree = "<absolute>"; };
 		09F869922B68E36800A56A4C /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		09F869952B68E46500A56A4C /* DrinkDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailView.swift; sourceTree = "<group>"; };
 		09F869972B68E48400A56A4C /* DrinkDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetails.swift; sourceTree = "<group>"; };
@@ -187,12 +194,6 @@
 		AC6D12852B6A8D7800169B23 /* PostOrLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOrLogin.swift; sourceTree = "<group>"; };
 		AC6D12872B6A8DD300169B23 /* TodayDrinkRecommended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayDrinkRecommended.swift; sourceTree = "<group>"; };
 		AC6D12892B6A8ED100169B23 /* WeatherAndFood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAndFood.swift; sourceTree = "<group>"; };
-		AC9132752B7C5BFD00528039 /* Loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Loading.json; path = ../../../../../../Downloads/Loading.json; sourceTree = "<group>"; };
-		AC9132762B7C5BFD00528039 /* Clouds.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Clouds.json; path = ../../../../../../Downloads/Clouds.json; sourceTree = "<group>"; };
-		AC9132772B7C5BFD00528039 /* Snow.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Snow.json; path = ../../../../../../Downloads/Snow.json; sourceTree = "<group>"; };
-		AC9132782B7C5BFD00528039 /* Sun.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Sun.json; path = ../../../../../../Downloads/Sun.json; sourceTree = "<group>"; };
-		AC9132792B7C5BFD00528039 /* Thunder.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Thunder.json; path = ../../../../../../Downloads/Thunder.json; sourceTree = "<group>"; };
-		AC91327A2B7C5BFD00528039 /* Rain.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Rain.json; path = ../../../../../../Downloads/Rain.json; sourceTree = "<group>"; };
 		AC98D1CE2B7357DA006F6EC9 /* Lottie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lottie.swift; sourceTree = "<group>"; };
 		AC98D1D32B7358AE006F6EC9 /* AiViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AiViewModel.swift; sourceTree = "<group>"; };
 		AC98D1D72B7359CC006F6EC9 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
@@ -214,7 +215,6 @@
 		B12BEE4E2B6B7BDA00580D29 /* Handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Handler.swift; sourceTree = "<group>"; };
 		B158F83E2B657A9000E33C47 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoSegment.swift; sourceTree = "<group>"; };
-		B1B8FE792B5EA9D900921BBE /* JUDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JUDA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1B8FE7C2B5EA9D900921BBE /* JUDAApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JUDAApp.swift; sourceTree = "<group>"; };
 		B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B1B8FE832B5EA9DA00921BBE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -272,11 +272,17 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
-		09BCC13A2B7B99FF00FF4D1B /* Frameworks */ = {
+		09BCC1482B7C7E1500FF4D1B /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
+				09BCC14E2B7C7E2900FF4D1B /* Clouds.json */,
+				09BCC1492B7C7E2900FF4D1B /* Loading.json */,
+				09BCC14C2B7C7E2900FF4D1B /* Rain.json */,
+				09BCC14D2B7C7E2900FF4D1B /* Snow.json */,
+				09BCC14B2B7C7E2900FF4D1B /* Sun.json */,
+				09BCC14A2B7C7E2900FF4D1B /* Thunder.json */,
 			);
-			name = Frameworks;
+			path = Lottie;
 			sourceTree = "<group>";
 		};
 		09F869942B68E44A00A56A4C /* DrinkDetail */ = {
@@ -303,30 +309,10 @@
 			path = ContentView;
 			sourceTree = "<group>";
 		};
-		AC9132742B7C5BE300528039 /* Lottie */ = {
-			isa = PBXGroup;
-			children = (
-				AC9132762B7C5BFD00528039 /* Clouds.json */,
-				AC9132752B7C5BFD00528039 /* Loading.json */,
-				AC91327A2B7C5BFD00528039 /* Rain.json */,
-				AC9132772B7C5BFD00528039 /* Snow.json */,
-				AC9132782B7C5BFD00528039 /* Sun.json */,
-				AC9132792B7C5BFD00528039 /* Thunder.json */,
-			);
-			path = Lottie;
-			sourceTree = "<group>";
-		};
-		ACCFECBA2B7FAA50009E5E9C /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		B121A5652B5F8D2000667D42 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				AC9132742B7C5BE300528039 /* Lottie */,
+				09BCC1482B7C7E1500FF4D1B /* Lottie */,
 				09A6AD7D2B72A53C00606585 /* Errors.swift */,
 				B12BEE4E2B6B7BDA00580D29 /* Handler.swift */,
 				7B6D76A62B677A8F00601B55 /* Button.swift */,
@@ -378,17 +364,7 @@
 			isa = PBXGroup;
 			children = (
 				B1B8FE7B2B5EA9D900921BBE /* JUDA */,
-				B1B8FE7A2B5EA9D900921BBE /* Products */,
-				09BCC13A2B7B99FF00FF4D1B /* Frameworks */,
 			);
-			sourceTree = "<group>";
-		};
-		B1B8FE7A2B5EA9D900921BBE /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				B1B8FE792B5EA9D900921BBE /* JUDA.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		B1B8FE7B2B5EA9D900921BBE /* JUDA */ = {
@@ -652,7 +628,7 @@
 				09BCC13B2B7B99FF00FF4D1B /* FirebaseAuth */,
 			);
 			productName = FinalHrmiProjects;
-			productReference = B1B8FE792B5EA9D900921BBE /* JUDA.app */;
+			productReference = 09BCC1552B7C7E6200FF4D1B /* JUDA.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -663,7 +639,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					B1B8FE782B5EA9D900921BBE = {
 						CreatedOnToolsVersion = 15.0;
@@ -685,7 +661,7 @@
 				AC98D1CB2B735765006F6EC9 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				AC98D1D02B73586F006F6EC9 /* XCRemoteSwiftPackageReference "OpenAI" */,
 			);
-			productRefGroup = B1B8FE7A2B5EA9D900921BBE /* Products */;
+			productRefGroup = B1B8FE702B5EA9D900921BBE;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -699,23 +675,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09BCC1512B7C7E2900FF4D1B /* Sun.json in Resources */,
+				09BCC1502B7C7E2900FF4D1B /* Thunder.json in Resources */,
 				B1B8FE8D2B5EAAAB00921BBE /* Colors.xcassets in Resources */,
 				B121A5732B5F910900667D42 /* Pretendard-Bold.otf in Resources */,
-				AC91327D2B7C5BFD00528039 /* Snow.json in Resources */,
-				AC91327B2B7C5BFD00528039 /* Loading.json in Resources */,
+				09BCC14F2B7C7E2900FF4D1B /* Loading.json in Resources */,
 				B1B8FE842B5EA9DA00921BBE /* Preview Assets.xcassets in Resources */,
-				AC9132802B7C5BFD00528039 /* Rain.json in Resources */,
 				B121A5782B5F911A00667D42 /* Pretendard-Thin.otf in Resources */,
 				B121A5772B5F911900667D42 /* Pretendard-SemiBold.otf in Resources */,
+				09BCC1532B7C7E2900FF4D1B /* Snow.json in Resources */,
+				09BCC1542B7C7E2900FF4D1B /* Clouds.json in Resources */,
 				B121A5742B5F910B00667D42 /* Pretendard-Light.otf in Resources */,
 				09BCC1452B7C78FE00FF4D1B /* GoogleService-Info.plist in Resources */,
-				AC91327E2B7C5BFD00528039 /* Sun.json in Resources */,
 				09BCC1462B7C78FE00FF4D1B /* APIKEYS.plist in Resources */,
-				AC91327C2B7C5BFD00528039 /* Clouds.json in Resources */,
+				09BCC1522B7C7E2900FF4D1B /* Rain.json in Resources */,
 				B121A5762B5F911700667D42 /* Pretendard-Regular.otf in Resources */,
 				B1B8FE812B5EA9DA00921BBE /* Assets.xcassets in Resources */,
-				ACCFECB82B7DFC9C009E5E9C /* APIKEYS.plist in Resources */,
-				AC91327F2B7C5BFD00528039 /* Thunder.json in Resources */,
 				B121A5752B5F911500667D42 /* Pretendard-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -826,6 +801,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -890,6 +866,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

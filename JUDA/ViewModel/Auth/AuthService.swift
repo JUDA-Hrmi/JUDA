@@ -20,6 +20,8 @@ final class AuthService: ObservableObject {
     @Published var errorMessage: String = ""
     // Apple Sign In 사용 - Nonce : 암호와된 임의의 난수
     @Published var nonce: String = ""
+    // 로그인 중
+    @Published var signInButtonClicked: Bool = false
     
     // Apple Sign In
     func appleAuthenticate(credential: ASAuthorizationAppleIDCredential) {
@@ -44,7 +46,6 @@ final class AuthService: ObservableObject {
             withAnimation(.easeInOut) {
                 self.signInStatus = true
             }
-            // TODO: 화면 이동 시키기
         }
     }
 }

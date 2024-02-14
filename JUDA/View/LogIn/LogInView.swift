@@ -35,11 +35,18 @@ struct LogInView: View {
                 }
                 //
                 Spacer()
+                // 로그인 중 - progress
+                if authService.signInButtonClicked == true {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                }
+                //
                 Spacer()
                 // 로그인 버튼
                 VStack(spacing: 30) {
                     // 애플 로그인
                     SignInWithAppleButton(.signIn) { request in
+                        authService.signInButtonClicked = true
                         authService.nonce = authService.randomNonceString()
                         request.requestedScopes = [.email, .fullName]
                         request.nonce = authService.sha256(authService.nonce)
@@ -87,10 +94,13 @@ struct LogInView: View {
                 .foregroundStyle(.mainBlack)
             }
         }
-        // 로그인 완료 시, 뒤로 가기 ( 메인 뷰로 이동 )
+        // 로그인 완료 시 화면 이동
         .onChange(of: authService.signInStatus) { newValue in
             if newValue == true {
+                // 기존 유저의 경우, 뒤로 가기 ( 메인 뷰로 이동 )
                 dismiss()
+                authService.signInButtonClicked = false
+                // TODO: 신규 유저 정보 동의 및 연령, 성별 등록 뷰 이동
             }
         }
     }
