@@ -73,7 +73,7 @@ struct AlarmStoreView: View {
             }
             ToolbarItem(placement: .principal) {
                 Text("알림")
-                    .font(.regular16)
+                    .font(.medium16)
                     .foregroundStyle(.mainBlack)
             }
         }

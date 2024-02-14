@@ -155,7 +155,7 @@ struct SettingView: View {
 			}
 			ToolbarItem(placement: .principal) {
 				Text("설정")
-					.font(.medium18)
+					.font(.medium16)
 					.foregroundStyle(.mainBlack)
 			}
 		}

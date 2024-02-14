@@ -7,7 +7,9 @@
 
 import SwiftUI
 
+// MARK: - 앱 전체에서 사용
 final class AppViewModel: ObservableObject {
+    // 탭바 상태
     @Published var tabBarState: Visibility = .visible
 }
 
