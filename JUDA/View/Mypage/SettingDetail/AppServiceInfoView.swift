@@ -26,7 +26,7 @@ struct AppServiceInfoView: View {
             }
             .modifier(CustomText())
             .fullScreenCover(isPresented: $isShowWebView) {
-                SafariView(url:URL(string: self.urlString)!)
+                SafariView(url: URL(string: self.urlString)!)
             }
         }
     }

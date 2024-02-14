@@ -15,9 +15,14 @@ struct TermsOfService: Hashable {
     var check: Bool
 }
 
-// MARK: - 신규 유저의 경우, 개인 정보 활용 동의 체크 및 성별 + 연령 등록 뷰
+// MARK: - 신규 유저의 경우, 개인 정보 활용 동의 체크 
 struct UserAgreementView: View {
     @Environment(\.dismiss) private var dismiss
+
+    private let webViewurlList = ["https://bit.ly/HrmiService",
+                                  "https://bit.ly/HrmiPrivacyPolicy",
+                                  "https://bit.ly/HrmiLocationPolicy"]
+    @State var isShowWebView: Bool = false
 
     @State private var termsOfServiceContents: [TermsOfService] = [
         TermsOfService(essential: true, content: "이용약관", check: false),
@@ -47,10 +52,20 @@ struct UserAgreementView: View {
                     Text(termsOfServiceContents[index].content)
                     //
                     Spacer()
-                    // 페이지 이동
-                    Text("보기")
-                        .font(.regular14)
-                        .foregroundStyle(.gray01)
+                    // 알림 수신 동의 제외
+                    if index != termsOfServiceContents.count - 1 {
+                        // 약관 관련 페이지 이동
+                        Button {
+                            isShowWebView.toggle()
+                        } label: {
+                            Text("보기")
+                                .font(.regular14)
+                                .foregroundStyle(.gray01)
+                        }
+                        .fullScreenCover(isPresented: $isShowWebView) {
+                            SafariView(url: URL(string: webViewurlList[index])!)
+                        }
+                    }
                 }
                 .font(.regular16)
             }
