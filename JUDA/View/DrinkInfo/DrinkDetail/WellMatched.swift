@@ -1,3 +1,10 @@
+//
+//  WellMatched.swift
+//  JUDA
+//
+//  Created by phang on 1/30/24.
+//
+
 import SwiftUI
 
 struct WellMatched: View {
@@ -18,12 +25,7 @@ struct WellMatched: View {
             }
             // 추천 받은 음식
             HStack(alignment: .center, spacing: 16) {
-                if let wellMatchedResponse = UserDefaults.standard.string(forKey: "WellMatchedResponse") {
-                    Text("\(wellMatchedResponse)")
-                    
-                } else {
-                    Text(aiWellMatchViewModel.respond)
-                }
+                Text(aiWellMatchViewModel.respond)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -34,21 +36,13 @@ struct WellMatched: View {
                 do {
                     aiWellMatchViewModel.respond = try await aiWellMatchViewModel.request(prompt: "Please recommend 3 foods that go well with you. Only food except drinks. List below --- Beverages List: \(drink)")
                     print("\(aiWellMatchViewModel.respond)")
-                    
-                    // Save the response to UserDefaults
-                    UserDefaults.standard.set(aiWellMatchViewModel.respond, forKey: "WellMatchedResponse")
                 } catch {
                     print("Error fetching recommendations: \(error)")
                 }
             }
-            
-            // Retrieve the saved response from UserDefaults
-            if let wellMatchedResponse = UserDefaults.standard.string(forKey: "WellMatchedResponse") {
-                // Use the retrieved response if needed
-                print("WellMatched Response: \(wellMatchedResponse)")
-            }
-            
             print("onappear call")
         }
+        
     }
+    
 }
