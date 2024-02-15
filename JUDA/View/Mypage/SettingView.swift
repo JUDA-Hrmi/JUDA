@@ -142,7 +142,13 @@ struct SettingView: View {
                     },
                     rightButtonLabel: "탈퇴하기",
                     rightButtonAction: {
-                        // TODO: 회원탈퇴 기능 추가하기
+                        Task {
+                            if await authService.deleteAccount() {
+                                isDeletAccount.toggle()
+                                // TODO: 메인 화면으로 이동
+                                dismiss()
+                            }
+                        }
                     })
                 )
 			}

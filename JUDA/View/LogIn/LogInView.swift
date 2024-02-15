@@ -47,23 +47,9 @@ struct LogInView: View {
             VStack(spacing: 30) {
                 // 애플 로그인
                 SignInWithAppleButton(.signIn) { request in
-                    authService.signInButtonClicked = true
-                    authService.nonce = authService.randomNonceString()
-                    request.requestedScopes = [.email, .fullName]
-                    request.nonce = authService.sha256(authService.nonce)
+                    authService.handleSignInWithAppleRequest(request)
                 } onCompletion: { result in
-                    switch result {
-                    case .success(let user):
-                        print("success")
-                        guard let credential = user.credential as? ASAuthorizationAppleIDCredential else {
-                            print("Error with firebase")
-                            return
-                        }
-                        authService.appleAuthenticate(credential: credential)
-                    case  .failure(let error):
-                        authService.signInButtonClicked = false
-                        print("Fail - \(error.localizedDescription)")
-                    }
+                    authService.handleSignInWithAppleCompletion(result)
                 }
                 .signInWithAppleButtonStyle(colorScheme == .light ? .black : .white)
                 .frame(width: 300, height: 48)

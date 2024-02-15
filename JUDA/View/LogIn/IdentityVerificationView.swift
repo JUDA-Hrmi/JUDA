@@ -123,8 +123,9 @@ struct IdentityVerificationView: View {
                             .tint(.mainAccent03)
                             .clipShape(.capsule)
                             // 텍스트 필드 다 채워야, 버튼 보이도록
-                            .disabled(name.isEmpty || birthDate.isEmpty ||
-                                      genderNumber.isEmpty || phoneNumber.isEmpty )
+                            .disabled((name.isEmpty || birthDate.isEmpty ||
+                                       genderNumber.isEmpty || phoneNumber.isEmpty) &&
+                                      phoneNumber.count == 11)
                         }
                         // 텍스트 필드 언더라인
                         Rectangle()
