@@ -11,7 +11,7 @@ import Lottie
 // MARK: - 메인 탭
 struct MainView: View {
     @EnvironmentObject private var appViewModel: AppViewModel
-    @State private var isLoggedIn = true
+    @State private var isLoggedIn = false
 	@Binding var selectedTabIndex: Int
 	
     var body: some View {

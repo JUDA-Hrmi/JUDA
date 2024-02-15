@@ -42,31 +42,31 @@ struct WeatherAndFood: View {
                         Text("오늘의 날씨와 어울리는")
                     }
                 } else {
-                    LottieView(jsonName: "Loading")
+                    LottieView(jsonName: "Sun")
                         .frame(width: 200, height: 200)
                         .aspectRatio(1.0, contentMode: .fit)
                 }
             }
             .onReceive(locationManager.$location) { location in
-                if shouldFetchWeather() {
-                    if let location = location {
-                        isLoading = true
-                        Task {
-                            do {
-                                // Fetch weather data
-                                let weatherData = try await fetchWeather(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-                                weather = weatherData
-                                // Request
-                                aiViewModel.respond = try await aiViewModel.request(prompt: "Please recommend snacks and drinks that go well with this weather. Please refer to the below list behind you for the sake of snacks. Please recommend one each for snacks and drinks. When printing snacks and drinks \(String(describing: weather?.main)) ---dish List: \(koreanSnacks) ---drink List:\(beerNames)")
-                                lastAPICallTimestamp = Date()
-                            } catch {
-                                print("Error: \(error)")
-                            }
-                            isLoading = false
-                        }
-                    }
-                }
-            }
+                          if shouldFetchWeather() && isLoggedIn {
+                              if let location = location {
+                                  isLoading = true
+                                  Task {
+                                      do {
+                                          // Fetch weather data
+                                          let weatherData = try await fetchWeather(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+                                          weather = weatherData
+                                          // Request
+                                          aiViewModel.respond = try await aiViewModel.request(prompt: "Please recommend snacks and drinks that go well with this weather. Please refer to the below list behind you for the sake of snacks. Please recommend one each for snacks and drinks. When printing snacks and drinks \(String(describing: weather?.main)) ---dish List: \(koreanSnacks) ---drink List:\(beerNames)")
+                                          lastAPICallTimestamp = Date()
+                                      } catch {
+                                          print("Error: \(error)")
+                                      }
+                                      isLoading = false
+                                  }
+                              }
+                          }
+                      }
 
             VStack(alignment:.center) {
                 if isLoading {
