@@ -35,7 +35,7 @@ final class AuthService: ObservableObject {
         self.signInStatus = false
     }
     
-    // 유저 삭제
+    // 회원탈퇴 - Apple
     func deleteAccount() async -> Bool {
         guard let user = Auth.auth().currentUser else { return false }
         do {
@@ -73,7 +73,7 @@ final class AuthService: ObservableObject {
     }
 }
 
-// MARK: - firestore
+// MARK: - firestore : 유저 저장 & 유저 삭제
 extension AuthService {
     // firestore 에 유저 저장
     func storeUserInformation() {
@@ -197,7 +197,7 @@ extension AuthService {
 }
 
 // MARK: - Sign in with Apple
-class SignInWithApple: NSObject, ASAuthorizationControllerDelegate {
+final class SignInWithApple: NSObject, ASAuthorizationControllerDelegate {
     private var continuation : CheckedContinuation<ASAuthorizationAppleIDCredential, Error>?
     
     func callAsFunction() async throws -> ASAuthorizationAppleIDCredential {
@@ -216,39 +216,6 @@ class SignInWithApple: NSObject, ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         if case let appleIDCredential as ASAuthorizationAppleIDCredential = authorization.credential {
             continuation?.resume(returning: appleIDCredential)
-        }
-    }
-    
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        continuation?.resume(throwing: error)
-    }
-}
-
-class TokenRevocationHelper: NSObject, ASAuthorizationControllerDelegate {
-    private var continuation : CheckedContinuation<Void, Error>?
-    
-    func revokeToken() async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            self.continuation = continuation
-            let appleIDProvider = ASAuthorizationAppleIDProvider()
-            let request = appleIDProvider.createRequest()
-            request.requestedScopes = [.fullName, .email]
-            
-            let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-            authorizationController.delegate = self
-            authorizationController.performRequests()
-        }
-    }
-    
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        if case let appleIDCredential as ASAuthorizationAppleIDCredential = authorization.credential {
-            guard let authorizationCode = appleIDCredential.authorizationCode else { return }
-            guard let authCodeString = String(data: authorizationCode, encoding: .utf8) else { return }
-            
-            Task {
-                try await Auth.auth().revokeToken(withAuthorizationCode: authCodeString)
-                continuation?.resume()
-            }
         }
     }
     

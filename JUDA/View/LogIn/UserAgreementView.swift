@@ -27,7 +27,8 @@ struct UserAgreementView: View {
     @State private var termsOfServiceContents: [TermsOfService] = [
         TermsOfService(essential: true, content: "이용약관", check: false),
         TermsOfService(essential: true, content: "개인정보 수집 및 이용 안내", check: false),
-        TermsOfService(essential: true, content: "제 3자 제공 동의", check: false),
+        TermsOfService(essential: true, content: "위치기반 서비스 이용약관 동의", check: false),
+        TermsOfService(essential: true, content: "만 19세 이상입니다.", check: false),
         TermsOfService(essential: false, content: "알림 수신 동의", check: false),
     ]
     // 전체 동의 체크박스
@@ -71,7 +72,7 @@ struct UserAgreementView: View {
                     //
                     Spacer()
                     // 알림 수신 동의 제외
-                    if index != termsOfServiceContents.count - 1 {
+                    if index < webViewurlList.count {
                         // 약관 관련 페이지 이동
                         Button {
                             isShowWebView.toggle()
@@ -114,7 +115,7 @@ struct UserAgreementView: View {
             Button {
                 // TODO: - 약관 및 알림 동의 처리 ( 서버 )
                 // 뷰 교체
-                viewType = .IdentityVerification
+                viewType = .ProfileSetting
             } label: {
                 Text("다음")
                     .font(.medium20)

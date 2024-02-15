@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-// MARK: - 개인 정보 활용 동의 체크 or 본인 인증 화면 enum
+// MARK: - 개인 정보 활용 동의 체크 or 프로필 설정 화면 enum
 enum TermsOrVerification {
     case TermsOfService
-    case IdentityVerification
+    case ProfileSetting
 }
 
-// MARK: - 신규 회원: 개인 정보 활용 동의 체크 or 본인 인증 화면
+// MARK: - 신규 회원: 개인 정보 활용 동의 체크 or 프로필 설정 화면
 struct TermsAndVerificationView: View {
     @State private var viewType: TermsOrVerification = .TermsOfService
     
@@ -21,8 +21,8 @@ struct TermsAndVerificationView: View {
         switch viewType {
         case .TermsOfService:
             UserAgreementView(viewType: $viewType)
-        case .IdentityVerification:
-            IdentityVerificationView(viewType: $viewType)
+        case .ProfileSetting:
+            ProfileSettingView(viewType: $viewType)
         }
     }
 }

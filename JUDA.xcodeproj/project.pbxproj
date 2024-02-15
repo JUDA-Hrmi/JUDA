@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0902EB492B7E3372003D555E /* ProfileSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902EB482B7E3372003D555E /* ProfileSettingView.swift */; };
 		09254CA72B637C9900569D94 /* CustomDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09254CA62B637C9900569D94 /* CustomDivider.swift */; };
 		09394C4A2B74A49A0077F78B /* SuggestDrink.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12832B6A8D6100169B23 /* SuggestDrink.swift */; };
 		09394C4B2B74A49A0077F78B /* PostOrLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12852B6A8D7800169B23 /* PostOrLogin.swift */; };
@@ -129,6 +130,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0902EB482B7E3372003D555E /* ProfileSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingView.swift; sourceTree = "<group>"; };
 		09254CA62B637C9900569D94 /* CustomDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDivider.swift; sourceTree = "<group>"; };
 		0961B7962B6624D300A9F553 /* DrinkInfoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoList.swift; sourceTree = "<group>"; };
 		0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoGrid.swift; sourceTree = "<group>"; };
@@ -263,6 +265,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0902EB472B7E11E9003D555E /* Trash */ = {
+			isa = PBXGroup;
+			children = (
+				09BCC1592B7C8CD300FF4D1B /* IdentityVerificationView.swift */,
+			);
+			path = Trash;
+			sourceTree = "<group>";
+		};
 		09BCC1362B7B99BD00FF4D1B /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -438,6 +448,7 @@
 				B1EE24762B614345007F68B0 /* DrinkInfo */,
 				B1EE24752B61432B007F68B0 /* Main */,
 				B1EE24742B614322007F68B0 /* LogIn */,
+				0902EB472B7E11E9003D555E /* Trash */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -448,7 +459,7 @@
 				B1EE24932B614485007F68B0 /* LogInView.swift */,
 				09BCC15E2B7CFC7E00FF4D1B /* TermsAndVerificationView.swift */,
 				09BCC1572B7C805400FF4D1B /* UserAgreementView.swift */,
-				09BCC1592B7C8CD300FF4D1B /* IdentityVerificationView.swift */,
+				0902EB482B7E3372003D555E /* ProfileSettingView.swift */,
 			);
 			path = LogIn;
 			sourceTree = "<group>";
@@ -715,6 +726,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09394C4A2B74A49A0077F78B /* SuggestDrink.swift in Sources */,
+				0902EB492B7E3372003D555E /* ProfileSettingView.swift in Sources */,
 				09394C4B2B74A49A0077F78B /* PostOrLogin.swift in Sources */,
 				7BBDFF722B6B912C0036FB8B /* TabItem.swift in Sources */,
 				7BBDFF732B6B912C0036FB8B /* DrinkInfoSegment.swift in Sources */,

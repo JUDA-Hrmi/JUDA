@@ -237,6 +237,6 @@ struct IdentityVerificationView: View {
     }
 }
 
-#Preview {
-    IdentityVerificationView(viewType: .constant(.IdentityVerification))
-}
+//#Preview {
+//    IdentityVerificationView(viewType: .constant(.IdentityVerification))
+//}
