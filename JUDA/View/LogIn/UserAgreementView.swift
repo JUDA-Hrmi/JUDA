@@ -43,13 +43,6 @@ struct UserAgreementView: View {
                 Text("이용약관")
                     .font(.medium16)
                     .frame(maxWidth: .infinity)
-                // 신고하기 화면 닫기 버튼
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "xmark")
-                        .font(.medium16)
-                }
             }
             .padding(.top, 10)
             .foregroundStyle(.mainBlack)

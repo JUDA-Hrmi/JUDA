@@ -52,7 +52,7 @@ struct ProfileSettingView: View {
     
     var body: some View {
         ZStack {
-            VStack(alignment: .center, spacing: 40) {
+            VStack(alignment: .center, spacing: 30) {
                 // 상단 바
                 ZStack(alignment: .leading) {
                     // 뒤로가기
@@ -78,14 +78,14 @@ struct ProfileSettingView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .clipShape(Circle())
-                                .frame(width: 100, height: 100)
+                                .frame(width: 150, height: 150)
                                 .overlay(Circle().stroke(Color.gray03, lineWidth: 1))
                         } else {
                             Image("appIcon")
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .clipShape(Circle())
-                                .frame(width: 100, height: 100)
+                                .frame(width: 150, height: 150)
                                 .overlay(Circle().stroke(Color.gray03, lineWidth: 1))
                         }
                         LibraryPhotosPicker(selectedPhotos: $selectedPhotos, maxSelectionCount: 1) { // 최대 1장
@@ -107,43 +107,43 @@ struct ProfileSettingView: View {
                         }
                         .tint(.mainBlack)
                     }
-                    // 닉네임
-                    VStack(alignment: .leading, spacing: 10) {
-                        // Text
-                        Text("닉네임")
-                            .font(.semibold16)
+                }
+                // 닉네임
+                VStack(alignment: .leading, spacing: 10) {
+                    // Text
+                    Text("닉네임")
+                        .font(.semibold16)
+                        .foregroundStyle(.mainBlack)
+                    // 텍스트 필드
+                    HStack {
+                        // TODO: - 로그인 시, 이름으로 초기 설정
+                        TextField("닉네임", text: $name)
+                            .font(.medium16)
                             .foregroundStyle(.mainBlack)
-                        // 텍스트 필드
-                        HStack {
-                            // TODO: - 로그인 시, 이름으로 초기 설정
-                            TextField("닉네임", text: $name)
-                                .font(.medium16)
-                                .foregroundStyle(.mainBlack)
-                                .focused($focusedField, equals: .name)
-                                .keyboardType(.numberPad)
-                                .textInputAutocapitalization(.never)
-                                .autocorrectionDisabled() // 자동 수정 비활성화
-                            Spacer()
-                            // 텍스트 한번에 지우는 xmark 버튼
-                            if !name.isEmpty && focusedField == .name {
-                                Button {
-                                    name = ""
-                                } label: {
-                                    Image(systemName: "xmark")
-                                }
-                                .foregroundStyle(.gray01)
+                            .focused($focusedField, equals: .name)
+                            .keyboardType(.numberPad)
+                            .textInputAutocapitalization(.never)
+                            .autocorrectionDisabled() // 자동 수정 비활성화
+                        Spacer()
+                        // 텍스트 한번에 지우는 xmark 버튼
+                        if !name.isEmpty && focusedField == .name {
+                            Button {
+                                name = ""
+                            } label: {
+                                Image(systemName: "xmark")
                             }
+                            .foregroundStyle(.gray01)
                         }
-                        // 텍스트 필드 언더라인
-                        Rectangle()
-                            .fill(.gray02)
-                            .frame(height: 1)
-                        // 닉네임 만족 기준
-                        Text("닉네임을 2자~10자 이내로 적어주세요.")
-                            .font(.light14)
-                            .foregroundStyle(nameReference ? .mainAccent01 : .clear)
-                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
+                    // 텍스트 필드 언더라인
+                    Rectangle()
+                        .fill(.gray02)
+                        .frame(height: 1)
+                    // 닉네임 만족 기준
+                    Text("닉네임을 2자~10자 이내로 적어주세요.")
+                        .font(.light14)
+                        .foregroundStyle(nameReference ? .mainAccent01 : .clear)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 HStack(alignment: .bottom) {
                     // 생일
@@ -171,7 +171,7 @@ struct ProfileSettingView: View {
                             ZStack {
                                 Rectangle()
                                     .fill(.background)
-                                    .frame(height: 40)
+                                    .frame(width: 80, height: 40)
                                     .overlay {
                                         RoundedRectangle(cornerRadius: 20)
                                             .stroke(selectedGender == gender ? .mainAccent03 : .gray02,
@@ -218,7 +218,7 @@ struct ProfileSettingView: View {
                     focusedField = nil
                 }
             }
-            //
+            // 텍스트필드에서 엔터 시, 이동
             .onSubmit {
                 switch focusedField {
                 case .name:
@@ -227,6 +227,7 @@ struct ProfileSettingView: View {
                     focusedField = nil
                 }
             }
+            // 사진 불러오기 실패 alert
             if isShowAlertDialog {
                 CustomDialog(type: .oneButton(
                     message: "사진을 불러오는데 실패했어요\n다시 시도해주세요",

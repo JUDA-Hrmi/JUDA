@@ -17,6 +17,11 @@ import AuthenticationServices
 final class AuthService: ObservableObject {
     // 로그인 유무
     @AppStorage("signInStatus") var signInStatus: Bool = false
+    
+    @Published var name: String = ""
+    @Published var age: String = ""
+    @Published var gender: String = ""
+    @Published var profileImage: String = ""
     // Error
     @Published var showError: Bool = false
     @Published var errorMessage: String = ""
@@ -38,30 +43,35 @@ final class AuthService: ObservableObject {
     // 회원탈퇴 - Apple
     func deleteAccount() async -> Bool {
         guard let user = Auth.auth().currentUser else { return false }
+        let needsTokenRevocation = user.providerData.contains { $0.providerID == "apple.com" }
         do {
-            let signInWithApple = SignInWithApple()
-            let appleIDCredential = try await signInWithApple()
-            
-            guard let appleIDToken = appleIDCredential.identityToken else {
-                print("ID 토큰 가져오지 못함")
-              return false
+            if needsTokenRevocation {
+                let signInWithApple = SignInWithApple()
+                let appleIDCredential = try await signInWithApple()
+                
+                guard let appleIDToken = appleIDCredential.identityToken else {
+                    print("ID 토큰 가져오지 못함")
+                    return false
+                }
+                guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+                    print("데이터 -> 토큰 문자열 에러 : \(appleIDToken.debugDescription)")
+                    return false
+                }
+                
+                let nonce = randomNonceString()
+                let credential = OAuthProvider.credential(withProviderID: "apple.com",
+                                                          idToken: idTokenString,
+                                                          rawNonce: nonce)
+                try await user.reauthenticate(with: credential)
+                
+                guard let authorizationCode = appleIDCredential.authorizationCode else { return false }
+                guard let authCodeString = String(data: authorizationCode, encoding: .utf8) else { return false }
+                try await Auth.auth().revokeToken(withAuthorizationCode: authCodeString)
             }
-            guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-                print("데이터 -> 토큰 문자열 에러 : \(appleIDToken.debugDescription)")
-              return false
-            }
-
-            let nonce = randomNonceString()
-            let credential = OAuthProvider.credential(withProviderID: "apple.com",
-                                                      idToken: idTokenString,
-                                                      rawNonce: nonce)
-            try await user.reauthenticate(with: credential)
             
             let uid = user.uid
-            
             try await user.delete()
-
-            deleteAccountData(uid: uid)
+            deleteAccountData(uid: uid) // TODO: - Cloud Functions 을 통해서 지우는게 이상적
             signInStatus = false
             errorMessage = ""
             return true
@@ -81,7 +91,13 @@ extension AuthService {
             print("current User X")
             return
         }
-        let userData: [String: Any] = ["name": "phang", "gender": "male", "age": 32] // TODO: - 실제 유저 데이터로 변경 필요
+        // TODO: - 실제 유저 데이터로 변경 필요
+        let userData: [String: Any] = [
+            "name": "phang",
+            "gender": "male",
+            "profileImage": "",
+            "age": 32
+        ]
         Firestore.firestore().collection("users")
             .document(uid).setData(userData) { error in
                 if let error = error {
@@ -135,19 +151,27 @@ extension AuthService {
                                                                fullName: appleIDCredential.fullName)
                 Task {
                     do {
-                        let _ = try await Auth.auth().signIn(with: credential)
+                        let result = try await Auth.auth().signIn(with: credential)
+                        // 신규 가입의 경우만, displayName 을 넘겨준다.
+                        if let _ = result.user.displayName {
+                            print("Fisrt ✨ - Apple Sign In 🍎")
+                            // TODO: - 약관동의 화면 이동
+                        // 기존 유저의 로그인
+                        } else {
+                            print("Apple Sign In 🍎")
+                            // TODO: - 메인으로 화면 이동
+                        }
+                        // 로그인 상태 변경
+                        withAnimation(.easeInOut) {
+                            self.signInStatus = true
+                        }
                     }
                     catch {
                         print("Error authenticating: \(error.localizedDescription)")
                     }
-                    print("Apple Sign In 🍎")
-                    // 로그인 상태 변경
-                    withAnimation(.easeInOut) {
-                        self.signInStatus = true
-                    }
-                    // 로그인 정보 firestore 에 저장
-                    self.storeUserInformation()
                 }
+                // 로그인 정보 firestore 에 저장
+//                self.storeUserInformation()
             }
         case .failure(let failure):
             signInButtonClicked = false

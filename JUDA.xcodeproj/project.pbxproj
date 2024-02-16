@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0902EB492B7E3372003D555E /* ProfileSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902EB482B7E3372003D555E /* ProfileSettingView.swift */; };
+		0902EB4B2B7E4E72003D555E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902EB4A2B7E4E72003D555E /* User.swift */; };
 		09254CA72B637C9900569D94 /* CustomDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09254CA62B637C9900569D94 /* CustomDivider.swift */; };
 		09394C4A2B74A49A0077F78B /* SuggestDrink.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12832B6A8D6100169B23 /* SuggestDrink.swift */; };
 		09394C4B2B74A49A0077F78B /* PostOrLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12852B6A8D7800169B23 /* PostOrLogin.swift */; };
@@ -131,6 +132,7 @@
 
 /* Begin PBXFileReference section */
 		0902EB482B7E3372003D555E /* ProfileSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingView.swift; sourceTree = "<group>"; };
+		0902EB4A2B7E4E72003D555E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		09254CA62B637C9900569D94 /* CustomDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDivider.swift; sourceTree = "<group>"; };
 		0961B7962B6624D300A9F553 /* DrinkInfoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoList.swift; sourceTree = "<group>"; };
 		0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoGrid.swift; sourceTree = "<group>"; };
@@ -417,6 +419,7 @@
 			children = (
 				B1EE24722B61431A007F68B0 /* DummyModel.swift */,
 				09BCC0B02B79EB5D00FF4D1B /* DrinkDummyData.swift */,
+				0902EB4A2B7E4E72003D555E /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -760,6 +763,7 @@
 				09F8699C2B68E4CA00A56A4C /* WellMatched.swift in Sources */,
 				096E631A2B616F31009246CE /* DrinkGridCell.swift in Sources */,
 				AC6D12882B6A8DD300169B23 /* TodayDrinkRecommended.swift in Sources */,
+				0902EB4B2B7E4E72003D555E /* User.swift in Sources */,
 				09F869982B68E48400A56A4C /* DrinkDetails.swift in Sources */,
 				B12330492B6A99B400DE2A93 /* SettingView.swift in Sources */,
 				09BCC0B12B79EB5D00FF4D1B /* DrinkDummyData.swift in Sources */,
