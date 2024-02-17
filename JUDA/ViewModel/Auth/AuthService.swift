@@ -17,11 +17,14 @@ import AuthenticationServices
 final class AuthService: ObservableObject {
     // 로그인 유무
     @AppStorage("signInStatus") var signInStatus: Bool = false
-    
+    // 신규 유저 or 기존 유저
+    @AppStorage("isFirstSignIn") var isFirstSignIn: Bool = false
+    // User Data
     @Published var name: String = ""
     @Published var age: String = ""
     @Published var gender: String = ""
     @Published var profileImage: String = ""
+    @Published var notificationAllowed: Bool = false
     // Error
     @Published var showError: Bool = false
     @Published var errorMessage: String = ""
@@ -63,7 +66,7 @@ final class AuthService: ObservableObject {
                                                           idToken: idTokenString,
                                                           rawNonce: nonce)
                 try await user.reauthenticate(with: credential)
-                
+                // 애플에서도 앱에 대한 로그인 토큰 삭제
                 guard let authorizationCode = appleIDCredential.authorizationCode else { return false }
                 guard let authCodeString = String(data: authorizationCode, encoding: .utf8) else { return false }
                 try await Auth.auth().revokeToken(withAuthorizationCode: authCodeString)
@@ -86,26 +89,19 @@ final class AuthService: ObservableObject {
 // MARK: - firestore : 유저 저장 & 유저 삭제
 extension AuthService {
     // firestore 에 유저 저장
-    func storeUserInformation() {
+    func addUserDataToStore(userData: User) {
         guard let uid = Auth.auth().currentUser?.uid else {
             print("current User X")
             return
         }
-        // TODO: - 실제 유저 데이터로 변경 필요
-        let userData: [String: Any] = [
-            "name": "phang",
-            "gender": "male",
-            "profileImage": "",
-            "age": 32
-        ]
-        Firestore.firestore().collection("users")
-            .document(uid).setData(userData) { error in
-                if let error = error {
-                    print("유저 정보 저장 에러 : \(error.localizedDescription)")
-                    return
-                }
-                print("Success - 유저 정보 저장")
-            }
+        let documetnRef = Firestore.firestore().collection("users")
+            .document(uid)
+        do {
+            try documetnRef.setData(from: userData)
+            print("Success - 유저 정보 저장")
+        } catch {
+            print("유저 정보 저장 에러 : \(error.localizedDescription)")
+        }
     }
     
     // firestore 에서 유저 데이터 삭제
@@ -153,13 +149,14 @@ extension AuthService {
                     do {
                         let result = try await Auth.auth().signIn(with: credential)
                         // 신규 가입의 경우만, displayName 을 넘겨준다.
-                        if let _ = result.user.displayName {
+                        if let displayName = result.user.displayName {
                             print("Fisrt ✨ - Apple Sign In 🍎")
-                            // TODO: - 약관동의 화면 이동
+                            self.name = displayName
+                            // 약관동의 화면 이동 위해, 신규 가입자로 타입 변경
+                            self.isFirstSignIn = true
                         // 기존 유저의 로그인
                         } else {
                             print("Apple Sign In 🍎")
-                            // TODO: - 메인으로 화면 이동
                         }
                         // 로그인 상태 변경
                         withAnimation(.easeInOut) {
@@ -170,8 +167,6 @@ extension AuthService {
                         print("Error authenticating: \(error.localizedDescription)")
                     }
                 }
-                // 로그인 정보 firestore 에 저장
-//                self.storeUserInformation()
             }
         case .failure(let failure):
             signInButtonClicked = false

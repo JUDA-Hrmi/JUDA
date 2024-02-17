@@ -25,6 +25,22 @@ enum Formatter {
             return "\(count)"
         }
     }
+    
+    // 생년월일 문자열 -> 나이: Int 로 변환
+    static func calculateAge(birthdate: String) -> Int? {
+        // 생년월일 날짜 변환
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyMMdd"
+        guard let birthdateDate = dateFormatter.date(from: birthdate) else {
+            return nil
+        }
+        // 현재 날짜
+        let currentDate = Date()
+        // 생년월일 현재 날짜 사이의 연도 차이 계산
+        let calendar = Calendar.current
+        let ageComponents = calendar.dateComponents([.year], from: birthdateDate, to: currentDate)
+        return ageComponents.year
+    }
 
     // 평점을 소수점 첫번째 자리까지 String으로 변환해주는 함수
     static func formattedStarRatingCount(rating: Double) -> String {

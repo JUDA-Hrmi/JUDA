@@ -18,6 +18,7 @@ struct TermsOfService: Hashable {
 // MARK: - 신규 유저의 경우, 개인 정보 활용 동의 체크 
 struct UserAgreementView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var authService: AuthService
 
     private let webViewurlList = ["https://bit.ly/HrmiService",
                                   "https://bit.ly/HrmiPrivacyPolicy",
@@ -46,6 +47,7 @@ struct UserAgreementView: View {
             }
             .padding(.top, 10)
             .foregroundStyle(.mainBlack)
+            // 이용 약관
             ForEach(termsOfServiceContents.indices, id: \.self) { index in
                 HStack(spacing: 5) {
                     // 체크 박스
@@ -106,7 +108,10 @@ struct UserAgreementView: View {
             //
             Spacer()
             Button {
-                // TODO: - 약관 및 알림 동의 처리 ( 서버 )
+                // '알림 수신 동의' 동의 시, user data 수정
+                if termsOfServiceContents.last?.check == true {
+                    authService.notificationAllowed = true
+                }
                 // 뷰 교체
                 viewType = .ProfileSetting
             } label: {

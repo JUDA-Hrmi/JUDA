@@ -85,10 +85,13 @@ struct LogInView: View {
         .onChange(of: authService.signInStatus) { newValue in
             if newValue == true {
                 authService.signInButtonClicked = false
-                // 기존 유저의 경우, 뒤로 가기 ( 메인 뷰로 이동 )
-//                dismiss()
-                // TODO: 신규 유저의 경우, 이용약관 뷰 이동
-                nextView = true
+                // 신규 유저의 경우, 이용약관 뷰 이동
+                if authService.isFirstSignIn {
+                    nextView = true
+                } else {
+                    // 기존 유저의 경우, 뒤로 가기 ( 메인 뷰로 이동 )
+                    dismiss()
+                }
             }
         }
         .fullScreenCover(isPresented: $nextView) {
