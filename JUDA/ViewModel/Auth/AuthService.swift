@@ -18,10 +18,10 @@ final class AuthService: ObservableObject {
     // 로그인 유무
     @AppStorage("signInStatus") var signInStatus: Bool = false
     // 신규 유저 or 기존 유저
-    @AppStorage("isFirstSignIn") var isFirstSignIn: Bool = false
+    @Published var isNewUser: Bool = false
     // User Data
     @Published var name: String = ""
-    @Published var age: String = ""
+    @Published var age: Int = 0
     @Published var gender: String = ""
     @Published var profileImage: String = ""
     @Published var notificationAllowed: Bool = false
@@ -32,15 +32,28 @@ final class AuthService: ObservableObject {
     @Published var signInButtonClicked: Bool = false
     // Nonce : 암호와된 임의의 난수
     private var currentNonce: String?
+    // users 컬렉션
+    private let collectionRef = Firestore.firestore().collection("users")
+    
+//    init() {
+//        currentUser = Auth.auth().currentUser
+//    }
+    
+    // 로그아웃 및 탈퇴 시, 초기화
+    func reset() {
+        self.signInStatus = false
+        self.isNewUser = false
+    }
     
     // 로그아웃
     func signOut() {
         do {
           try Auth.auth().signOut()
-        } catch let signOutError as NSError {
-          print("Error signing out: %@", signOutError)
+        } catch {
+            print("Error signing out: ", error.localizedDescription)
+            errorMessage = error.localizedDescription
         }
-        self.signInStatus = false
+        reset()
     }
     
     // 회원탈퇴 - Apple
@@ -75,7 +88,7 @@ final class AuthService: ObservableObject {
             let uid = user.uid
             try await user.delete()
             deleteAccountData(uid: uid) // TODO: - Cloud Functions 을 통해서 지우는게 이상적
-            signInStatus = false
+            reset()
             errorMessage = ""
             return true
         } catch {
@@ -86,18 +99,52 @@ final class AuthService: ObservableObject {
     }
 }
 
-// MARK: - firestore : 유저 저장 & 유저 삭제
+// MARK: - firestore : 유저 정보 불러오기 & 유저 저장 & 유저 삭제
 extension AuthService {
+    // firestore 에 유저 존재 유무 체크
+    func checkNewUser(uid: String) async -> Bool {
+        do {
+            let document = try await collectionRef.document(uid).getDocument()
+            return !document.exists
+        } catch {
+            print("Error getting document: \(error)")
+            return true
+        }
+    }
+
+    // firestore 에서 유저 정보 가져오기
+    func fetchUserData() async {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            reset()
+            print("currentUser 없음")
+            return
+        }
+        do {
+            let document = try await collectionRef.document(uid).getDocument(source: .cache)
+            if document.exists {
+                let userData = try document.data(as: User.self)
+                self.name = userData.name
+                self.age = userData.age
+                self.profileImage = userData.profileImage ?? "" // 기본 이미지 url
+                self.gender = userData.gender
+                self.notificationAllowed = userData.notificationAllowed
+            } else {
+                print("Document does not exist in cache")
+            }
+        } catch {
+            print("Error getting document: \(error)")
+        }
+    }
+    
     // firestore 에 유저 저장
     func addUserDataToStore(userData: User) {
         guard let uid = Auth.auth().currentUser?.uid else {
+            reset()
             print("current User X")
             return
         }
-        let documetnRef = Firestore.firestore().collection("users")
-            .document(uid)
         do {
-            try documetnRef.setData(from: userData)
+            try collectionRef.document(uid).setData(from: userData)
             print("Success - 유저 정보 저장")
         } catch {
             print("유저 정보 저장 에러 : \(error.localizedDescription)")
@@ -106,14 +153,20 @@ extension AuthService {
     
     // firestore 에서 유저 데이터 삭제
     func deleteAccountData(uid: String) {
-        let reference = Firestore.firestore().collection("users").document(uid)
-        reference.delete { error in
+        collectionRef.document(uid).delete { error in
             if let error = error {
                 print("deleteAccountData - firestore : \(error.localizedDescription)")
                 return
             }
         }
     }
+}
+
+// MARK: - firestorage
+// 유저 가입 시, 프로필 이미지 생성
+// 유저 탈퇴 시, 프로필 이미지 삭제 + 유저 게시글 이미지 삭제
+extension AuthService {
+    //
 }
 
 // MARK: - SignInWithAppleButton : request & result
@@ -129,48 +182,52 @@ extension AuthService {
     func handleSignInWithAppleCompletion(_ result: Result<ASAuthorization, Error>) {
         switch result {
         case .success(let authorization):
-            if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
-                guard let nonce = currentNonce else {
-                    fatalError("Invalid state: a login callback was received, but no login request was sent.")
-                }
-                guard let appleIDToken = appleIDCredential.identityToken else {
-                    print("Unable to fetdch identify token.")
-                    return
-                }
-                guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-                    print("Unable to serialise token string from data: \(appleIDToken.debugDescription)")
-                    return
-                }
-                
-                let credential = OAuthProvider.appleCredential(withIDToken: idTokenString,
-                                                               rawNonce: nonce,
-                                                               fullName: appleIDCredential.fullName)
-                Task {
-                    do {
-                        let result = try await Auth.auth().signIn(with: credential)
-                        // 신규 가입의 경우만, displayName 을 넘겨준다.
-                        if let displayName = result.user.displayName {
-                            print("Fisrt ✨ - Apple Sign In 🍎")
-                            self.name = displayName
-                            // 약관동의 화면 이동 위해, 신규 가입자로 타입 변경
-                            self.isFirstSignIn = true
-                        // 기존 유저의 로그인
-                        } else {
-                            print("Apple Sign In 🍎")
-                        }
-                        // 로그인 상태 변경
-                        withAnimation(.easeInOut) {
-                            self.signInStatus = true
-                        }
-                    }
-                    catch {
-                        print("Error authenticating: \(error.localizedDescription)")
-                    }
+            guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {
+                print("error: appleIDCredential")
+                return
+            }
+            let fullName = appleIDCredential.fullName
+            self.name = (fullName?.familyName ?? "") + (fullName?.givenName ?? "")
+            Task {
+                // 로그인
+                await singInApple(appleIDCredential: appleIDCredential)
+                // 신규 유저 체크
+                isNewUser = await checkNewUser(uid: Auth.auth().currentUser?.uid ?? "")
+                // 신규 유저
+                if isNewUser {
+                    signOut()
+                    self.isNewUser = true
+                    print("Fisrt ✨ - Apple Sign Up 🍎")
+                } else {
+                    print("Apple Sign In 🍎")
+                    self.signInStatus = true
                 }
             }
         case .failure(let failure):
-            signInButtonClicked = false
+            reset()
             errorMessage = failure.localizedDescription
+        }
+    }
+    
+    func singInApple(appleIDCredential: ASAuthorizationAppleIDCredential) async {
+        guard let nonce = currentNonce else {
+            fatalError("Invalid state: a login callback was received, but no login request was sent.")
+        }
+        guard let appleIDToken = appleIDCredential.identityToken else {
+            print("Unable to fetdch identify token.")
+            return
+        }
+        guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+            print("Unable to serialise token string from data: \(appleIDToken.debugDescription)")
+            return
+        }
+        let credential = OAuthProvider.appleCredential(withIDToken: idTokenString,
+                                                       rawNonce: nonce,
+                                                       fullName: appleIDCredential.fullName)
+        do {
+            let _ = try await Auth.auth().signIn(with: credential)
+        } catch {
+            print("Error authenticating: \(error.localizedDescription)")
         }
     }
 }
@@ -215,7 +272,7 @@ extension AuthService {
     }
 }
 
-// MARK: - Sign in with Apple
+// MARK: - Sign in with Apple (reauth)
 final class SignInWithApple: NSObject, ASAuthorizationControllerDelegate {
     private var continuation : CheckedContinuation<ASAuthorizationAppleIDCredential, Error>?
     

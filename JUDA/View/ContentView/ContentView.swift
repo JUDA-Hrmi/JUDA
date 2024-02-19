@@ -68,7 +68,7 @@ struct ContentView: View {
         case .liked:
             LikedView()
         case .myPage:
-            MypageView()
+            MypageView(selectedTabIndex: $selectedTabIndex)
         }
     }
 }

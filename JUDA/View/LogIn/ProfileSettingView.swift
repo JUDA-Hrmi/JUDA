@@ -38,6 +38,10 @@ struct ProfileSettingView: View {
     @State private var userProfileImage: UIImage? // 사용자 프로필 이미지
     
     @State private var name: String = ""
+    var namePlaceholder: String {
+        guard !authService.name.isEmpty else { return "닉네임"}
+        return name
+    }
     @State private var birthDate: String = ""
     @State private var selectedGender: Gender?
     
@@ -117,7 +121,7 @@ struct ProfileSettingView: View {
                         // 텍스트 필드
                         HStack {
                             TextField("닉네임", text: $name,
-                                      prompt: Text(authService.name))
+                                      prompt: Text(namePlaceholder))
                             .font(.medium16)
                             .foregroundStyle(.mainBlack)
                             .focused($focusedField, equals: .name)
@@ -197,15 +201,22 @@ struct ProfileSettingView: View {
                 }
                 // "완료" 버튼
                 Button {
-                    // 유저 이름, 생일, 성별, 프로필, 알림 동의 등 forestore 에 저장
-                    authService.addUserDataToStore(
-                        userData: User(
-                            name: name,
-                            age: Formatter.calculateAge(birthdate: birthDate) ?? 20,
-                            gender: selectedGender!.rawValue,
-//                            profileImage: userProfileImage, 이미지 Storage 주소로 저장
-                            profileImage: "",
-                            notificationAllowed: authService.notificationAllowed))
+                    Task {
+                        //
+                        let signWithApple = SignInWithApple()
+                        let appleIDCredential = try await signWithApple()
+                        await authService.singInApple(appleIDCredential: appleIDCredential)
+                        authService.signInStatus = true
+                        // 유저 이름, 생일, 성별, 프로필, 알림 동의 등 forestore 에 저장
+                        authService.addUserDataToStore(
+                            userData: User(
+                                name: name,
+                                age: Formatter.calculateAge(birthdate: birthDate) ?? 20,
+                                gender: selectedGender!.rawValue,
+//                                profileImage: userProfileImage, 이미지 Storage 주소로 저장
+                                profileImage: "",
+                                notificationAllowed: authService.notificationAllowed))
+                    }
                     // TODO: NavigationPath 초기화 ( 메인 뷰로 이동 )
                     dismiss()
                 } label: {

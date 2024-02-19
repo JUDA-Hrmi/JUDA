@@ -21,12 +21,18 @@ struct JUDAApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject private var authService = AuthService()
     @StateObject private var appViewModel = AppViewModel()
+    @State private var isLoading = true
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(authService)
-                .environmentObject(appViewModel)
+            if isLoading {
+                SplashView(isActive: $isLoading)
+                    .environmentObject(authService)
+            } else {
+                ContentView()
+                    .environmentObject(authService)
+                    .environmentObject(appViewModel)
+            }
         }
     }
 }

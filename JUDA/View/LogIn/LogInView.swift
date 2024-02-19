@@ -83,15 +83,17 @@ struct LogInView: View {
         }
         // 로그인 완료 시 화면 이동
         .onChange(of: authService.signInStatus) { newValue in
+            authService.signInButtonClicked = false
             if newValue == true {
-                authService.signInButtonClicked = false
-                // 신규 유저의 경우, 이용약관 뷰 이동
-                if authService.isFirstSignIn {
-                    nextView = true
-                } else {
-                    // 기존 유저의 경우, 뒤로 가기 ( 메인 뷰로 이동 )
-                    dismiss()
-                }
+                // 기존 유저의 경우, 뒤로 가기 ( 메인 뷰로 이동 )
+                dismiss()
+            }
+        }
+        .onChange(of: authService.isNewUser) { _ in
+            authService.signInButtonClicked = false
+            // 신규 유저의 경우, 이용약관 뷰 이동
+            if authService.isNewUser == true {
+                nextView = true
             }
         }
         .fullScreenCover(isPresented: $nextView) {

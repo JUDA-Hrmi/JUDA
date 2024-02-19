@@ -15,6 +15,8 @@ struct MypageView: View {
     @State var isLike: Bool = true
     @State var likeCount: Int = 303
     
+    @Binding var selectedTabIndex: Int
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -75,7 +77,7 @@ struct MypageView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     // TODO: NavigationLink - value 로 수정
                     NavigationLink {
-                        SettingView()
+                        SettingView(selectedTabIndex: $selectedTabIndex)
                             .modifier(TabBarHidden())
                     } label: {
                         Image(systemName: "gearshape")
@@ -92,5 +94,5 @@ struct MypageView: View {
 }
 
 #Preview {
-    MypageView()
+    MypageView(selectedTabIndex: .constant(4))
 }

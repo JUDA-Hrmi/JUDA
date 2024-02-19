@@ -25,6 +25,8 @@ struct SettingView: View {
 	@State private var selectedSortingOption: String = "시스템 모드"
 	@State private var isLogoutClicked = false // 로그아웃 버튼 클릭 시
 	@State private var isDeletAccount = false // 회원탈퇴 버튼 클릭 시
+    
+    @Binding var selectedTabIndex: Int
 	
 	var body: some View {
 		ZStack {
@@ -126,7 +128,9 @@ struct SettingView: View {
                     rightButtonAction: {
                         // 로그아웃 - AppStorage 에서 변경
                         authService.signOut()
-                        // TODO: MainView 로 보내기
+                        // MainView 로 보내기
+                        dismiss()
+                        selectedTabIndex = 0
                     })
                 )
 			}
@@ -145,8 +149,9 @@ struct SettingView: View {
                         Task {
                             if await authService.deleteAccount() {
                                 isDeletAccount.toggle()
-                                // TODO: 메인 화면으로 이동
+                                // 메인 화면으로 이동
                                 dismiss()
+                                selectedTabIndex = 0
                             }
                         }
                     })
@@ -185,5 +190,5 @@ struct CustomText: ViewModifier {
 
 
 #Preview {
-	SettingView()
+    SettingView(selectedTabIndex: .constant(4))
 }
