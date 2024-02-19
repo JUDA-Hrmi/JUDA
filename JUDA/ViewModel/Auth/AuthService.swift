@@ -30,8 +30,8 @@ final class AuthService: ObservableObject {
     // Error
     @Published var showError: Bool = false
     @Published var errorMessage: String = ""
-    // 로그인 중
-    @Published var signInButtonClicked: Bool = false
+    // 로딩 중
+    @Published var isLoading: Bool = false
     // Nonce : 암호와된 임의의 난수
     private var currentNonce: String?
     // Firestore - users 컬렉션
@@ -44,6 +44,7 @@ final class AuthService: ObservableObject {
     // 로그아웃 및 탈퇴 시, 초기화
     func reset() {
         self.signInStatus = false
+        self.isLoading = false
         self.isNewUser = false
         self.uid = ""
         self.name = ""
@@ -103,6 +104,7 @@ final class AuthService: ObservableObject {
         } catch {
             print("deleteAccount error : \(error.localizedDescription)")
             errorMessage = error.localizedDescription
+            isLoading = false
             return false
         }
     }
@@ -223,7 +225,7 @@ extension AuthService {
 // MARK: - SignInWithAppleButton : request & result
 extension AuthService {
     func handleSignInWithAppleRequest(_ request: ASAuthorizationAppleIDRequest) {
-        signInButtonClicked = true
+//        signInButtonClicked = true
         request.requestedScopes = [.fullName, .email]
         let nonce = randomNonceString()
         currentNonce = nonce
@@ -240,6 +242,8 @@ extension AuthService {
             let fullName = appleIDCredential.fullName
             self.name = (fullName?.familyName ?? "") + (fullName?.givenName ?? "")
             Task {
+                // 로그인 중 -
+                isLoading = true
                 // 로그인
                 await singInApple(appleIDCredential: appleIDCredential)
                 // 신규 유저 체크

@@ -36,13 +36,6 @@ struct LogInView: View {
             }
             //
             Spacer()
-            // 로그인 중 - progress
-            if authService.signInButtonClicked == true {
-                ProgressView()
-                    .progressViewStyle(.circular)
-            }
-            //
-            Spacer()
             // 로그인 버튼
             VStack(spacing: 30) {
                 // 애플 로그인
@@ -70,6 +63,8 @@ struct LogInView: View {
                 .font(.thin12)
                 .multilineTextAlignment(.center)
         }
+        // 로그인 도중에 생기는 로딩
+        .loadingView($authService.isLoading)
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -83,14 +78,14 @@ struct LogInView: View {
         }
         // 로그인 완료 시 화면 이동
         .onChange(of: authService.signInStatus) { newValue in
-            authService.signInButtonClicked = false
+            authService.isLoading = false
             if newValue == true {
                 // 기존 유저의 경우, 뒤로 가기 ( 메인 뷰로 이동 )
                 dismiss()
             }
         }
         .onChange(of: authService.isNewUser) { _ in
-            authService.signInButtonClicked = false
+            authService.isLoading = false
             // 신규 유저의 경우, 이용약관 뷰 이동
             if authService.isNewUser == true {
                 nextView = true
