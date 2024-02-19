@@ -45,7 +45,7 @@ struct DrinkDetailView: View {
                 }
                 CustomDivider()
                 // 잘어울리는 음식
-                WellMatched()
+                WellMatched(drink: drink)
                 
                 CustomDivider()
                 // 차트 - 선호하는 연령, 성별

@@ -9,10 +9,10 @@ import SwiftUI
 
 struct WellMatched: View {
     @EnvironmentObject var aiWellMatchViewModel: AiWellMatchViewModel
-    let drink = [
-        "트리폴라 피에몬테 로쏘"
-    ]
-    
+//    let drink = [
+//        "트리폴라 피에몬테 로쏘"
+//    ]
+    let drink: Drink
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             // Well Matched
@@ -34,8 +34,9 @@ struct WellMatched: View {
         .onAppear {
             Task {
                 do {
-                    aiWellMatchViewModel.respond = try await aiWellMatchViewModel.request(prompt: "Please recommend 3 foods that go well with you. Only food except drinks. List below --- Beverages List: \(drink)")
+                    aiWellMatchViewModel.respond = try await aiWellMatchViewModel.request(prompt: "Please recommend 3 foods that go well with you. Only food except drinks. List below --- Beverages List: \(drink.name)")
                     print("\(aiWellMatchViewModel.respond)")
+                    print("\(drink.name)")
                 } catch {
                     print("Error fetching recommendations: \(error)")
                 }
@@ -46,3 +47,5 @@ struct WellMatched: View {
     }
     
 }
+
+
