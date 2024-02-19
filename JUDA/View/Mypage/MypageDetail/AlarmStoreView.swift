@@ -7,35 +7,6 @@
 
 import SwiftUI
 
-// UITest - 알림 내역 리스트
-struct Alarm: Identifiable, Hashable {
-    let id = UUID()
-    let likedUserName: String
-    let postImageName: String
-    let likedTime: Date
-    
-    static func randomDate() -> Date {
-        let randomTimeInterval = Double.random(in: -500 * 24 * 60 * 60 ... 0)
-        return Date().addingTimeInterval(randomTimeInterval)
-    }
-
-    static let alarmList: [Alarm] = [
-        .init(likedUserName: "phang", postImageName: "foodEx3", likedTime: randomDate()),
-        .init(likedUserName: "mangJae", postImageName: "foodEx2", likedTime: randomDate()),
-        .init(likedUserName: "SayHong", postImageName: "foodEx4", likedTime: randomDate()),
-        .init(likedUserName: "withSeon", postImageName: "foodEx1", likedTime: randomDate()),
-        .init(likedUserName: "DevLarva", postImageName: "foodEx2", likedTime: randomDate()),
-        .init(likedUserName: "내가아이디가좀길어", postImageName: "foodEx1", likedTime: randomDate()),
-        .init(likedUserName: "withSeon", postImageName: "foodEx3", likedTime: randomDate()),
-        .init(likedUserName: "DevLarva", postImageName: "foodEx3", likedTime: randomDate()),
-        .init(likedUserName: "withSeon", postImageName: "foodEx5", likedTime: randomDate()),
-        .init(likedUserName: "SayHong", postImageName: "foodEx5", likedTime: randomDate()),
-        .init(likedUserName: "phang", postImageName: "foodEx2", likedTime: randomDate()),
-        .init(likedUserName: "mangJae", postImageName: "foodEx4", likedTime: randomDate()),
-        .init(likedUserName: "phang", postImageName: "foodEx4", likedTime: randomDate()),
-        .init(likedUserName: "내가아이디가좀길어ㅋ", postImageName: "foodEx4", likedTime: randomDate()),
-    ]
-}
 
 // MARK: - 알람 쌓여있는 리스트 화면
 struct AlarmStoreView: View {
