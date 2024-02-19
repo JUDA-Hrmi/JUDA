@@ -95,7 +95,7 @@ struct ProfileSettingView: View {
                             Image(systemName: "pencil.circle.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
-                                .frame(width: 25, height: 25)
+                                .frame(width: 30, height: 30)
                                 .foregroundStyle(.gray01)
                         }
                         .onChange(of: selectedPhotos) { _ in
