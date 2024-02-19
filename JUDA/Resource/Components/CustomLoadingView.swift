@@ -31,7 +31,8 @@ struct CustomLoadingViewModifier: ViewModifier {
             content
             if isLoading {
                 CustomLoadingView()
-                    .zIndex(1) // 기존 뷰 (content) 위에 표시
+                    // 기존 뷰 (content) 위에 표시
+                    .zIndex(1)
             }
         }
     }
