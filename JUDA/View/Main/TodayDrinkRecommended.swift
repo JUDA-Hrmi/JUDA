@@ -22,24 +22,24 @@ let TodayDrinkData: [TodayDrink] = [
 
 // MARK: - 오늘의 추천 술 이미지 + 이름
 struct TodayDrinkRecommended: View {
-	@Binding var isLoggedIn: Bool
+    @Binding var isLoggedIn: Bool
     let todayDrink: [TodayDrink] = TodayDrinkData
-	
+    
     var body: some View {
         VStack {
             HStack(alignment: .top, spacing: 20) {
                 ForEach(todayDrink, id: \.self) { drink in
-					if isLoggedIn {
+                    if isLoggedIn {
                         // TODO: NavigationLink - value 로 수정
-						NavigationLink {
+                        NavigationLink {
                             DrinkDetailView(drink: Wine.wineSample01) // 임시 더미데이터
                                 .modifier(TabBarHidden())
-						} label: {
-							TodayDrinkRecommendedCell(todayDrink: drink)
-						}
-					} else {
-						TodayDrinkRecommendedCell(todayDrink: drink)
-					}
+                        } label: {
+                            TodayDrinkRecommendedCell(todayDrink: drink)
+                        }
+                    } else {
+                        TodayDrinkRecommendedCell(todayDrink: drink)
+                    }
                 }
             }
         }
@@ -58,14 +58,14 @@ struct TodayDrinkRecommendedCell: View {
         VStack {
             // 이미지
             Image(todayDrink.image)
-				.resizable()
-				.aspectRatio(contentMode: .fit)
-				.frame(width: 70, height: 103.48)
-				.padding(.bottom, 10)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 70, height: 103.48)
+                .padding(.bottom, 10)
             // 술 이름
             Text(todayDrink.title)
                 .font(.regular12)
-				.foregroundStyle(.mainBlack)
+                .foregroundStyle(.mainBlack)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
         }
