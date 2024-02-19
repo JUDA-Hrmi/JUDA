@@ -16,7 +16,7 @@ struct AlarmStoreListCell: View {
             VStack(alignment: .leading, spacing: 2) {
                 // 게사물 좋아요 알람 내용
                 Group {
-                    Text(alarm.likedUserName)
+                    Text(alarm.likedUser)
                         .font(.medium14)
                     +
                     Text(" 님이 게시물에 하트를 남겼어요.")
@@ -27,10 +27,10 @@ struct AlarmStoreListCell: View {
                 .overlay(alignment: .topLeading) {
                     // TODO: NavigationLink - value 로 수정
                     NavigationLink {
-                        NavigationProfileView(likeCount: 44, userType: .otheruser, userName: alarm.likedUserName)
+                        NavigationProfileView(likeCount: 44, userType: .otheruser, userName: alarm.likedUser)
                             .modifier(TabBarHidden())
                     } label: {
-                        Text(alarm.likedUserName)
+                        Text(alarm.likedUser)
                             .font(.medium14)
                             .foregroundStyle(.mainBlack)
                     }
@@ -43,7 +43,7 @@ struct AlarmStoreListCell: View {
             }
             Spacer()
             // 해당 술상 이미지
-            Image(alarm.postImageName)
+            Image("foodEx1")
                 .resizable()
                 .aspectRatio(1.0, contentMode: .fill)
                 .frame(maxWidth: 60, maxHeight: 60)
@@ -55,6 +55,3 @@ struct AlarmStoreListCell: View {
     }
 }
 
-#Preview {
-    AlarmStoreListCell(alarm: Alarm(likedUserName: "내가아이디가좀길어ㅋ", postImageName: "foodEx1", likedTime: Alarm.randomDate()))
-}

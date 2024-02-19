@@ -138,6 +138,7 @@ extension AuthService {
                 fetchProfileImage()
                 self.gender = userData.gender
                 self.notificationAllowed = userData.notificationAllowed
+                print("Data:", userData)
             } else {
                 print("Document does not exist in cache")
             }

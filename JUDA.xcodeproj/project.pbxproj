@@ -11,7 +11,6 @@
 		0902EB4B2B7E4E72003D555E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902EB4A2B7E4E72003D555E /* User.swift */; };
 		090FF1C72B80A0C600AF22B5 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090FF1C62B80A0C600AF22B5 /* SplashView.swift */; };
 		090FF1CA2B82ED8400AF22B5 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 090FF1C92B82ED8400AF22B5 /* FirebaseStorage */; };
-		090FF1CC2B83408400AF22B5 /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 090FF1CB2B83408400AF22B5 /* DrinkLoading.json */; };
 		090FF1CE2B83413100AF22B5 /* CustomLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090FF1CD2B83413100AF22B5 /* CustomLoadingView.swift */; };
 		090FF1D02B83436000AF22B5 /* View +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090FF1CF2B83436000AF22B5 /* View +.swift */; };
 		09254CA72B637C9900569D94 /* CustomDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09254CA62B637C9900569D94 /* CustomDivider.swift */; };
@@ -113,6 +112,7 @@
 		B1CF61212B83763000B59447 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = ACCFECBB2B7FAA50009E5E9C /* FirebaseFirestore */; };
 		B1CF61232B83767300B59447 /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1CF61222B83767300B59447 /* APIKEYS.plist */; };
 		B1CF61252B83767C00B59447 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1CF61242B83767C00B59447 /* GoogleService-Info.plist */; };
+		B1CF61272B838DBF00B59447 /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = B1CF61262B838DBF00B59447 /* DrinkLoading.json */; };
 		B1EE24642B613EB1007F68B0 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B1EE24632B613EB1007F68B0 /* FirebaseAnalytics */; };
 		B1EE24662B613EB1007F68B0 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = B1EE24652B613EB1007F68B0 /* FirebaseAnalyticsOnDeviceConversion */; };
 		B1EE24682B613EB1007F68B0 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B1EE24672B613EB1007F68B0 /* FirebaseAnalyticsSwift */; };
@@ -137,7 +137,6 @@
 		0902EB482B7E3372003D555E /* ProfileSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingView.swift; sourceTree = "<group>"; };
 		0902EB4A2B7E4E72003D555E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		090FF1C62B80A0C600AF22B5 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
-		090FF1CB2B83408400AF22B5 /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = DrinkLoading.json; path = ../../../../../Downloads/DrinkLoading.json; sourceTree = "<group>"; };
 		090FF1CD2B83413100AF22B5 /* CustomLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLoadingView.swift; sourceTree = "<group>"; };
 		090FF1CF2B83436000AF22B5 /* View +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View +.swift"; sourceTree = "<group>"; };
 		09254CA62B637C9900569D94 /* CustomDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDivider.swift; sourceTree = "<group>"; };
@@ -235,6 +234,7 @@
 		B1B8FE8C2B5EAAAB00921BBE /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		B1CF61222B83767300B59447 /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = APIKEYS.plist; sourceTree = "<group>"; };
 		B1CF61242B83767C00B59447 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B1CF61262B838DBF00B59447 /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DrinkLoading.json; sourceTree = "<group>"; };
 		B1EE24722B61431A007F68B0 /* DummyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyModel.swift; sourceTree = "<group>"; };
 		B1EE24872B61445E007F68B0 /* MypageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageView.swift; sourceTree = "<group>"; };
 		B1EE24892B614464007F68B0 /* LikedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedView.swift; sourceTree = "<group>"; };
@@ -316,7 +316,7 @@
 		09BCC1482B7C7E1500FF4D1B /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
-				090FF1CB2B83408400AF22B5 /* DrinkLoading.json */,
+				B1CF61262B838DBF00B59447 /* DrinkLoading.json */,
 				09BCC14E2B7C7E2900FF4D1B /* Clouds.json */,
 				09BCC1492B7C7E2900FF4D1B /* Loading.json */,
 				09BCC14C2B7C7E2900FF4D1B /* Rain.json */,
@@ -730,6 +730,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09BCC1512B7C7E2900FF4D1B /* Sun.json in Resources */,
+				B1CF61272B838DBF00B59447 /* DrinkLoading.json in Resources */,
 				09BCC1502B7C7E2900FF4D1B /* Thunder.json in Resources */,
 				B1B8FE8D2B5EAAAB00921BBE /* Colors.xcassets in Resources */,
 				B121A5732B5F910900667D42 /* Pretendard-Bold.otf in Resources */,
@@ -737,7 +738,6 @@
 				B1B8FE842B5EA9DA00921BBE /* Preview Assets.xcassets in Resources */,
 				B121A5782B5F911A00667D42 /* Pretendard-Thin.otf in Resources */,
 				B121A5772B5F911900667D42 /* Pretendard-SemiBold.otf in Resources */,
-				090FF1CC2B83408400AF22B5 /* DrinkLoading.json in Resources */,
 				09BCC1532B7C7E2900FF4D1B /* Snow.json in Resources */,
 				09BCC1542B7C7E2900FF4D1B /* Clouds.json in Resources */,
 				B1CF61252B83767C00B59447 /* GoogleService-Info.plist in Resources */,

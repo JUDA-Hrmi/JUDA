@@ -7,27 +7,29 @@
 
 import SwiftUI
 
-
 // MARK: - 알람 쌓여있는 리스트 화면
 struct AlarmStoreView: View {
+    let userId = "Wb0TytMDe7GTOaTBnI5Y"
+
     @Environment(\.dismiss) private var dismiss
-    
+    @StateObject var notifications = Alarms.shared
+
     var body: some View {
         VStack(spacing: 0) {
             // 알람 리스트
             // MARK: iOS 16.4 이상
             if #available(iOS 16.4, *) {
                 ScrollView() {
-                    AlarmListContent()
+                    AlarmListContent(notifications: notifications)
                 }
                 .scrollBounceBehavior(.basedOnSize, axes: .vertical)
             // MARK: iOS 16.4 미만
             } else {
                 ViewThatFits(in: .vertical) {
-                    AlarmListContent()
+                    AlarmListContent(notifications: notifications)
                         .frame(maxHeight: .infinity, alignment: .top)
                     ScrollView {
-                        AlarmListContent()
+                        AlarmListContent(notifications: notifications)
                     }
                 }
             }
@@ -44,26 +46,29 @@ struct AlarmStoreView: View {
             }
             ToolbarItem(placement: .principal) {
                 Text("알림")
-                    .font(.medium16)
+                    .font(.regular16)
                     .foregroundStyle(.mainBlack)
             }
+        }
+        .task {
+            await notifications.fetchNotificationForUser(userId: userId)
         }
     }
 }
 
 // MARK: - 스크롤 뷰 or 뷰 로 보여질 알람 리스트
 struct AlarmListContent: View {
+    @StateObject var notifications: Alarms
+
     var body: some View {
         LazyVStack {
-            ForEach(0..<Alarm.alarmList.count, id: \.self) { index in
+            ForEach(notifications.alarms, id: \.self) { alarm in
                 // TODO: NavigationLink - value 로 수정
-                NavigationLink {
-                    PostDetailView(postUserType: .writter, nickName: "Hrmi", isLike: .constant(false), likeCount: .constant(45))
-                } label: {
-                    AlarmStoreListCell(alarm: Alarm.alarmList[index])
+                NavigationLink(destination: PostDetailView(postUserType: .writter, nickName: "Hrmi", isLike: .constant(false), likeCount: .constant(45))) {
+                    AlarmStoreListCell(alarm: alarm)
                 }
-                
-                if index != Alarm.alarmList.count - 1 {
+
+                if alarm != notifications.alarms.last {
                     CustomDivider()
                 }
             }
@@ -71,6 +76,3 @@ struct AlarmListContent: View {
     }
 }
 
-#Preview {
-    AlarmStoreView()
-}

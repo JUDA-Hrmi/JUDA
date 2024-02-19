@@ -9,11 +9,10 @@ import SwiftUI
 
 // MARK: - 유저 닉네임 수정 화면
 struct ChangeUserNameView: View {
+    @EnvironmentObject private var authService: AuthService
 	@Environment(\.dismiss) var dismiss
     
 	@FocusState var isFocused: Bool
-    
-	@Binding var userNickName: String
     
 	@State private var userChangeNickName: String = ""
 	@State private var isCompleted: Bool = true
@@ -25,7 +24,7 @@ struct ChangeUserNameView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             // 유저 닉네임 수정 텍스트 필드
             HStack {
-                TextField(userNickName, text: $userChangeNickName)
+                TextField(authService.name, text: $userChangeNickName)
                     .font(.medium16)
                     .foregroundStyle(.mainBlack)
                     .focused($isFocused)
@@ -65,7 +64,7 @@ struct ChangeUserNameView: View {
             CustomDivider()
             // 닉네임 변경 완료
             Button {
-                userNickName = userChangeNickName
+                // TODO: update 코드 작성하기
                 dismiss()
             } label: {
                 Text("변경 완료")
@@ -74,8 +73,8 @@ struct ChangeUserNameView: View {
                     .padding(.vertical, 5)
                 
             }
-            .disabled(userChangeNickName.isEmpty || userNickName == userChangeNickName)
-            .foregroundColor(userChangeNickName.isEmpty || userNickName == userChangeNickName ? .gray01 : .white)
+            .disabled(userChangeNickName.isEmpty || authService.name == userChangeNickName)
+            .foregroundColor(userChangeNickName.isEmpty || authService.name == userChangeNickName ? .gray01 : .white)
             .buttonStyle(.borderedProminent)
             .tint(.mainAccent03)
         }
