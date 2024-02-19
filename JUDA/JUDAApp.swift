@@ -9,21 +9,33 @@ import SwiftUI
 import FirebaseCore
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-  func application(_ application: UIApplication,
-                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    FirebaseApp.configure()
-    return true
-  }
+    var window: UIWindow?
+
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        // firebase
+        FirebaseApp.configure()
+        return true
+    }
 }
 
 @main
 struct JUDAApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject private var authService = AuthService()
+    @StateObject private var appViewModel = AppViewModel()
+    @State private var isLoading = true
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(AppViewModel())
+            if isLoading {
+                SplashView(isActive: $isLoading)
+                    .environmentObject(authService)
+            } else {
+                ContentView()
+                    .environmentObject(authService)
+                    .environmentObject(appViewModel)
+            }
         }
     }
 }

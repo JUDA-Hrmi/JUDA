@@ -57,7 +57,7 @@ struct NavigationPostsView: View {
             }
             ToolbarItem(placement: .principal) {
                 Text(postSearchText)
-                    .font(.semibold16)
+                    .font(.medium16)
                     .lineLimit(1)
             }
         }

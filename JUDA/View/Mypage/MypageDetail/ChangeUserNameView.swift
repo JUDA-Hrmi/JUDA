@@ -95,7 +95,7 @@ struct ChangeUserNameView: View {
             }
             ToolbarItem(placement: .principal) {
                 Text("닉네임 수정")
-                    .font(.regular16)
+                    .font(.medium16)
             }
         }
         .tint(.mainBlack)

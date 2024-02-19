@@ -11,7 +11,8 @@ import Lottie
 // MARK: - 메인 탭
 struct MainView: View {
     @EnvironmentObject private var appViewModel: AppViewModel
-    @State private var isLoggedIn = true
+    @EnvironmentObject private var authService: AuthService
+    
 	@Binding var selectedTabIndex: Int
 	
     var body: some View {
@@ -19,13 +20,13 @@ struct MainView: View {
             VStack(alignment: .center, spacing: 0) {
                 Spacer()
                 // 날씨 와 어울리는 술 + 안주
-                WeatherAndFood(isLoggedIn: $isLoggedIn)
+                WeatherAndFood()
                 Spacer()
                 // 오늘의 추천 술
-                SuggestDrink(isLoggedIn: $isLoggedIn)
+                SuggestDrink()
                 Spacer()
                 // 추천 술상 보러가기 or 로그인 하러가기
-                PostOrLogin(isLoggedIn: $isLoggedIn, selectedTabIndex: $selectedTabIndex)
+                PostOrLogin(selectedTabIndex: $selectedTabIndex)
                 Spacer()
             }
             .padding(.horizontal, 20)

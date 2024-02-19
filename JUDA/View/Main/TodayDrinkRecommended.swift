@@ -22,14 +22,23 @@ let TodayDrinkData: [TodayDrink] = [
 
 // MARK: - 오늘의 추천 술 이미지 + 이름
 struct TodayDrinkRecommended: View {
+<<<<<<< HEAD
     @Binding var isLoggedIn: Bool
+=======
+    @EnvironmentObject private var authService: AuthService
+
+>>>>>>> 25c0a42 ([Feat] AppleLogin 작성 중 #104)
     let todayDrink: [TodayDrink] = TodayDrinkData
     
     var body: some View {
         VStack {
             HStack(alignment: .top, spacing: 20) {
                 ForEach(todayDrink, id: \.self) { drink in
+<<<<<<< HEAD
                     if isLoggedIn {
+=======
+                    if authService.signInStatus {
+>>>>>>> 25c0a42 ([Feat] AppleLogin 작성 중 #104)
                         // TODO: NavigationLink - value 로 수정
                         NavigationLink {
                             DrinkDetailView(drink: Wine.wineSample01) // 임시 더미데이터
@@ -47,7 +56,7 @@ struct TodayDrinkRecommended: View {
 }
 
 #Preview {
-    TodayDrinkRecommended(isLoggedIn: .constant(true))
+    TodayDrinkRecommended()
 }
 
 // MARK: - 오늘의 추천 술 셀

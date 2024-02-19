@@ -70,7 +70,7 @@ struct NavigationProfileView: View {
             }
             ToolbarItem(placement: .principal) {
                 userType == .user ? Text("마이페이지") : Text("\(userName) 님의 페이지")
-                    .font(.semibold18)
+                    .font(.medium16)
             }
         }
         .navigationBarBackButtonHidden()

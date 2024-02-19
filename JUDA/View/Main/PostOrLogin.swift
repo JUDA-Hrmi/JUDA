@@ -9,13 +9,14 @@ import SwiftUI
 
 // MARK: - 추천 술상 보러가기 or 로그인 하러가기
 struct PostOrLogin: View {
-    @Binding var isLoggedIn: Bool
+    @EnvironmentObject private var authService: AuthService
+
     @Binding var selectedTabIndex: Int
     
     var body: some View {
-        VStack(alignment: isLoggedIn ? .leading : .center, spacing: 10) {
+        VStack(alignment: authService.signInStatus ? .leading : .center, spacing: 10) {
             // 로그인
-            if isLoggedIn {
+            if authService.signInStatus {
                 Text("다른 사람들은 어떻게 먹었을까?")
                     .font(.medium16)
                 // 술상 탭 이동
@@ -30,25 +31,27 @@ struct PostOrLogin: View {
                 }
                 // 비로그인
             } else {
-                Text("추천 안주와 술을 알고 싶다면?")
-                    .font(.semibold18)
-                // TODO: NavigationLink - value 로 수정
-                NavigationLink {
-                    LogInView()
-                        .modifier(TabBarHidden())
-                } label: {
-                    HStack(alignment: .center) {
-                        Text("로그인 하러가기")
-                            .font(.medium16)
-                            .foregroundStyle(.mainAccent03)
+                VStack(alignment: .center, spacing: 10) {
+                    Text("추천 안주와 술을 알고 싶다면?")
+                        .font(.medium18)
+                    // TODO: NavigationLink - value 로 수정
+                    NavigationLink {
+                        LogInView()
+                            .modifier(TabBarHidden())
+                    } label: {
+                        HStack(alignment: .center) {
+                            Text("로그인 하러가기")
+                                .font(.semibold16)
+                                .foregroundStyle(.mainAccent03)
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 10)
+                        .background(.mainAccent03.opacity(0.2))
+                        .clipShape(.rect(cornerRadius: 10))
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 6)
-                    .background(.mainAccent03.opacity(0.2))
-                    .clipShape(.rect(cornerRadius: 10))
                 }
             }
         }
-        .frame(maxWidth: .infinity, alignment: isLoggedIn ? .leading : .center)
+        .frame(maxWidth: .infinity, alignment: authService.signInStatus ? .leading : .center)
     }
 }
