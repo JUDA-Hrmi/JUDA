@@ -49,7 +49,7 @@ struct WeatherAndFood: View {
                 }
             }
             .onReceive(locationManager.$location) { location in
-                          if shouldFetchWeather() && isLoggedIn {
+                          if shouldFetchWeather() && authService.signInStatus {
                               if let location = location {
                                   isLoading = true
                                   Task {
@@ -92,12 +92,8 @@ struct WeatherAndFood: View {
                 }
             }
         }
-<<<<<<< HEAD
-        .font(isLoggedIn ? .bold22 : .bold20)
-=======
         .font(authService.signInStatus ? .bold22 : .bold20)
         // TODO: - 나중에 develop에서 병합후에 폰트 수정
->>>>>>> 25c0a42 ([Feat] AppleLogin 작성 중 #104)
     }
     
     // fetch타임 설정 TimeInterval 300 == 5분으로 설정
@@ -172,8 +168,3 @@ struct WeatherAndFood: View {
         }
     }
 }
-
-
-
-    
-

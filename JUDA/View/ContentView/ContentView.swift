@@ -49,7 +49,6 @@ struct ContentView: View {
             }
         }
         .tint(.mainAccent03)
-        
     }
     
     // viewType에 따라 특정 View를 리턴해주는 함수
