@@ -9,10 +9,11 @@ import SwiftUI
 import FirebaseCore
 import FirebaseAuth
 import FirebaseFirestore
+import FirebaseStorage
 import CryptoKit
 import AuthenticationServices
 
-// MARK: - 로그인 / Auth
+// MARK: - Auth (로그인, 로그아웃, 회원탈퇴) + 로그인 유저 데이터
 @MainActor
 final class AuthService: ObservableObject {
     // 로그인 유무
@@ -20,10 +21,11 @@ final class AuthService: ObservableObject {
     // 신규 유저 or 기존 유저
     @Published var isNewUser: Bool = false
     // User Data
+    @Published var uid: String = ""
     @Published var name: String = ""
     @Published var age: Int = 0
     @Published var gender: String = ""
-    @Published var profileImage: String = ""
+    @Published var profileImage: UIImage?
     @Published var notificationAllowed: Bool = false
     // Error
     @Published var showError: Bool = false
@@ -32,17 +34,23 @@ final class AuthService: ObservableObject {
     @Published var signInButtonClicked: Bool = false
     // Nonce : 암호와된 임의의 난수
     private var currentNonce: String?
-    // users 컬렉션
+    // Firestore - users 컬렉션
     private let collectionRef = Firestore.firestore().collection("users")
-    
-//    init() {
-//        currentUser = Auth.auth().currentUser
-//    }
+    // Storage
+    private let storage = Storage.storage()
+    private let userImages = "userImages"
+    private let userImageType = "image/jpg"
     
     // 로그아웃 및 탈퇴 시, 초기화
     func reset() {
         self.signInStatus = false
         self.isNewUser = false
+        self.uid = ""
+        self.name = ""
+        self.age = 0
+        self.gender = ""
+        self.profileImage = nil
+        self.notificationAllowed = false
     }
     
     // 로그아웃
@@ -88,6 +96,7 @@ final class AuthService: ObservableObject {
             let uid = user.uid
             try await user.delete()
             deleteAccountData(uid: uid) // TODO: - Cloud Functions 을 통해서 지우는게 이상적
+            await deleteUserProfileImage()
             reset()
             errorMessage = ""
             return true
@@ -123,9 +132,10 @@ extension AuthService {
             let document = try await collectionRef.document(uid).getDocument(source: .cache)
             if document.exists {
                 let userData = try document.data(as: User.self)
+                self.uid = uid
                 self.name = userData.name
                 self.age = userData.age
-                self.profileImage = userData.profileImage ?? "" // 기본 이미지 url
+                fetchProfileImage()
                 self.gender = userData.gender
                 self.notificationAllowed = userData.notificationAllowed
             } else {
@@ -138,13 +148,8 @@ extension AuthService {
     
     // firestore 에 유저 저장
     func addUserDataToStore(userData: User) {
-        guard let uid = Auth.auth().currentUser?.uid else {
-            reset()
-            print("current User X")
-            return
-        }
         do {
-            try collectionRef.document(uid).setData(from: userData)
+            try collectionRef.document(self.uid).setData(from: userData)
             print("Success - 유저 정보 저장")
         } catch {
             print("유저 정보 저장 에러 : \(error.localizedDescription)")
@@ -163,10 +168,56 @@ extension AuthService {
 }
 
 // MARK: - firestorage
-// 유저 가입 시, 프로필 이미지 생성
-// 유저 탈퇴 시, 프로필 이미지 삭제 + 유저 게시글 이미지 삭제
+// 유저 가입 시, 프로필 이미지 생성 & 받아오기
+// 유저 탈퇴 시, 프로필 이미지 삭제
 extension AuthService {
-    //
+    // storage 에 유저 프로필 이미지 올리기
+    func uploadProfileImageToStorage(image: UIImage?) {
+        guard let image = image else { 
+            print("error - uploadProfileImageToStorage : image X")
+            return
+        }
+        let storageRef = storage.reference().child("\(userImages)/\(self.uid)")
+        let data = image.jpegData(compressionQuality: 0.2)
+        let metaData = StorageMetadata()
+        metaData.contentType = userImageType
+        if let data = data {
+            storageRef.putData(data, metadata: metaData) { (metaData, error) in
+                guard let _ = metaData, error == nil else {
+                    print("Error Profile Image Upload -> \(String(describing: error?.localizedDescription))")
+                    return
+                }
+            }
+            print("uploadProfileImageToStorage : \(self.uid)-profileImag)")
+            self.profileImage = image
+        } else {
+            print("error - uploadProfileImageToStorage : data X")
+        }
+    }
+    
+    // 유저 프로필 받아오기
+    func fetchProfileImage() {
+        let storageRef = storage.reference().child("\(userImages)/\(self.uid)")
+        storageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+            guard let data = data,
+                  let image = UIImage(data: data),
+                  error == nil else {
+                print("Error getData -> \(String(describing: error))")
+                return
+            }
+            self.profileImage = image
+        }
+    }
+    
+    // 프로필 이미지 삭제
+    func deleteUserProfileImage() async {
+        let storageRef = storage.reference().child("\(userImages)/\(self.uid)")
+        do {
+            try await storageRef.delete()
+        } catch {
+            print("프로필 이미미 삭제 에러 - \(error.localizedDescription)")
+        }
+    }
 }
 
 // MARK: - SignInWithAppleButton : request & result
@@ -200,6 +251,7 @@ extension AuthService {
                     print("Fisrt ✨ - Apple Sign Up 🍎")
                 } else {
                     print("Apple Sign In 🍎")
+                    await fetchUserData()
                     self.signInStatus = true
                 }
             }
@@ -226,6 +278,11 @@ extension AuthService {
                                                        fullName: appleIDCredential.fullName)
         do {
             let _ = try await Auth.auth().signIn(with: credential)
+            guard let uid = Auth.auth().currentUser?.uid else {
+                print("currentUser 없음")
+                return
+            }
+            self.uid = uid
         } catch {
             print("Error authenticating: \(error.localizedDescription)")
         }

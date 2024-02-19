@@ -14,10 +14,11 @@ enum UserType {
 
 // MARK: - 유저 프로필 (사진, 닉네임, 닉네임 수정)
 struct UserProfileView: View {
+    @EnvironmentObject private var authService: AuthService
+
     @State private var userNickName: String = "sayHong" // 사용자 닉네임
     
     @State private var selectedPhotos: [PhotosPickerItem] = []
-    @State private var userProfileImage: UIImage? // 사용자 프로필 이미지
     
     let userType: UserType
     
@@ -30,22 +31,19 @@ struct UserProfileView: View {
                 HStack(spacing: 20) {
                     HStack(alignment: .bottom, spacing: -15) {
                         // 사용자 프로필 이미지
-                        if let image = userProfileImage { // 사용자 지정 이미지가 있을 때 (이미지 선택 완료했을 경우)
+                        if let image = authService.profileImage { // 사용자 지정 이미지가 있을 때 (이미지 선택 완료했을 경우)
                             Image(uiImage: image)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .clipShape(Circle())
                                 .frame(width: 70, height: 70)  // 원의 크기 조절
-                                .overlay(Circle().stroke(Color.gray03, lineWidth: 1))  // 원 테두리 추가
                         } else {
                             // 사용자 지정 이미지가 없을 때 기본 이미지로 설정
-                            // TODO: 기본 이미지 파일 지정해서 넣기
-                            Image("appIcon")
+                            Image("defaultprofileimage")
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .clipShape(Circle())
                                 .frame(width: 70, height: 70)
-                                .overlay(Circle().stroke(Color.gray03, lineWidth: 1))
                         }
                         // 프로필 사진 수정 버튼
                         if userType == .user {
@@ -104,7 +102,8 @@ struct UserProfileView: View {
             guard let data = try await selectedPhoto.loadTransferable(type: Data.self) else {
                 throw PhotosPickerImageLoadingError.invalidImageData
             }
-            userProfileImage = UIImage(data: data)
+            authService.profileImage = UIImage(data: data)
+            authService.uploadProfileImageToStorage(image: UIImage(data: data))
         } catch {
             throw PhotosPickerImageLoadingError.invalidImageData
         }

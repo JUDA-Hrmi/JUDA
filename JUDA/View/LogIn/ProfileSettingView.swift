@@ -40,7 +40,7 @@ struct ProfileSettingView: View {
     @State private var name: String = ""
     var namePlaceholder: String {
         guard !authService.name.isEmpty else { return "닉네임"}
-        return name
+        return authService.name
     }
     @State private var birthDate: String = ""
     @State private var selectedGender: Gender?
@@ -84,14 +84,12 @@ struct ProfileSettingView: View {
                                 .aspectRatio(contentMode: .fill)
                                 .clipShape(Circle())
                                 .frame(width: 150, height: 150)
-                                .overlay(Circle().stroke(Color.gray03, lineWidth: 1))
                         } else {
-                            Image("appIcon")
+                            Image("defaultprofileimage")
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .clipShape(Circle())
                                 .frame(width: 150, height: 150)
-                                .overlay(Circle().stroke(Color.gray03, lineWidth: 1))
                         }
                         LibraryPhotosPicker(selectedPhotos: $selectedPhotos, maxSelectionCount: 1) { // 최대 1장
                             Image(systemName: "pencil.circle.fill")
@@ -202,7 +200,7 @@ struct ProfileSettingView: View {
                 // "완료" 버튼
                 Button {
                     Task {
-                        //
+                        // 재로그인
                         let signWithApple = SignInWithApple()
                         let appleIDCredential = try await signWithApple()
                         await authService.singInApple(appleIDCredential: appleIDCredential)
@@ -213,9 +211,12 @@ struct ProfileSettingView: View {
                                 name: name,
                                 age: Formatter.calculateAge(birthdate: birthDate) ?? 20,
                                 gender: selectedGender!.rawValue,
-//                                profileImage: userProfileImage, 이미지 Storage 주소로 저장
                                 profileImage: "",
                                 notificationAllowed: authService.notificationAllowed))
+                        // 유저 데이터 받기
+                        await authService.fetchUserData()
+                        // 프로필 이미지 storage 저장
+                        authService.uploadProfileImageToStorage(image: userProfileImage)
                     }
                     // TODO: NavigationPath 초기화 ( 메인 뷰로 이동 )
                     dismiss()
