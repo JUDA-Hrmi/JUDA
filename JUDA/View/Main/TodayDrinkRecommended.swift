@@ -31,18 +31,18 @@ struct TodayDrinkRecommended: View {
     var body: some View {
         VStack {
             HStack(alignment: .top, spacing: 20) {
-                    if isLoggedIn {
-                        // TODO: NavigationLink - value 로 수정
-                        NavigationLink {
-                            DrinkDetailView(drink: Wine.wineSample01) // 임시 더미데이터
-                                .modifier(TabBarHidden())
-                        } label: {
-                            //                            TodayDrinkRecommendedCell(todayDrink: drink)
-                            TestRecommend(isLoggedIn: $isLoggedIn)
-                        }
-                    } else {
-                        TestRecommend(isLoggedIn: $isLoggedIn)
+                if isLoggedIn {
+                    // TODO: NavigationLink - value 로 수정
+                    NavigationLink {
+                        DrinkDetailView(drink: Wine.wineSample01) // 임시 더미데이터
+                            .modifier(TabBarHidden())
+                    } label: {
+                        TodayDrinkRecommendedCell(isLoggedIn: $isLoggedIn)
+//                        TestRecommend(isLoggedIn: $isLoggedIn)
                     }
+                } else {
+                    TestRecommend(isLoggedIn: $isLoggedIn)
+                }
             }
         }
     }
@@ -54,114 +54,7 @@ struct TodayDrinkRecommended: View {
 
 // MARK: - 오늘의 추천 술 셀
 struct TodayDrinkRecommendedCell: View {
-    let todayDrink: TodayDrink
-    
-    var body: some View {
-        VStack {
-            // 이미지
-            Image(todayDrink.image)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 70, height: 103.48)
-                .padding(.bottom, 10)
-            // 술 이름
-            Text(todayDrink.title)
-                .font(.regular12)
-                .foregroundStyle(.mainBlack)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-        }
-        .padding(.top, 20)
-        .frame(maxWidth: .infinity)
-    }
-}
-
-#Preview {
-    TodayDrinkRecommendedCell(todayDrink: TodayDrink(title: "지평 막걸리", image:"jipyeong"))
-}
-
-
-struct FirebaseDrink: Codable, Hashable {
-    //    let category: String
-    //    let type: String
-    let name: String
-    //    let amount: String
-    //    let price: Int
-    //    let alcohol: Double
-    //    let country: String
-    //    let province: String? // wine
-    //    let aroma: [String]? // wine, beer, whishkey
-    //    let taste: [String]? // wine, beer, whishkey
-    //    let finish: [String]? // wine, beer, whishkey
-    //    let sweet: Int? // traditional
-    //    let sour: Int? // traditional
-    //    let refresh: Int? // traditional
-    //    let body: Int? // traditional
-    //    let carbonated: Int? // traditional
-    //    let wellMatched: [String]
-    //    let rating: Double
-    //    let countTagged: Int
-    //    let agePreference: [Int: Int]
-    //    let genderPreference: [String: Int]
-    init(name: String) {
-        self.name = name
-    }
-}
-
-
-enum TestDrinkType: CaseIterable {
-    case beer, traditionalLiquor, whiskey, wine
-    
-    var string: String {
-        switch self {
-        case .beer:
-            return "Beer_food"
-        case .traditionalLiquor:
-            return "traditional_liqur_food"
-        case .whiskey:
-            return "test_whiskey"
-        case .wine:
-            return "test_wine"
-        }
-    }
-}
-struct Ai2Model: Decodable {
-    let openai: String
-}
-
-class Recommend: ObservableObject {
-    var openAI: OpenAI?
-    static let shared = Recommend()
-    private init() {}
-    @Published var recommend = [FirebaseDrink]()
-    
-    let db = Firestore.firestore()
-    private var listener: ListenerRegistration?
-    
-    @MainActor
-    func fetchDrinks() async {
-         do {
-             let drinksSnapshot = try await db.collection("testBeer").getDocuments() // Firebase의 collection 이름으로 수정
-             
-             for drinkDocument in drinksSnapshot.documents {
-                 if let drink = try? drinkDocument.data(as: FirebaseDrink.self) {
-                     self.recommend.append(drink)
-                 }
-             }
-         } catch {
-             print("Error fetching drinks:", error)
-         }
-        print("fetchDrinks")
-     }
-    
-    // 실시간 관찰 중지
-    func stopListening() {
-        listener?.remove()
-        print("stopListening")
-    }
-}
-
-struct TestRecommend: View {
+//    let todayDrink: TodayDrink
     @ObservedObject var recommend = Recommend.shared
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var aiViewModel: AiTodayViewModel
@@ -171,39 +64,48 @@ struct TestRecommend: View {
     @State private var isLoading = false
     var body: some View {
         VStack {
+            // 이미지
+//            Image(todayDrink.image)
+//                .resizable()
+//                .aspectRatio(contentMode: .fit)
+//                .frame(width: 70, height: 103.48)
+//                .padding(.bottom, 10)
+            // 술 이름
             HStack {
                 Text("\(aiViewModel.respondToday)")
             }
-        }
-        .onAppear {
-            Task {
-                do {
-                    await recommend.fetchDrinks()
-                    guard let location = locationManager.location
-                    else {
-                        return
+            .onAppear {
+                Task {
+                    do {
+                        await recommend.fetchDrinks()
+                        guard let location = locationManager.location
+                        else {
+                            return
+                        }
+                        
+                        // Fetch weather data
+                        let weatherData = try await fetchWeather(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+                        weather = weatherData
+                        
+                        // Request AI recommendation
+                        aiViewModel.respondToday = try await aiViewModel.requestToday(prompt: "Please recommend three drinks that go well with this weather. Please refer to the below list behind you .\(String(describing: weather?.main))  \(recommend.recommend)")
+                        lastAPICallTimestamp = Date()
+                        
+                        print("\(aiViewModel.respondToday)")
+                    } catch {
+                        print("Error: \(error)")
                     }
-                    
-                    // Fetch weather data
-                    let weatherData = try await fetchWeather(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-                    weather = weatherData
-                    
-                    // Request AI recommendation
-                    aiViewModel.respondToday = try await aiViewModel.requestToday(prompt: "Please recommend three drinks that go well with this weather. Please refer to the below list behind you .\(String(describing: weather?.main))  \(recommend.recommend)")
-                    lastAPICallTimestamp = Date()
-                    
-                    print("\(aiViewModel.respondToday)")
-                } catch {
-                    print("Error: \(error)")
                 }
             }
-        }
-
-
-            }
             
-    
-    
+            
+        }
+        
+        
+        
+
+        
+    }
     // fetch타임 설정 TimeInterval 300 == 5분으로 설정
     private func shouldFetchWeather() -> Bool {
         guard let lastTimestamp = lastAPICallTimestamp else {
@@ -272,16 +174,95 @@ struct TestRecommend: View {
             }
         }
     }
-    
 }
-
-// 날씨 정보 fetch
-
 
 
 #Preview {
-    TestRecommend(isLoggedIn: .constant(true))
+    TodayDrinkRecommendedCell(isLoggedIn: .constant(true))
 }
+
+
+struct FirebaseDrink: Codable, Hashable {
+    //    let category: String
+    //    let type: String
+    let name: String
+    //    let amount: String
+    //    let price: Int
+    //    let alcohol: Double
+    //    let country: String
+    //    let province: String? // wine
+    //    let aroma: [String]? // wine, beer, whishkey
+    //    let taste: [String]? // wine, beer, whishkey
+    //    let finish: [String]? // wine, beer, whishkey
+    //    let sweet: Int? // traditional
+    //    let sour: Int? // traditional
+    //    let refresh: Int? // traditional
+    //    let body: Int? // traditional
+    //    let carbonated: Int? // traditional
+    //    let wellMatched: [String]
+    //    let rating: Double
+    //    let countTagged: Int
+    //    let agePreference: [Int: Int]
+    //    let genderPreference: [String: Int]
+    init(name: String) {
+        self.name = name
+    }
+}
+
+
+enum TestDrinkType: CaseIterable {
+    case beer, traditionalLiquor, whiskey, wine
+    
+    var string: String {
+        switch self {
+        case .beer:
+            return "Beer_food"
+        case .traditionalLiquor:
+            return "traditional_liqur_food"
+        case .whiskey:
+            return "test_whiskey"
+        case .wine:
+            return "test_wine"
+        }
+    }
+}
+struct Ai2Model: Decodable {
+    let openai: String
+}
+
+class Recommend: ObservableObject {
+    var openAI: OpenAI?
+    static let shared = Recommend()
+    private init() {}
+    @Published var recommend = [FirebaseDrink]()
+    
+    let db = Firestore.firestore()
+    private var listener: ListenerRegistration?
+    
+    @MainActor
+    func fetchDrinks() async {
+        do {
+            let drinksSnapshot = try await db.collection("testBeer").getDocuments() // Firebase의 collection 이름으로 수정
+            
+            for drinkDocument in drinksSnapshot.documents {
+                if let drink = try? drinkDocument.data(as: FirebaseDrink.self) {
+                    self.recommend.append(drink)
+                }
+            }
+        } catch {
+            print("Error fetching drinks:", error)
+        }
+        print("fetchDrinks")
+    }
+    
+    // 실시간 관찰 중지
+    func stopListening() {
+        listener?.remove()
+        print("stopListening")
+    }
+}
+
+
 
 
 

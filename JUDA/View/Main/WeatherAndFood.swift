@@ -92,7 +92,6 @@ struct WeatherAndFood: View {
             }
         }
         .font(isLoggedIn ? .bold22 : .bold20)
-        // TODO: - 나중에 develop에서 병합후에 폰트 수정
     }
     
     // fetch타임 설정 TimeInterval 300 == 5분으로 설정
