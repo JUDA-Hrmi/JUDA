@@ -9,6 +9,7 @@ import Foundation
 
 // MARK: - User 모델
 struct User: Codable, Hashable {
+//  @DocumentID var id: String?
     var name: String
     var age: Int
     var gender: String
