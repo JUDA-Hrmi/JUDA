@@ -9,99 +9,50 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 
-class Users: ObservableObject {
+@MainActor
+final class Users: ObservableObject {
     static let shared = Users()
     private init() {}
     @Published var users = [User]()
+    @Published var uid: String = ""
     let db = Firestore.firestore()
     private var listener: ListenerRegistration?
     
-//    func startListeningForUser(_ userId: String) {
-//           // 기존 리스너가 있다면 삭제
-//           listener?.remove()
-//
-//           // 새로운 리스너 등록
-//           let userRef = db.collection("users").document(userId)
-//           listener = userRef.addSnapshotListener { [weak self] documentSnapshot, error in
-//               guard let self = self else { return }
-//
-//               if let error = error {
-//                   print("Error fetching document: \(error)")
-//                   return
-//               }
-//
-//               guard let documentSnapshot = documentSnapshot else {
-//                   print("Document does not exist")
-//                   return
-//               }
-//
-//               do {
-//                   if let updatedUser = try documentSnapshot.data(as: User.self) {
-//                           if let index = self.users.firstIndex(where: { $0.id == userId }) {
-//                               // Update the user in the array
-//                               self.users[index] = updatedUser
-//                           } else {
-//                               // Add the user to the array
-//                               self.users.append(updatedUser)
-//                           }
-//                       }
-//               } catch {
-//                   print("Error decoding user data:", error)
-//               }
-//           }
-//       }
-    // TODO: 업데이트 함수 작성하기
-    func updateUserName(userId: String, userName: String) {
-        let docRef = db.collection("users").document(userId)
+    func startListeningForUser(uid: String) {
+            let userRef = Firestore.firestore().collection("users").document(uid)
+            
+            // 기존에 활성화된 리스너가 있다면 삭제
+            listener?.remove()
+            
+            // 새로운 리스너 등록
+            listener = userRef.addSnapshotListener { [weak self] documentSnapshot, error in
+                guard let self = self else { return }
+
+                if let error = error {
+                    print("Error fetching user data: \(error)")
+                    return
+                }
+
+                // 문서의 데이터를 가져와서 User로 디코딩
+                if let user = try? documentSnapshot?.data(as: User.self) {
+                    self.users.append(user)
+                    print("User data updated: \(user)")
+                }
+            }
+        }
+    
+    func updateUserName(uid: String, userName: String) {
+        let docRef = db.document(uid)
 
         docRef.updateData(["name": userName]) { error in
             if let error = error {
                 print(error)
             } else {
-                print("Successed merged in:", userId)
+                print("Successed merged in:", uid)
             }
         }
     }
-    
-//    func fetchPostsForUser(userId: String) async {
-//            do {
-//                let postsSnapshot = try await db.collection("users").document(userId).collection("posts").getDocuments()
-//
-//                var posts = [Post]()
-//
-//                for postDocument in postsSnapshot.documents {
-//                    if let post = try? postDocument.data(as: Post.self) {
-//                        posts.append(post)
-//                        print("Post content:", post.content)
-//                    }
-//                }
-//            } catch {
-//                print("Error fetching posts:", error)
-//            }
-//        }
-    
-    // 컬렉션에서 여러 문서 가져오기
-    @MainActor
-    func fetchAllUsers() async {
-        do {
-            let snapshot = try await db.collection("users").getDocuments()
-            
-            // 이거 안해주면 load 할 때마다 와랄라 다 출력된다!
-            self.users.removeAll()
-            
-            for document in snapshot.documents {
-                if let user = try? document.data(as: User.self) {
-                    self.users.append(user)
-                    print("data", user)
-                }
-            }
-        } catch {
-            print(error)
-        }
-    }
-    
     // 특정 사용자만 불러오기
-    @MainActor
     func fetchUserInformation(userId: String) async {
         do {
             let document = try await db.collection("users").document(userId).getDocument()
@@ -208,6 +159,7 @@ class Users: ObservableObject {
         print("stop Listening")
     }
 }
+
 class Alarms: ObservableObject {
     static let shared = Alarms()
     private init() {}

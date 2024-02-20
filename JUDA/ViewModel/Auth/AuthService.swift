@@ -40,6 +40,7 @@ final class AuthService: ObservableObject {
     private let storage = Storage.storage()
     private let userImages = "userImages"
     private let userImageType = "image/jpg"
+    private var listener: ListenerRegistration?
     
     // 로그아웃 및 탈퇴 시, 초기화
     func reset() {
@@ -106,6 +107,60 @@ final class AuthService: ObservableObject {
             return false
         }
     }
+}
+
+// MARK: - 닉네임 수정 버튼 클릭 -> 닉네임 업데이트
+extension AuthService {
+    func updateUserName(uid: String, userName: String) {
+        let docRef = collectionRef.document(uid)
+
+        docRef.updateData(["name": userName]) { error in
+            if let error = error {
+                print(error)
+            } else {
+                print("Successed merged in:", uid)
+            }
+        }
+    }
+}
+
+// MARK: - 데이터 실시간 업데이트
+extension AuthService {
+    private func updateUserFromSnapshot(_ documentSnapshot: DocumentSnapshot) {
+            // 문서의 데이터를 가져와서 User로 디코딩
+            if let user = try? documentSnapshot.data(as: User.self) {
+                // 해당 사용자의 데이터를 업데이트
+                self.uid = uid
+                self.name = user.name
+                self.age = user.age
+                self.gender = user.gender
+
+                print("User data updated: \(user)")
+            }
+        }
+    
+    func startListeningForUser(uid: String) {
+            let userRef = Firestore.firestore().collection("users").document(uid)
+
+            // 기존에 활성화된 리스너가 있다면 삭제
+            listener?.remove()
+
+            // 새로운 리스너 등록
+            listener = userRef.addSnapshotListener { [weak self] documentSnapshot, error in
+                guard let self = self else { return }
+
+                if let error = error {
+                    print("Error fetching user data: \(error)")
+                    return
+                }
+
+                // 사용자 데이터 업데이트 메서드 호출
+                if let documentSnapshot = documentSnapshot {
+                    self.updateUserFromSnapshot(documentSnapshot)
+                }
+            }
+        }
+
 }
 
 // MARK: - firestore : 유저 정보 불러오기 & 유저 저장 & 유저 삭제

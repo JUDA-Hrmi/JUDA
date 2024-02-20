@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 // MARK: - 유저 닉네임 수정 화면
 struct ChangeUserNameView: View {
     @EnvironmentObject private var authService: AuthService
+//    @StateObject var user = Users.shared
 	@Environment(\.dismiss) var dismiss
     
 	@FocusState var isFocused: Bool
@@ -65,6 +67,9 @@ struct ChangeUserNameView: View {
             // 닉네임 변경 완료
             Button {
                 // TODO: update 코드 작성하기
+                authService.updateUserName(uid: Auth.auth().currentUser?.uid ?? "", userName: userChangeNickName)
+                // 실시간 업데이트 감지
+                authService.startListeningForUser(uid: Auth.auth().currentUser?.uid ?? "")
                 dismiss()
             } label: {
                 Text("변경 완료")

@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 // MARK: - 알람 쌓여있는 리스트 화면
 struct AlarmStoreView: View {
-    let userId = "Wb0TytMDe7GTOaTBnI5Y"
+    let userId = Auth.auth().currentUser?.uid ?? ""
 
     @Environment(\.dismiss) private var dismiss
     @StateObject var notifications = Alarms.shared
