@@ -128,6 +128,7 @@ struct SettingView: View {
                     rightButtonAction: {
                         // 로그아웃 - AppStorage 에서 변경
                         authService.signOut()
+                        isLogoutClicked.toggle()
                         // MainView 로 보내기
                         dismiss()
                         selectedTabIndex = 0
