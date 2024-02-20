@@ -286,7 +286,7 @@ extension AuthService {
         request.nonce = sha256(nonce)
     }
     
-    func handleSignInWithAppleCompletion(_ result: Result<ASAuthorization, Error>) {
+    func handleSignInWithAppleCompletion(_ result: Result<ASAuthorization, Error>, appViewModel: AppViewModel) {
         switch result {
         case .success(let authorization):
             guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {

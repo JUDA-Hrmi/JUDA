@@ -14,6 +14,7 @@ struct LogInView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var appViewModel: AppViewModel
     
     @State private var nextView: Bool = false
     
@@ -49,7 +50,7 @@ struct LogInView: View {
                 SignInWithAppleButton(.signIn) { request in
                     authService.handleSignInWithAppleRequest(request)
                 } onCompletion: { result in
-                    authService.handleSignInWithAppleCompletion(result)
+                    authService.handleSignInWithAppleCompletion(result, appViewModel: appViewModel)
                 }
                 .signInWithAppleButtonStyle(colorScheme == .light ? .black : .white)
                 .frame(width: 300, height: 48)

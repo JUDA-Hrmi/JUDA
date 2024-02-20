@@ -10,6 +10,7 @@ import SwiftUI
 // MARK: - SplashView
 struct SplashView: View {
     @EnvironmentObject private var authService: AuthService
+    @StateObject var colorScheme = BackgroundTheme()
     @Binding var isActive: Bool
 
     var body: some View {
@@ -27,6 +28,7 @@ struct SplashView: View {
                 }
             }
         }
+        .preferredColorScheme(colorScheme.selectedColor)
     }
 }
 

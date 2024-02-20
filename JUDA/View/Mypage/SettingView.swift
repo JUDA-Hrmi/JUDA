@@ -11,6 +11,7 @@ import WebKit
 // MARK: - 환경설정 세팅 화면
 struct SettingView: View {
     @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var appViewModel: AppViewModel
 
 	private let optionNameList = ["라이트 모드", "다크 모드", "시스템 모드"] // 화면 모드 설정 옵션 이름 리스트
 	private let webViewNameList = ["서비스 이용약관", "개인정보 처리방침", "위치정보 처리방침"] // 웹뷰로 보여줘야하는 항목 이름 리스트
@@ -20,7 +21,7 @@ struct SettingView: View {
 	
 	@Environment(\.dismiss) private var dismiss
 	
-	@State private var isAlarmOn: Bool = true // 알람 설정 toggle
+    @State private var isAlarmOn: Bool = false // 알람 설정 toggle
 	@State private var isShowingSheet: Bool = false // CustomBottomSheet 올라오기
 	@State private var selectedSortingOption: String = "시스템 모드"
 	@State private var isLogoutClicked = false // 로그아웃 버튼 클릭 시
@@ -33,7 +34,8 @@ struct SettingView: View {
 			VStack(alignment: .leading) {
 				// 알림 설정
 				Toggle(isOn: $isAlarmOn) {
-					Text("알림 설정: \(String(isAlarmOn) == "true" ? "켜기" : "끄기")")
+                    Text("알림 설정: \(String(authService.notificationAllowed) == "true" ? "켜기" : "끄기")")
+                    Text("알림 설정: \(String(authService.notificationAllowed))")
 				}
 				.tint(.mainAccent03)
 				.modifier(CustomText())
@@ -128,8 +130,8 @@ struct SettingView: View {
                     rightButtonAction: {
                         // 로그아웃 - AppStorage 에서 변경
                         authService.signOut()
+                        isLogoutClicked.toggle()
                         // MainView 로 보내기
-                        dismiss()
                         selectedTabIndex = 0
                     })
                 )
@@ -150,7 +152,6 @@ struct SettingView: View {
                             if await authService.deleteAccount() {
                                 isDeletAccount.toggle()
                                 // 메인 화면으로 이동
-                                dismiss()
                                 selectedTabIndex = 0
                             }
                         }
@@ -158,6 +159,9 @@ struct SettingView: View {
                 )
 			}
 		}
+        .onDisappear {
+            dismiss()
+        }
 		.navigationBarBackButtonHidden()
 		.toolbar {
 			ToolbarItem(placement: .topBarLeading) {
@@ -189,6 +193,6 @@ struct CustomText: ViewModifier {
 }
 
 
-#Preview {
-    SettingView(selectedTabIndex: .constant(4))
-}
+//#Preview {
+//    SettingView(selectedTabIndex: .constant(4))
+//}
