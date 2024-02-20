@@ -24,6 +24,7 @@ struct JUDAApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject private var authService = AuthService()
     @StateObject private var appViewModel = AppViewModel()
+    @StateObject private var colorScheme = BackgroundTheme()
     @State private var isLoading = true
     
     var body: some Scene {
@@ -35,6 +36,7 @@ struct JUDAApp: App {
                 ContentView()
                     .environmentObject(authService)
                     .environmentObject(appViewModel)
+                    .environmentObject(colorScheme)
             }
         }
     }

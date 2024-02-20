@@ -90,5 +90,6 @@ struct LogInView: View {
         .fullScreenCover(isPresented: $nextView) {
             TermsAndVerificationView()
         }
+//        .preferredColorScheme(colorScheme.selectedColor)
     }
 }

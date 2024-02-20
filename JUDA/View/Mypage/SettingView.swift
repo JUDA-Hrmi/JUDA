@@ -8,10 +8,17 @@
 import SwiftUI
 import WebKit
 
+final class BackgroundTheme: ObservableObject {
+    // 시스템모드 설정
+    @Published var selectedColor: ColorScheme?
+}
+
+
 // MARK: - 환경설정 세팅 화면
 struct SettingView: View {
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var appViewModel: AppViewModel
+    @EnvironmentObject var colorScheme: BackgroundTheme
 
 	private let optionNameList = ["라이트 모드", "다크 모드", "시스템 모드"] // 화면 모드 설정 옵션 이름 리스트
 	private let webViewNameList = ["서비스 이용약관", "개인정보 처리방침", "위치정보 처리방침"] // 웹뷰로 보여줘야하는 항목 이름 리스트
@@ -23,7 +30,7 @@ struct SettingView: View {
 	
     @State private var isAlarmOn: Bool = false // 알람 설정 toggle
 	@State private var isShowingSheet: Bool = false // CustomBottomSheet 올라오기
-	@State private var selectedSortingOption: String = "시스템 모드"
+    @AppStorage("selectedSortingOption") private var selectedSortingOption: String = "시스템 모드"
 	@State private var isLogoutClicked = false // 로그아웃 버튼 클릭 시
 	@State private var isDeletAccount = false // 회원탈퇴 버튼 클릭 시
     
@@ -51,6 +58,18 @@ struct SettingView: View {
                             CustomSortingButton(optionNameList: optionNameList,
                                                 selectedSortingOption: $selectedSortingOption,
                                                 isShowingSheet: $isShowingSheet)
+                            .onChange(of: selectedSortingOption) { _ in
+                                switch selectedSortingOption {
+                                case "라이트 모드":
+                                    colorScheme.selectedColor = .light
+                                case "다크 모드":
+                                    colorScheme.selectedColor = .dark
+                                case "시스템 모드":
+                                    colorScheme.selectedColor = nil
+                                default:
+                                    colorScheme.selectedColor = nil
+                                }
+                            }
                         }
                         .modifier(CustomText())
                     }
@@ -163,6 +182,30 @@ struct SettingView: View {
                 // 공지사항
                 // TODO: NavigationLink - value 로 수정
                 VStack(alignment: .leading) {
+                    Button {
+                        isShowingSheet.toggle()
+                    } label: {
+                        HStack {
+                            Text("화면 모드 설정")
+                            Spacer()
+                            CustomSortingButton(optionNameList: optionNameList,
+                                                selectedSortingOption: $selectedSortingOption,
+                                                isShowingSheet: $isShowingSheet)
+                            .onChange(of: selectedSortingOption) { _ in
+                                switch selectedSortingOption {
+                                case "라이트 모드":
+                                    colorScheme.selectedColor = .light
+                                case "다크 모드":
+                                    colorScheme.selectedColor = .dark
+                                case "시스템 모드":
+                                    colorScheme.selectedColor = nil
+                                default:
+                                    colorScheme.selectedColor = nil
+                                }
+                            }
+                        }
+                        .modifier(CustomText())
+                    }
                     NavigationLink {
                         NoticeView()
                     } label: {
@@ -186,6 +229,15 @@ struct SettingView: View {
                     //
                     CustomDivider()
                     Spacer()
+                }
+                .sheet(isPresented: $isShowingSheet) {
+                    CustomBottomSheetContent(optionNameList: optionNameList,
+                                             isShowingSheet: $isShowingSheet,
+                                             selectedSortingOption: $selectedSortingOption,
+                                             bottomSheetTypeText: BottomSheetType.displaySetting)
+                        .presentationDetents([.displaySetting])
+                        .presentationDragIndicator(.hidden) // 시트 상단 인디케이터 비활성화
+                        .interactiveDismissDisabled() // 내려서 닫기 비활성화
                 }
             }
 		}
