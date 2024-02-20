@@ -9,7 +9,7 @@ import Foundation
 import FirebaseCore
 import FirebaseFirestore
 
-class DrinkUploadViewModel: ObservableObject {
+final class DrinkUploadViewModel: ObservableObject {
 	func decodeJsonUploadFirestore() {
 		var drinks: [FBDrink] = []
 		for drinkType in DrinkJsonType.allCases {
