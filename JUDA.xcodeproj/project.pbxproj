@@ -22,6 +22,7 @@
 		0961B7992B6624DD00A9F553 /* DrinkInfoGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */; };
 		096E63182B616886009246CE /* DrinkListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096E63172B616886009246CE /* DrinkListCell.swift */; };
 		096E631A2B616F31009246CE /* DrinkGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096E63192B616F31009246CE /* DrinkGridCell.swift */; };
+		0999125C2B84654400E72C73 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0999125B2B84654400E72C73 /* FirebaseCrashlytics */; };
 		099F16192B750E7E00D8BEDA /* UINavigationController +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099F16182B750E7E00D8BEDA /* UINavigationController +.swift */; };
 		099F161B2B75347100D8BEDA /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099F161A2B75347100D8BEDA /* CheckBox.swift */; };
 		09A6AD722B70B46E00606585 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD712B70B46E00606585 /* AppViewModel.swift */; };
@@ -263,6 +264,7 @@
 				09BCC13C2B7B99FF00FF4D1B /* FirebaseAuth in Frameworks */,
 				090FF1CA2B82ED8400AF22B5 /* FirebaseStorage in Frameworks */,
 				B1EE24642B613EB1007F68B0 /* FirebaseAnalytics in Frameworks */,
+				0999125C2B84654400E72C73 /* FirebaseCrashlytics in Frameworks */,
 				B1EE24662B613EB1007F68B0 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				AC98D1D22B73586F006F6EC9 /* OpenAI in Frameworks */,
 				09BCC15D2B7CF2CB00FF4D1B /* FirebaseFirestore in Frameworks */,
@@ -680,6 +682,7 @@
 				09BCC13B2B7B99FF00FF4D1B /* FirebaseAuth */,
 				09BCC15C2B7CF2CB00FF4D1B /* FirebaseFirestore */,
 				090FF1C92B82ED8400AF22B5 /* FirebaseStorage */,
+				0999125B2B84654400E72C73 /* FirebaseCrashlytics */,
 			);
 			productName = FinalHrmiProjects;
 			productReference = 09BCC1562B7C802600FF4D1B /* JUDA.app */;
@@ -1119,6 +1122,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B1EE24622B613EB1007F68B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		0999125B2B84654400E72C73 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B1EE24622B613EB1007F68B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
 		};
 		09BCC13B2B7B99FF00FF4D1B /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
