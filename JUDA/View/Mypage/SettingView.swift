@@ -147,7 +147,9 @@ struct SettingView: View {
                     rightButtonLabel: "탈퇴하기",
                     rightButtonAction: {
                         Task {
+                            authService.isLoading = true
                             if await authService.deleteAccount() {
+                                authService.isLoading = false
                                 isDeletAccount.toggle()
                                 // 메인 화면으로 이동
                                 dismiss()
@@ -158,6 +160,8 @@ struct SettingView: View {
                 )
 			}
 		}
+        // 회원탈퇴 시, 생기는 로딩
+        .loadingView($authService.isLoading)
 		.navigationBarBackButtonHidden()
 		.toolbar {
 			ToolbarItem(placement: .topBarLeading) {
