@@ -16,7 +16,7 @@ struct unauthenticatedMypageView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                HStack {
+                HStack(spacing: 20) {
                     Image("defaultprofileimage")
                         .resizable()
                         .aspectRatio(contentMode: .fill)
@@ -28,6 +28,7 @@ struct unauthenticatedMypageView: View {
                     } label: {
                         Text("로그인 하러 가기 >")
                             .font(.medium18)
+                            .foregroundStyle(.mainAccent03)
                     }
                     Spacer()
                 }
@@ -44,7 +45,7 @@ struct unauthenticatedMypageView: View {
                 
                 Spacer()
                 
-                Text("로그인해서 \n 술상을 작성해보세요")
+                Text("로그인해서\n 술상을 작성해보세요")
                     .font(.semibold18)
                     .foregroundStyle(.gray01)
                     .multilineTextAlignment(.center)
