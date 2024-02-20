@@ -94,10 +94,7 @@ final class AuthService: ObservableObject {
                 try await Auth.auth().revokeToken(withAuthorizationCode: authCodeString)
             }
             
-            let uid = user.uid
             try await user.delete()
-            deleteAccountData(uid: uid) // TODO: - Cloud Functions 을 통해서 지우는게 이상적
-            await deleteUserProfileImage()
             reset()
             errorMessage = ""
             return true
@@ -110,7 +107,7 @@ final class AuthService: ObservableObject {
     }
 }
 
-// MARK: - firestore : 유저 정보 불러오기 & 유저 저장 & 유저 삭제
+// MARK: - firestore : 유저 정보 불러오기 & 유저 저장
 extension AuthService {
     // firestore 에 유저 존재 유무 체크
     func checkNewUser(uid: String) async -> Bool {
@@ -157,21 +154,10 @@ extension AuthService {
             print("유저 정보 저장 에러 : \(error.localizedDescription)")
         }
     }
-    
-    // firestore 에서 유저 데이터 삭제
-    func deleteAccountData(uid: String) {
-        collectionRef.document(uid).delete { error in
-            if let error = error {
-                print("deleteAccountData - firestore : \(error.localizedDescription)")
-                return
-            }
-        }
-    }
 }
 
 // MARK: - firestorage
 // 유저 가입 시, 프로필 이미지 생성 & 받아오기
-// 유저 탈퇴 시, 프로필 이미지 삭제
 extension AuthService {
     // storage 에 유저 프로필 이미지 올리기
     func uploadProfileImageToStorage(image: UIImage?) {
@@ -208,16 +194,6 @@ extension AuthService {
                 return
             }
             self.profileImage = image
-        }
-    }
-    
-    // 프로필 이미지 삭제
-    func deleteUserProfileImage() async {
-        let storageRef = storage.reference().child("\(userImages)/\(self.uid)")
-        do {
-            try await storageRef.delete()
-        } catch {
-            print("프로필 이미미 삭제 에러 - \(error.localizedDescription)")
         }
     }
 }

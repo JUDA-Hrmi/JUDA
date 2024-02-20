@@ -22,6 +22,9 @@
 		096E63182B616886009246CE /* DrinkListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096E63172B616886009246CE /* DrinkListCell.swift */; };
 		096E631A2B616F31009246CE /* DrinkGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096E63192B616F31009246CE /* DrinkGridCell.swift */; };
 		0999125C2B84654400E72C73 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0999125B2B84654400E72C73 /* FirebaseCrashlytics */; };
+		099912602B84955400E72C73 /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0999125E2B84955400E72C73 /* APIKEYS.plist */; };
+		099912612B84955400E72C73 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0999125F2B84955400E72C73 /* GoogleService-Info.plist */; };
+		099912632B84969800E72C73 /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 099912622B84969800E72C73 /* DrinkLoading.json */; };
 		099F16192B750E7E00D8BEDA /* UINavigationController +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099F16182B750E7E00D8BEDA /* UINavigationController +.swift */; };
 		099F161B2B75347100D8BEDA /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099F161A2B75347100D8BEDA /* CheckBox.swift */; };
 		09A6AD722B70B46E00606585 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD712B70B46E00606585 /* AppViewModel.swift */; };
@@ -85,15 +88,8 @@
 		7BBDFF712B6B90EB0036FB8B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE249F2B6144E3007F68B0 /* MainViewModel.swift */; };
 		7BBDFF722B6B912C0036FB8B /* TabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD512B676E1000770E3A /* TabItem.swift */; };
 		7BBDFF732B6B912C0036FB8B /* DrinkInfoSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */; };
-		7BE14B922B84727A00C1F6C3 /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7BE14B902B84727A00C1F6C3 /* APIKEYS.plist */; };
-		7BE14B932B84727A00C1F6C3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7BE14B912B84727A00C1F6C3 /* GoogleService-Info.plist */; };
 		7BE14B952B84733900C1F6C3 /* Drink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE14B942B84733900C1F6C3 /* Drink.swift */; };
 		7BE14B972B84767000C1F6C3 /* DrinkUploadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE14B962B84767000C1F6C3 /* DrinkUploadViewModel.swift */; };
-		7BE14B9D2B8476B300C1F6C3 /* test_whiskey.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BE14B992B8476B300C1F6C3 /* test_whiskey.json */; };
-		7BE14B9E2B8476B300C1F6C3 /* test_wine.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BE14B9A2B8476B300C1F6C3 /* test_wine.json */; };
-		7BE14B9F2B8476B300C1F6C3 /* traditional_liqur_food.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BE14B9B2B8476B300C1F6C3 /* traditional_liqur_food.json */; };
-		7BE14BA02B8476B300C1F6C3 /* Beer_food.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BE14B9C2B8476B300C1F6C3 /* Beer_food.json */; };
-		7BE14BA22B847ED100C1F6C3 /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BE14BA12B847ED100C1F6C3 /* DrinkLoading.json */; };
 		AC110B572B69658C005390BB /* ChangeUserNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC110B562B69658C005390BB /* ChangeUserNameView.swift */; };
 		AC5778E52B6FC20C00F7B04B /* NavigationProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5778E42B6FC20C00F7B04B /* NavigationProfileView.swift */; };
 		AC6D12882B6A8DD300169B23 /* TodayDrinkRecommended.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12872B6A8DD300169B23 /* TodayDrinkRecommended.swift */; };
@@ -151,6 +147,10 @@
 		0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoGrid.swift; sourceTree = "<group>"; };
 		096E63172B616886009246CE /* DrinkListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkListCell.swift; sourceTree = "<group>"; };
 		096E63192B616F31009246CE /* DrinkGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkGridCell.swift; sourceTree = "<group>"; };
+		0999125D2B84931600E72C73 /* JUDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JUDA.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0999125E2B84955400E72C73 /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = APIKEYS.plist; path = "../../흐르미/APIKEYS.plist"; sourceTree = "<group>"; };
+		0999125F2B84955400E72C73 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../흐르미/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		099912622B84969800E72C73 /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DrinkLoading.json; sourceTree = "<group>"; };
 		099F16182B750E7E00D8BEDA /* UINavigationController +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController +.swift"; sourceTree = "<group>"; };
 		099F161A2B75347100D8BEDA /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		09A6AD712B70B46E00606585 /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
@@ -167,7 +167,6 @@
 		09BCC14C2B7C7E2900FF4D1B /* Rain.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Rain.json; sourceTree = "<group>"; };
 		09BCC14D2B7C7E2900FF4D1B /* Snow.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Snow.json; sourceTree = "<group>"; };
 		09BCC14E2B7C7E2900FF4D1B /* Clouds.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Clouds.json; sourceTree = "<group>"; };
-		09BCC1562B7C802600FF4D1B /* JUDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = JUDA.app; path = "/Users/minjaekim/Desktop/iOS/Technical-Project/Team-Projects/PJ4T7_HrMi/build/Debug-iphoneos/JUDA.app"; sourceTree = "<absolute>"; };
 		09BCC1572B7C805400FF4D1B /* UserAgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgreementView.swift; sourceTree = "<group>"; };
 		09BCC1592B7C8CD300FF4D1B /* IdentityVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityVerificationView.swift; sourceTree = "<group>"; };
 		09BCC15E2B7CFC7E00FF4D1B /* TermsAndVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndVerificationView.swift; sourceTree = "<group>"; };
@@ -210,15 +209,8 @@
 		7B92656C2B692F0700840095 /* PostReportContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportContent.swift; sourceTree = "<group>"; };
 		7B92656E2B69303F00840095 /* PostReportButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportButton.swift; sourceTree = "<group>"; };
 		7B9265702B6941D000840095 /* PostReportToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportToolbar.swift; sourceTree = "<group>"; };
-		7BE14B902B84727A00C1F6C3 /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = APIKEYS.plist; path = ../../../../../../Downloads/JUDA/APIKEYS.plist; sourceTree = "<group>"; };
-		7BE14B912B84727A00C1F6C3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/JUDA/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7BE14B942B84733900C1F6C3 /* Drink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drink.swift; sourceTree = "<group>"; };
 		7BE14B962B84767000C1F6C3 /* DrinkUploadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkUploadViewModel.swift; sourceTree = "<group>"; };
-		7BE14B992B8476B300C1F6C3 /* test_whiskey.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = test_whiskey.json; path = ../../../../../../../../../Downloads/JUDA/TestJsonData/test_whiskey.json; sourceTree = "<group>"; };
-		7BE14B9A2B8476B300C1F6C3 /* test_wine.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = test_wine.json; path = ../../../../../../../../../Downloads/JUDA/TestJsonData/test_wine.json; sourceTree = "<group>"; };
-		7BE14B9B2B8476B300C1F6C3 /* traditional_liqur_food.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = traditional_liqur_food.json; path = ../../../../../../../../../Downloads/JUDA/TestJsonData/traditional_liqur_food.json; sourceTree = "<group>"; };
-		7BE14B9C2B8476B300C1F6C3 /* Beer_food.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Beer_food.json; path = ../../../../../../../../../Downloads/JUDA/TestJsonData/Beer_food.json; sourceTree = "<group>"; };
-		7BE14BA12B847ED100C1F6C3 /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = DrinkLoading.json; path = ../../../../../../../../Downloads/JUDA/Lottie/DrinkLoading.json; sourceTree = "<group>"; };
 		AC110B562B69658C005390BB /* ChangeUserNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeUserNameView.swift; sourceTree = "<group>"; };
 		AC5778E42B6FC20C00F7B04B /* NavigationProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationProfileView.swift; sourceTree = "<group>"; };
 		AC6D12832B6A8D6100169B23 /* SuggestDrink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestDrink.swift; sourceTree = "<group>"; };
@@ -314,7 +306,6 @@
 		09BCC1362B7B99BD00FF4D1B /* App */ = {
 			isa = PBXGroup;
 			children = (
-				7BE14B982B84769600C1F6C3 /* TestJson */,
 				09A6AD712B70B46E00606585 /* AppViewModel.swift */,
 				7BE14B962B84767000C1F6C3 /* DrinkUploadViewModel.swift */,
 			);
@@ -332,7 +323,7 @@
 		09BCC1482B7C7E1500FF4D1B /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
-				7BE14BA12B847ED100C1F6C3 /* DrinkLoading.json */,
+				099912622B84969800E72C73 /* DrinkLoading.json */,
 				09BCC14E2B7C7E2900FF4D1B /* Clouds.json */,
 				09BCC1492B7C7E2900FF4D1B /* Loading.json */,
 				09BCC14C2B7C7E2900FF4D1B /* Rain.json */,
@@ -365,17 +356,6 @@
 				2C63DD512B676E1000770E3A /* TabItem.swift */,
 			);
 			path = ContentView;
-			sourceTree = "<group>";
-		};
-		7BE14B982B84769600C1F6C3 /* TestJson */ = {
-			isa = PBXGroup;
-			children = (
-				7BE14B9C2B8476B300C1F6C3 /* Beer_food.json */,
-				7BE14B992B8476B300C1F6C3 /* test_whiskey.json */,
-				7BE14B9A2B8476B300C1F6C3 /* test_wine.json */,
-				7BE14B9B2B8476B300C1F6C3 /* traditional_liqur_food.json */,
-			);
-			path = TestJson;
 			sourceTree = "<group>";
 		};
 		B121A5652B5F8D2000667D42 /* Resource */ = {
@@ -435,6 +415,7 @@
 			children = (
 				B1B8FE7B2B5EA9D900921BBE /* JUDA */,
 				090FF1C82B82ED8400AF22B5 /* Frameworks */,
+				0999125D2B84931600E72C73 /* JUDA.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -449,9 +430,9 @@
 				B121A5652B5F8D2000667D42 /* Resource */,
 				B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */,
 				B1B8FE8C2B5EAAAB00921BBE /* Colors.xcassets */,
+				0999125E2B84955400E72C73 /* APIKEYS.plist */,
+				0999125F2B84955400E72C73 /* GoogleService-Info.plist */,
 				B121A56F2B5F8DA100667D42 /* Info.plist */,
-				7BE14B902B84727A00C1F6C3 /* APIKEYS.plist */,
-				7BE14B912B84727A00C1F6C3 /* GoogleService-Info.plist */,
 				B1B8FE822B5EA9DA00921BBE /* Preview Content */,
 			);
 			path = JUDA;
@@ -710,7 +691,7 @@
 				0999125B2B84654400E72C73 /* FirebaseCrashlytics */,
 			);
 			productName = FinalHrmiProjects;
-			productReference = 09BCC1562B7C802600FF4D1B /* JUDA.app */;
+			productReference = 0999125D2B84931600E72C73 /* JUDA.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -758,12 +739,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				09BCC1512B7C7E2900FF4D1B /* Sun.json in Resources */,
-				7BE14B9F2B8476B300C1F6C3 /* traditional_liqur_food.json in Resources */,
 				09BCC1502B7C7E2900FF4D1B /* Thunder.json in Resources */,
 				B1B8FE8D2B5EAAAB00921BBE /* Colors.xcassets in Resources */,
 				B121A5732B5F910900667D42 /* Pretendard-Bold.otf in Resources */,
 				09BCC14F2B7C7E2900FF4D1B /* Loading.json in Resources */,
 				B1B8FE842B5EA9DA00921BBE /* Preview Assets.xcassets in Resources */,
+				099912632B84969800E72C73 /* DrinkLoading.json in Resources */,
 				B121A5782B5F911A00667D42 /* Pretendard-Thin.otf in Resources */,
 				B121A5772B5F911900667D42 /* Pretendard-SemiBold.otf in Resources */,
 				09BCC1532B7C7E2900FF4D1B /* Snow.json in Resources */,
@@ -771,14 +752,10 @@
 				B121A5742B5F910B00667D42 /* Pretendard-Light.otf in Resources */,
 				09BCC1522B7C7E2900FF4D1B /* Rain.json in Resources */,
 				B121A5762B5F911700667D42 /* Pretendard-Regular.otf in Resources */,
+				099912602B84955400E72C73 /* APIKEYS.plist in Resources */,
 				B1B8FE812B5EA9DA00921BBE /* Assets.xcassets in Resources */,
-				7BE14B932B84727A00C1F6C3 /* GoogleService-Info.plist in Resources */,
-				7BE14BA22B847ED100C1F6C3 /* DrinkLoading.json in Resources */,
-				7BE14B9E2B8476B300C1F6C3 /* test_wine.json in Resources */,
 				B121A5752B5F911500667D42 /* Pretendard-Medium.otf in Resources */,
-				7BE14B9D2B8476B300C1F6C3 /* test_whiskey.json in Resources */,
-				7BE14B922B84727A00C1F6C3 /* APIKEYS.plist in Resources */,
-				7BE14BA02B8476B300C1F6C3 /* Beer_food.json in Resources */,
+				099912612B84955400E72C73 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
