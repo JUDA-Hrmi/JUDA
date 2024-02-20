@@ -11,7 +11,6 @@
 		0902EB4B2B7E4E72003D555E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902EB4A2B7E4E72003D555E /* User.swift */; };
 		090FF1C72B80A0C600AF22B5 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090FF1C62B80A0C600AF22B5 /* SplashView.swift */; };
 		090FF1CA2B82ED8400AF22B5 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 090FF1C92B82ED8400AF22B5 /* FirebaseStorage */; };
-		090FF1CC2B83408400AF22B5 /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 090FF1CB2B83408400AF22B5 /* DrinkLoading.json */; };
 		090FF1CE2B83413100AF22B5 /* CustomLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090FF1CD2B83413100AF22B5 /* CustomLoadingView.swift */; };
 		090FF1D02B83436000AF22B5 /* View +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090FF1CF2B83436000AF22B5 /* View +.swift */; };
 		090FF1D52B83570F00AF22B5 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = ACCFECBB2B7FAA50009E5E9C /* FirebaseFirestore */; };
@@ -33,8 +32,6 @@
 		09BCC0B32B7A2BE600FF4D1B /* KoreanTastingNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BCC0B22B7A2BE600FF4D1B /* KoreanTastingNotes.swift */; };
 		09BCC1392B7B99D600FF4D1B /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BCC1382B7B99D600FF4D1B /* AuthService.swift */; };
 		09BCC13C2B7B99FF00FF4D1B /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 09BCC13B2B7B99FF00FF4D1B /* FirebaseAuth */; };
-		09BCC1452B7C78FE00FF4D1B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09BCC1432B7C78FE00FF4D1B /* GoogleService-Info.plist */; };
-		09BCC1462B7C78FE00FF4D1B /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09BCC1442B7C78FE00FF4D1B /* APIKEYS.plist */; };
 		09BCC14F2B7C7E2900FF4D1B /* Loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 09BCC1492B7C7E2900FF4D1B /* Loading.json */; };
 		09BCC1502B7C7E2900FF4D1B /* Thunder.json in Resources */ = {isa = PBXBuildFile; fileRef = 09BCC14A2B7C7E2900FF4D1B /* Thunder.json */; };
 		09BCC1512B7C7E2900FF4D1B /* Sun.json in Resources */ = {isa = PBXBuildFile; fileRef = 09BCC14B2B7C7E2900FF4D1B /* Sun.json */; };
@@ -88,6 +85,15 @@
 		7BBDFF712B6B90EB0036FB8B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE249F2B6144E3007F68B0 /* MainViewModel.swift */; };
 		7BBDFF722B6B912C0036FB8B /* TabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD512B676E1000770E3A /* TabItem.swift */; };
 		7BBDFF732B6B912C0036FB8B /* DrinkInfoSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */; };
+		7BE14B922B84727A00C1F6C3 /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7BE14B902B84727A00C1F6C3 /* APIKEYS.plist */; };
+		7BE14B932B84727A00C1F6C3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7BE14B912B84727A00C1F6C3 /* GoogleService-Info.plist */; };
+		7BE14B952B84733900C1F6C3 /* Drink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE14B942B84733900C1F6C3 /* Drink.swift */; };
+		7BE14B972B84767000C1F6C3 /* DrinkUploadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE14B962B84767000C1F6C3 /* DrinkUploadViewModel.swift */; };
+		7BE14B9D2B8476B300C1F6C3 /* test_whiskey.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BE14B992B8476B300C1F6C3 /* test_whiskey.json */; };
+		7BE14B9E2B8476B300C1F6C3 /* test_wine.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BE14B9A2B8476B300C1F6C3 /* test_wine.json */; };
+		7BE14B9F2B8476B300C1F6C3 /* traditional_liqur_food.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BE14B9B2B8476B300C1F6C3 /* traditional_liqur_food.json */; };
+		7BE14BA02B8476B300C1F6C3 /* Beer_food.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BE14B9C2B8476B300C1F6C3 /* Beer_food.json */; };
+		7BE14BA22B847ED100C1F6C3 /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BE14BA12B847ED100C1F6C3 /* DrinkLoading.json */; };
 		AC110B572B69658C005390BB /* ChangeUserNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC110B562B69658C005390BB /* ChangeUserNameView.swift */; };
 		AC5778E52B6FC20C00F7B04B /* NavigationProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5778E42B6FC20C00F7B04B /* NavigationProfileView.swift */; };
 		AC6D12882B6A8DD300169B23 /* TodayDrinkRecommended.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12872B6A8DD300169B23 /* TodayDrinkRecommended.swift */; };
@@ -138,7 +144,6 @@
 		0902EB482B7E3372003D555E /* ProfileSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingView.swift; sourceTree = "<group>"; };
 		0902EB4A2B7E4E72003D555E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		090FF1C62B80A0C600AF22B5 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
-		090FF1CB2B83408400AF22B5 /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = DrinkLoading.json; path = ../../../../../Downloads/DrinkLoading.json; sourceTree = "<group>"; };
 		090FF1CD2B83413100AF22B5 /* CustomLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLoadingView.swift; sourceTree = "<group>"; };
 		090FF1CF2B83436000AF22B5 /* View +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View +.swift"; sourceTree = "<group>"; };
 		09254CA62B637C9900569D94 /* CustomDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDivider.swift; sourceTree = "<group>"; };
@@ -156,15 +161,13 @@
 		09BCC0B22B7A2BE600FF4D1B /* KoreanTastingNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KoreanTastingNotes.swift; sourceTree = "<group>"; };
 		09BCC1352B7B956A00FF4D1B /* JUDA.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JUDA.entitlements; sourceTree = "<group>"; };
 		09BCC1382B7B99D600FF4D1B /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
-		09BCC1432B7C78FE00FF4D1B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		09BCC1442B7C78FE00FF4D1B /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = APIKEYS.plist; sourceTree = "<group>"; };
 		09BCC1492B7C7E2900FF4D1B /* Loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Loading.json; sourceTree = "<group>"; };
 		09BCC14A2B7C7E2900FF4D1B /* Thunder.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Thunder.json; sourceTree = "<group>"; };
 		09BCC14B2B7C7E2900FF4D1B /* Sun.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Sun.json; sourceTree = "<group>"; };
 		09BCC14C2B7C7E2900FF4D1B /* Rain.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Rain.json; sourceTree = "<group>"; };
 		09BCC14D2B7C7E2900FF4D1B /* Snow.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Snow.json; sourceTree = "<group>"; };
 		09BCC14E2B7C7E2900FF4D1B /* Clouds.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Clouds.json; sourceTree = "<group>"; };
-		09BCC1562B7C802600FF4D1B /* JUDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JUDA.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		09BCC1562B7C802600FF4D1B /* JUDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = JUDA.app; path = "/Users/minjaekim/Desktop/iOS/Technical-Project/Team-Projects/PJ4T7_HrMi/build/Debug-iphoneos/JUDA.app"; sourceTree = "<absolute>"; };
 		09BCC1572B7C805400FF4D1B /* UserAgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgreementView.swift; sourceTree = "<group>"; };
 		09BCC1592B7C8CD300FF4D1B /* IdentityVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityVerificationView.swift; sourceTree = "<group>"; };
 		09BCC15E2B7CFC7E00FF4D1B /* TermsAndVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndVerificationView.swift; sourceTree = "<group>"; };
@@ -207,6 +210,15 @@
 		7B92656C2B692F0700840095 /* PostReportContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportContent.swift; sourceTree = "<group>"; };
 		7B92656E2B69303F00840095 /* PostReportButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportButton.swift; sourceTree = "<group>"; };
 		7B9265702B6941D000840095 /* PostReportToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportToolbar.swift; sourceTree = "<group>"; };
+		7BE14B902B84727A00C1F6C3 /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = APIKEYS.plist; path = ../../../../../../Downloads/JUDA/APIKEYS.plist; sourceTree = "<group>"; };
+		7BE14B912B84727A00C1F6C3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/JUDA/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7BE14B942B84733900C1F6C3 /* Drink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drink.swift; sourceTree = "<group>"; };
+		7BE14B962B84767000C1F6C3 /* DrinkUploadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkUploadViewModel.swift; sourceTree = "<group>"; };
+		7BE14B992B8476B300C1F6C3 /* test_whiskey.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = test_whiskey.json; path = ../../../../../../../../../Downloads/JUDA/TestJsonData/test_whiskey.json; sourceTree = "<group>"; };
+		7BE14B9A2B8476B300C1F6C3 /* test_wine.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = test_wine.json; path = ../../../../../../../../../Downloads/JUDA/TestJsonData/test_wine.json; sourceTree = "<group>"; };
+		7BE14B9B2B8476B300C1F6C3 /* traditional_liqur_food.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = traditional_liqur_food.json; path = ../../../../../../../../../Downloads/JUDA/TestJsonData/traditional_liqur_food.json; sourceTree = "<group>"; };
+		7BE14B9C2B8476B300C1F6C3 /* Beer_food.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Beer_food.json; path = ../../../../../../../../../Downloads/JUDA/TestJsonData/Beer_food.json; sourceTree = "<group>"; };
+		7BE14BA12B847ED100C1F6C3 /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = DrinkLoading.json; path = ../../../../../../../../Downloads/JUDA/Lottie/DrinkLoading.json; sourceTree = "<group>"; };
 		AC110B562B69658C005390BB /* ChangeUserNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeUserNameView.swift; sourceTree = "<group>"; };
 		AC5778E42B6FC20C00F7B04B /* NavigationProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationProfileView.swift; sourceTree = "<group>"; };
 		AC6D12832B6A8D6100169B23 /* SuggestDrink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestDrink.swift; sourceTree = "<group>"; };
@@ -302,7 +314,9 @@
 		09BCC1362B7B99BD00FF4D1B /* App */ = {
 			isa = PBXGroup;
 			children = (
+				7BE14B982B84769600C1F6C3 /* TestJson */,
 				09A6AD712B70B46E00606585 /* AppViewModel.swift */,
+				7BE14B962B84767000C1F6C3 /* DrinkUploadViewModel.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -318,7 +332,7 @@
 		09BCC1482B7C7E1500FF4D1B /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
-				090FF1CB2B83408400AF22B5 /* DrinkLoading.json */,
+				7BE14BA12B847ED100C1F6C3 /* DrinkLoading.json */,
 				09BCC14E2B7C7E2900FF4D1B /* Clouds.json */,
 				09BCC1492B7C7E2900FF4D1B /* Loading.json */,
 				09BCC14C2B7C7E2900FF4D1B /* Rain.json */,
@@ -351,6 +365,17 @@
 				2C63DD512B676E1000770E3A /* TabItem.swift */,
 			);
 			path = ContentView;
+			sourceTree = "<group>";
+		};
+		7BE14B982B84769600C1F6C3 /* TestJson */ = {
+			isa = PBXGroup;
+			children = (
+				7BE14B9C2B8476B300C1F6C3 /* Beer_food.json */,
+				7BE14B992B8476B300C1F6C3 /* test_whiskey.json */,
+				7BE14B9A2B8476B300C1F6C3 /* test_wine.json */,
+				7BE14B9B2B8476B300C1F6C3 /* traditional_liqur_food.json */,
+			);
+			path = TestJson;
 			sourceTree = "<group>";
 		};
 		B121A5652B5F8D2000667D42 /* Resource */ = {
@@ -409,7 +434,6 @@
 			isa = PBXGroup;
 			children = (
 				B1B8FE7B2B5EA9D900921BBE /* JUDA */,
-				09BCC1562B7C802600FF4D1B /* JUDA.app */,
 				090FF1C82B82ED8400AF22B5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -426,8 +450,8 @@
 				B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */,
 				B1B8FE8C2B5EAAAB00921BBE /* Colors.xcassets */,
 				B121A56F2B5F8DA100667D42 /* Info.plist */,
-				09BCC1442B7C78FE00FF4D1B /* APIKEYS.plist */,
-				09BCC1432B7C78FE00FF4D1B /* GoogleService-Info.plist */,
+				7BE14B902B84727A00C1F6C3 /* APIKEYS.plist */,
+				7BE14B912B84727A00C1F6C3 /* GoogleService-Info.plist */,
 				B1B8FE822B5EA9DA00921BBE /* Preview Content */,
 			);
 			path = JUDA;
@@ -447,6 +471,7 @@
 				B1EE24722B61431A007F68B0 /* DummyModel.swift */,
 				09BCC0B02B79EB5D00FF4D1B /* DrinkDummyData.swift */,
 				0902EB4A2B7E4E72003D555E /* User.swift */,
+				7BE14B942B84733900C1F6C3 /* Drink.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -733,6 +758,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09BCC1512B7C7E2900FF4D1B /* Sun.json in Resources */,
+				7BE14B9F2B8476B300C1F6C3 /* traditional_liqur_food.json in Resources */,
 				09BCC1502B7C7E2900FF4D1B /* Thunder.json in Resources */,
 				B1B8FE8D2B5EAAAB00921BBE /* Colors.xcassets in Resources */,
 				B121A5732B5F910900667D42 /* Pretendard-Bold.otf in Resources */,
@@ -740,16 +766,19 @@
 				B1B8FE842B5EA9DA00921BBE /* Preview Assets.xcassets in Resources */,
 				B121A5782B5F911A00667D42 /* Pretendard-Thin.otf in Resources */,
 				B121A5772B5F911900667D42 /* Pretendard-SemiBold.otf in Resources */,
-				090FF1CC2B83408400AF22B5 /* DrinkLoading.json in Resources */,
 				09BCC1532B7C7E2900FF4D1B /* Snow.json in Resources */,
 				09BCC1542B7C7E2900FF4D1B /* Clouds.json in Resources */,
 				B121A5742B5F910B00667D42 /* Pretendard-Light.otf in Resources */,
-				09BCC1452B7C78FE00FF4D1B /* GoogleService-Info.plist in Resources */,
-				09BCC1462B7C78FE00FF4D1B /* APIKEYS.plist in Resources */,
 				09BCC1522B7C7E2900FF4D1B /* Rain.json in Resources */,
 				B121A5762B5F911700667D42 /* Pretendard-Regular.otf in Resources */,
 				B1B8FE812B5EA9DA00921BBE /* Assets.xcassets in Resources */,
+				7BE14B932B84727A00C1F6C3 /* GoogleService-Info.plist in Resources */,
+				7BE14BA22B847ED100C1F6C3 /* DrinkLoading.json in Resources */,
+				7BE14B9E2B8476B300C1F6C3 /* test_wine.json in Resources */,
 				B121A5752B5F911500667D42 /* Pretendard-Medium.otf in Resources */,
+				7BE14B9D2B8476B300C1F6C3 /* test_whiskey.json in Resources */,
+				7BE14B922B84727A00C1F6C3 /* APIKEYS.plist in Resources */,
+				7BE14BA02B8476B300C1F6C3 /* Beer_food.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -790,6 +819,7 @@
 				B1EE24732B61431A007F68B0 /* DummyModel.swift in Sources */,
 				2C63DD672B67EB1B00770E3A /* RecordView.swift in Sources */,
 				7B6D76AF2B67CFC900601B55 /* PostInfo.swift in Sources */,
+				7BE14B972B84767000C1F6C3 /* DrinkUploadViewModel.swift in Sources */,
 				B12BEE472B6A9E1000580D29 /* AppServiceInfoView.swift in Sources */,
 				B1EE249E2B6144DD007F68B0 /* DrinkInfoViewModel.swift in Sources */,
 				AC98D1D82B7359CC006F6EC9 /* WeatherViewModel.swift in Sources */,
@@ -849,6 +879,7 @@
 				09F869A02B68E50000A56A4C /* TaggedTrendingPosts.swift in Sources */,
 				AC98D1D42B7358AE006F6EC9 /* AiViewModel.swift in Sources */,
 				7B6D76B52B67D5F900601B55 /* PostTags.swift in Sources */,
+				7BE14B952B84733900C1F6C3 /* Drink.swift in Sources */,
 				09A6AD7E2B72A53C00606585 /* Errors.swift in Sources */,
 				099F161B2B75347100D8BEDA /* CheckBox.swift in Sources */,
 				7B904C662B6168C60052384A /* PostCell.swift in Sources */,
