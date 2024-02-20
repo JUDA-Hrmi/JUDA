@@ -54,16 +54,6 @@ struct LogInView: View {
                 }
                 .signInWithAppleButtonStyle(colorScheme == .light ? .black : .white)
                 .frame(width: 300, height: 48)
-                // 구글 로그인
-                Image("Google")
-                    .resizable()
-                    .frame(width: 300, height: 48)
-                    .aspectRatio(contentMode: .fit)
-                // 카카오 로그인
-                Image("Kakao")
-                    .resizable()
-                    .frame(width: 300, height: 48)
-                    .aspectRatio(contentMode: .fit)
             }
             Spacer()
             //

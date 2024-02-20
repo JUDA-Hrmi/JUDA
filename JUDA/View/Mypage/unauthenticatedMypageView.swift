@@ -1,0 +1,79 @@
+//
+//  unauthenticatedMypageView.swift
+//  JUDA
+//
+//  Created by 홍세희 on 2024/02/20.
+//
+
+import SwiftUI
+
+struct unauthenticatedMypageView: View {
+    @EnvironmentObject private var appViewModel: AppViewModel
+    @EnvironmentObject private var authService: AuthService
+
+    @Binding var selectedTabIndex: Int
+    
+    var body: some View {
+        NavigationStack {
+            VStack {
+                HStack {
+                    Image("defaultprofileimage")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .clipShape(Circle())
+                        .frame(width: 70, height: 70)
+                    NavigationLink {
+                        LogInView()
+                            .modifier(TabBarHidden())
+                    } label: {
+                        Text("로그인 하러 가기 >")
+                            .font(.medium18)
+                    }
+                    Spacer()
+                }
+                .padding()
+                // 내가 작성한 게시물 -- '새 글 작성하기'
+                HStack {
+                    Text("내가 작성한 술상")
+                        .font(.semibold18)
+                    Spacer()
+                    // TODO: NavigationLink - value 로 수정
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 20)
+                
+                Spacer()
+                
+                Text("로그인해서 \n 술상을 작성해보세요")
+                    .font(.semibold18)
+                    .foregroundStyle(.gray01)
+                    .multilineTextAlignment(.center)
+                Spacer()
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Text("마이페이지")
+                        .font(.semibold18)
+                }
+                // 환경설정 세팅 뷰
+                ToolbarItem(placement: .topBarTrailing) {
+                    // TODO: NavigationLink - value 로 수정
+                    NavigationLink {
+                        SettingView(selectedTabIndex: $selectedTabIndex)
+                            .modifier(TabBarHidden())
+                    } label: {
+                        Image(systemName: "gearshape")
+                    }
+                }
+            }
+            .foregroundStyle(.mainBlack)
+            .onAppear {
+                appViewModel.tabBarState = .visible
+            }
+        }
+    }
+}
+
+#Preview {
+    unauthenticatedMypageView(selectedTabIndex: .constant(0))
+}

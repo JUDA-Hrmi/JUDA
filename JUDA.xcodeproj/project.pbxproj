@@ -92,6 +92,7 @@
 		AC98D1D22B73586F006F6EC9 /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = AC98D1D12B73586F006F6EC9 /* OpenAI */; };
 		AC98D1D42B7358AE006F6EC9 /* AiViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98D1D32B7358AE006F6EC9 /* AiViewModel.swift */; };
 		AC98D1D82B7359CC006F6EC9 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98D1D72B7359CC006F6EC9 /* WeatherViewModel.swift */; };
+		B1198FA02B84EAF3002BE0DE /* unauthenticatedMypageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1198F9F2B84EAF3002BE0DE /* unauthenticatedMypageView.swift */; };
 		B121A5722B5F8EE100667D42 /* Font +.swift in Sources */ = {isa = PBXBuildFile; fileRef = B121A5712B5F8EE100667D42 /* Font +.swift */; };
 		B121A5732B5F910900667D42 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B121A56C2B5F8D5D00667D42 /* Pretendard-Bold.otf */; };
 		B121A5742B5F910B00667D42 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = B121A56D2B5F8D5D00667D42 /* Pretendard-Light.otf */; };
@@ -212,6 +213,7 @@
 		AC98D1CE2B7357DA006F6EC9 /* Lottie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lottie.swift; sourceTree = "<group>"; };
 		AC98D1D32B7358AE006F6EC9 /* AiViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AiViewModel.swift; sourceTree = "<group>"; };
 		AC98D1D72B7359CC006F6EC9 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
+		B1198F9F2B84EAF3002BE0DE /* unauthenticatedMypageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = unauthenticatedMypageView.swift; sourceTree = "<group>"; };
 		B121A5692B5F8D5D00667D42 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		B121A56A2B5F8D5D00667D42 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		B121A56B2B5F8D5D00667D42 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
@@ -568,6 +570,7 @@
 		B1EE247E2B614388007F68B0 /* Mypage */ = {
 			isa = PBXGroup;
 			children = (
+				B1198F9F2B84EAF3002BE0DE /* unauthenticatedMypageView.swift */,
 				B1EE24872B61445E007F68B0 /* MypageView.swift */,
 				B12330482B6A99B400DE2A93 /* SettingView.swift */,
 				AC5778E42B6FC20C00F7B04B /* NavigationProfileView.swift */,
@@ -837,6 +840,7 @@
 				B1EE248E2B614470007F68B0 /* PostsView.swift in Sources */,
 				2C2AD5012B689CA500C681F4 /* SelectedPhotoHorizontalScroll.swift in Sources */,
 				2C2AD5032B68A15E00C681F4 /* FoodTagAddTextField.swift in Sources */,
+				B1198FA02B84EAF3002BE0DE /* unauthenticatedMypageView.swift in Sources */,
 				2C2AD5052B68A1AF00C681F4 /* FoodTagVertical.swift in Sources */,
 				09F869BB2B6A4A9C00A56A4C /* LikedDrinkList.swift in Sources */,
 				09F869962B68E46500A56A4C /* DrinkDetailView.swift in Sources */,
