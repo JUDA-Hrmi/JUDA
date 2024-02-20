@@ -48,7 +48,7 @@ struct WeatherAndFood: View {
                         .aspectRatio(1.0, contentMode: .fit)
                 }
             }
-            .onReceive(locationManager.$location) { location in
+            .onChange(of: locationManager.location) { location in
                           if shouldFetchWeather() && authService.signInStatus {
                               if let location = location {
                                   isLoading = true
@@ -93,7 +93,6 @@ struct WeatherAndFood: View {
             }
         }
         .font(authService.signInStatus ? .bold22 : .bold20)
-        // TODO: - 나중에 develop에서 병합후에 폰트 수정
     }
     
     // fetch타임 설정 TimeInterval 300 == 5분으로 설정
@@ -119,16 +118,15 @@ struct WeatherAndFood: View {
     }
 
     // 날씨 정보 fetch
+    // TODO: - 노션 참고 변경 사항
     private func fetchWeather(latitude: Double, longitude: Double) async throws -> Weather {
-        return try await withCheckedThrowingContinuation { continuation in
-            WeatherAPI.shared.getWeather(latitude: latitude, longitude: longitude) { weather in
-                if let weather = weather {
-                    continuation.resume(returning: weather)
-                    print("getWeather call")
-                } else {
-                    continuation.resume(throwing: NSError(domain: "", code: -1, userInfo: nil))
-                }
-            }
+        let weather = await WeatherAPI.shared.getWeather(latitude: latitude, longitude: longitude)
+        if let weather = weather {
+            print("getWeather call")
+            return weather
+        } else {
+            print("Weather data could not be fetched.")
+            throw NSError(domain: "WeatherErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Weather data could not be fetched."])
         }
     }
 

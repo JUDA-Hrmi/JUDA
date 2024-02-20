@@ -65,7 +65,7 @@ class AiViewModel: ObservableObject {
         respond = "술: \(drink) + 안주: \(dish)"
         print(respond)
     }
-    
+
 }
 
 
@@ -104,6 +104,16 @@ class AiTodayViewModel: ObservableObject {
             throw error
         }
     }
+    
+    func parseAndSetResponse(_ response: String) {
+          let components = response.components(separatedBy: " ")
+          guard components.count == 3 else {
+              print("Invalid response format")
+              return
+          }
+          
+          respondToday = response
+      }
 }
 
     
