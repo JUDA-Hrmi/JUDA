@@ -20,7 +20,7 @@ struct User: Codable, Hashable {
 // TODO: 추후 수정 필요
 struct Alarm: Codable, Hashable {
     var isChecked: Bool
-    let likedUser: String
+    let likedUserName: String
     let likedTime: Date
     let likeUserUID: String
 }

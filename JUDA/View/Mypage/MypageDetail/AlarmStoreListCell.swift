@@ -16,7 +16,7 @@ struct AlarmStoreListCell: View {
             VStack(alignment: .leading, spacing: 2) {
                 // 게사물 좋아요 알람 내용
                 Group {
-                    Text(alarm.likedUser)
+                    Text(alarm.likedUserName)
                         .font(.medium14)
                     +
                     Text(" 님이 게시물에 하트를 남겼어요.")
@@ -27,10 +27,10 @@ struct AlarmStoreListCell: View {
                 .overlay(alignment: .topLeading) {
                     // TODO: NavigationLink - value 로 수정
                     NavigationLink {
-                        NavigationProfileView(likeCount: 44, userType: .otheruser, userName: alarm.likedUser)
+                        NavigationProfileView(likeCount: 44, userType: .otheruser, userName: alarm.likedUserName)
                             .modifier(TabBarHidden())
                     } label: {
-                        Text(alarm.likedUser)
+                        Text(alarm.likedUserName)
                             .font(.medium14)
                             .foregroundStyle(.mainBlack)
                     }

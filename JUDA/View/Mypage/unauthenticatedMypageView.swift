@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 로그인 X 일 경우 보여지는 MypageView
 struct unauthenticatedMypageView: View {
     @EnvironmentObject private var appViewModel: AppViewModel
     @EnvironmentObject private var authService: AuthService
