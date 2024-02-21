@@ -134,8 +134,6 @@ extension AuthService {
                 self.name = user.name
                 self.age = user.age
                 self.gender = user.gender
-
-                print("User data updated: \(user)")
             }
         }
     

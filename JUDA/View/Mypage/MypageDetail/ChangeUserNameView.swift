@@ -68,8 +68,6 @@ struct ChangeUserNameView: View {
             Button {
                 // TODO: update 코드 작성하기
                 authService.updateUserName(uid: Auth.auth().currentUser?.uid ?? "", userName: userChangeNickName)
-                // 실시간 업데이트 감지
-                authService.startListeningForUser(uid: Auth.auth().currentUser?.uid ?? "")
                 dismiss()
             } label: {
                 Text("변경 완료")

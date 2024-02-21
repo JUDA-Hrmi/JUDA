@@ -90,6 +90,7 @@ struct MypageView: View {
             .foregroundStyle(.mainBlack)
             .onAppear {
                 appViewModel.tabBarState = .visible
+                authService.startListeningForUser(uid: Auth.auth().currentUser?.uid ?? "")
             }
         }
         .toolbar(appViewModel.tabBarState, for: .tabBar)
