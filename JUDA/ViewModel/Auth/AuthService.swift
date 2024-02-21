@@ -137,7 +137,7 @@ extension AuthService {
             }
         }
     
-    func startListeningForUser(uid: String) {
+    func startListeningForUser() {
             let userRef = Firestore.firestore().collection("users").document(uid)
 
             // 기존에 활성화된 리스너가 있다면 삭제

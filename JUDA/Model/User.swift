@@ -22,5 +22,5 @@ struct Alarm: Codable, Hashable {
     var isChecked: Bool
     let likedUserName: String
     let likedTime: Date
-    let likeUserUID: String
+//    let likeUserUID: String
 }
