@@ -9,13 +9,13 @@ import SwiftUI
 
 // MARK: - 선택된 사진들을 보여주는 스크롤뷰
 struct SelectedPhotoHorizontalScroll: View {
-    @EnvironmentObject private var recordVM: RecordViewModel
+    @EnvironmentObject private var recordViewModel: RecordViewModel
     
     var body: some View {
         ScrollView(.horizontal) {
             LazyHStack(spacing: 10) {
-                ForEach(0..<recordVM.images.count, id: \.self) { index in
-                    Image(uiImage: recordVM.images[index])
+                ForEach(0..<recordViewModel.images.count, id: \.self) { index in
+                    Image(uiImage: recordViewModel.images[index])
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 100, height: 100)

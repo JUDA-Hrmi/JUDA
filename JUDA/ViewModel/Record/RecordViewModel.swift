@@ -38,7 +38,7 @@ final class RecordViewModel: ObservableObject {
     @Published var isPostUploadSuccess = false
     
     // Firestore connection
-    let db = Firestore.firestore()
+    private let db = Firestore.firestore()
 }
 
 // MARK: - User Data Fetch

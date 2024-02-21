@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: - 추가된 음식 태그를 보여주는 부분
 struct FoodTagVertical: View {
-    @EnvironmentObject private var recordVM: RecordViewModel
+    @EnvironmentObject private var recordViewModel: RecordViewModel
     // 태그 결과를 보여주는 이차원 배열
     @State private var foodTagRows: [[String]] = []
         
@@ -25,10 +25,10 @@ struct FoodTagVertical: View {
             }
         }
         .padding(.vertical, 10)
-        .frame(width: recordVM.windowWidth, alignment: .leading)
+        .frame(width: recordViewModel.windowWidth, alignment: .leading)
         // 음식 태그 배열에 변경사항이 있을 때마다 width에 맞게 2차원 배열로 매핑
-        .onChange(of: recordVM.foodTags) { _ in
-            foodTagRows = TagHandler.getRows(tags: recordVM.foodTags, spacing: 35, fontSize: 14, windowWidth: recordVM.windowWidth)
+        .onChange(of: recordViewModel.foodTags) { _ in
+            foodTagRows = TagHandler.getRows(tags: recordViewModel.foodTags, spacing: 35, fontSize: 14, windowWidth: recordViewModel.windowWidth)
         }
     }
 }

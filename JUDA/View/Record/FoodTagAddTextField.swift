@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: - 음식 태그 추가 텍스트 필드
 struct FoodTagAddTextField: View {
-    @EnvironmentObject private var recordVM: RecordViewModel
+    @EnvironmentObject private var recordViewModel: RecordViewModel
 	// TextField로 부터 입력받은 음식 태그 이름
 	@State private var foodTagName: String = ""
 	// VStack에 부여된 id 값 바인딩
@@ -61,7 +61,7 @@ struct FoodTagAddTextField: View {
             calculateIsFoodTagsCountAboveTen()
         }
         // 음식 태그 리스트에 변화가 있을때마다, 10개가 넘는지 확인
-        .onChange(of: recordVM.foodTags) { _ in
+        .onChange(of: recordViewModel.foodTags) { _ in
             calculateIsFoodTagsCountAboveTen()
         }
         .padding(.vertical, 10)
@@ -73,14 +73,14 @@ struct FoodTagAddTextField: View {
 	
     // 음식 태그가 10개가 넘는지 확인하는 함수
     private func calculateIsFoodTagsCountAboveTen() {
-        self.isTagsCountAboveTen = recordVM.foodTags.count >= 10
+        self.isTagsCountAboveTen = recordViewModel.foodTags.count >= 10
     }
     
 	// 입력된 음식 태그 이름을 음식 태그 배열 foodTags에 추가해주는 함수
 	private func addFoodTag() {
 		// 중복 추가 불가
-        if !foodTagName.isEmpty && !recordVM.foodTags.contains(where: { $0 == foodTagName }) {
-            recordVM.foodTags.append(foodTagName)
+        if !foodTagName.isEmpty && !recordViewModel.foodTags.contains(where: { $0 == foodTagName }) {
+            recordViewModel.foodTags.append(foodTagName)
 		}
 		// TextField 비워주기
 		foodTagName = ""

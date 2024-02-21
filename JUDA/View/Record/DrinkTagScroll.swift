@@ -34,17 +34,17 @@ struct DrinkTagScroll: View {
 
 // MARK: - DrinkTagScroll 로 보여줄 내용
 struct DrinkTagContent: View {
-    @EnvironmentObject private var recordVM: RecordViewModel
+    @EnvironmentObject private var recordViewModel: RecordViewModel
     // CustomRatingDialog를 띄워주는 상태 프로퍼티
     @Binding var isShowRatingDialog: Bool
     
     var body: some View {
         LazyVStack {
-            ForEach(recordVM.drinkTags.map { ($0.key, $0.value) }, id: \.0) { drinkTag in
+            ForEach(recordViewModel.drinkTags.map { ($0.key, $0.value) }, id: \.0) { drinkTag in
                 DrinkTagCell(drinkTag: drinkTag)
                     .onTapGesture {
                         // 현재 선택된 DrinkTagCell의 술 태그 정보 받아오기
-                        recordVM.selectedDrinkTag = drinkTag
+                        recordViewModel.selectedDrinkTag = drinkTag
                         // CustomRatingDialog 띄우기
                         isShowRatingDialog.toggle()
                     }
@@ -55,7 +55,7 @@ struct DrinkTagContent: View {
 
 // MARK: - 태그된 술 리스트 셀
 struct DrinkTagCell: View {
-    @EnvironmentObject private var recordVM: RecordViewModel
+    @EnvironmentObject private var recordViewModel: RecordViewModel
     // 술 태그
     let drinkTag: (String, DrinkTag)
     
@@ -86,7 +86,7 @@ struct DrinkTagCell: View {
             // Xmark 버튼
             Button {
                 // 클릭 시, 술 태그 배열에서 해당 술 태그 삭제
-                recordVM.drinkTags[drinkTag.0] = nil
+                recordViewModel.drinkTags[drinkTag.0] = nil
             } label: {
                 Image(systemName: "xmark")
                     .foregroundStyle(.gray01)

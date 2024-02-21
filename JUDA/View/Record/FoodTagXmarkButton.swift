@@ -9,14 +9,14 @@ import SwiftUI
 
 // MARK: - "X 음식태그" 형태를 가진 버튼
 struct FoodTagXmarkButton: View {
-    @EnvironmentObject private var recordVM: RecordViewModel
+    @EnvironmentObject private var recordViewModel: RecordViewModel
     // 음식 태그 이름
     let foodTag: String
     
     var body: some View {
         Button {
             // 버튼 클릭 시, foodTag 삭제
-            recordVM.foodTags.removeAll(where: { $0 == foodTag })
+            recordViewModel.foodTags.removeAll(where: { $0 == foodTag })
         } label : {
             HStack(spacing: 2) {
                 Image(systemName: "xmark")

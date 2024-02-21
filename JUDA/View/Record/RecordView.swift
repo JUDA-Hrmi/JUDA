@@ -17,7 +17,7 @@ struct RecordView: View {
     // Navigation을 위한 환경 프로퍼티
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var auth: AuthService
-    @EnvironmentObject private var recordVM: RecordViewModel
+    @EnvironmentObject private var recordViewModel: RecordViewModel
     // 기록 타입 ( 작성 or 수정 )
     let recordType: RecordType
     // TextEditor focus 상태 프로퍼티
@@ -72,17 +72,17 @@ struct RecordView: View {
             }
             // 화면 너비 받아오기
             .task {
-                recordVM.windowWidth = TagHandler.getScreenWidthWithoutPadding(padding: 20)
+                recordViewModel.windowWidth = TagHandler.getScreenWidthWithoutPadding(padding: 20)
             }
         }
         // post upload 여부에 따라 loadingView 표시
-        .loadingView($recordVM.isPostUploadSuccess)
+        .loadingView($recordViewModel.isPostUploadSuccess)
         // 글 내용 유무 체크
         .onAppear {
             isPostContentNotEmpty()
         }
         // 글 내용 유무 체크
-        .onChange(of: recordVM.content) { _ in
+        .onChange(of: recordViewModel.content) { _ in
             isPostContentNotEmpty()
         }
         .navigationBarBackButtonHidden()
@@ -108,22 +108,22 @@ struct RecordView: View {
                     DispatchQueue.main.async {
                         Task {
                             // loadingView 띄우기
-                            recordVM.isPostUploadSuccess = true
+                            recordViewModel.isPostUploadSuccess = true
                             // FirevaseStorage multiple image upload
-                            await recordVM.multipleImageUpload()
+                            await recordViewModel.multipleImageUpload()
                             
                             // post 데이터 모델 객체 생성
-                            recordVM.post = Post(user: (auth.uid, UserField(name: auth.name,
+                            recordViewModel.post = Post(user: (auth.uid, UserField(name: auth.name,
                                                                             age: auth.age, gender: auth.gender,
                                                                             notificationAllowed: auth.notificationAllowed)),
-                                                 drinkTags: recordVM.drinkTags,
-                                                 postField: PostField(imagesID: recordVM.imagesID, content: recordVM.content,
-                                                                      likedCount: 0, postedTimeStamp: Date(), foodTags: recordVM.foodTags))
+                                                 drinkTags: recordViewModel.drinkTags,
+                                                 postField: PostField(imagesID: recordViewModel.imagesID, content: recordViewModel.content,
+                                                                      likedCount: 0, postedTimeStamp: Date(), foodTags: recordViewModel.foodTags))
                             
                             // post upload
-                            await recordVM.uploadPost()
+                            await recordViewModel.uploadPost()
                             // loadingView 없애기
-                            recordVM.isPostUploadSuccess = false
+                            recordViewModel.isPostUploadSuccess = false
                         }
                     }
                     
@@ -138,14 +138,14 @@ struct RecordView: View {
     }
     
     private func isPostContentNotEmpty() {
-        let trimmedString = recordVM.content.trimmingCharacters(in: .whitespacesAndNewlines) // 공백 + 개행문자 제외
+        let trimmedString = recordViewModel.content.trimmingCharacters(in: .whitespacesAndNewlines) // 공백 + 개행문자 제외
         self.isPostContent = !trimmedString.isEmpty
     }
 }
 
 // MARK: - 술상 기록 화면에 보여줄 내용
 struct RecordContent: View {
-    @EnvironmentObject private var recordVM: RecordViewModel
+    @EnvironmentObject private var recordViewModel: RecordViewModel
     // post add/edit
     let recordType: RecordType
     // TextEditor focus 상태 프로퍼티
@@ -166,11 +166,11 @@ struct RecordContent: View {
             // 선택된 사진들을 보여주는 가로 Scroll View
             SelectedPhotoHorizontalScroll()
             // 글 작성 TextEditor
-            TextEditor(text: $recordVM.content)
+            TextEditor(text: $recordViewModel.content)
             // TextEditor에 Text를 오버레이하여 placeholder로 보여줌
                 .overlay(alignment: .topLeading) {
                     // content가 입력됐을 때, placeholder "" 처리
-                    Text(recordVM.content.isEmpty ? placeholder : "")
+                    Text(recordViewModel.content.isEmpty ? placeholder : "")
                         .font(.regular16)
                         .padding(.leading, 6)
                         .padding(.top, 10)

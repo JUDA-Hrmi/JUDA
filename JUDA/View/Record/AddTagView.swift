@@ -11,7 +11,7 @@ import PhotosUI
 // MARK: - 글 작성 시, 사진 선택 및 술 태그 추가 화면
 struct AddTagView: View {
     @EnvironmentObject private var auth: AuthService
-    @EnvironmentObject private var recordVM: RecordViewModel
+    @EnvironmentObject private var recordViewModel: RecordViewModel
     // 사진 배열
     @State private var selectedPhotos: [PhotosPickerItem] = []
     // SearchTagView Sheet를 띄워주는 상태 프로퍼티
@@ -52,7 +52,7 @@ struct AddTagView: View {
                     .padding(.horizontal, 20)
                     .padding(.vertical, 10)
                     // 술 태그가 없을 때, 텍스트 보여주기
-                    if recordVM.drinkTags.isEmpty {
+                    if recordViewModel.drinkTags.isEmpty {
                         Spacer()
                         Text("태그를 추가해보세요\n(최대 5개)")
                             .foregroundStyle(.gray01)
@@ -69,7 +69,7 @@ struct AddTagView: View {
                 if isShowRatingDialog {
                     CustomDialog(type: .rating(
                         // 선택된 술 태그의 술 이름
-                        drinkName: recordVM.selectedDrinkTag?.1.drinkTag.name ?? "",
+                        drinkName: recordViewModel.selectedDrinkTag?.1.drinkTag.name ?? "",
                         leftButtonLabel: "취소",
                         leftButtonAction: {
                             // CustomRatingDialog 사라지게 하기
@@ -80,8 +80,8 @@ struct AddTagView: View {
                             // 0보다 큰 점수를 매겼을 때 수정 버튼 동작
                             if rating > 0 {
                                 // 술 태그 배열에서 해당 술 태그의 점수를 변경
-                                if let selectedDrinkTag = recordVM.selectedDrinkTag {
-                                    recordVM.drinkTags[selectedDrinkTag.0] = DrinkTag(drinkTag: selectedDrinkTag.1.drinkTag, rating: rating)
+                                if let selectedDrinkTag = recordViewModel.selectedDrinkTag {
+                                    recordViewModel.drinkTags[selectedDrinkTag.0] = DrinkTag(drinkTag: selectedDrinkTag.1.drinkTag, rating: rating)
                                 }
                                 // 점수 변경 후 CustomRatingDialog 사라지게 하기
                                 isShowRatingDialog = false
@@ -92,7 +92,7 @@ struct AddTagView: View {
                     )
                     // 선택한 drinkTag의 rating을 CustomDialog에 표시하기 위한 rating 값 변경
                     .onAppear {
-                        if let rating = recordVM.selectedDrinkTag?.1.rating {
+                        if let rating = recordViewModel.selectedDrinkTag?.1.rating {
                             self.rating = rating
                         }
                     }
@@ -111,7 +111,7 @@ struct AddTagView: View {
                 
             }
             // 술 태그 리스트에 변화가 있을 때, 체크
-            .onChange(of: recordVM.drinkTags.count) { _ in
+            .onChange(of: recordViewModel.drinkTags.count) { _ in
                 // 태그가 5개를 넘어가는지 확인
                 calculateIsTagsCountAboveFive()
             }
@@ -143,7 +143,7 @@ struct AddTagView: View {
                 SearchTagView(isShowSearchTag: $isShowSearchTag)
                 // SearchTagView Disappear시, 검색 결과 비워주기
                     .onDisappear {
-                        recordVM.searchDrinks = [:]
+                        recordViewModel.searchDrinks = [:]
                     }
             }
         }
@@ -151,7 +151,7 @@ struct AddTagView: View {
     
     // 술 태그가 5개를 넘는지 확인하는 함수
     private func calculateIsTagsCountAboveFive() {
-        self.isTagsCountAboveFive = recordVM.drinkTags.count >= 5
+        self.isTagsCountAboveFive = recordViewModel.drinkTags.count >= 5
     }
 }
 
