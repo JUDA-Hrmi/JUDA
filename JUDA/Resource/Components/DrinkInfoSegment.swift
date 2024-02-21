@@ -11,7 +11,7 @@ import SwiftUI
 struct DrinkInfoSegment: View {
     let optionNameList: [String] // 정렬옵션 이름이 담겨진 리스트
     
-    @Binding var selectedSortingOption: String // 선택된 항목 이름
+    let selectedSortingOption: String // 선택된 항목 이름
     @Binding var isShowingSheet: Bool
     @Binding var isGridView: Bool
     
@@ -19,7 +19,7 @@ struct DrinkInfoSegment: View {
         HStack {
             CustomChangeStyleSegment(isGridView: $isGridView)
             Spacer()
-            CustomSortingButton(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
+            CustomSortingButton(optionNameList: optionNameList, selectedSortingOption: selectedSortingOption, isShowingSheet: $isShowingSheet)
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
@@ -52,7 +52,7 @@ struct CustomChangeStyleSegment: View {
 // MARK: - 정렬 옵션 버튼
 struct CustomSortingButton: View {
     let optionNameList: [String] // 정렬옵션 이름이 담겨진 리스트
-    @Binding var selectedSortingOption: String // 선택된 항목 이름
+    let selectedSortingOption: String // 선택된 항목 이름
     @Binding var isShowingSheet: Bool
     
     var body: some View {

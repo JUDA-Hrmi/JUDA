@@ -49,9 +49,7 @@ struct SettingView: View {
                         HStack {
                             Text("화면 모드 설정")
                             Spacer()
-                            CustomSortingButton(optionNameList: optionNameList,
-                                                selectedSortingOption: $selectedSortingOption,
-                                                isShowingSheet: $isShowingSheet)
+                            CustomSortingButton(optionNameList: optionNameList, selectedSortingOption: selectedSortingOption, isShowingSheet: $isShowingSheet)
                             // CustomSortingButton에서 선택한 selectedSortingOption로 화면 색상 설정하기
                             .onChange(of: selectedSortingOption) { _ in
                                 switch selectedSortingOption {
@@ -183,9 +181,7 @@ struct SettingView: View {
                         HStack {
                             Text("화면 모드 설정")
                             Spacer()
-                            CustomSortingButton(optionNameList: optionNameList,
-                                                selectedSortingOption: $selectedSortingOption,
-                                                isShowingSheet: $isShowingSheet)
+                            CustomSortingButton(optionNameList: optionNameList, selectedSortingOption: selectedSortingOption, isShowingSheet: $isShowingSheet)
                             .onChange(of: selectedSortingOption) { _ in
                                 switch selectedSortingOption {
                                 case "라이트 모드":
