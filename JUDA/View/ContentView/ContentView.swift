@@ -9,6 +9,8 @@ import SwiftUI
 
 // MARK: - 앱 전체 스타트 탭 뷰
 struct ContentView: View {
+    @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject var colorScheme: SystemColorTheme
     // 현재 선택된 탭의 인덱스. 초기값 0
     @State private var selectedTabIndex = 0
     // post 서치바 텍스트
@@ -50,6 +52,8 @@ struct ContentView: View {
             }
         }
         .tint(.mainAccent03)
+        // SettingView - 화면 모드 -> 선택한 옵션에 따라 배경색 변환
+        .preferredColorScheme(colorScheme.selectedColor == .light ? .light : colorScheme.selectedColor == .dark ? .dark : .none)
     }
     
     // viewType에 따라 특정 View를 리턴해주는 함수
@@ -67,10 +71,17 @@ struct ContentView: View {
             PostsView(postSearchText: $postSearchText)
                 .environmentObject(recordViewModel)
         case .liked:
-            LikedView()
+            if authService.signInStatus {
+                LikedView()
+            } else {
+                EmptyView()
+            }
         case .myPage:
-            MypageView(selectedTabIndex: $selectedTabIndex)
-                .environmentObject(recordViewModel)
+            if authService.signInStatus {
+                MypageView(selectedTabIndex: $selectedTabIndex)
+            } else {
+                unauthenticatedMypageView(selectedTabIndex: $selectedTabIndex)
+            }
         }
     }
 }

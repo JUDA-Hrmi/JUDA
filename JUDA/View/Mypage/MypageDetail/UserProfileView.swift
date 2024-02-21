@@ -15,8 +15,6 @@ enum UserType {
 // MARK: - 유저 프로필 (사진, 닉네임, 닉네임 수정)
 struct UserProfileView: View {
     @EnvironmentObject private var authService: AuthService
-
-    @State private var userNickName: String = "sayHong" // 사용자 닉네임
     
     @State private var selectedPhotos: [PhotosPickerItem] = []
     
@@ -72,14 +70,14 @@ struct UserProfileView: View {
                         }
                     }
                     // 사용자 닉네임 표시
-                    Text(userNickName)
+                    Text(authService.name)
                         .font(.medium18)
                     Spacer()
                     // 닉네임 수정
                     if userType == .user {
                         // TODO: NavigationLink - value 로 수정
                         NavigationLink {
-                            ChangeUserNameView(userNickName: $userNickName)
+                            ChangeUserNameView()
                                 .modifier(TabBarHidden())
                         } label: {
                             Text("닉네임 수정")

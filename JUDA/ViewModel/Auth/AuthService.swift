@@ -40,6 +40,7 @@ final class AuthService: ObservableObject {
     private let storage = Storage.storage()
     private let userImages = "userImages"
     private let userImageType = "image/jpg"
+    private var listener: ListenerRegistration?
     
     // 로그아웃 및 탈퇴 시, 초기화
     func reset() {
@@ -94,10 +95,7 @@ final class AuthService: ObservableObject {
                 try await Auth.auth().revokeToken(withAuthorizationCode: authCodeString)
             }
             
-            let uid = user.uid
             try await user.delete()
-            deleteAccountData(uid: uid) // TODO: - Cloud Functions 을 통해서 지우는게 이상적
-            await deleteUserProfileImage()
             reset()
             errorMessage = ""
             return true
@@ -110,7 +108,59 @@ final class AuthService: ObservableObject {
     }
 }
 
-// MARK: - firestore : 유저 정보 불러오기 & 유저 저장 & 유저 삭제
+// MARK: - 닉네임 수정 버튼 클릭 -> 닉네임 업데이트
+extension AuthService {
+    func updateUserName(uid: String, userName: String) {
+        let docRef = collectionRef.document(uid)
+
+        docRef.updateData(["name": userName]) { error in
+            if let error = error {
+                print(error)
+            } else {
+                print("Successed merged in:", uid)
+            }
+        }
+    }
+}
+
+// MARK: - 데이터 실시간 업데이트
+extension AuthService {
+    private func updateUserFromSnapshot(_ documentSnapshot: DocumentSnapshot) {
+            // 문서의 데이터를 가져와서 User로 디코딩
+            if let user = try? documentSnapshot.data(as: User.self) {
+                // 해당 사용자의 데이터를 업데이트
+                self.uid = uid
+                self.name = user.name
+                self.age = user.age
+                self.gender = user.gender
+            }
+        }
+    
+    func startListeningForUser() {
+            let userRef = Firestore.firestore().collection("users").document(uid)
+
+            // 기존에 활성화된 리스너가 있다면 삭제
+            listener?.remove()
+
+            // 새로운 리스너 등록
+            listener = userRef.addSnapshotListener { [weak self] documentSnapshot, error in
+                guard let self = self else { return }
+
+                if let error = error {
+                    print("Error fetching user data: \(error)")
+                    return
+                }
+
+                // 사용자 데이터 업데이트 메서드 호출
+                if let documentSnapshot = documentSnapshot {
+                    self.updateUserFromSnapshot(documentSnapshot)
+                }
+            }
+        }
+
+}
+
+// MARK: - firestore : 유저 정보 불러오기 & 유저 저장
 extension AuthService {
     // firestore 에 유저 존재 유무 체크
     func checkNewUser(uid: String) async -> Bool {
@@ -140,6 +190,7 @@ extension AuthService {
                 fetchProfileImage()
                 self.gender = userData.gender
                 self.notificationAllowed = userData.notificationAllowed
+                print("Data:", userData)
             } else {
                 print("Document does not exist in cache")
             }
@@ -157,21 +208,10 @@ extension AuthService {
             print("유저 정보 저장 에러 : \(error.localizedDescription)")
         }
     }
-    
-    // firestore 에서 유저 데이터 삭제
-    func deleteAccountData(uid: String) {
-        collectionRef.document(uid).delete { error in
-            if let error = error {
-                print("deleteAccountData - firestore : \(error.localizedDescription)")
-                return
-            }
-        }
-    }
 }
 
 // MARK: - firestorage
 // 유저 가입 시, 프로필 이미지 생성 & 받아오기
-// 유저 탈퇴 시, 프로필 이미지 삭제
 extension AuthService {
     // storage 에 유저 프로필 이미지 올리기
     func uploadProfileImageToStorage(image: UIImage?) {
@@ -208,16 +248,6 @@ extension AuthService {
                 return
             }
             self.profileImage = image
-        }
-    }
-    
-    // 프로필 이미지 삭제
-    func deleteUserProfileImage() async {
-        let storageRef = storage.reference().child("\(userImages)/\(self.uid)")
-        do {
-            try await storageRef.delete()
-        } catch {
-            print("프로필 이미미 삭제 에러 - \(error.localizedDescription)")
         }
     }
 }

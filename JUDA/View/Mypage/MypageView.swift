@@ -6,16 +6,17 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 // MARK: - 마이페이지 탭
 struct MypageView: View {
     @EnvironmentObject private var appViewModel: AppViewModel
-    @EnvironmentObject private var auth: AuthService
+    @EnvironmentObject private var authService: AuthService
     
     // MARK: 데이터 구조 정해지면 바꿔야되는 부분
     @State var isLike: Bool = true
     @State var likeCount: Int = 303
-    
+    @State var isLoggedIn = false
     @Binding var selectedTabIndex: Int
     
     var body: some View {
@@ -88,12 +89,9 @@ struct MypageView: View {
             .foregroundStyle(.mainBlack)
             .onAppear {
                 appViewModel.tabBarState = .visible
+                authService.startListeningForUser()
             }
         }
         .toolbar(appViewModel.tabBarState, for: .tabBar)
     }
-}
-
-#Preview {
-    MypageView(selectedTabIndex: .constant(4))
 }

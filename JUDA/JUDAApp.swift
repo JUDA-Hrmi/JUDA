@@ -22,6 +22,7 @@ struct JUDAApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject private var authService = AuthService()
     @StateObject private var appViewModel = AppViewModel()
+    @StateObject private var colorScheme = SystemColorTheme()
     @State private var isLoading = true
     
     var body: some Scene {
@@ -29,10 +30,12 @@ struct JUDAApp: App {
             if isLoading {
                 SplashView(isActive: $isLoading)
                     .environmentObject(authService)
+                    .environmentObject(colorScheme)
             } else {
                 ContentView()
                     .environmentObject(authService)
                     .environmentObject(appViewModel)
+                    .environmentObject(colorScheme)
             }
         }
     }

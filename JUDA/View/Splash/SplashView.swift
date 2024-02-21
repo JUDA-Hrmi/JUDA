@@ -10,6 +10,7 @@ import SwiftUI
 // MARK: - SplashView
 struct SplashView: View {
     @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject var colorScheme: SystemColorTheme
     @Binding var isActive: Bool
 
     var body: some View {
@@ -27,6 +28,8 @@ struct SplashView: View {
                 }
             }
         }
+        // SettingView - 화면 모드 -> 선택한 옵션에 따라 배경색 변환
+        .preferredColorScheme(colorScheme.selectedColor == .light ? .light : colorScheme.selectedColor == .dark ? .dark : .none)
     }
 }
 

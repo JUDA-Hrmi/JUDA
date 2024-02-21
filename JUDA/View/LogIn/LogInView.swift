@@ -12,8 +12,9 @@ import AuthenticationServices
 // MARK: - 로그인 화면
 struct LogInView: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var appViewModel: AppViewModel
+    @EnvironmentObject var colorScheme: SystemColorTheme
     
     @State private var nextView: Bool = false
     
@@ -44,21 +45,11 @@ struct LogInView: View {
                 } onCompletion: { result in
                     authService.handleSignInWithAppleCompletion(result)
                 }
-                .signInWithAppleButtonStyle(colorScheme == .light ? .black : .white)
+                .signInWithAppleButtonStyle(colorScheme.selectedColor == .light ? .black: (colorScheme.selectedColor == .dark ? .white : .black))
                 .frame(width: 300, height: 48)
-                // 구글 로그인
-                Image("Google")
-                    .resizable()
-                    .frame(width: 300, height: 48)
-                    .aspectRatio(contentMode: .fit)
-                // 카카오 로그인
-                Image("Kakao")
-                    .resizable()
-                    .frame(width: 300, height: 48)
-                    .aspectRatio(contentMode: .fit)
             }
             Spacer()
-            //
+            
             Text("2024, 주다 - JUDA all rights reserved.\nPowered by PJ4T7_HrMi")
                 .font(.thin12)
                 .multilineTextAlignment(.center)
