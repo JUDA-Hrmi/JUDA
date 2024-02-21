@@ -65,10 +65,6 @@
 		2C63DD612B67D5EB00770E3A /* PhotoSelectPagingTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD602B67D5EB00770E3A /* PhotoSelectPagingTab.swift */; };
 		2C63DD652B67DFA400770E3A /* DrinkTagScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD642B67DFA400770E3A /* DrinkTagScroll.swift */; };
 		2C63DD672B67EB1B00770E3A /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD662B67EB1B00770E3A /* RecordView.swift */; };
-		2C6EDE882B85CD4000CE623A /* test_whiskey.json in Resources */ = {isa = PBXBuildFile; fileRef = 2C6EDE842B85CD4000CE623A /* test_whiskey.json */; };
-		2C6EDE8A2B85CD4000CE623A /* test_wine.json in Resources */ = {isa = PBXBuildFile; fileRef = 2C6EDE862B85CD4000CE623A /* test_wine.json */; };
-		2C6EDE8B2B85CD4000CE623A /* Beer_food.json in Resources */ = {isa = PBXBuildFile; fileRef = 2C6EDE872B85CD4000CE623A /* Beer_food.json */; };
-		2C6EDE8D2B86191D00CE623A /* traditional_liqur_food.json in Resources */ = {isa = PBXBuildFile; fileRef = 2C6EDE8C2B86191D00CE623A /* traditional_liqur_food.json */; };
 		2C7FD54C2B848E6B00169512 /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C7FD54B2B848E6B00169512 /* APIKEYS.plist */; };
 		2C7FD54E2B848E7500169512 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C7FD54D2B848E7500169512 /* GoogleService-Info.plist */; };
 		2C7FD5502B848E8500169512 /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 2C7FD54F2B848E8500169512 /* DrinkLoading.json */; };
@@ -195,10 +191,6 @@
 		2C63DD602B67D5EB00770E3A /* PhotoSelectPagingTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectPagingTab.swift; sourceTree = "<group>"; };
 		2C63DD642B67DFA400770E3A /* DrinkTagScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkTagScroll.swift; sourceTree = "<group>"; };
 		2C63DD662B67EB1B00770E3A /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
-		2C6EDE842B85CD4000CE623A /* test_whiskey.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test_whiskey.json; sourceTree = "<group>"; };
-		2C6EDE862B85CD4000CE623A /* test_wine.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test_wine.json; sourceTree = "<group>"; };
-		2C6EDE872B85CD4000CE623A /* Beer_food.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Beer_food.json; sourceTree = "<group>"; };
-		2C6EDE8C2B86191D00CE623A /* traditional_liqur_food.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = traditional_liqur_food.json; sourceTree = "<group>"; };
 		2C7FD54A2B848E0300169512 /* JUDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JUDA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C7FD54B2B848E6B00169512 /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = APIKEYS.plist; sourceTree = "<group>"; };
 		2C7FD54D2B848E7500169512 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -318,7 +310,6 @@
 			children = (
 				09A6AD712B70B46E00606585 /* AppViewModel.swift */,
 				7BE14B962B84767000C1F6C3 /* DrinkUploadViewModel.swift */,
-				2C6EDE832B85CD2A00CE623A /* drinks */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -367,17 +358,6 @@
 				2C63DD512B676E1000770E3A /* TabItem.swift */,
 			);
 			path = ContentView;
-			sourceTree = "<group>";
-		};
-		2C6EDE832B85CD2A00CE623A /* drinks */ = {
-			isa = PBXGroup;
-			children = (
-				2C6EDE872B85CD4000CE623A /* Beer_food.json */,
-				2C6EDE842B85CD4000CE623A /* test_whiskey.json */,
-				2C6EDE862B85CD4000CE623A /* test_wine.json */,
-				2C6EDE8C2B86191D00CE623A /* traditional_liqur_food.json */,
-			);
-			path = drinks;
 			sourceTree = "<group>";
 		};
 		B121A5652B5F8D2000667D42 /* Resource */ = {
@@ -768,8 +748,6 @@
 				09BCC14F2B7C7E2900FF4D1B /* Loading.json in Resources */,
 				B1B8FE842B5EA9DA00921BBE /* Preview Assets.xcassets in Resources */,
 				2C7FD5502B848E8500169512 /* DrinkLoading.json in Resources */,
-				2C6EDE8D2B86191D00CE623A /* traditional_liqur_food.json in Resources */,
-				2C6EDE8A2B85CD4000CE623A /* test_wine.json in Resources */,
 				B121A5782B5F911A00667D42 /* Pretendard-Thin.otf in Resources */,
 				B121A5772B5F911900667D42 /* Pretendard-SemiBold.otf in Resources */,
 				09BCC1532B7C7E2900FF4D1B /* Snow.json in Resources */,
@@ -780,9 +758,7 @@
 				2C7FD54C2B848E6B00169512 /* APIKEYS.plist in Resources */,
 				B1B8FE812B5EA9DA00921BBE /* Assets.xcassets in Resources */,
 				B121A5752B5F911500667D42 /* Pretendard-Medium.otf in Resources */,
-				2C6EDE882B85CD4000CE623A /* test_whiskey.json in Resources */,
 				2C7FD54E2B848E7500169512 /* GoogleService-Info.plist in Resources */,
-				2C6EDE8B2B85CD4000CE623A /* Beer_food.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
