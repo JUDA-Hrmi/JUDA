@@ -31,7 +31,7 @@ struct DrinkInfoView: View {
             ZStack {
                 VStack(spacing: 0) {
                     // 서치바
-                    SearchBar(inputText: $searchText)
+                    SearchBar(inputText: $searchText) {  }
                     
                     ScrollViewReader { value in
                         Group {

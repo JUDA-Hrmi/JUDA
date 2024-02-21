@@ -39,7 +39,7 @@ struct LikedDrinkListContent: View {
                     DrinkDetailView(drink: Korean.koreanSample01) // 임시 더미데이터
                         .modifier(TabBarHidden())
                 } label: {
-                    DrinkListCell(drink: Korean.koreanSample01) // 임시 더미데이터
+//                    DrinkListCell(drink: Korean.koreanSample01) // 임시 더미데이터
                 }
                 .buttonStyle(EmptyActionStyle())
             }

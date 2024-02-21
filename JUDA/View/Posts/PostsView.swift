@@ -22,7 +22,7 @@ struct PostsView: View {
         NavigationStack {
             VStack(spacing: 0) {
                 // 상단 서치바
-                SearchBar(inputText: $postSearchText)
+                SearchBar(inputText: $postSearchText) {  }
                 HStack(alignment: .center) {
                     // 인기, 최신 순으로 선택하여 정렬하기 위한 CustomSegment
                     CustomTextSegment(segments: PostOrLiked.post,

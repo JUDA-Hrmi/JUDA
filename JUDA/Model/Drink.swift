@@ -42,13 +42,15 @@ struct FBDrink: Codable {
 	let refresh: Int? // traditional
 	let body: Int? // traditional
 	let carbonated: Int? // traditional
+    let material: [String]?  // traditional
 	let wellMatched: [String]
 	let rating: Double
-	let taggedCount: Int
-	let agePreference: [Int: Int]
+    let taggedPostID: [String]
+	let agePreference: [String: Int]
 	let genderPreference: [String: Int]
 }
 
+// Json 파싱 모델
 struct RawBeer: Codable {
 	let category: String
 	let type: String
@@ -63,6 +65,7 @@ struct RawBeer: Codable {
 	let wellMatched: [String]
 }
 
+// Json 파싱 모델
 struct RawTraditional: Codable {
 	let category: String
 	let type: String
@@ -76,9 +79,11 @@ struct RawTraditional: Codable {
 	let refresh: Int
 	let body: Int
 	let carbonated: Int
+    let material: [String]
 	let wellMatched: [String]
 }
 
+// Json 파싱 모델
 struct RawWine: Codable {
 	let category: String
 	let type: String
@@ -94,6 +99,7 @@ struct RawWine: Codable {
 	let wellMatched: [String]
 }
 
+// Json 파싱 모델
 struct RawWhiskey: Codable {
 	let category: String
 	let type: String

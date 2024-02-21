@@ -10,6 +10,8 @@ import SwiftUI
 // MARK: - 서치바
 struct SearchBar: View {
     @Binding var inputText: String
+    // submit 시 액션 closer
+    let closure: () -> Void
 //    @FocusState private var isFocused: Bool
     
     var body: some View {
@@ -24,9 +26,11 @@ struct SearchBar: View {
 					.foregroundStyle(.mainBlack)
                     .textInputAutocapitalization(.never) // 자동 대문자 설정 기능 비활성화
                     .autocorrectionDisabled() // 자동 수정 비활성화
+                    .submitLabel(.search)
                     .onSubmit {
                         // TODO: 리턴 시 수행될 함수 추가하기.
                         print("리턴이 눌러졌어요! <\(inputText)> 입력 됨.")
+                        closure()
                     }
             }
             Spacer()
