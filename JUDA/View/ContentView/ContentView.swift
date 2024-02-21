@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: - 앱 전체 스타트 탭 뷰
 struct ContentView: View {
     @EnvironmentObject private var authService: AuthService
-    @EnvironmentObject var colorScheme: BackgroundTheme
+    @EnvironmentObject var colorScheme: SystemColorTheme
     // 현재 선택된 탭의 인덱스. 초기값 0
     @State private var selectedTabIndex = 0
     // post 서치바 텍스트
@@ -18,7 +18,6 @@ struct ContentView: View {
     @StateObject var locationManager = LocationManager()
     @StateObject var aiViewModel = AiViewModel()
     @StateObject var aiTodayViewModel = AiTodayViewModel()
-//    @StateObject var colorScheme = BackgroundTheme()
     // Tabbar 불투명하게 설정 (색상 백그라운드)
     init() {
         UITabBar.appearance().shadowImage = UIImage()
@@ -52,7 +51,9 @@ struct ContentView: View {
             }
         }
         .tint(.mainAccent03)
-        .preferredColorScheme(colorScheme.selectedColor)
+        .preferredColorScheme(colorScheme.selectedColor == .light ? .light :
+                                colorScheme.selectedColor == .dark ? .dark :
+                                .none)
     }
     
     // viewType에 따라 특정 View를 리턴해주는 함수

@@ -74,7 +74,3 @@ struct unauthenticatedMypageView: View {
         }
     }
 }
-
-#Preview {
-    unauthenticatedMypageView(selectedTabIndex: .constant(0))
-}

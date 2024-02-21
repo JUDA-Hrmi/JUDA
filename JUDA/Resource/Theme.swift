@@ -23,3 +23,23 @@ struct Theme {
     }
   }
 }
+
+enum JUDAColorScheme: String {
+    case light = "light"
+    case dark = "dark"
+}
+
+final class SystemColorTheme: ObservableObject {
+    @Published var selectedColor: JUDAColorScheme? {
+        didSet {
+            UserDefaults.standard.set(selectedColor?.rawValue, forKey: "selectedColor")
+        }
+    }
+
+    init() {
+        if let storedColorName = UserDefaults.standard.string(forKey: "selectedColor"),
+            let storedColor = JUDAColorScheme(rawValue: storedColorName.lowercased()) {
+            selectedColor = storedColor
+        }
+    }
+}

@@ -8,17 +8,11 @@
 import SwiftUI
 import WebKit
 
-final class BackgroundTheme: ObservableObject {
-    // 시스템모드 설정
-    @Published var selectedColor: ColorScheme?
-}
-
-
 // MARK: - 환경설정 세팅 화면
 struct SettingView: View {
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var appViewModel: AppViewModel
-    @EnvironmentObject var colorScheme: BackgroundTheme
+    @EnvironmentObject var colorScheme: SystemColorTheme
 
 	private let optionNameList = ["라이트 모드", "다크 모드", "시스템 모드"] // 화면 모드 설정 옵션 이름 리스트
 	private let webViewNameList = ["서비스 이용약관", "개인정보 처리방침", "위치정보 처리방침"] // 웹뷰로 보여줘야하는 항목 이름 리스트
@@ -274,7 +268,3 @@ struct CustomText: ViewModifier {
 	}
 }
 
-
-//#Preview {
-//    SettingView(selectedTabIndex: .constant(4))
-//}
