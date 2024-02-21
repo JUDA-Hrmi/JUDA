@@ -30,8 +30,8 @@ final class AuthService: ObservableObject {
     // Error
     @Published var showError: Bool = false
     @Published var errorMessage: String = ""
-    // 로그인 중
-    @Published var signInButtonClicked: Bool = false
+    // 로딩 중
+    @Published var isLoading: Bool = false
     // Nonce : 암호와된 임의의 난수
     private var currentNonce: String?
     // Firestore - users 컬렉션
@@ -45,6 +45,7 @@ final class AuthService: ObservableObject {
     // 로그아웃 및 탈퇴 시, 초기화
     func reset() {
         self.signInStatus = false
+        self.isLoading = false
         self.isNewUser = false
         self.uid = ""
         self.name = ""
@@ -94,16 +95,14 @@ final class AuthService: ObservableObject {
                 try await Auth.auth().revokeToken(withAuthorizationCode: authCodeString)
             }
             
-            let uid = user.uid
             try await user.delete()
-            deleteAccountData(uid: uid) // TODO: - Cloud Functions 을 통해서 지우는게 이상적
-            await deleteUserProfileImage()
             reset()
             errorMessage = ""
             return true
         } catch {
             print("deleteAccount error : \(error.localizedDescription)")
             errorMessage = error.localizedDescription
+            isLoading = false
             return false
         }
     }
@@ -161,7 +160,7 @@ extension AuthService {
 
 }
 
-// MARK: - firestore : 유저 정보 불러오기 & 유저 저장 & 유저 삭제
+// MARK: - firestore : 유저 정보 불러오기 & 유저 저장
 extension AuthService {
     // firestore 에 유저 존재 유무 체크
     func checkNewUser(uid: String) async -> Bool {
@@ -209,21 +208,10 @@ extension AuthService {
             print("유저 정보 저장 에러 : \(error.localizedDescription)")
         }
     }
-    
-    // firestore 에서 유저 데이터 삭제
-    func deleteAccountData(uid: String) {
-        collectionRef.document(uid).delete { error in
-            if let error = error {
-                print("deleteAccountData - firestore : \(error.localizedDescription)")
-                return
-            }
-        }
-    }
 }
 
 // MARK: - firestorage
 // 유저 가입 시, 프로필 이미지 생성 & 받아오기
-// 유저 탈퇴 시, 프로필 이미지 삭제
 extension AuthService {
     // storage 에 유저 프로필 이미지 올리기
     func uploadProfileImageToStorage(image: UIImage?) {
@@ -262,22 +250,12 @@ extension AuthService {
             self.profileImage = image
         }
     }
-    
-    // 프로필 이미지 삭제
-    func deleteUserProfileImage() async {
-        let storageRef = storage.reference().child("\(userImages)/\(self.uid)")
-        do {
-            try await storageRef.delete()
-        } catch {
-            print("프로필 이미미 삭제 에러 - \(error.localizedDescription)")
-        }
-    }
 }
 
 // MARK: - SignInWithAppleButton : request & result
 extension AuthService {
     func handleSignInWithAppleRequest(_ request: ASAuthorizationAppleIDRequest) {
-        signInButtonClicked = true
+//        signInButtonClicked = true
         request.requestedScopes = [.fullName, .email]
         let nonce = randomNonceString()
         currentNonce = nonce
@@ -294,6 +272,8 @@ extension AuthService {
             let fullName = appleIDCredential.fullName
             self.name = (fullName?.familyName ?? "") + (fullName?.givenName ?? "")
             Task {
+                // 로그인 중 -
+                isLoading = true
                 // 로그인
                 await singInApple(appleIDCredential: appleIDCredential)
                 // 신규 유저 체크
