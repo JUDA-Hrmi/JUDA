@@ -43,7 +43,7 @@ struct AlarmStoreListCell: View {
             }
             Spacer()
             // 해당 술상 이미지
-            Image(alarm.postImageName)
+            Image("foodEx1")
                 .resizable()
                 .aspectRatio(1.0, contentMode: .fill)
                 .frame(maxWidth: 60, maxHeight: 60)
@@ -55,6 +55,3 @@ struct AlarmStoreListCell: View {
     }
 }
 
-#Preview {
-    AlarmStoreListCell(alarm: Alarm(likedUserName: "내가아이디가좀길어ㅋ", postImageName: "foodEx1", likedTime: Alarm.randomDate()))
-}

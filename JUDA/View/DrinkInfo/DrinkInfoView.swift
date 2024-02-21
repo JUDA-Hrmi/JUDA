@@ -43,7 +43,7 @@ struct DrinkInfoView: View {
                             .padding([.top, .horizontal], 20)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             // 세그먼트 + 필터링
-                            DrinkInfoSegment(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, isGridView: $isGridView)
+//                            DrinkInfoSegment(optionNameList: optionNameList, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet, isGridView: $isGridView)
                             // 술 뷰 - DrinkSelectHorizontalScrollBar 의 선택에 따라 자연스럽게 페이징으로 화면 전환
                             TabView(selection: $selectedDrinkTypeIndex) {
                                 // TODO: 각 술 타입에 맞는 리스트를 grid 와 list 에 뿌려줘야 함
@@ -77,10 +77,10 @@ struct DrinkInfoView: View {
                 }
                 // 정렬 방식 선택 CustomBottomSheet (.drinkInfo)
                 .sheet(isPresented: $isShowingSheet) {
-                    CustomBottomSheetContent(optionNameList: optionNameList, isShowingSheet: $isShowingSheet, selectedSortingOption: $selectedSortingOption, bottomSheetTypeText: BottomSheetType.drinkInfo)
-                        .presentationDetents([.drinkInfo])
-                        .presentationDragIndicator(.hidden) // 시트 상단 인디케이터 비활성화
-                        .interactiveDismissDisabled() // 내려서 닫기 비활성화
+//                    CustomBottomSheetContent(optionNameList: optionNameList, isShowingSheet: $isShowingSheet, selectedSortingOption: $selectedSortingOption, bottomSheetTypeText: BottomSheetType.drinkInfo)
+//                        .presentationDetents([.drinkInfo])
+//                        .presentationDragIndicator(.hidden) // 시트 상단 인디케이터 비활성화
+//                        .interactiveDismissDisabled() // 내려서 닫기 비활성화
                 }
             }
             .onAppear {

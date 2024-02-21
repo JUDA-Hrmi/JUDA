@@ -77,6 +77,3 @@ struct NavigationProfileView: View {
     }
 }
 
-#Preview {
-    NavigationProfileView(userType: UserType.otheruser, userName: "sayHong")
-}

@@ -15,3 +15,12 @@ struct User: Codable, Hashable {
     var profileImage: String?
     var notificationAllowed: Bool
 }
+
+// MARK: - Notification 모델
+// TODO: 추후 수정 필요
+struct Alarm: Codable, Hashable {
+    var isChecked: Bool
+    let likedUserName: String
+    let likedTime: Date
+//    let likeUserUID: String
+}
