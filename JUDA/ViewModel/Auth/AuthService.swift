@@ -127,7 +127,7 @@ extension AuthService {
 extension AuthService {
     private func updateUserFromSnapshot(_ documentSnapshot: DocumentSnapshot) {
             // 문서의 데이터를 가져와서 User로 디코딩
-            if let user = try? documentSnapshot.data(as: User.self) {
+            if let user = try? documentSnapshot.data(as: UserField.self) {
                 // 해당 사용자의 데이터를 업데이트
                 self.uid = uid
                 self.name = user.name
