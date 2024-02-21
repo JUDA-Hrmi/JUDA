@@ -21,10 +21,10 @@ struct SettingView: View {
                                   "https://bit.ly/HrmiLocationPolicy"] // webViewNameList에 해당하는 url 주소
 	
 	@Environment(\.dismiss) private var dismiss
-	
+    
+    @AppStorage("selectedSortingOption") private var selectedSortingOption: String = "시스템 모드"
     @State private var isAlarmOn: Bool = false // 알람 설정 toggle
 	@State private var isShowingSheet: Bool = false // CustomBottomSheet 올라오기
-    @AppStorage("selectedSortingOption") private var selectedSortingOption: String = "시스템 모드"
 	@State private var isLogoutClicked = false // 로그아웃 버튼 클릭 시
 	@State private var isDeletAccount = false // 회원탈퇴 버튼 클릭 시
     
@@ -52,6 +52,7 @@ struct SettingView: View {
                             CustomSortingButton(optionNameList: optionNameList,
                                                 selectedSortingOption: $selectedSortingOption,
                                                 isShowingSheet: $isShowingSheet)
+                            // CustomSortingButton에서 선택한 selectedSortingOption로 화면 색상 설정하기
                             .onChange(of: selectedSortingOption) { _ in
                                 switch selectedSortingOption {
                                 case "라이트 모드":

@@ -51,9 +51,8 @@ struct ContentView: View {
             }
         }
         .tint(.mainAccent03)
-        .preferredColorScheme(colorScheme.selectedColor == .light ? .light :
-                                colorScheme.selectedColor == .dark ? .dark :
-                                .none)
+        // SettingView - 화면 모드 -> 선택한 옵션에 따라 배경색 변환
+        .preferredColorScheme(colorScheme.selectedColor == .light ? .light : colorScheme.selectedColor == .dark ? .dark : .none)
     }
     
     // viewType에 따라 특정 View를 리턴해주는 함수
