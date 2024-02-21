@@ -63,14 +63,14 @@ struct KoreanTastingNotesContent: View {
 
 // MARK: - 재료 화면 부분
 struct DrinkMaterial: View {
-    let material: [String]
+    let material: [String]?
     let windowWidth: CGFloat
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("원재료")
                 .font(.semibold18)
-            ForEach(TagHandler.getRows(tags: material,
+            ForEach(TagHandler.getRows(tags: material ?? [],
                                        spacing: 10,
                                        fontSize: 16,
                                        windowWidth: windowWidth,

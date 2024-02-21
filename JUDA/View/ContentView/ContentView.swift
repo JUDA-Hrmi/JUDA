@@ -11,13 +11,17 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject var colorScheme: SystemColorTheme
+
+    @StateObject private var locationManager = LocationManager()
+    @StateObject private var aiViewModel = AiViewModel()
+    @StateObject private var aiTodayViewModel = AiTodayViewModel()
+    @StateObject private var drinkViewModel = DrinkViewModel()
+    @StateObject private var recordViewModel = RecordViewModel()
+    @StateObject private var postsViewModel = PostsViewModel()
+
     // 현재 선택된 탭의 인덱스. 초기값 0
     @State private var selectedTabIndex = 0
-    @StateObject var locationManager = LocationManager()
-    @StateObject var aiViewModel = AiViewModel()
-    @StateObject var aiTodayViewModel = AiTodayViewModel()
-    @StateObject private var recordViewModel = RecordViewModel()
-	@StateObject private var postsViewModel = PostsViewModel()
+    
     // Tabbar 불투명하게 설정 (색상 백그라운드)
     init() {
         UITabBar.appearance().shadowImage = UIImage()
@@ -66,6 +70,7 @@ struct ContentView: View {
                 .environmentObject(aiTodayViewModel)
         case .drinkInfo:
             DrinkInfoView()
+                .environmentObject(drinkViewModel)
         case .posts:
             PostsView()
                 .environmentObject(recordViewModel)

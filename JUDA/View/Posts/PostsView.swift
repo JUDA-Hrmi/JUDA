@@ -13,7 +13,6 @@ struct PostsView: View {
 	@EnvironmentObject private var authService: AuthService
 	@EnvironmentObject private var postsViewModel: PostsViewModel
 	
-	
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
@@ -43,10 +42,10 @@ struct PostsView: View {
                 .padding(.horizontal, 20)
                 // 인기 or 최신 탭뷰
 				TabView(selection: $postsViewModel.selectedSegmentIndex) {
-                    ForEach(0..<PostOrLiked.post.count, id: \.self) { index in
+                    ForEach(0..<PostSortType.allCases.count, id: \.self) { index in
                         ScrollViewReader { value in
                             Group {
-                                if index == 0 {
+                                if postsViewModel.postSortType[index] == .popularity {
                                     // 인기순
 									PostGrid()
                                 } else {

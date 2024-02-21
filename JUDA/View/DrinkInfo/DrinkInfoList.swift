@@ -9,23 +9,21 @@ import SwiftUI
 
 // MARK: - 술장 리스트 뷰
 struct DrinkInfoList: View {
-    let drinks: [Drink]
-
     var body: some View {
         // MARK: iOS 16.4 이상
         if #available(iOS 16.4, *) {
             ScrollView() {
-                DrinkListContent(drinks: drinks)
+                DrinkListContent()
             }
             .scrollBounceBehavior(.basedOnSize, axes: .vertical)
             .scrollDismissesKeyboard(.immediately)
         // MARK: iOS 16.4 미만
         } else {
             ViewThatFits(in: .vertical) {
-                DrinkListContent(drinks: drinks)
+                DrinkListContent()
                     .frame(maxHeight: .infinity, alignment: .top)
                 ScrollView {
-                    DrinkListContent(drinks: drinks)
+                    DrinkListContent()
                 }
                 .scrollDismissesKeyboard(.immediately)
             }
@@ -35,14 +33,14 @@ struct DrinkInfoList: View {
 
 // MARK: - 술장 리스트 뷰 내용
 struct DrinkListContent: View {
-    let drinks: [Drink]
+    @EnvironmentObject private var drinkViewModel: DrinkViewModel
 
     var body: some View {
         // 리스트
         LazyVStack {
             // TODO: 데이터 들어온 리스트로 ForEach
-            ForEach(drinks.indices, id: \.self) { index in
-                let drink = drinks[index]
+            ForEach(drinkViewModel.drinks.indices, id: \.self) { index in
+                let drink = drinkViewModel.drinks[index]
                 // TODO: NavigationLink - value 로 수정
                 NavigationLink {
                     DrinkDetailView(drink: drink)
@@ -57,5 +55,5 @@ struct DrinkListContent: View {
 }
 
 #Preview {
-    DrinkInfoList(drinks: Drinks.sampleData)
+    DrinkInfoList()
 }

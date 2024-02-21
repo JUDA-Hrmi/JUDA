@@ -9,14 +9,14 @@ import SwiftUI
 
 // MARK: - 술 디테일에서 보여주는 상단의 술 정보 부분 (이미지, 이름, 가격 등)
 struct DrinkDetails: View {
-    // UITest - Drink DummyData
-    let drink: Drink
+    let drink: FBDrink
 
     var body: some View {
         // 술 정보 (이미지, 이름, 용량, 나라, 도수, 가격, 별점, 태그된 게시물)
         HStack(alignment: .center, spacing: 30) {
             // 술 이미지
-            Image(drink.image)
+//            Image(drink.image)
+            Image("jinro")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(height: 180)
@@ -33,11 +33,12 @@ struct DrinkDetails: View {
                 HStack {
                     // 나라
                     Text(drink.country)
-                    if drink.drinkType == .wine ,let wine = drink as? Wine {
-                        Text(wine.province)
+                    if drink.category == DrinkType.wine.rawValue, 
+                        let province = drink.province {
+                        Text(province)
                     }
                     // 도수
-                    Text(Formatter.formattedABVCount(abv: drink.abv))
+                    Text(Formatter.formattedABVCount(abv: drink.alcohol))
                 }
                 .font(.regular16)
                 // 가격
@@ -49,9 +50,9 @@ struct DrinkDetails: View {
                 // 태그된 게시물
                 // TODO: NavigationLink - value 로 수정
                 NavigationLink {
-					NavigationPostsView(postSearchText: drink.name)
+					NavigationPostsView()
                 } label: {
-                    Text("\(drink.numberOfTagged)개의 태그된 게시물")
+                    Text("\(drink.taggedPostID.count)개의 태그된 게시물")
                         .font(.regular16)
                         .foregroundStyle(.gray01)
                         .underline()
@@ -62,8 +63,4 @@ struct DrinkDetails: View {
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
     }
-}
-
-#Preview {
-    DrinkDetails(drink: Whiskey.whiskeySample01)
 }

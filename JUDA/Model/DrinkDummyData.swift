@@ -7,15 +7,6 @@
 
 import Foundation
 
-// MARK: - 술의 카테고리
-enum DrinkType: String {
-    case all = "전체"
-    case korean = "전통주"
-    case beer = "맥주"
-    case wine = "와인"
-    case whiskey = "위스키"
-}
-
 // MARK: - Drink Dummy Data
 
 // all
@@ -74,7 +65,7 @@ protocol Drink {
 // 전통주
 struct Korean: Drink {
     let id = UUID()             // id
-    let drinkType = DrinkType.korean
+    let drinkType = DrinkType.traditional
     let name: String            // 이름
     let image: String           // 이미지
     let country: String         // 제조사

@@ -9,23 +9,21 @@ import SwiftUI
 
 // MARK: - 술장 그리드 뷰
 struct DrinkInfoGrid: View {
-    let drinks: [Drink]
-    
     var body: some View {
         // MARK: iOS 16.4 이상
         if #available(iOS 16.4, *) {
             ScrollView() {
-                DrinkGridContent(drinks: drinks)
+                DrinkGridContent()
             }
             .scrollBounceBehavior(.basedOnSize, axes: .vertical)
             .scrollDismissesKeyboard(.immediately)
         // MARK: iOS 16.4 미만
         } else {
             ViewThatFits(in: .vertical) {
-                DrinkGridContent(drinks: drinks)
+                DrinkGridContent()
                     .frame(maxHeight: .infinity, alignment: .top)
                 ScrollView {
-                    DrinkGridContent(drinks: drinks)
+                    DrinkGridContent()
                 }
                 .scrollDismissesKeyboard(.immediately)
             }
@@ -35,17 +33,17 @@ struct DrinkInfoGrid: View {
 
 // MARK: - 술장 그리드 뷰 내용
 struct DrinkGridContent: View {
+    @EnvironmentObject private var drinkViewModel: DrinkViewModel
+
     // 술 그리드 셀 2개 column
     private let columns: [GridItem] = [GridItem(.flexible()), GridItem(.flexible())]
-    
-    let drinks: [Drink]
-    
+        
     var body: some View {
         // 그리드
         LazyVGrid(columns: columns, spacing: 10) {
             // TODO: 데이터 들어온 리스트로 ForEach 
-            ForEach(drinks.indices, id: \.self) { index in
-                let drink = drinks[index]
+            ForEach(drinkViewModel.drinks.indices, id: \.self) { index in
+                let drink = drinkViewModel.drinks[index]
                 // TODO: NavigationLink - value 로 수정
                 NavigationLink {
                     DrinkDetailView(drink: drink)
@@ -62,5 +60,5 @@ struct DrinkGridContent: View {
 }
 
 #Preview {
-    DrinkInfoGrid(drinks: Drinks.sampleData)
+    DrinkInfoGrid()
 }

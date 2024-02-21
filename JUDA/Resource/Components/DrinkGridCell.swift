@@ -9,8 +9,8 @@ import SwiftUI
 
 // MARK: - 술 그리드 셀
 struct DrinkGridCell: View {
-    // UITest - Drink DummyData
-    let drink: Drink
+    let drink: FBDrink
+    
     // UITest - Drink 하트
     @State private var isLiked = false
     
@@ -27,7 +27,8 @@ struct DrinkGridCell: View {
             VStack(alignment: .leading, spacing: 10) {
                 // 술 사진
                 VStack(alignment: .center) {
-                    Image(drink.image)
+//                    Image(drink.image)
+                    Image("jinro")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(height: 103.48)
@@ -41,11 +42,11 @@ struct DrinkGridCell: View {
                     .font(.semibold16)
                     .foregroundStyle(.mainBlack)
                 // 나라, 도수
-                switch drink.drinkType {
-                case .wine:
-                    getCountryAndProvinceAndABV(drink as! Wine)
+                switch drink.category {
+                case DrinkType.wine.rawValue:
+                    getCountryAndProvinceAndABV()
                 default:
-                    getCountryAndABV(drink)
+                    getCountryAndABV()
                 }
                 Spacer()
                 // 별
@@ -61,36 +62,115 @@ struct DrinkGridCell: View {
     }
     
     @ViewBuilder
-    private func getCountryAndABV(_ drink: Drink) -> some View {
+    private func getCountryAndABV() -> some View {
         HStack(spacing: 10) {
             Text(drink.country)
                 .font(.semibold14)
-            Text(Formatter.formattedABVCount(abv: drink.abv))
+            Text(Formatter.formattedABVCount(abv: drink.alcohol))
                 .font(.semibold14)
         }
         .foregroundStyle(.gray01)
     }
     
     @ViewBuilder
-    private func getCountryAndProvinceAndABV(_ drink: Wine) -> some View {
+    private func getCountryAndProvinceAndABV() -> some View {
         VStack(alignment: .leading) {
             HStack(spacing: 6) {
                 Text(drink.country)
                     .font(.semibold14)
-                Text(drink.province)
+                Text(drink.province ?? "")
                     .font(.semibold14)
             }
-            Text(Formatter.formattedABVCount(abv: drink.abv))
+            Text(Formatter.formattedABVCount(abv: drink.alcohol))
                 .font(.semibold14)
         }
         .foregroundStyle(.gray01)
     }
 }
 
+// MARK: - 로딩 중, 술 리스트 셀
+struct ShimmerDrinkGridCell: View {
+    var body: some View {
+        ZStack {
+            // shimmer view
+            VStack(alignment: .trailing, spacing: 10) {
+                // 하트
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(.black.opacity(0.09))
+                    .frame(width: 26, height: 26)
+                // 술 정보
+                VStack(alignment: .leading, spacing: 10) {
+                    // 술 사진
+                    VStack(alignment: .center) {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(.black.opacity(0.09))
+                            .frame(height: 103.48)
+                            .frame(width: 70)
+                    }
+                    .frame(maxWidth: .infinity)
+                    // 술 이름 + 용량
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(.black.opacity(0.09))
+                        .frame(width: 130, height: 15)
+                    // 나라, 도수
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(.black.opacity(0.09))
+                        .frame(width: 100, height: 15)
+                    Spacer()
+                    // 별
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(.black.opacity(0.09))
+                        .frame(width: 80, height: 15)
+                }
+            }
+            // shimmer animation view
+            VStack(alignment: .trailing, spacing: 10) {
+                // 하트
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(.white.opacity(0.6))
+                    .frame(width: 26, height: 26)
+                // 술 정보
+                VStack(alignment: .leading, spacing: 10) {
+                    // 술 사진
+                    VStack(alignment: .center) {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(.white.opacity(0.6))
+                            .frame(height: 103.48)
+                            .frame(width: 70)
+                    }
+                    .frame(maxWidth: .infinity)
+                    // 술 이름 + 용량
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(.white.opacity(0.6))
+                        .frame(width: 130, height: 15)
+                    // 나라, 도수
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(.white.opacity(0.6))
+                        .frame(width: 100, height: 15)
+                    Spacer()
+                    // 별
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(.white.opacity(0.6))
+                        .frame(width: 80, height: 15)
+                }
+            }
+            .mask {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(.white.opacity(0.6))
+                    .rotationEffect(.init(degrees: 70))
+//                    .offset(x: item.show ? 1000 : -350)
+            }
+        }
+        .frame(height: 270)
+        .padding(10)
+    }
+}
+
 #Preview {
     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
         ForEach(0..<3, id: \.self) { _ in
-            DrinkGridCell(drink: Korean.koreanSample01)
+//            DrinkGridCell(drink: Korean.koreanSample01)
+            ShimmerDrinkGridCell()
         }
     }
     .padding(.horizontal, 20)

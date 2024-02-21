@@ -11,7 +11,8 @@ import SwiftUI
 struct DrinkDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var windowWidth: CGFloat = 0
-    let drink: Drink
+    
+    let drink: FBDrink
     
     var body: some View {
         // 세로 스크롤
@@ -21,27 +22,17 @@ struct DrinkDetailView: View {
                 DrinkDetails(drink: drink)
                 CustomDivider()
                 // 단맛 / 신맛 / 청량 / 바디 / 탄산  or  향 / 맛 / 여운
-                switch drink.drinkType {
-                case .korean:
-                    if let drink = drink as? Korean {
-                        // 단맛 / 신맛 / 청량 / 바디 / 탄산
-                        KoreanTastingNotes(sweet: drink.sweet, sour: drink.sour, refresh: drink.refresh,
-                                           bodyFeel: drink.body, carbonated: drink.carbonated)
-                        CustomDivider()
-                        // 재료
-                        DrinkMaterial(material: drink.material, windowWidth: windowWidth)
-                    }
+                switch drink.category {
+                case DrinkType.traditional.rawValue:
+                    // 단맛 / 신맛 / 청량 / 바디 / 탄산
+                    KoreanTastingNotes(sweet: drink.sweet, sour: drink.sour, refresh: drink.refresh,
+                                       bodyFeel: drink.body, carbonated: drink.carbonated)
+                    CustomDivider()
+                    // 재료
+                    DrinkMaterial(material: drink.material, windowWidth: windowWidth)
                 default:
                     // 향 / 맛 / 여운
-                    if let drink = drink as? Wine {
-                        TastingNotes(aroma: drink.aroma, taste: drink.taste, finish: drink.finish)
-                    } else if let drink = drink as? Whiskey {
-                        TastingNotes(aroma: drink.aroma, taste: drink.taste, finish: drink.finish)
-                    } else if let drink = drink as? Beer {
-                        TastingNotes(aroma: drink.aroma, taste: drink.taste, finish: drink.finish)
-                    } else {
-                        EmptyView()
-                    }
+                    TastingNotes(aroma: drink.aroma, taste: drink.taste, finish: drink.finish)
                 }
                 CustomDivider()
                 // 잘어울리는 음식
@@ -84,6 +75,3 @@ struct DrinkDetailView: View {
     }
 }
 
-#Preview {
-    DrinkDetailView(drink: Beer.beerSample02)
-}
