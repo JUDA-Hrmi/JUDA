@@ -60,9 +60,9 @@ struct SettingView: View {
                                 case "다크 모드":
                                     colorScheme.selectedColor = .dark
                                 case "시스템 모드":
-                                    colorScheme.selectedColor = nil
+                                    colorScheme.selectedColor = .none
                                 default:
-                                    colorScheme.selectedColor = nil
+                                    colorScheme.selectedColor = .none
                                 }
                             }
                         }
@@ -193,9 +193,9 @@ struct SettingView: View {
                                 case "다크 모드":
                                     colorScheme.selectedColor = .dark
                                 case "시스템 모드":
-                                    colorScheme.selectedColor = nil
+                                    colorScheme.selectedColor = .none
                                 default:
-                                    colorScheme.selectedColor = nil
+                                    colorScheme.selectedColor = .none
                                 }
                             }
                         }
