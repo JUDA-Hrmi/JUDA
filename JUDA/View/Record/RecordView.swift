@@ -12,26 +12,14 @@ enum RecordType {
     case add, edit
 }
 
-// 음식 태그 데이터 모델
-struct FoodTag: Identifiable, Hashable, Equatable {
-    let id = UUID()
-    let name: String
-}
-
 // MARK: - 술상 기록 화면
 struct RecordView: View {
     // Navigation을 위한 환경 프로퍼티
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var auth: AuthService
+    @EnvironmentObject private var recordVM: RecordViewModel
     // 기록 타입 ( 작성 or 수정 )
     let recordType: RecordType
-    // 선택된 사진들을 담은 배열 (더미 데이터는 Assets을 사용하기 위해 작성)
-    @State private var images: [String] = ["foodEx1", "foodEx2", "foodEx3", "foodEx4", "foodEx5"]
-    // TextEditor으로 작성될 글 내용
-    @State private var content: String = ""
-    // 음식 태그 배열
-    @State private var foodTags: [FoodTag] = []
-    // 화면 너비
-    @State private var windowWidth: CGFloat = 0
     // TextEditor focus 상태 프로퍼티
     @FocusState private var isFocusedTextEditor: Bool
     // TextField focus 상태 프로퍼티
@@ -47,9 +35,8 @@ struct RecordView: View {
                 // MARK: iOS 16.4 이상
                 if #available(iOS 16.4, *) {
                     ScrollView {
-                        RecordContent(recordType: recordType, images: $images, content: $content,
-                                      foodTags: $foodTags, windowWidth: $windowWidth,
-                                      isFocusedTextEditor: $isFocusedTextEditor, isFocusedTextField: $isFocusedTextField,
+                        RecordContent(recordType: recordType, isFocusedTextEditor: $isFocusedTextEditor,
+                                      isFocusedTextField: $isFocusedTextField,
                                       textField: textField, proxy: proxy)
                     }
                     .scrollBounceBehavior(.basedOnSize, axes: .vertical)
@@ -66,9 +53,8 @@ struct RecordView: View {
                     }
                 } else {
                     ScrollView {
-                        RecordContent(recordType: recordType, images: $images, content: $content,
-                                      foodTags: $foodTags, windowWidth: $windowWidth,
-                                      isFocusedTextEditor: $isFocusedTextEditor, isFocusedTextField: $isFocusedTextField,
+                        RecordContent(recordType: recordType, isFocusedTextEditor: $isFocusedTextEditor,
+                                      isFocusedTextField: $isFocusedTextField,
                                       textField: textField, proxy: proxy)
                     }
                     // 스크롤 했을 때, 키보드 사라지기
@@ -84,16 +70,19 @@ struct RecordView: View {
                     }
                 }
             }
+            // 화면 너비 받아오기
             .task {
-                windowWidth = TagHandler.getScreenWidthWithoutPadding(padding: 20)
+                recordVM.windowWidth = TagHandler.getScreenWidthWithoutPadding(padding: 20)
             }
         }
+        // post upload 여부에 따라 loadingView 표시
+        .loadingView($recordVM.isPostUploadSuccess)
         // 글 내용 유무 체크
         .onAppear {
             isPostContentNotEmpty()
         }
         // 글 내용 유무 체크
-        .onChange(of: content) { _ in
+        .onChange(of: recordVM.content) { _ in
             isPostContentNotEmpty()
         }
         .navigationBarBackButtonHidden()
@@ -108,7 +97,36 @@ struct RecordView: View {
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
+                    if isFocusedTextEditor {
+                        isFocusedTextEditor = false
+                    }
+                    if isFocusedTextField {
+                        isFocusedTextField = false
+                    }
+
                     // TODO: 술상 저장 후, 작성 or 수정 하기 전에 있었던 화면으로 이동 (path 조절)
+                    DispatchQueue.main.async {
+                        Task {
+                            // loadingView 띄우기
+                            recordVM.isPostUploadSuccess = true
+                            // FirevaseStorage multiple image upload
+                            await recordVM.multipleImageUpload()
+                            
+                            // post 데이터 모델 객체 생성
+                            recordVM.post = Post(user: (auth.uid, UserField(name: auth.name,
+                                                                            age: auth.age, gender: auth.gender,
+                                                                            notificationAllowed: auth.notificationAllowed)),
+                                                 drinkTags: recordVM.drinkTags,
+                                                 postField: PostField(imagesID: recordVM.imagesID, content: recordVM.content,
+                                                                      likedCount: 0, postedTimeStamp: Date(), foodTags: recordVM.foodTags))
+                            
+                            // post upload
+                            await recordVM.uploadPost()
+                            // loadingView 없애기
+                            recordVM.isPostUploadSuccess = false
+                        }
+                    }
+                    
                 } label: {
                     Text("완료")
                         .font(.regular16)
@@ -120,22 +138,16 @@ struct RecordView: View {
     }
     
     private func isPostContentNotEmpty() {
-        let trimmedString = content.trimmingCharacters(in: .whitespacesAndNewlines) // 공백 + 개행문자 제외
+        let trimmedString = recordVM.content.trimmingCharacters(in: .whitespacesAndNewlines) // 공백 + 개행문자 제외
         self.isPostContent = !trimmedString.isEmpty
     }
 }
 
 // MARK: - 술상 기록 화면에 보여줄 내용
 struct RecordContent: View {
+    @EnvironmentObject private var recordVM: RecordViewModel
+    // post add/edit
     let recordType: RecordType
-    // 선택된 사진들을 담은 배열 (더미 데이터는 Assets을 사용하기 위해 작성)
-    @Binding var images: [String]
-    // TextEditor으로 작성될 글 내용
-    @Binding var content: String
-    // 음식 태그 배열
-    @Binding var foodTags: [FoodTag]
-    // 화면 너비
-    @Binding var windowWidth: CGFloat
     // TextEditor focus 상태 프로퍼티
     var isFocusedTextEditor: FocusState<Bool>.Binding
     // TextField focus 상태 프로퍼티
@@ -152,13 +164,13 @@ struct RecordContent: View {
     var body: some View {
         LazyVStack {
             // 선택된 사진들을 보여주는 가로 Scroll View
-            SelectedPhotoHorizontalScroll(images: $images)
+            SelectedPhotoHorizontalScroll()
             // 글 작성 TextEditor
-            TextEditor(text: $content)
+            TextEditor(text: $recordVM.content)
             // TextEditor에 Text를 오버레이하여 placeholder로 보여줌
                 .overlay(alignment: .topLeading) {
                     // content가 입력됐을 때, placeholder "" 처리
-                    Text(content.isEmpty ? placeholder : "")
+                    Text(recordVM.content.isEmpty ? placeholder : "")
                         .font(.regular16)
                         .padding(.leading, 6)
                         .padding(.top, 10)
@@ -191,9 +203,9 @@ struct RecordContent: View {
                 .padding(.horizontal, 20)
                 .padding(.bottom, 5)
                 // 음식 태그 추가 TextField
-                FoodTagAddTextField(foodTags: $foodTags, textField: textField, isFocusedTextField: isFocusedTextField, proxy: proxy)
+                FoodTagAddTextField(textField: textField, isFocusedTextField: isFocusedTextField, proxy: proxy)
                 // 추가된 음식 태그를 보여주는 하단부
-                FoodTagVertical(foodTags: $foodTags, windowWidth: windowWidth)
+                FoodTagVertical()
             }
             .padding(.bottom, 5)
             // ScrollView focusing을 위한 VStack에 id 부여

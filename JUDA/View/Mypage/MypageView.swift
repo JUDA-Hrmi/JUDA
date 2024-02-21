@@ -10,6 +10,7 @@ import SwiftUI
 // MARK: - 마이페이지 탭
 struct MypageView: View {
     @EnvironmentObject private var appViewModel: AppViewModel
+    @EnvironmentObject private var auth: AuthService
     
     // MARK: 데이터 구조 정해지면 바꿔야되는 부분
     @State var isLike: Bool = true

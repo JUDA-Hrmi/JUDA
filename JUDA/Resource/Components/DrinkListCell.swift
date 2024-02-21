@@ -10,16 +10,18 @@ import SwiftUI
 // MARK: - 술 리스트 셀
 struct DrinkListCell: View {
     // UITest - Drink DummyData
-    let drink: Drink
+    let drink: FBDrink
     // UITest - Drink 하트
-    @State private var isLiked = false
+    @Binding var isLiked: Bool
+    // searchTagView에서 사용하는지에 대한 여부
+    var searchTag: Bool = false
     
     var body: some View {
         HStack(alignment: .top) {
             // 술 정보
             HStack(alignment: .center, spacing: 20) {
                 // 술 사진
-                Image(drink.image)
+                Image("jinro")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 103.48)
@@ -35,12 +37,14 @@ struct DrinkListCell: View {
                     HStack(spacing: 0) {
                         Text(drink.country)
                             .font(.semibold14)
-                        if drink.drinkType == .wine ,let wine = drink as? Wine {
-                            Text(wine.province)
+//                        if drink.drinkType == .wine ,let wine = drink as? Wine {
+                        if drink.category == DrinkType.wine.rawValue,
+                           let province = drink.province {
+                            Text(province)
                                 .font(.semibold14)
                                 .padding(.leading, 6)
                         }
-                        Text(Formatter.formattedABVCount(abv: drink.abv))
+                        Text(Formatter.formattedABVCount(abv: drink.alcohol))
                             .font(.semibold14)
                             .padding(.leading, 10)
                     }
@@ -55,11 +59,17 @@ struct DrinkListCell: View {
             }
             Spacer()
             // 하트
-            Button {
-                isLiked.toggle()
-            } label: {
+            // searchTagView에서 사용 시, 버튼이 아닌 이미지 처리
+            if searchTag {
                 Image(systemName: isLiked ? "heart.fill" : "heart")
                     .foregroundStyle(isLiked ? .mainAccent02 : .gray01)
+            } else {
+                Button {
+                    isLiked.toggle()
+                } label: {
+                    Image(systemName: isLiked ? "heart.fill" : "heart")
+                        .foregroundStyle(isLiked ? .mainAccent02 : .gray01)
+                }
             }
         }
         .padding(.vertical, 10)
@@ -68,6 +78,6 @@ struct DrinkListCell: View {
     }
 }
 
-#Preview {
-    DrinkListCell(drink: Wine.wineSample01)
-}
+//#Preview {
+//    DrinkListCell(drink: Wine.wineSample01)
+//}

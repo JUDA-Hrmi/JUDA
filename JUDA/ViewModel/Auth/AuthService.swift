@@ -133,7 +133,7 @@ extension AuthService {
         do {
             let document = try await collectionRef.document(uid).getDocument(source: .cache)
             if document.exists {
-                let userData = try document.data(as: User.self)
+                let userData = try document.data(as: UserField.self)
                 self.uid = uid
                 self.name = userData.name
                 self.age = userData.age
@@ -149,7 +149,7 @@ extension AuthService {
     }
     
     // firestore 에 유저 저장
-    func addUserDataToStore(userData: User) {
+    func addUserDataToStore(userData: UserField) {
         do {
             try collectionRef.document(self.uid).setData(from: userData)
             print("Success - 유저 정보 저장")

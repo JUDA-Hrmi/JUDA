@@ -16,6 +16,7 @@ struct ContentView: View {
     @StateObject var locationManager = LocationManager()
     @StateObject var aiViewModel = AiViewModel()
     @StateObject var aiTodayViewModel = AiTodayViewModel()
+    @StateObject private var recordVM = RecordViewModel()
     // Tabbar 불투명하게 설정 (색상 백그라운드)
     init() {
         UITabBar.appearance().shadowImage = UIImage()
@@ -64,10 +65,12 @@ struct ContentView: View {
             DrinkInfoView()
         case .posts:
             PostsView(postSearchText: $postSearchText)
+                .environmentObject(recordVM)
         case .liked:
             LikedView()
         case .myPage:
             MypageView(selectedTabIndex: $selectedTabIndex)
+                .environmentObject(recordVM)
         }
     }
 }

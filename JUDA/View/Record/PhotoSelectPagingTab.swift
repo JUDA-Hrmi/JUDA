@@ -10,10 +10,9 @@ import PhotosUI
 
 // MARK: - 글 작성 시, 선택된 사진들 페이징 뷰
 struct PhotoSelectPagingTab: View {
+    @EnvironmentObject private var recordVM: RecordViewModel
     // 현재 선택된 탭의 인덱스. 초기값 0
     @State private var selectedIndex = 0
-    // photo picker로 선택된 이미지 배열
-    @Binding var images: [UIImage]
     // photo picker로 선택된 사진 배열
     @Binding var selectedPhotos: [PhotosPickerItem]
     // 이미지 가져오다가 에러나면 띄워줄 alert
@@ -38,9 +37,9 @@ struct PhotoSelectPagingTab: View {
             // 선택된 사진들을 탭뷰 페이징 형식으로 보여주기
             TabView(selection: $selectedIndex) {
                 Group {
-                    ForEach(images.indices, id: \.self) { index in
+                    ForEach(recordVM.images.indices, id: \.self) { index in
                         // 이미지
-                        Image(uiImage: images[index])
+                        Image(uiImage: recordVM.images[index])
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: imageSize, height: imageSize)
@@ -57,15 +56,14 @@ struct PhotoSelectPagingTab: View {
                             .tag(index + 1)
                     }
                     // 선택된 사진이 10장보다 적을 때,
-                    if images.count < maxImages {
+                    if recordVM.images.count < maxImages {
                         // 사진 선택 (포토픽커)
-                        LibraryPhotosPicker(selectedPhotos: $selectedPhotos,
-                                            maxSelectionCount: maxImages) {
+                        LibraryPhotosPicker(selectedPhotos: $selectedPhotos, maxSelectionCount: maxImages) {
                             Image(systemName: "plus.circle.fill")
                                 .font(.largeTitle)
                                 .frame(width: imageSize, height: imageSize)
                                 .background(.gray06)
-                        }.tag(images.count + 1)
+                        }.tag(recordVM.images.count + 1)
                     }
                 }
             }
@@ -83,9 +81,9 @@ struct PhotoSelectPagingTab: View {
                 }
             }
             // 현재 보이는 사진 맨 뒤 사진으로 수정
-            .onChange(of: images) { _ in
+            .onChange(of: recordVM.images) { _ in
                 Task {
-                    selectedIndex = self.images.count
+                    selectedIndex = recordVM.images.count
                 }
             }
         }
@@ -95,7 +93,7 @@ struct PhotoSelectPagingTab: View {
     private func updateImage() async throws {
         // 선택된 사진 하나도 없으면, 배열 비우고 바로 리턴
         guard !selectedPhotos.isEmpty else {
-            self.images = []
+            recordVM.images = []
             return
         }
         var images = [UIImage]() // 임시 배열 (작업 끝나면 배열채로 한번에 업데이트
@@ -111,12 +109,12 @@ struct PhotoSelectPagingTab: View {
                 throw PhotosPickerImageLoadingError.invalidImageData
             }
         }
-        self.images = images
-        self.selectedIndex = self.images.count
+        recordVM.images = images
+        self.selectedIndex = recordVM.images.count
     }
     
     private func removePhoto(_ index: Int) {
-        self.images.remove(at: index)
-        self.selectedPhotos.remove(at: index)
+        recordVM.images.remove(at: index)
+        selectedPhotos.remove(at: index)
     }
 }

@@ -48,7 +48,7 @@ struct DrinkListContent: View {
                     DrinkDetailView(drink: drink)
                         .modifier(TabBarHidden())
                 } label: {
-                    DrinkListCell(drink: drink)
+//                    DrinkListCell(drink: drink)
                 }
                 .buttonStyle(EmptyActionStyle())
             }
