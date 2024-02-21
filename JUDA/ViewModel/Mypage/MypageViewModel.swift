@@ -9,19 +9,19 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 
-class Users: ObservableObject {
-    static let shared = Users()
-    private init() {}
-    @Published var users = [User]()
-    let db = Firestore.firestore()
-    private var listener: ListenerRegistration?
-    
-    @MainActor
-    func fetchNotificationAllowed() async {
-        
-    }
- 
-}
+//class Users: ObservableObject {
+//    static let shared = Users()
+//    private init() {}
+//    @Published var users = [User]()
+//    let db = Firestore.firestore()
+//    private var listener: ListenerRegistration?
+//    
+//    @MainActor
+//    func fetchNotificationAllowed() async {
+//        
+//    }
+// 
+//}
 
 class Alarms: ObservableObject {
     static let shared = Alarms()
