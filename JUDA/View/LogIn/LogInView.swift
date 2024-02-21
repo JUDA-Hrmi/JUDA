@@ -50,13 +50,13 @@ struct LogInView: View {
                 SignInWithAppleButton(.signIn) { request in
                     authService.handleSignInWithAppleRequest(request)
                 } onCompletion: { result in
-                    authService.handleSignInWithAppleCompletion(result, appViewModel: appViewModel)
+                    authService.handleSignInWithAppleCompletion(result)
                 }
                 .signInWithAppleButtonStyle(colorScheme.selectedColor == .light ? .black: (colorScheme.selectedColor == .dark ? .white : .black))
                 .frame(width: 300, height: 48)
             }
             Spacer()
-            //
+            
             Text("2024, 주다 - JUDA all rights reserved.\nPowered by PJ4T7_HrMi")
                 .font(.thin12)
                 .multilineTextAlignment(.center)
@@ -90,6 +90,5 @@ struct LogInView: View {
         .fullScreenCover(isPresented: $nextView) {
             TermsAndVerificationView()
         }
-//        .preferredColorScheme(colorScheme.selectedColor)
     }
 }
