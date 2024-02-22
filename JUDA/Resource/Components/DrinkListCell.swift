@@ -11,7 +11,7 @@ import Kingfisher
 // MARK: - 술 리스트 셀
 struct DrinkListCell: View {
     @EnvironmentObject private var drinkViewModel: DrinkViewModel
-    @State private var imageURL: String = ""
+    @State private var imageString: String = ""
     @State private var isLoading: Bool = true
     let drink: FBDrink
     
@@ -26,7 +26,7 @@ struct DrinkListCell: View {
             HStack(alignment: .center, spacing: 20) {
                 // 술 사진
                 if isLoading {
-                    KFImage(URL(string: imageURL))
+                    KFImage(URL(string: imageString))
                         .placeholder {
                             CircularLoaderView(size: 20)
                                 .frame(width: 70, height: 103.48)
@@ -97,7 +97,7 @@ struct DrinkListCell: View {
                                 category: DrinkType(rawValue: drink.category) ?? DrinkType.all,
                                 detailedCategory: drink.type) {
                 if let imageString = await drinkViewModel.fetchImageUrl(imageName: imageName) {
-                    self.imageURL = imageString
+                    self.imageString = imageString
                 } else {
                     self.isLoading = false
                 }

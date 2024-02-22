@@ -6,39 +6,66 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 // MARK: - 술 디테일에서 보여주는 상단의 술 정보 부분 (이미지, 이름, 가격 등)
 struct DrinkDetails: View {
+    @EnvironmentObject private var drinkViewModel: DrinkViewModel
+    @State private var imageString: String = ""
+    @State private var isLoading: Bool = true
+
     let drink: FBDrink
 
     var body: some View {
         // 술 정보 (이미지, 이름, 용량, 나라, 도수, 가격, 별점, 태그된 게시물)
         HStack(alignment: .center, spacing: 30) {
             // 술 이미지
-//            Image(drink.image)
-            Image("jinro")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 180)
-                .padding(10)
-                .frame(width: 100)
+            if isLoading {
+                KFImage(URL(string: imageString))
+                    .placeholder {
+                        CircularLoaderView(size: 20)
+                            .frame(height: 180)
+                            .padding(10)
+                            .frame(width: 100)
+                    }
+                    .loadDiskFileSynchronously(true) // 디스크에서 동기적으로 이미지 가져오기
+                    .cacheMemoryOnly() // 메모리 캐시만 사용 (디스크 X)
+                    .fade(duration: 0.2) // 이미지 부드럽게 띄우기
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(height: 180)
+                    .padding(10)
+                    .frame(width: 100)
+            } else {
+                Text("No Image")
+                    .font(.medium16)
+                    .foregroundStyle(.mainBlack)
+                    .frame(height: 180)
+                    .padding(10)
+                    .frame(width: 100)
+            }
             // 이름, 나라, 도수, 가격, 별점, 태그된 게시물
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 6) {
                 // 이름 + 용량
                 Text(drink.name + " " + drink.amount)
                     .font(.semibold18)
                     .foregroundStyle(.mainBlack)
                     .lineLimit(2)
-                // 나라, 도수
+                // 종류, 도수
+                HStack {
+                    // 종류
+                    Text(drink.type)
+                    // 도수
+                    Text(Formatter.formattedABVCount(abv: drink.alcohol))
+                }
+                // 나라, 지방
                 HStack {
                     // 나라
                     Text(drink.country)
                     if drink.category == DrinkType.wine.rawValue, 
                         let province = drink.province {
-                        Text(province)
+                        Text(province) // 지방
                     }
-                    // 도수
-                    Text(Formatter.formattedABVCount(abv: drink.alcohol))
                 }
                 .font(.regular16)
                 // 가격
@@ -62,5 +89,19 @@ struct DrinkDetails: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
+        // 이미지 불러오기
+        .task {
+            if let imageName = drinkViewModel.getImageName(
+                                category: DrinkType(rawValue: drink.category) ?? DrinkType.all,
+                                detailedCategory: drink.type) {
+                if let imageString = await drinkViewModel.fetchImageUrl(imageName: imageName) {
+                    self.imageString = imageString
+                } else {
+                    self.isLoading = false
+                }
+            } else {
+                self.isLoading = false
+            }
+        }
     }
 }

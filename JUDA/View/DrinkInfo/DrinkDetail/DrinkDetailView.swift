@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 // MARK: - 술 디테일 화면
 struct DrinkDetailView: View {
@@ -59,13 +60,13 @@ struct DrinkDetailView: View {
             }
             ToolbarItem(placement: .topBarTrailing) {
                 // 공유하기
-                ShareLink(item: "Test", // TODO: 실제 공유하려는 내용으로 변경 필요
+                ShareLink(item: drink.name,
                           subject: Text("이 링크를 확인해보세요."),
-                          message: Text("Hrmi 앱에서 술 정보를 공유했어요!"),
+                          message: Text("주다 - JUDA 에서 술 정보를 공유했어요!"),
                           // 미리보기
                           preview: SharePreview(
-                            Text("카누카 칵테일 700ml"), // TODO: 해당 술 이름으로 변경
-                            image: Image("canuca")) // TODO: 해당 술의 이미지로 변경
+                            Text(drink.name + " " + drink.amount),
+                            image: Image(systemName: "AppIcon")) // TODO: 변경
                 ) {
                     Image(systemName: "square.and.arrow.up")
                 }

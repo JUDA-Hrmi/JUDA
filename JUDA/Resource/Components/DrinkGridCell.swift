@@ -11,7 +11,7 @@ import Kingfisher
 // MARK: - 술 그리드 셀
 struct DrinkGridCell: View {
     @EnvironmentObject private var drinkViewModel: DrinkViewModel
-    @State private var imageURL: String = ""
+    @State private var imageString: String = ""
     @State private var isLoading: Bool = true
     let drink: FBDrink
     
@@ -32,7 +32,7 @@ struct DrinkGridCell: View {
                 // 술 사진
                 VStack(alignment: .center) {
                     if isLoading {
-                        KFImage(URL(string: imageURL))
+                        KFImage(URL(string: imageString))
                             .placeholder {
                                 CircularLoaderView(size: 20)
                                     .frame(width: 70, height: 103.48)
@@ -81,7 +81,7 @@ struct DrinkGridCell: View {
                                 category: DrinkType(rawValue: drink.category) ?? DrinkType.all,
                                 detailedCategory: drink.type) {
                 if let imageString = await drinkViewModel.fetchImageUrl(imageName: imageName) {
-                    self.imageURL = imageString
+                    self.imageString = imageString
                 } else {
                     self.isLoading = false
                 }
@@ -93,27 +93,34 @@ struct DrinkGridCell: View {
     
     @ViewBuilder
     private func getCountryAndABV() -> some View {
-        HStack(spacing: 10) {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(spacing: 6) {
+                Text(drink.type)
+                Text(Formatter.formattedABVCount(abv: drink.alcohol))
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
             Text(drink.country)
-                .font(.semibold14)
-            Text(Formatter.formattedABVCount(abv: drink.alcohol))
-                .font(.semibold14)
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .font(.semibold14)
         .foregroundStyle(.gray01)
     }
     
     @ViewBuilder
     private func getCountryAndProvinceAndABV() -> some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(spacing: 6) {
+                Text(drink.type)
+                Text(Formatter.formattedABVCount(abv: drink.alcohol))
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
             HStack(spacing: 6) {
                 Text(drink.country)
-                    .font(.semibold14)
                 Text(drink.province ?? "")
-                    .font(.semibold14)
             }
-            Text(Formatter.formattedABVCount(abv: drink.alcohol))
-                .font(.semibold14)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .font(.semibold14)
         .foregroundStyle(.gray01)
     }
 }
@@ -147,7 +154,11 @@ struct ShimmerDrinkGridCell: View {
                     RoundedRectangle(cornerRadius: 10)
                         .fill(.mainBlack.opacity(0.09))
                         .frame(width: 130, height: 15)
-                    // 나라, 도수
+                    // 나라, 지방
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(.mainBlack.opacity(0.09))
+                        .frame(width: 100, height: 15)
+                    // 타입, 도수
                     RoundedRectangle(cornerRadius: 10)
                         .fill(.mainBlack.opacity(0.09))
                         .frame(width: 100, height: 15)
@@ -177,7 +188,11 @@ struct ShimmerDrinkGridCell: View {
                     RoundedRectangle(cornerRadius: 10)
                         .fill(overColor.opacity(0.6))
                         .frame(width: 130, height: 15)
-                    // 나라, 도수
+                    // 나라, 지방
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(overColor.opacity(0.6))
+                        .frame(width: 100, height: 15)
+                    // 타입, 도수
                     RoundedRectangle(cornerRadius: 10)
                         .fill(overColor.opacity(0.6))
                         .frame(width: 100, height: 15)
