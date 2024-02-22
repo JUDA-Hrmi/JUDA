@@ -10,9 +10,7 @@ import Kingfisher
 
 // MARK: - 술 리스트 셀
 struct DrinkListCell: View {
-    @EnvironmentObject private var drinkViewModel: DrinkViewModel
-    @State private var imageString: String = ""
-    @State private var isLoading: Bool = true
+    @StateObject private var drinkImageViewModel = DrinkImageViewModel()
     let drink: FBDrink
     
     // UITest - Drink 하트
@@ -25,8 +23,8 @@ struct DrinkListCell: View {
             // 술 정보
             HStack(alignment: .center, spacing: 20) {
                 // 술 사진
-                if isLoading {
-                    KFImage(URL(string: imageString))
+                if drinkImageViewModel.isLoading {
+                    KFImage(URL(string: drinkImageViewModel.imageString))
                         .placeholder {
                             CircularLoaderView(size: 20)
                                 .frame(width: 70, height: 103.48)
@@ -93,17 +91,9 @@ struct DrinkListCell: View {
         .frame(height: 130)
         // 이미지 불러오기
         .task {
-            if let imageName = drinkViewModel.getImageName(
-                                category: DrinkType(rawValue: drink.category) ?? DrinkType.all,
-                                detailedCategory: drink.type) {
-                if let imageString = await drinkViewModel.fetchImageUrl(imageName: imageName) {
-                    self.imageString = imageString
-                } else {
-                    self.isLoading = false
-                }
-            } else {
-                self.isLoading = false
-            }
+            await drinkImageViewModel
+                .getImageURLString(category: DrinkType(rawValue: drink.category) ?? DrinkType.all,
+                                   detailedCategory: drink.type)
         }
     }
 }

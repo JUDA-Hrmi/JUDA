@@ -26,6 +26,7 @@
 		0999125C2B84654400E72C73 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0999125B2B84654400E72C73 /* FirebaseCrashlytics */; };
 		099912652B85799800E72C73 /* CircularLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099912642B85799800E72C73 /* CircularLoaderView.swift */; };
 		099D9AA62B8720AC002261F7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 099D9AA52B8720AC002261F7 /* Kingfisher */; };
+		099D9AAC2B8784BA002261F7 /* DrinkImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099D9AAB2B8784BA002261F7 /* DrinkImageViewModel.swift */; };
 		099F16192B750E7E00D8BEDA /* UINavigationController +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099F16182B750E7E00D8BEDA /* UINavigationController +.swift */; };
 		099F161B2B75347100D8BEDA /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099F161A2B75347100D8BEDA /* CheckBox.swift */; };
 		09A6AD722B70B46E00606585 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD712B70B46E00606585 /* AppViewModel.swift */; };
@@ -169,6 +170,7 @@
 		0974A14C2B8B7B5000476199 /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = APIKEYS.plist; path = "../../흐르미/APIKEYS.plist"; sourceTree = "<group>"; };
 		0974A14F2B8B7B6C00476199 /* ShimmerPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerPostCell.swift; sourceTree = "<group>"; };
 		099912642B85799800E72C73 /* CircularLoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularLoaderView.swift; sourceTree = "<group>"; };
+		099D9AAB2B8784BA002261F7 /* DrinkImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkImageViewModel.swift; sourceTree = "<group>"; };
 		099F16182B750E7E00D8BEDA /* UINavigationController +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController +.swift"; sourceTree = "<group>"; };
 		099F161A2B75347100D8BEDA /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		09A6AD712B70B46E00606585 /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
@@ -666,6 +668,7 @@
 			isa = PBXGroup;
 			children = (
 				B1EE249D2B6144DD007F68B0 /* DrinkViewModel.swift */,
+				099D9AAB2B8784BA002261F7 /* DrinkImageViewModel.swift */,
 			);
 			path = Drink;
 			sourceTree = "<group>";
@@ -846,6 +849,7 @@
 				2C2FF2982B63916700B2301A /* StarRating.swift in Sources */,
 				2C63DD612B67D5EB00770E3A /* PhotoSelectPagingTab.swift in Sources */,
 				7B6D76B92B68D9C900601B55 /* PostReportView.swift in Sources */,
+				099D9AAC2B8784BA002261F7 /* DrinkImageViewModel.swift in Sources */,
 				B1EE248A2B614464007F68B0 /* LikedView.swift in Sources */,
 				B127A4222B64EB53001F005D /* CustomBottomSheet.swift in Sources */,
 				7B5174922B69EAB300915793 /* NavigationPostsView.swift in Sources */,
