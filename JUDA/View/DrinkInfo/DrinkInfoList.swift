@@ -38,21 +38,27 @@ struct DrinkListContent: View {
     var body: some View {
         // 리스트
         LazyVStack {
-            ForEach(drinkViewModel.drinks.indices, id: \.self) { index in
-                let drink = drinkViewModel.drinks[index]
-                // TODO: NavigationLink - value 로 수정
-                NavigationLink {
-                    DrinkDetailView(drink: drink)
-                        .modifier(TabBarHidden())
-                } label: {
-                    DrinkListCell(drink: drink, isLiked: .constant(true))
-                        .task {
-                            if drink.name == drinkViewModel.drinks.last?.name {
-                                await drinkViewModel.loadDrinksNextPage()
+            if !drinkViewModel.isLoading {
+                ForEach(drinkViewModel.drinks.indices, id: \.self) { index in
+                    let drink = drinkViewModel.drinks[index]
+                    // TODO: NavigationLink - value 로 수정
+                    NavigationLink {
+                        DrinkDetailView(drink: drink)
+                            .modifier(TabBarHidden())
+                    } label: {
+                        DrinkListCell(drink: drink, isLiked: .constant(true))
+                            .task {
+                                if drink.name == drinkViewModel.drinks.last?.name {
+                                    await drinkViewModel.loadDrinksNextPage()
+                                }
                             }
-                        }
+                    }
+                    .buttonStyle(EmptyActionStyle())
                 }
-                .buttonStyle(EmptyActionStyle())
+            } else {
+                ForEach(0..<10) { _ in
+                    ShimmerDrinkListCell()
+                }
             }
         }
     }

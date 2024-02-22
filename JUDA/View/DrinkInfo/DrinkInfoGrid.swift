@@ -41,21 +41,27 @@ struct DrinkGridContent: View {
     var body: some View {
         // 그리드
         LazyVGrid(columns: columns, spacing: 10) {
-            ForEach(drinkViewModel.drinks.indices, id: \.self) { index in
-                let drink = drinkViewModel.drinks[index]
-                // TODO: NavigationLink - value 로 수정
-                NavigationLink {
-                    DrinkDetailView(drink: drink)
-                        .modifier(TabBarHidden())
-                } label: {
-                    DrinkGridCell(drink: drink)
-                        .task {
-                            if drink.name == drinkViewModel.drinks.last?.name {
-                                await drinkViewModel.loadDrinksNextPage()
+            if !drinkViewModel.isLoading {
+                ForEach(drinkViewModel.drinks.indices, id: \.self) { index in
+                    let drink = drinkViewModel.drinks[index]
+                    // TODO: NavigationLink - value 로 수정
+                    NavigationLink {
+                        DrinkDetailView(drink: drink)
+                            .modifier(TabBarHidden())
+                    } label: {
+                        DrinkGridCell(drink: drink)
+                            .task {
+                                if drink.name == drinkViewModel.drinks.last?.name {
+                                    await drinkViewModel.loadDrinksNextPage()
+                                }
                             }
-                        }
+                    }
+                    .buttonStyle(EmptyActionStyle())
                 }
-                .buttonStyle(EmptyActionStyle())
+            } else {
+                ForEach(0..<10) { _ in
+                    ShimmerDrinkGridCell()
+                }
             }
         }
         .padding(.horizontal, 20)

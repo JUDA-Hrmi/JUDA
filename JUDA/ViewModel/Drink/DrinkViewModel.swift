@@ -22,6 +22,8 @@ final class DrinkViewModel: ObservableObject {
     @Published var selectedSortedTypeString: String = DrinkSortType.popularity.rawValue
     // pagination 을 위한, 이전 load의 마지막
     @Published var lastSnapshot: QueryDocumentSnapshot?
+    // Shimmer Drink List / Grid Cell 을 보여주기 위한
+    @Published var isLoading: Bool = false
     
     // Drink 종류
     let typesOfDrink: [DrinkType] = [
@@ -84,6 +86,7 @@ final class DrinkViewModel: ObservableObject {
 extension DrinkViewModel {
     // 술 리스트 - 첫 가져오기 ( 정렬 방식 받아서 사용 )
     func loadDrinksFirstPage() async {
+        isLoading = true
         // 술 카테고리 선택에 따라 가져온 reference + 술 정렬 타입에 맞게 collection reference 가져오기
         // pagination 을 위해 limit(to: 20) 추가
         let firstReference = getReference(
@@ -105,6 +108,7 @@ extension DrinkViewModel {
         } catch {
             print("Error - load Drinks First Page: \(error.localizedDescription)")
         }
+        isLoading = false
     }
     
     // 술 리스트 - 다음 페이지 가져오기
