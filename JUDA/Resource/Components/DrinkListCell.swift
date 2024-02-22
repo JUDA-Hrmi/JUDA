@@ -6,9 +6,13 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 // MARK: - 술 리스트 셀
 struct DrinkListCell: View {
+    @EnvironmentObject private var drinkViewModel: DrinkViewModel
+    @State private var imageURL: String = ""
+    @State private var isLoading: Bool = true
     let drink: FBDrink
     
     // UITest - Drink 하트
@@ -21,12 +25,24 @@ struct DrinkListCell: View {
             // 술 정보
             HStack(alignment: .center, spacing: 20) {
                 // 술 사진
-//                Image(drink.image)
-                Image("jinro")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: 103.48)
-                    .frame(width: 70)
+                if isLoading {
+                    KFImage(URL(string: imageURL))
+                        .placeholder {
+                            CircularLoaderView(size: 20)
+                                .frame(width: 70, height: 103.48)
+                        }
+                        .loadDiskFileSynchronously(true) // 디스크에서 동기적으로 이미지 가져오기
+                        .cacheMemoryOnly() // 메모리 캐시만 사용 (디스크 X)
+                        .fade(duration: 0.2) // 이미지 부드럽게 띄우기
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 70, height: 103.48)
+                } else {
+                    Text("No Image")
+                        .font(.medium16)
+                        .foregroundStyle(.mainBlack)
+                        .frame(width: 70, height: 103.48)
+                }
                 // 술 이름 + 나라, 도수 + 별점
                 VStack(alignment: .leading, spacing: 10) {
                     // 술 이름 + 용량
@@ -75,13 +91,31 @@ struct DrinkListCell: View {
         .padding(.vertical, 10)
         .padding(.horizontal, 20)
         .frame(height: 130)
+        // 이미지 불러오기
+        .task {
+            if let imageName = drinkViewModel.getImageName(
+                                category: DrinkType(rawValue: drink.category) ?? DrinkType.all,
+                                detailedCategory: drink.type) {
+                if let imageString = await drinkViewModel.fetchImageUrl(imageName: imageName) {
+                    self.imageURL = imageString
+                } else {
+                    self.isLoading = false
+                }
+            } else {
+                self.isLoading = false
+            }
+        }
     }
 }
 
 // MARK: - 로딩 중, 술 리스트 셀
 struct ShimmerDrinkListCell: View {
+    @Environment(\.colorScheme) var colorScheme
     @State private var show: Bool = false
-
+    private var overColor: Color {
+        colorScheme == .light ? .white : .black
+    }
+    
     var body: some View {
         ZStack {
             // shimmer view
@@ -90,29 +124,28 @@ struct ShimmerDrinkListCell: View {
                 HStack(alignment: .center, spacing: 20) {
                     // 술 사진
                     RoundedRectangle(cornerRadius: 10)
-                        .fill(.black.opacity(0.09))
-                        .frame(height: 103.48)
-                        .frame(width: 70)
+                        .fill(.mainBlack.opacity(0.09))
+                        .frame(width: 70, height: 103.48)
                     // 술 이름 + 나라, 도수 + 별점
                     VStack(alignment: .leading, spacing: 10) {
                         // 술 이름 + 용량
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(.black.opacity(0.09))
+                            .fill(.mainBlack.opacity(0.09))
                             .frame(width: 200, height: 15)
                         // 나라, 도수
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(.black.opacity(0.09))
+                            .fill(.mainBlack.opacity(0.09))
                             .frame(width: 150, height: 15)
                         // 별점
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(.black.opacity(0.09))
+                            .fill(.mainBlack.opacity(0.09))
                             .frame(width: 120, height: 15)
                     }
                 }
                 Spacer()
                 // 하트
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(.black.opacity(0.09))
+                    .fill(.mainBlack.opacity(0.09))
                     .frame(width: 26, height: 26)
             }
             // shimmer animation view
@@ -121,34 +154,33 @@ struct ShimmerDrinkListCell: View {
                 HStack(alignment: .center, spacing: 20) {
                     // 술 사진
                     RoundedRectangle(cornerRadius: 10)
-                        .fill(.white.opacity(0.6))
-                        .frame(height: 103.48)
-                        .frame(width: 70)
+                        .fill(overColor.opacity(0.6))
+                        .frame(width: 70, height: 103.48)
                     // 술 이름 + 나라, 도수 + 별점
                     VStack(alignment: .leading, spacing: 10) {
                         // 술 이름 + 용량
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(.white.opacity(0.6))
+                            .fill(overColor.opacity(0.6))
                             .frame(width: 200, height: 15)
                         // 나라, 도수
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(.white.opacity(0.6))
+                            .fill(overColor.opacity(0.6))
                             .frame(width: 150, height: 15)
                         // 별점
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(.white.opacity(0.6))
+                            .fill(overColor.opacity(0.6))
                             .frame(width: 120, height: 15)
                     }
                 }
                 Spacer()
                 // 하트
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(.black.opacity(0.09))
+                    .fill(overColor.opacity(0.6))
                     .frame(width: 26, height: 26)
             }
             .mask {
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(.white.opacity(0.6))
+                    .fill(overColor.opacity(0.6))
                     .rotationEffect(.init(degrees: 120))
                     .offset(x: show ? 800 : -150)
             }

@@ -23,11 +23,11 @@ struct CircularLoaderView: View {
     
     var body: some View {
         Circle()
-            .stroke(gradient, lineWidth: 8)
+            .stroke(gradient, lineWidth: 6)
             .frame(width: size, height: size)
             .rotationEffect(Angle(degrees: animate ? 360 : 0))
             .animation(
-                Animation.linear(duration: 3)
+                Animation.linear(duration: 1.5)
                     .repeatForever(autoreverses: false),
                 value: animate
             )

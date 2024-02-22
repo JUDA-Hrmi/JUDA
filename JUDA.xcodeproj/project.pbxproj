@@ -25,6 +25,7 @@
 		0974A1502B8B7B6C00476199 /* ShimmerPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A14F2B8B7B6C00476199 /* ShimmerPostCell.swift */; };
 		0999125C2B84654400E72C73 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0999125B2B84654400E72C73 /* FirebaseCrashlytics */; };
 		099912652B85799800E72C73 /* CircularLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099912642B85799800E72C73 /* CircularLoaderView.swift */; };
+		099D9AA62B8720AC002261F7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 099D9AA52B8720AC002261F7 /* Kingfisher */; };
 		099F16192B750E7E00D8BEDA /* UINavigationController +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099F16182B750E7E00D8BEDA /* UINavigationController +.swift */; };
 		099F161B2B75347100D8BEDA /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099F161A2B75347100D8BEDA /* CheckBox.swift */; };
 		09A6AD722B70B46E00606585 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD712B70B46E00606585 /* AppViewModel.swift */; };
@@ -286,6 +287,8 @@
 				B14957F92B86584D00870297 /* FirebaseAppCheck in Frameworks */,
 				B1CF61212B83763000B59447 /* FirebaseFirestore in Frameworks */,
 				B14957F72B86584D00870297 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				099D9AA62B8720AC002261F7 /* Kingfisher in Frameworks */,
+				090FF1D52B83570F00AF22B5 /* FirebaseFirestore in Frameworks */,
 				B1EE24682B613EB1007F68B0 /* FirebaseAnalyticsSwift in Frameworks */,
 				B14957F12B86584D00870297 /* FirebaseAnalytics in Frameworks */,
 				B14958072B86593C00870297 /* Lottie in Frameworks */,
@@ -745,6 +748,7 @@
 				B14958022B86584D00870297 /* FirebaseDatabase */,
 				B14958042B86590400870297 /* OpenAI */,
 				B14958062B86593C00870297 /* Lottie */,
+				099D9AA52B8720AC002261F7 /* Kingfisher */,
 			);
 			productName = FinalHrmiProjects;
 			productReference = 0974A14A2B8B787E00476199 /* JUDA.app */;
@@ -779,6 +783,7 @@
 				B1EE24622B613EB1007F68B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				AC98D1CB2B735765006F6EC9 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				AC98D1D02B73586F006F6EC9 /* XCRemoteSwiftPackageReference "OpenAI" */,
+				099D9AA42B8720AC002261F7 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = B1B8FE702B5EA9D900921BBE;
 			projectDirPath = "";
@@ -1159,6 +1164,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		099D9AA42B8720AC002261F7 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.11.0;
+			};
+		};
 		AC98D1CB2B735765006F6EC9 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
@@ -1195,6 +1208,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B1EE24622B613EB1007F68B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
+		};
+		099D9AA52B8720AC002261F7 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 099D9AA42B8720AC002261F7 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 		09BCC13B2B7B99FF00FF4D1B /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
