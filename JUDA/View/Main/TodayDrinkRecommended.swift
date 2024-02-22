@@ -44,10 +44,10 @@ struct TodayDrinkRecommended: View {
                             DrinkDetailView(drink: Wine.wineSample01) // 임시 더미데이터
                                 .modifier(TabBarHidden())
                         } label: {
-                            TodayDrinkRecommendedCell(drink: todayDrink[0])
+                            TodayDrinkRecommendedCell(drink: drink)
                         }
                     } else {
-                        TodayDrinkRecommendedCell(drink: todayDrink[0])
+                        TodayDrinkRecommendedCell(drink: drink)
                     }
                 }
             }
