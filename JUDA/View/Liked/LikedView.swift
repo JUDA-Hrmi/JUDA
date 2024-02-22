@@ -17,9 +17,7 @@ enum LikedType: String, CaseIterable {
 struct LikedView: View {
     @EnvironmentObject private var appViewModel: AppViewModel
 
-    // UITest - 세그먼트 선택 index 저장
     @State private var selectedSegmentIndex = 0
-
     private let likedType = LikedType.allCases
     
     var body: some View {

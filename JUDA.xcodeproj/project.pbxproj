@@ -33,7 +33,6 @@
 		09A6AD7A2B71F6D800606585 /* LibraryPhotosPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD792B71F6D800606585 /* LibraryPhotosPicker.swift */; };
 		09A6AD7E2B72A53C00606585 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD7D2B72A53C00606585 /* Errors.swift */; };
 		09B4A0452B6E5DAE0082B235 /* PresentationDetent +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B4A0442B6E5DAE0082B235 /* PresentationDetent +.swift */; };
-		09BCC0B12B79EB5D00FF4D1B /* DrinkDummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BCC0B02B79EB5D00FF4D1B /* DrinkDummyData.swift */; };
 		09BCC0B32B7A2BE600FF4D1B /* KoreanTastingNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BCC0B22B7A2BE600FF4D1B /* KoreanTastingNotes.swift */; };
 		09BCC1392B7B99D600FF4D1B /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BCC1382B7B99D600FF4D1B /* AuthService.swift */; };
 		09BCC13C2B7B99FF00FF4D1B /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 09BCC13B2B7B99FF00FF4D1B /* FirebaseAuth */; };
@@ -138,7 +137,6 @@
 		B1EE24662B613EB1007F68B0 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = B1EE24652B613EB1007F68B0 /* FirebaseAnalyticsOnDeviceConversion */; };
 		B1EE24682B613EB1007F68B0 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B1EE24672B613EB1007F68B0 /* FirebaseAnalyticsSwift */; };
 		B1EE246A2B613EB1007F68B0 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = B1EE24692B613EB1007F68B0 /* FirebaseAnalyticsWithoutAdIdSupport */; };
-		B1EE24732B61431A007F68B0 /* DummyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24722B61431A007F68B0 /* DummyModel.swift */; };
 		B1EE24882B61445E007F68B0 /* MypageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24872B61445E007F68B0 /* MypageView.swift */; };
 		B1EE248A2B614464007F68B0 /* LikedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24892B614464007F68B0 /* LikedView.swift */; };
 		B1EE248E2B614470007F68B0 /* PostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE248D2B614470007F68B0 /* PostsView.swift */; };
@@ -177,7 +175,6 @@
 		09A6AD792B71F6D800606585 /* LibraryPhotosPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryPhotosPicker.swift; sourceTree = "<group>"; };
 		09A6AD7D2B72A53C00606585 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		09B4A0442B6E5DAE0082B235 /* PresentationDetent +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PresentationDetent +.swift"; sourceTree = "<group>"; };
-		09BCC0B02B79EB5D00FF4D1B /* DrinkDummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDummyData.swift; sourceTree = "<group>"; };
 		09BCC0B22B7A2BE600FF4D1B /* KoreanTastingNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KoreanTastingNotes.swift; sourceTree = "<group>"; };
 		09BCC1352B7B956A00FF4D1B /* JUDA.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JUDA.entitlements; sourceTree = "<group>"; };
 		09BCC1382B7B99D600FF4D1B /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -290,7 +287,6 @@
 				B1CF61212B83763000B59447 /* FirebaseFirestore in Frameworks */,
 				B14957F72B86584D00870297 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				099D9AA62B8720AC002261F7 /* Kingfisher in Frameworks */,
-				090FF1D52B83570F00AF22B5 /* FirebaseFirestore in Frameworks */,
 				B1EE24682B613EB1007F68B0 /* FirebaseAnalyticsSwift in Frameworks */,
 				B14957F12B86584D00870297 /* FirebaseAnalytics in Frameworks */,
 				B14958072B86593C00870297 /* Lottie in Frameworks */,
@@ -493,8 +489,6 @@
 		B1EE246D2B614280007F68B0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B1EE24722B61431A007F68B0 /* DummyModel.swift */,
-				09BCC0B02B79EB5D00FF4D1B /* DrinkDummyData.swift */,
 				0902EB4A2B7E4E72003D555E /* User.swift */,
 				7BE14B942B84733900C1F6C3 /* Drink.swift */,
 				2C7FD5512B848EEF00169512 /* Post.swift */,
@@ -859,7 +853,6 @@
 				0974A1502B8B7B6C00476199 /* ShimmerPostCell.swift in Sources */,
 				09F869B52B6A47B700A56A4C /* AlarmStoreListCell.swift in Sources */,
 				B1EE249A2B6144C5007F68B0 /* RecordViewModel.swift in Sources */,
-				B1EE24732B61431A007F68B0 /* DummyModel.swift in Sources */,
 				2C63DD672B67EB1B00770E3A /* RecordView.swift in Sources */,
 				7B6D76AF2B67CFC900601B55 /* PostInfo.swift in Sources */,
 				7BE14B972B84767000C1F6C3 /* DrinkUploadViewModel.swift in Sources */,
@@ -872,7 +865,6 @@
 				0902EB4B2B7E4E72003D555E /* User.swift in Sources */,
 				09F869982B68E48400A56A4C /* DrinkDetails.swift in Sources */,
 				B12330492B6A99B400DE2A93 /* SettingView.swift in Sources */,
-				09BCC0B12B79EB5D00FF4D1B /* DrinkDummyData.swift in Sources */,
 				7B904C682B6184560052384A /* CustomTextSegment.swift in Sources */,
 				2C2AD4FD2B68891C00C681F4 /* SearchTagView.swift in Sources */,
 				B1EE24A22B6144EA007F68B0 /* LogInViewModel.swift in Sources */,

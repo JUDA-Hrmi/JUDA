@@ -45,7 +45,7 @@ final class AuthService: ObservableObject {
     private var listener: ListenerRegistration?
     
     // 로그아웃 및 탈퇴 시, 초기화
-    func reset() {
+    private func reset() {
         self.signInStatus = false
         self.isLoading = false
         self.isNewUser = false
@@ -55,6 +55,8 @@ final class AuthService: ObservableObject {
         self.gender = ""
         self.profileImage = nil
         self.notificationAllowed = false
+        self.likedPosts = []
+        self.likedDrinks = []
     }
     
     // 로그아웃
@@ -128,40 +130,39 @@ extension AuthService {
 // MARK: - 데이터 실시간 업데이트
 extension AuthService {
     private func updateUserFromSnapshot(_ documentSnapshot: DocumentSnapshot) {
-            // 문서의 데이터를 가져와서 User로 디코딩
-            if let user = try? documentSnapshot.data(as: UserField.self) {
-                // 해당 사용자의 데이터를 업데이트
-                self.uid = uid
-                self.name = user.name
-                self.age = user.age
-                self.gender = user.gender
-				self.likedPosts = user.likedPosts ?? []
-				self.likedDrinks = user.likedDrinks ?? []
-            }
+        // 문서의 데이터를 가져와서 User로 디코딩
+        if let user = try? documentSnapshot.data(as: UserField.self) {
+            // 해당 사용자의 데이터를 업데이트
+            self.uid = uid
+            self.name = user.name
+            self.age = user.age
+            self.gender = user.gender
+            self.likedPosts = user.likedPosts ?? []
+            self.likedDrinks = user.likedDrinks ?? []
         }
+    }
     
     func startListeningForUser() {
-            let userRef = Firestore.firestore().collection("users").document(uid)
+        let userRef = Firestore.firestore().collection("users").document(uid)
 
-            // 기존에 활성화된 리스너가 있다면 삭제
-            listener?.remove()
+        // 기존에 활성화된 리스너가 있다면 삭제
+        listener?.remove()
 
-            // 새로운 리스너 등록
-            listener = userRef.addSnapshotListener { [weak self] documentSnapshot, error in
-                guard let self = self else { return }
+        // 새로운 리스너 등록
+        listener = userRef.addSnapshotListener { [weak self] documentSnapshot, error in
+            guard let self = self else { return }
 
-                if let error = error {
-                    print("Error fetching user data: \(error)")
-                    return
-                }
+            if let error = error {
+                print("Error fetching user data: \(error)")
+                return
+            }
 
-                // 사용자 데이터 업데이트 메서드 호출
-                if let documentSnapshot = documentSnapshot {
-                    self.updateUserFromSnapshot(documentSnapshot)
-                }
+            // 사용자 데이터 업데이트 메서드 호출
+            if let documentSnapshot = documentSnapshot {
+                self.updateUserFromSnapshot(documentSnapshot)
             }
         }
-
+    }
 }
 
 // MARK: - firestore : 유저 정보 불러오기 & 유저 저장
@@ -198,7 +199,7 @@ extension AuthService {
 				self.likedDrinks = userData.likedDrinks ?? []
                 print("Data:", userData)
             } else {
-                print("Document does not exist in cache")
+                print("Document does not exist")
             }
         } catch {
             print("Error getting document: \(error)")
@@ -278,7 +279,6 @@ extension AuthService {
 // MARK: - SignInWithAppleButton : request & result
 extension AuthService {
     func handleSignInWithAppleRequest(_ request: ASAuthorizationAppleIDRequest) {
-//        signInButtonClicked = true
         request.requestedScopes = [.fullName, .email]
         let nonce = randomNonceString()
         currentNonce = nonce

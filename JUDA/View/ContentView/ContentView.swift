@@ -18,6 +18,7 @@ struct ContentView: View {
     @StateObject private var drinkViewModel = DrinkViewModel()
     @StateObject private var recordViewModel = RecordViewModel()
     @StateObject private var postsViewModel = PostsViewModel()
+    @StateObject private var likedViewModel = LikedViewModel()
 
     // 현재 선택된 탭의 인덱스. 초기값 0
     @State private var selectedTabIndex = 0
@@ -78,6 +79,7 @@ struct ContentView: View {
         case .liked:
             if authService.signInStatus {
                 LikedView()
+                    .environmentObject(likedViewModel)
             } else {
                 EmptyView()
             }

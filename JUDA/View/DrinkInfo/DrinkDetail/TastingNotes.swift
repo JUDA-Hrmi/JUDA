@@ -48,7 +48,3 @@ struct TastingNotesContent: View {
         }
     }
 }
-
-#Preview {
-    TastingNotes(aroma: Wine.wineSample01.aroma, taste: Wine.wineSample01.taste, finish: Wine.wineSample01.finish)
-}
