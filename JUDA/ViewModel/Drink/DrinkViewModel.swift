@@ -21,7 +21,7 @@ final class DrinkViewModel: ObservableObject {
     // 현재 drinks 를 정렬할 reference
     @Published var selectedSortedTypeString: String = DrinkSortType.popularity.rawValue
     // pagination 을 위한, 이전 load의 마지막
-    @Published var lastSnapshot: QueryDocumentSnapshot!
+    @Published var lastSnapshot: QueryDocumentSnapshot?
     
     // Drink 종류
     let typesOfDrink: [DrinkType] = [
@@ -109,6 +109,10 @@ extension DrinkViewModel {
     
     // 술 리스트 - 다음 페이지 가져오기
     func loadDrinksNextPage() async {
+        guard let lastSnapshot = lastSnapshot else {
+            print("loadDrinksNextPage - lastSnapshot 없음")
+            return
+        }
         // 이전 lastSnapshot 이후로 20개
         let reference = getReference(
                             sortType: DrinkSortType(rawValue: selectedSortedTypeString) ?? .popularity,

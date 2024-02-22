@@ -80,6 +80,8 @@ struct DrinkListCell: View {
 
 // MARK: - 로딩 중, 술 리스트 셀
 struct ShimmerDrinkListCell: View {
+    @State private var show: Bool = false
+
     var body: some View {
         ZStack {
             // shimmer view
@@ -147,8 +149,13 @@ struct ShimmerDrinkListCell: View {
             .mask {
                 RoundedRectangle(cornerRadius: 10)
                     .fill(.white.opacity(0.6))
-                    .rotationEffect(.init(degrees: 70))
-//                    .offset(x: item.show ? 1000 : -350)
+                    .rotationEffect(.init(degrees: 120))
+                    .offset(x: show ? 800 : -150)
+            }
+            .onAppear {
+                withAnimation(.linear(duration: 1.0).repeatForever(autoreverses: false)) {
+                    show.toggle()
+                }
             }
         }
         .padding(.vertical, 10)
@@ -158,6 +165,6 @@ struct ShimmerDrinkListCell: View {
 }
 
 #Preview {
-//    DrinkListCell(drink: Wine.wineSample01)
+//    DrinkListCell(drink: FBDrink.dummyData)
     ShimmerDrinkListCell()
 }

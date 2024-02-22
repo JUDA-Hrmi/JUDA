@@ -41,7 +41,6 @@ struct DrinkGridContent: View {
     var body: some View {
         // 그리드
         LazyVGrid(columns: columns, spacing: 10) {
-            // TODO: 데이터 들어온 리스트로 ForEach 
             ForEach(drinkViewModel.drinks.indices, id: \.self) { index in
                 let drink = drinkViewModel.drinks[index]
                 // TODO: NavigationLink - value 로 수정
@@ -50,6 +49,11 @@ struct DrinkGridContent: View {
                         .modifier(TabBarHidden())
                 } label: {
                     DrinkGridCell(drink: drink)
+                        .task {
+                            if drink.name == drinkViewModel.drinks.last?.name {
+                                await drinkViewModel.loadDrinksNextPage()
+                            }
+                        }
                 }
                 .buttonStyle(EmptyActionStyle())
             }

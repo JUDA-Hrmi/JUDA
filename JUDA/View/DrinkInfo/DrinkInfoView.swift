@@ -55,7 +55,7 @@ struct DrinkInfoView: View {
                                              isShowingSheet: $isShowingSortSheet)
                             // 술 뷰 - DrinkSelectHorizontalScrollBar 의 선택에 따라 자연스럽게 페이징으로 화면 전환
                             TabView(selection: $drinkViewModel.selectedDrinkTypeIndex) {
-                                // TODO: 각 술 타입에 맞는 리스트를 grid 와 list 에 뿌려줘야 함
+                                // 각 술 타입에 맞는 리스트를 grid 와 list 에 뿌려줘야 함
                                 ForEach(drinkViewModel.typesOfDrink.indices, id: \.self) { _ in
                                     ScrollViewReader { proxy in
                                         Group {

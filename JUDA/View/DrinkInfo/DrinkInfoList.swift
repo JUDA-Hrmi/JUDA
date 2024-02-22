@@ -38,7 +38,6 @@ struct DrinkListContent: View {
     var body: some View {
         // 리스트
         LazyVStack {
-            // TODO: 데이터 들어온 리스트로 ForEach
             ForEach(drinkViewModel.drinks.indices, id: \.self) { index in
                 let drink = drinkViewModel.drinks[index]
                 // TODO: NavigationLink - value 로 수정
@@ -46,7 +45,12 @@ struct DrinkListContent: View {
                     DrinkDetailView(drink: drink)
                         .modifier(TabBarHidden())
                 } label: {
-//                    DrinkListCell(drink: drink)
+                    DrinkListCell(drink: drink, isLiked: .constant(true))
+                        .task {
+                            if drink.name == drinkViewModel.drinks.last?.name {
+                                await drinkViewModel.loadDrinksNextPage()
+                            }
+                        }
                 }
                 .buttonStyle(EmptyActionStyle())
             }

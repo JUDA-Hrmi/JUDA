@@ -90,6 +90,8 @@ struct DrinkGridCell: View {
 
 // MARK: - 로딩 중, 술 리스트 셀
 struct ShimmerDrinkGridCell: View {
+    @State private var show: Bool = false
+    
     var body: some View {
         ZStack {
             // shimmer view
@@ -157,8 +159,13 @@ struct ShimmerDrinkGridCell: View {
             .mask {
                 RoundedRectangle(cornerRadius: 10)
                     .fill(.white.opacity(0.6))
-                    .rotationEffect(.init(degrees: 70))
-//                    .offset(x: item.show ? 1000 : -350)
+                    .rotationEffect(.init(degrees: 20))
+                    .offset(x: show ? 800 : -150)
+            }
+            .onAppear {
+                withAnimation(.linear(duration: 1.0).repeatForever(autoreverses: false)) {
+                    show.toggle()
+                }
             }
         }
         .frame(height: 270)
@@ -169,7 +176,7 @@ struct ShimmerDrinkGridCell: View {
 #Preview {
     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
         ForEach(0..<3, id: \.self) { _ in
-//            DrinkGridCell(drink: Korean.koreanSample01)
+//            DrinkGridCell(drink: FBDrink.dummyData)
             ShimmerDrinkGridCell()
         }
     }
