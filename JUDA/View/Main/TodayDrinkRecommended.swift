@@ -14,12 +14,13 @@ import OpenAI
 struct TodayDrink: Identifiable, Hashable {
     let id = UUID()
     let image: String
+    var words: [String]
 }
 
-let TodayDrinkData: [TodayDrink] = [
-    TodayDrink(image:"jipyeong"),
-    TodayDrink(image:"jibibbo"),
-    TodayDrink(image:"jinro")
+var TodayDrinkData: [TodayDrink] = [
+    TodayDrink(image:"jipyeong", words: []),
+    TodayDrink(image:"jibibbo", words: []),
+    TodayDrink(image:"jinro", words: [])
 ]
 
 // MARK: - 오늘의 추천 술 이미지 + 이름
@@ -32,7 +33,7 @@ struct TodayDrinkRecommended: View {
     @State private var weather: Weather?
     @State private var lastAPICallTimestamp: Date?
     @State private var isLoading = false
-    let todayDrink: [TodayDrink] = TodayDrinkData
+    @State var todayDrink: [TodayDrink] = TodayDrinkData
     var body: some View {
         VStack {
             HStack(alignment: .top, spacing: 20) {
@@ -43,12 +44,10 @@ struct TodayDrinkRecommended: View {
                             DrinkDetailView(drink: Wine.wineSample01) // 임시 더미데이터
                                 .modifier(TabBarHidden())
                         } label: {
-                            TodayDrinkRecommendedCell(todayDrink: drink)
-                            
-                            //                        TestRecommend(isLoggedIn: $isLoggedIn)
+                            TodayDrinkRecommendedCell(drink: todayDrink[0])
                         }
                     } else {
-                        TodayDrinkRecommendedCell(todayDrink: drink)
+                        TodayDrinkRecommendedCell(drink: todayDrink[0])
                     }
                 }
             }
@@ -66,8 +65,23 @@ struct TodayDrinkRecommended: View {
                         weather = weatherData
                         
                         // Request AI recommendation
-                        aiViewModel.respondToday = try await aiViewModel.requestToday(prompt: "Please recommend three drinks that go well with this weather. Please refer to the below list behind you . --weather: \(String(describing: weather?.main)) --drinks: \(recommend.recommend)")
-                        lastAPICallTimestamp = Date()
+                        // Request AI recommendation
+                        // Request AI recommendation
+                        let response = try await aiViewModel.requestToday(prompt: "Please recommend three drinks that go well with this weather. Please refer to the below list behind you . --weather: \(String(describing: weather?.main)) --drinks: \(recommend.recommend)")
+                        
+                        // Assuming the response is a string of three words separated by a comma
+                        let words = response.split(separator: ", ").map { String($0) }
+                        
+                        // Check if the number of words matches the number of drinks
+                        guard words.count == todayDrink.count else {
+                            print("The number of words does not match the number of drinks.")
+                            return
+                        }
+                        
+                        // Update the words array for each TodayDrink instance
+                        for (index, word) in words.enumerated() {
+                            todayDrink[index].words = [word]
+                        }
                         
                         print("\(aiViewModel.respondToday)")
                     } catch {
@@ -90,29 +104,30 @@ struct TodayDrinkRecommended: View {
         @EnvironmentObject private var authService: AuthService
         @State private var lastAPICallTimestamp: Date?
         @State private var isLoading = false
-        let todayDrink: TodayDrink
+        
+        let drink: TodayDrink
+        
         var body: some View {
             VStack {
                 // 이미지
-                Image(todayDrink.image)
+                Image("jinro")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 70, height: 103.48)
                     .padding(.bottom, 10)
                 //술 이름
-                let words = aiViewModel.respondToday.split(separator: " ").map { String($0) }
-                Text("\(aiViewModel.respondToday)")
-            
+                
+                ForEach(drink.words, id: \.self) { word in
+                    Text(word)
+                }
+                
             }
         }
-        // fetch타임 설정 TimeInterval 300 == 5분으로 설정
-      
-        
     }
     
     struct FirebaseDrink: Codable, Hashable {
         let name: String
-
+        
         init(name: String) {
             self.name = name
         }

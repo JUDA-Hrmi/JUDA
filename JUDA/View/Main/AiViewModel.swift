@@ -72,7 +72,7 @@ class AiViewModel: ObservableObject {
 
 class AiTodayViewModel: ObservableObject {
     var openAI: OpenAI?
-    var respondToday = ""
+    @Published var respondToday = ""
     
     init() {
         guard let url = Bundle.main.url(forResource: "APIKEYS", withExtension: "plist") else { return }
@@ -88,10 +88,12 @@ class AiTodayViewModel: ObservableObject {
     }
     // Firebase에서 가져온 음료 정보를 AI 모델에 전달
     // 프롬프트 request 함수
+    @MainActor
     func requestToday (prompt: String) async throws -> String {
         let query = ChatQuery(model: .gpt3_5Turbo_16k, messages: [
-            Chat(role: .system, content: "Please be sure to give recommendation answer in three word using Korean in once, only from each given list.And please print them out as three alcohol drink"),
-            Chat(role: .assistant, content: "카스 블랑 경복궁"),
+            Chat(role: .system, content: "Please be sure to give recommendation answer in three word using Korean in once, only from each given list.And please print them out as three alcohol drink"), // with json type
+            Chat(role: .assistant, content: "카스, 블랑, 경복궁"),
+            Chat(role: .assistant, content: "카발란 셰리, 구미호, 카스"),
             Chat(role: .user, content: prompt),
         ])
         
@@ -105,15 +107,15 @@ class AiTodayViewModel: ObservableObject {
         }
     }
     
-    func parseAndSetResponse(_ response: String) {
-          let components = response.components(separatedBy: " ")
-          guard components.count == 3 else {
-              print("Invalid response format")
-              return
-          }
-          
-          respondToday = response
-      }
+//    func parseAndSetResponse(_ response: String) {
+//          let components = response.components(separatedBy: " ")
+//          guard components.count == 3 else {
+//              print("Invalid response format")
+//              return
+//          }
+//          
+//          respondToday = response
+//      }
 }
 
     
