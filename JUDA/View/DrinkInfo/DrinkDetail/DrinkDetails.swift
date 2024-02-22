@@ -26,6 +26,7 @@ struct DrinkDetails: View {
                             .frame(width: 100)
                     }
                     .loadDiskFileSynchronously(true) // 디스크에서 동기적으로 이미지 가져오기
+                    .cancelOnDisappear(true) // 화면 이동 시, 진행중인 다운로드 중단
                     .cacheMemoryOnly() // 메모리 캐시만 사용 (디스크 X)
                     .fade(duration: 0.2) // 이미지 부드럽게 띄우기
                     .resizable()
@@ -76,10 +77,16 @@ struct DrinkDetails: View {
                 NavigationLink {
 					NavigationPostsView()
                 } label: {
-                    Text("\(drink.taggedPostID.count)개의 태그된 게시물")
-                        .font(.regular16)
-                        .foregroundStyle(.gray01)
-                        .underline()
+                    if drink.taggedPostID.count > 0 {
+                        Text("\(drink.taggedPostID.count)개의 태그된 게시물")
+                            .font(.regular16)
+                            .foregroundStyle(.gray01)
+                            .underline()
+                    } else {
+                        Text("태그된 게시물 없음")
+                            .font(.regular16)
+                            .foregroundStyle(.gray01)
+                    }
                 }
             }
         }

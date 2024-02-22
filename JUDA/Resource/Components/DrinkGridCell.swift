@@ -36,6 +36,7 @@ struct DrinkGridCell: View {
                                     .frame(width: 70, height: 103.48)
                             }
                             .loadDiskFileSynchronously(true) // 디스크에서 동기적으로 이미지 가져오기
+                            .cancelOnDisappear(true) // 화면 이동 시, 진행중인 다운로드 중단
                             .cacheMemoryOnly() // 메모리 캐시만 사용 (디스크 X)
                             .fade(duration: 0.2) // 이미지 부드럽게 띄우기
                             .resizable()
