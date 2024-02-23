@@ -44,16 +44,17 @@ struct TodayDrinkRecommended: View {
                             DrinkDetailView(drink: Wine.wineSample01) // 임시 더미데이터
                                 .modifier(TabBarHidden())
                         } label: {
-                            TodayDrinkRecommendedCell(drink: drink)
+                            TodayDrinkRecommendedCell(isLoading: $isLoading, drink: drink)
                         }
                     } else {
-                        TodayDrinkRecommendedCell(drink: drink)
+                        TodayDrinkRecommendedCell(isLoading: $isLoading, drink: drink)
                     }
                 }
             }
             .onAppear {
                 Task {
                     do {
+                        isLoading = true
                         if shouldFetchWeather() && authService.signInStatus {
                             await recommend.fetchDrinks()
                             // Request AI recommendation
@@ -62,7 +63,8 @@ struct TodayDrinkRecommended: View {
                             // 텍스트 분할
                             let words = response.split(separator: ", ").map { String($0) }
 
-                            // 단어수 검사
+                            // 단어수 검사 3개가 아니면 에러처리
+                            // TODO: - 에러처리 이후에 다시 API 호출 하도록 수정 필요
                             guard words.count == todayDrink.count else {
                                 print("The number of words does not match the number of drinks.")
                                 return
@@ -78,6 +80,7 @@ struct TodayDrinkRecommended: View {
                     } catch {
                         print("Error: \(error)")
                     }
+                    isLoading = false
                 }
             }
             
@@ -94,28 +97,29 @@ struct TodayDrinkRecommended: View {
         @State private var weather: Weather?
         @EnvironmentObject private var authService: AuthService
         @State private var lastAPICallTimestamp: Date?
-        @State private var isLoading = false
-        
+        @Binding var isLoading: Bool
+        @State private var drinkImage: UIImage?
         let drink: TodayDrink
         
         var body: some View {
             VStack {
-                // 이미지
-                Image("jinro")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 70, height: 103.48)
-                    .padding(.bottom, 10)
-                //술 이름
-                
-                ForEach(drink.words, id: \.self) { word in
-                    Text(word)
-                        .lineLimit(1)
+                if isLoading {
+                    ProgressView()
+                } else {
+                    // 이미지
+                    Image("jinro")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 70, height: 103.48)
+                        .padding(.bottom, 10)
+                    //술 이름
+                    ForEach(drink.words, id: \.self) { word in
+                        Text(word)
+                            .lineLimit(1)
+                    }
                 }
-                
             }
         }
-        
     }
     
     struct FirebaseDrink: Codable, Hashable {
@@ -158,7 +162,8 @@ struct TodayDrinkRecommended: View {
 //            throw NSError(domain: "WeatherErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Weather data could not be fetched."])
 //        }
 //    }
-//    
+//
+    
     
     
     class Recommend: ObservableObject {
