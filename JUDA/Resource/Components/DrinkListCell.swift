@@ -11,10 +11,19 @@ import Kingfisher
 // MARK: - 술 리스트 셀
 struct DrinkListCell: View {
     @StateObject private var drinkImageViewModel = DrinkImageViewModel()
+    @EnvironmentObject private var authService: AuthService
+
     let drink: FBDrink
-    @Binding var isLiked: Bool
-    // searchTagView에서 사용하는지에 대한 여부
-    var searchTag: Bool = false
+    let searchTag: Bool// searchTagView에서 사용하는지에 대한 여부
+    @State private var isLiked: Bool
+    
+    private let debouncer = Debouncer(delay: 0.5)
+    
+    init(drink: FBDrink, isLiked: Bool, searchTag: Bool = false) {
+        self.drink = drink
+        _isLiked = State(initialValue: isLiked)
+        self.searchTag = searchTag
+    }
     
     var body: some View {
         HStack(alignment: .top) {
@@ -79,6 +88,11 @@ struct DrinkListCell: View {
             } else {
                 Button {
                     isLiked.toggle()
+                    // 디바운서 콜
+                    debouncer.call {
+                        authService.addOrRemoveToLikedDrinks(isLiked: isLiked, drink.drinkID)
+                        authService.userLikedDrinksUpdate()
+                    }
                 } label: {
                     Image(systemName: isLiked ? "heart.fill" : "heart")
                         .foregroundStyle(isLiked ? .mainAccent02 : .gray01)

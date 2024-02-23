@@ -128,7 +128,9 @@ struct SearchTagListContent: View {
     var body: some View {
         LazyVStack {
 			ForEach(recordViewModel.searchDrinks, id: \.drinkID) { drink in
-				DrinkListCell(drink: drink, isLiked: .constant(recordViewModel.userLikedDrinksID.contains(where: { $0 == drink.drinkID })), searchTag: true)
+				DrinkListCell(drink: drink,
+                              isLiked: recordViewModel.userLikedDrinksID.contains(where: { $0 == drink.drinkID }),
+                              searchTag: true)
                     .onTapGesture {
                         // 현재 선택된 DrinkListCell의 술 정보를 받아오기
 						recordViewModel.selectedDrinkTag = DrinkTag(drink: drink, rating: 0)

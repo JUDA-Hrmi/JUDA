@@ -30,8 +30,7 @@ struct DrinkGridCell: View {
                 isLiked.toggle()
                 // 디바운서 콜
                 debouncer.call {
-                    authService.addOrRemoveToLikedDrinks(isLiked: isLiked,
-                                                         drink.drinkID)
+                    authService.addOrRemoveToLikedDrinks(isLiked: isLiked, drink.drinkID)
                     authService.userLikedDrinksUpdate()
                 }
             } label: {
