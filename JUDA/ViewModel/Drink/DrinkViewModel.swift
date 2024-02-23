@@ -27,7 +27,6 @@ final class DrinkViewModel: ObservableObject {
     @Published var lastSnapshot: QueryDocumentSnapshot?
     // Shimmer Drink List / Grid Cell 을 보여주기 위한
     @Published var isLoading: Bool = true
-    
     // Drink 종류
     let typesOfDrink: [DrinkType] = [
         .all, .traditional, .wine, .whiskey, .beer
@@ -35,11 +34,27 @@ final class DrinkViewModel: ObservableObject {
     // FireStore 기본 경로
     private let firestore = Firestore.firestore()
     private let drinkCollection = "drinks"
-    
     // FireStorage 기본 경로
     private let storage = Storage.storage()
     private let drinkImagesPath = "drinkImages/"
     
+    // 해당 술의 연령 선호도 를 PieModel 형식에 맞춰 반환
+    func getPieModelData(ageData: [String: Int]) -> [PieModel] {
+        return [
+            .init(type: "20대", count: Double(ageData["20"] ?? 0), color: .mainAccent03),
+            .init(type: "30대", count: Double(ageData["30"] ?? 0), color: .mainAccent03.opacity(0.75)),
+            .init(type: "40대", count: Double(ageData["40"] ?? 0), color: .mainAccent03.opacity(0.5)),
+            .init(type: "50대 이상", count: Double(ageData["50"] ?? 0), color: .mainAccent03.opacity(0.25))
+        ]
+    }
+    
+    // 해당 술의 성별 선호도 를 PieModel 형식에 맞춰 반환
+    func getPieModelData(genderData: [String: Int]) -> [PieModel] {
+        return [
+            .init(type: "남성", count: Double(genderData["male"] ?? 0), color: .mainAccent04),
+            .init(type: "여성", count: Double(genderData["female"] ?? 0), color: .mainAccent05.opacity(0.5))
+        ]
+    }
     
     // 선택된 술 카테고리에 따른 reference 설정
     private func getReference(category: DrinkType) -> Query {
@@ -200,7 +215,7 @@ extension DrinkViewModel {
             case "약주 청주":
                 return "yakju_cheongju.png"
             default: // 기타주류, 과실주
-                return nil // TODO: - 수정 필요.
+                return nil
             }
         // 위스키
         case .whiskey:

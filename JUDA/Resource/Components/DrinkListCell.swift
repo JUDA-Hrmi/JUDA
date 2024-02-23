@@ -10,9 +10,9 @@ import Kingfisher
 
 // MARK: - 술 리스트 셀
 struct DrinkListCell: View {
+    @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var drinkViewModel: DrinkViewModel
     @EnvironmentObject private var likedViewModel: LikedViewModel
-    @EnvironmentObject private var authService: AuthService
 
     let drink: FBDrink
     let searchTag: Bool // searchTagView에서 사용하는지에 대한 여부

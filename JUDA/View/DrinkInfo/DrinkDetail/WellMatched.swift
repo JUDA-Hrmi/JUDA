@@ -9,8 +9,8 @@ import SwiftUI
 
 // MARK: - 잘 어울리는 음식
 struct WellMatched: View {
-    // UITest - 추천 받은 음식 3가지
     let wellMatched: [String]?
+    let windowWidth: CGFloat
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -23,10 +23,16 @@ struct WellMatched: View {
                     .foregroundStyle(.mainAccent05)
             }
             // 추천 받은 음식
-            HStack(alignment: .center, spacing: 16) {
-                ForEach(wellMatched ?? ["-"], id: \.self) { food in
-                    Text(food)
-                        .font(.regular16)
+            ForEach(TagHandler.getRows(tags: wellMatched ?? [],
+                                       spacing: 10,
+                                       fontSize: 16,
+                                       windowWidth: windowWidth,
+                                       tagString: ""), id: \.self) { row in
+                HStack(spacing: 10) {
+                    ForEach(row, id: \.self) { value in
+                        Text(value)
+                            .font(.regular16)
+                    }
                 }
             }
         }
@@ -34,8 +40,4 @@ struct WellMatched: View {
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
     }
-}
-
-#Preview {
-    WellMatched(wellMatched: ["해산물 파스타", "로스트 치킨", "회"])
 }

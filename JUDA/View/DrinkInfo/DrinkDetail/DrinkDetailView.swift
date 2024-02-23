@@ -11,6 +11,8 @@ import Kingfisher
 // MARK: - 술 디테일 화면
 struct DrinkDetailView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var drinkViewModel: DrinkViewModel
+    
     @State private var windowWidth: CGFloat = 0
     
     let drink: FBDrink
@@ -37,11 +39,17 @@ struct DrinkDetailView: View {
                 }
                 CustomDivider()
                 // 잘어울리는 음식
-                WellMatched(wellMatched: drink.wellMatched)
+                WellMatched(wellMatched: drink.wellMatched, windowWidth: windowWidth)
                 CustomDivider()
-                // 차트 - 선호하는 연령, 성별
-                PeferenceChart()
-                CustomDivider()
+                // 차트 - 선호하는 연령, 성별 ( 데이터 있을 때만 보여주기 )
+                if drink.agePreference.values.reduce(0, +) > 0,
+                   drink.genderPreference.values.reduce(0, +) > 0 {
+                    PeferenceChart(ageGroupPieData:
+                                    drinkViewModel.getPieModelData(ageData: drink.agePreference),
+                                   genderGroupPieData:
+                                    drinkViewModel.getPieModelData(genderData: drink.genderPreference))
+                    CustomDivider()
+                }
                 // 태그된 인기 게시물
                 TaggedTrendingPosts()
             }
