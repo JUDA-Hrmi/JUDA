@@ -52,7 +52,9 @@ struct LikedDrinkListContent: View {
                         DrinkDetailView(drink: drink)
                             .modifier(TabBarHidden())
                     } label: {
-                        DrinkListCell(drink: drink, isLiked: true)
+                        DrinkListCell(drink: drink,
+                                      isLiked: true,
+                                      liked: true)
                     }
                     .buttonStyle(EmptyActionStyle())
                 }

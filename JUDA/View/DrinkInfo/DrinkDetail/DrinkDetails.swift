@@ -10,20 +10,18 @@ import Kingfisher
 
 // MARK: - 술 디테일에서 보여주는 상단의 술 정보 부분 (이미지, 이름, 가격 등)
 struct DrinkDetails: View {
-    @StateObject private var drinkImageViewModel = DrinkImageViewModel()
+    @EnvironmentObject private var drinkViewModel: DrinkViewModel
     let drink: FBDrink
 
     var body: some View {
         // 술 정보 (이미지, 이름, 용량, 나라, 도수, 가격, 별점, 태그된 게시물)
         HStack(alignment: .center, spacing: 30) {
             // 술 이미지
-            if drinkImageViewModel.isLoading {
-                KFImage(URL(string: drinkImageViewModel.imageString))
+            if let url = drinkViewModel.drinkImages[drink.drinkID ?? ""] {
+                KFImage.url(url)
                     .placeholder {
                         CircularLoaderView(size: 20)
-                            .frame(height: 180)
-                            .padding(10)
-                            .frame(width: 100)
+                            .frame(width: 70, height: 103.48)
                     }
                     .loadDiskFileSynchronously(true) // 디스크에서 동기적으로 이미지 가져오기
                     .cancelOnDisappear(true) // 화면 이동 시, 진행중인 다운로드 중단
@@ -93,11 +91,5 @@ struct DrinkDetails: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
-        // 이미지 불러오기
-        .task {
-            await drinkImageViewModel
-                .getImageURLString(category: DrinkType(rawValue: drink.category) ?? DrinkType.all,
-                                   detailedCategory: drink.type)
-        }
     }
 }

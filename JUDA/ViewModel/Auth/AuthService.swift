@@ -211,9 +211,8 @@ extension AuthService {
                 fetchProfileImage()
                 self.gender = userData.gender
                 self.notificationAllowed = userData.notificationAllowed
-				self.likedPosts = userData.likedPosts ?? []
-				self.likedDrinks = userData.likedDrinks ?? []
-                print("Data:", userData)
+                self.likedDrinks = userData.likedDrinks ?? []
+                self.likedPosts = userData.likedPosts ?? []
             } else {
                 print("Document does not exist")
             }

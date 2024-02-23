@@ -10,19 +10,22 @@ import Kingfisher
 
 // MARK: - 술 리스트 셀
 struct DrinkListCell: View {
-    @StateObject private var drinkImageViewModel = DrinkImageViewModel()
+    @EnvironmentObject private var drinkViewModel: DrinkViewModel
+    @EnvironmentObject private var likedViewModel: LikedViewModel
     @EnvironmentObject private var authService: AuthService
 
     let drink: FBDrink
-    let searchTag: Bool// searchTagView에서 사용하는지에 대한 여부
+    let searchTag: Bool // searchTagView에서 사용하는지에 대한 여부
+    let liked: Bool // LikedView 에서 사용하는지에 대한 여부
     @State private var isLiked: Bool
     
     private let debouncer = Debouncer(delay: 0.5)
     
-    init(drink: FBDrink, isLiked: Bool, searchTag: Bool = false) {
+    init(drink: FBDrink, isLiked: Bool, searchTag: Bool = false, liked: Bool = false) {
         self.drink = drink
         _isLiked = State(initialValue: isLiked)
         self.searchTag = searchTag
+        self.liked = liked
     }
     
     var body: some View {
@@ -30,8 +33,23 @@ struct DrinkListCell: View {
             // 술 정보
             HStack(alignment: .center, spacing: 20) {
                 // 술 사진
-                if drinkImageViewModel.isLoading {
-                    KFImage(URL(string: drinkImageViewModel.imageString))
+                if liked,
+                   let url = likedViewModel.drinkImages[drink.drinkID ?? ""] {
+                    KFImage.url(url)
+                        .placeholder {
+                            CircularLoaderView(size: 20)
+                                .frame(width: 70, height: 103.48)
+                        }
+                        .loadDiskFileSynchronously(true) // 디스크에서 동기적으로 이미지 가져오기
+                        .cancelOnDisappear(true) // 화면 이동 시, 진행중인 다운로드 중단
+                        .cacheMemoryOnly() // 메모리 캐시만 사용 (디스크 X)
+                        .fade(duration: 0.2) // 이미지 부드럽게 띄우기
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 70, height: 103.48)
+                } else if !liked,
+                          let url = drinkViewModel.drinkImages[drink.drinkID ?? ""] {
+                    KFImage.url(url)
                         .placeholder {
                             CircularLoaderView(size: 20)
                                 .frame(width: 70, height: 103.48)
@@ -102,12 +120,6 @@ struct DrinkListCell: View {
         .padding(.vertical, 10)
         .padding(.horizontal, 20)
         .frame(height: 130)
-        // 이미지 불러오기
-        .task {
-            await drinkImageViewModel
-                .getImageURLString(category: DrinkType(rawValue: drink.category) ?? DrinkType.all,
-                                   detailedCategory: drink.type)
-        }
     }
 }
 
