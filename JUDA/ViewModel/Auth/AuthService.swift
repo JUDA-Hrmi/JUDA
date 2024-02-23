@@ -29,6 +29,7 @@ final class AuthService: ObservableObject {
     @Published var notificationAllowed: Bool = false
 	@Published var likedPosts = [String]()
 	@Published var likedDrinks = [String]()
+
     // Error
     @Published var showError: Bool = false
     @Published var errorMessage: String = ""
@@ -225,6 +226,7 @@ extension AuthService {
 		}
 	}
 	
+    // 유저 정보 업데이트 - drink
 	func userLikedDrinksUpdate() {
 		collectionRef.document(self.uid).updateData(["likedDrinks": self.likedDrinks]) { error in
 			if let error = error {
@@ -236,6 +238,7 @@ extension AuthService {
 
 // MARK: - firestorage
 // 유저 가입 시, 프로필 이미지 생성 & 받아오기
+// 유저 정보 업데이트
 extension AuthService {
     // storage 에 유저 프로필 이미지 올리기
     func uploadProfileImageToStorage(image: UIImage?) {

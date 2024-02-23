@@ -53,10 +53,14 @@ struct KoreanTastingNotesContent: View {
             Text(value == nil ? "-" : "\(value ?? 0)")
                 .font(.regular16)
                 .frame(width: 20, alignment: .center)
-            // 막대 - 단맛 / 신맛 / 청량 / 바디 / 탄산
-            Rectangle()
-                .fill(.mainAccent05.opacity(0.8))
-                .frame(width: 30 * CGFloat(integerLiteral: value ?? 0), height: 12)
+            // 원형 수치 표시 - 단맛 / 신맛 / 청량 / 바디 / 탄산
+            HStack(alignment: .center, spacing: 3) {
+                ForEach(1..<6) { index in
+                    Circle()
+                        .fill((value ?? 0) >= index ? .mainAccent05.opacity(0.8) : .gray04)
+                        .frame(width: 14)
+                }
+            }
         }
     }
 }
