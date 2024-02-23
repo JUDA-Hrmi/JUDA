@@ -58,11 +58,13 @@ struct TodayDrinkRecommended: View {
                             isLoading = true
                             await recommend.fetchDrinks()
                             // Request AI recommendation
-                            let response = try await aiViewModel.requestToday(prompt: "Please recommend three drinks that go well with this weather. Please refer to the below list behind you . --weather: \(String(describing: weather?.main)) --drinks: \(recommend.recommend)")
+                            let response = try await aiViewModel.requestToday(prompt: "Please recommend three drinks and category that go well with this weather. Please refer to the below list behind you . --weather: \(String(describing: weather?.main)) --drinks: \(recommend.recommend)")
                             print("\(recommend.recommend)")
                             // 텍스트 분할
                             let words = response.split(separator: ", ").map { String($0) }
-                            
+                            let categories = words.map { $0.split(separator: "/").map { String($0) } }
+                            let categoryValues = categories.map { $0[1] }
+                            print("카테고리: \(categoryValues)")
                             // 단어수 검사 3개가 아니면 에러처리
                             // TODO: - 에러처리 이후에 다시 API 호출 하도록 수정 필요
                             guard words.count == todayDrink.count else {
@@ -72,8 +74,9 @@ struct TodayDrinkRecommended: View {
                             // 출력
                             for (index, word) in words.enumerated() {
                                 todayDrink[index].words = [word]
-                                lastAPICallTimestamp = Date()
                             }
+                            lastAPICallTimestamp = Date()
+                            print("결과값: \(aiViewModel.respondToday)")
                         }
                         catch {
                             print("Error: \(error)")
@@ -180,6 +183,66 @@ struct TodayDrinkRecommended: View {
         return timeDifference >= minimumTimeDifference
     }
 }
+
+enum DrinkTypes: String {
+    case all = "전체"
+    case traditional = "우리술"
+    case beer = "맥주"
+    case wine = "와인"
+    case whiskey = "위스키"
+}
+private func getImageName(category: DrinkTypes, detailedCategory: String) -> String? {
+    switch category {
+        // 맥주
+    case .beer:
+        switch detailedCategory {
+        case "흑맥주":
+            return "darkBeer.png"
+        case "논알콜":
+            return "nonAlcoholBeer.png"
+        case "과일", "기타":
+            return nil
+        default: // 나머지 모든 맥주
+            return "beer_bottled.png"
+        }
+        // 우리술
+    case .traditional:
+        switch detailedCategory {
+        case "탁주":
+            return "makgeolli.png"
+        case "증류주":
+            return "distilledAlcohol.png"
+        case "약주 청주":
+            return "yakju_cheongju.png"
+        default: // 기타주류, 과실주
+            return nil // TODO: - 수정 필요.
+        }
+        // 위스키
+    case .whiskey:
+        return "whiskey.png"
+        // 와인
+    case .wine:
+        switch detailedCategory {
+        case "주정강화":
+            return "fortifiedWine.png"
+        case "로제":
+            return "roseWine.png"
+        case "스파클링":
+            return "sparklingWine.png"
+        case "화이트":
+            return "whiteWine.png"
+        case "레드":
+            return "redWine.png"
+        default: // 예외
+            return nil
+        }
+    default:
+        return nil
+    }
+}
+
+
+
 
 
 

@@ -50,7 +50,7 @@ class AiViewModel: ObservableObject {
     
     
     
-
+    
     // 술 + 안주 respond 분리 함수
     private func parseAndSetResponse(_ response: String) {
         let components = response.components(separatedBy: " ")
@@ -65,7 +65,7 @@ class AiViewModel: ObservableObject {
         respond = "술: \(drink) + 안주: \(dish)"
         print(respond)
     }
-
+    
 }
 
 
@@ -92,8 +92,8 @@ class AiTodayViewModel: ObservableObject {
     func requestToday (prompt: String) async throws -> String {
         let query = ChatQuery(model: .gpt3_5Turbo_16k, messages: [
             Chat(role: .system, content: "Please be sure to give recommendation answer in three word using Korean in once, only from each given list.And please print them out as three alcohol drink"), // with json type
-            Chat(role: .assistant, content: "카스, 블랑, 경복궁"),
-            Chat(role: .assistant, content: "카발란 셰리, 구미호, 카스"),
+            Chat(role: .assistant, content: "매실원주/우리술, 카스/맥주, 공주애오디와인/우리술"),
+            Chat(role: .assistant, content: "크로넨버그 1664 블랑/맥주, 글렌고인 25년/위스키, 막시모40/우리술"),
             Chat(role: .user, content: prompt),
         ])
         
@@ -107,19 +107,13 @@ class AiTodayViewModel: ObservableObject {
         }
     }
     
-//    func parseAndSetResponse(_ response: String) {
-//          let components = response.components(separatedBy: " ")
-//          guard components.count == 3 else {
-//              print("Invalid response format")
-//              return
-//          }
-//          
-//          respondToday = response
-//      }
+    //    func parseAndSetResponse(_ response: String) {
+    //          let components = response.components(separatedBy: " ")
+    //          guard components.count == 3 else {
+    //              print("Invalid response format")
+    //              return
+    //          }
+    //
+    //          respondToday = response
+    //      }
 }
-
-    
-    
-    
-    
-
