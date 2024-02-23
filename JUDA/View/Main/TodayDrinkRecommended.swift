@@ -54,36 +54,27 @@ struct TodayDrinkRecommended: View {
             .onAppear {
                 Task {
                     do {
-                        await recommend.fetchDrinks()
-                        guard let location = locationManager.location
-                        else {
-                            return
+                        if shouldFetchWeather() && authService.signInStatus {
+                            await recommend.fetchDrinks()
+                            // Request AI recommendation
+                            let response = try await aiViewModel.requestToday(prompt: "Please recommend three drinks that go well with this weather. Please refer to the below list behind you . --weather: \(String(describing: weather?.main)) --drinks: \(recommend.recommend)")
+
+                            // 텍스트 분할
+                            let words = response.split(separator: ", ").map { String($0) }
+
+                            // 단어수 검사
+                            guard words.count == todayDrink.count else {
+                                print("The number of words does not match the number of drinks.")
+                                return
+                            }
+
+                            // 출력
+                            for (index, word) in words.enumerated() {
+                                todayDrink[index].words = [word]
+                                lastAPICallTimestamp = Date()
+                            }
+                            
                         }
-                        
-                        // Fetch weather data
-                        let weatherData = try await fetchWeather(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-                        weather = weatherData
-                        
-                        // Request AI recommendation
-                        // Request AI recommendation
-                        // Request AI recommendation
-                        let response = try await aiViewModel.requestToday(prompt: "Please recommend three drinks that go well with this weather. Please refer to the below list behind you . --weather: \(String(describing: weather?.main)) --drinks: \(recommend.recommend)")
-                        
-                        // Assuming the response is a string of three words separated by a comma
-                        let words = response.split(separator: ", ").map { String($0) }
-                        
-                        // Check if the number of words matches the number of drinks
-                        guard words.count == todayDrink.count else {
-                            print("The number of words does not match the number of drinks.")
-                            return
-                        }
-                        
-                        // Update the words array for each TodayDrink instance
-                        for (index, word) in words.enumerated() {
-                            todayDrink[index].words = [word]
-                        }
-                        
-                        print("\(aiViewModel.respondToday)")
                     } catch {
                         print("Error: \(error)")
                     }
@@ -119,10 +110,12 @@ struct TodayDrinkRecommended: View {
                 
                 ForEach(drink.words, id: \.self) { word in
                     Text(word)
+                        .lineLimit(1)
                 }
                 
             }
         }
+        
     }
     
     struct FirebaseDrink: Codable, Hashable {
@@ -155,17 +148,17 @@ struct TodayDrinkRecommended: View {
     }
     
     
-    private func fetchWeather(latitude: Double, longitude: Double) async throws -> Weather {
-        let weather = await WeatherAPI.shared.getWeather(latitude: latitude, longitude: longitude)
-        if let weather = weather {
-            print("getWeather call22")
-            return weather
-        } else {
-            print("Weather data could not be fetched.")
-            throw NSError(domain: "WeatherErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Weather data could not be fetched."])
-        }
-    }
-    
+//    private func fetchWeather(latitude: Double, longitude: Double) async throws -> Weather {
+//        let weather = await WeatherAPI.shared.getWeather(latitude: latitude, longitude: longitude)
+//        if let weather = weather {
+//            print("getWeather call22")
+//            return weather
+//        } else {
+//            print("Weather data could not be fetched.")
+//            throw NSError(domain: "WeatherErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Weather data could not be fetched."])
+//        }
+//    }
+//    
     
     
     class Recommend: ObservableObject {
@@ -199,7 +192,20 @@ struct TodayDrinkRecommended: View {
             print("stopListening")
         }
     }
+    private func shouldFetchWeather() -> Bool {
+        guard let lastTimestamp = lastAPICallTimestamp else {
+            return true
+        }
+
+        let currentTime = Date()
+        let timeDifference = currentTime.timeIntervalSince(lastTimestamp)
+        let minimumTimeDifference: TimeInterval = 300
+
+        return timeDifference >= minimumTimeDifference
+    }
 }
 
 
 
+
+ 
