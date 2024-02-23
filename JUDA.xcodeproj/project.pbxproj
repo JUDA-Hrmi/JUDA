@@ -85,6 +85,7 @@
 		7BBDFF722B6B912C0036FB8B /* TabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD512B676E1000770E3A /* TabItem.swift */; };
 		7BBDFF732B6B912C0036FB8B /* DrinkInfoSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */; };
 		AC110B572B69658C005390BB /* ChangeUserNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC110B562B69658C005390BB /* ChangeUserNameView.swift */; };
+		AC2A053C2B88EC32003F23F7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = AC2A053B2B88EC32003F23F7 /* Kingfisher */; };
 		AC5778E52B6FC20C00F7B04B /* NavigationProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5778E42B6FC20C00F7B04B /* NavigationProfileView.swift */; };
 		AC6D12882B6A8DD300169B23 /* TodayDrinkRecommended.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12872B6A8DD300169B23 /* TodayDrinkRecommended.swift */; };
 		AC6D128A2B6A8ED100169B23 /* WeatherAndFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12892B6A8ED100169B23 /* WeatherAndFood.swift */; };
@@ -266,6 +267,7 @@
 				B1EE24662B613EB1007F68B0 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				AC98D1D22B73586F006F6EC9 /* OpenAI in Frameworks */,
 				09BCC15D2B7CF2CB00FF4D1B /* FirebaseFirestore in Frameworks */,
+				AC2A053C2B88EC32003F23F7 /* Kingfisher in Frameworks */,
 				B1EE246A2B613EB1007F68B0 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				AC98D1CD2B735765006F6EC9 /* Lottie in Frameworks */,
 			);
@@ -680,6 +682,7 @@
 				09BCC13B2B7B99FF00FF4D1B /* FirebaseAuth */,
 				09BCC15C2B7CF2CB00FF4D1B /* FirebaseFirestore */,
 				090FF1C92B82ED8400AF22B5 /* FirebaseStorage */,
+				AC2A053B2B88EC32003F23F7 /* Kingfisher */,
 			);
 			productName = FinalHrmiProjects;
 			productReference = 09BCC1562B7C802600FF4D1B /* JUDA.app */;
@@ -714,6 +717,7 @@
 				B1EE24622B613EB1007F68B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				AC98D1CB2B735765006F6EC9 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				AC98D1D02B73586F006F6EC9 /* XCRemoteSwiftPackageReference "OpenAI" */,
+				AC2A053A2B88EC32003F23F7 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = B1B8FE702B5EA9D900921BBE;
 			projectDirPath = "";
@@ -1088,6 +1092,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		AC2A053A2B88EC32003F23F7 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.11.0;
+			};
+		};
 		AC98D1CB2B735765006F6EC9 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
@@ -1129,6 +1141,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B1EE24622B613EB1007F68B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		AC2A053B2B88EC32003F23F7 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC2A053A2B88EC32003F23F7 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 		AC98D1CC2B735765006F6EC9 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;

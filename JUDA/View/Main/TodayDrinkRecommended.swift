@@ -53,13 +53,13 @@ struct TodayDrinkRecommended: View {
             }
             .onAppear {
                 Task {
-                    if shouldFetchWeather() && authService.signInStatus {
+                    if fetchTimeInterval() && authService.signInStatus {
                         do {
                             isLoading = true
                             await recommend.fetchDrinks()
-                                                        // Request AI recommendation
+                            // Request AI recommendation
                             let response = try await aiViewModel.requestToday(prompt: "Please recommend three drinks that go well with this weather. Please refer to the below list behind you . --weather: \(String(describing: weather?.main)) --drinks: \(recommend.recommend)")
-                            
+                            print("\(recommend.recommend)")
                             // 텍스트 분할
                             let words = response.split(separator: ", ").map { String($0) }
                             
@@ -69,13 +69,11 @@ struct TodayDrinkRecommended: View {
                                 print("The number of words does not match the number of drinks.")
                                 return
                             }
-                            
                             // 출력
                             for (index, word) in words.enumerated() {
                                 todayDrink[index].words = [word]
                                 lastAPICallTimestamp = Date()
                             }
-                            
                         }
                         catch {
                             print("Error: \(error)")
@@ -84,7 +82,6 @@ struct TodayDrinkRecommended: View {
                     isLoading = false
                 }
             }
-            
         }
         
     }
@@ -126,45 +123,17 @@ struct TodayDrinkRecommended: View {
     
     struct FirebaseDrink: Codable, Hashable {
         let name: String
+        let category: String
         
-        init(name: String) {
+        init(name: String, category: String) {
             self.name = name
+            self.category = category
         }
     }
     
-    
-    enum TestDrinkType: CaseIterable {
-        case beer, traditionalLiquor, whiskey, wine
-        
-        var string: String {
-            switch self {
-            case .beer:
-                return "Beer_food"
-            case .traditionalLiquor:
-                return "traditional_liqur_food"
-            case .whiskey:
-                return "test_whiskey"
-            case .wine:
-                return "test_wine"
-            }
-        }
-    }
     struct Ai2Model: Decodable {
         let openai: String
     }
-    
-    
-//    private func fetchWeather(latitude: Double, longitude: Double) async throws -> Weather {
-//        let weather = await WeatherAPI.shared.getWeather(latitude: latitude, longitude: longitude)
-//        if let weather = weather {
-//            print("getWeather call22")
-//            return weather
-//        } else {
-//            print("Weather data could not be fetched.")
-//            throw NSError(domain: "WeatherErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Weather data could not be fetched."])
-//        }
-//    }
-//
     
     
     
@@ -199,15 +168,15 @@ struct TodayDrinkRecommended: View {
             print("stopListening")
         }
     }
-    private func shouldFetchWeather() -> Bool {
+    private func fetchTimeInterval() -> Bool {
         guard let lastTimestamp = lastAPICallTimestamp else {
             return true
         }
-
+        
         let currentTime = Date()
         let timeDifference = currentTime.timeIntervalSince(lastTimestamp)
         let minimumTimeDifference: TimeInterval = 300
-
+        
         return timeDifference >= minimumTimeDifference
     }
 }
@@ -215,4 +184,12 @@ struct TodayDrinkRecommended: View {
 
 
 
- 
+
+// MARK: - 사진 뿌리기 방법
+//1
+//음료 이름 보내 -> 받아옴 -> 뿌려
+//음료 이름 보내 -> 받아옴 -> (카테고리,이름) 파베에 있는거랑 비교 if == -> 출력
+//아니다 -> 다시 받아옴
+
+
+//2
