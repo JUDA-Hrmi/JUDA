@@ -17,6 +17,10 @@ final class DrinkViewModel: ObservableObject {
     @Published var drinks = [FBDrink]()
     // 술 이미지 딕셔너리 *[drinkID: imageURL]
     @Published var drinkImages = [String: URL]()
+    // 첫 접근인지 체크 (첫 접근 시, no image 띄우는 오류때문에 사용)
+    @Published var isFirstAccess = true
+    // 첫 접근때만 사용, url 을 받아올 예정인 개수 (첫 접근 시, no image 띄우는 오류때문에 사용)
+    @Published var intendedURLCount = 0
     // 그리드 or 리스트
     @Published var selectedViewType: DrinkInfoLayoutOption = .grid
     // 현재 drinks 를 검색할 reference
@@ -37,6 +41,7 @@ final class DrinkViewModel: ObservableObject {
     // FireStorage 기본 경로
     private let storage = Storage.storage()
     private let drinkImagesPath = "drinkImages/"
+    
     
     // 해당 술의 연령 선호도 를 PieModel 형식에 맞춰 반환
     func getPieModelData(ageData: [String: Int]) -> [PieModel] {
@@ -119,6 +124,7 @@ extension DrinkViewModel {
         do {
             let snapshot = try await firstReference.getDocuments()
             self.drinks.removeAll()
+            if isFirstAccess { intendedURLCount = snapshot.documents.count }
             for document in snapshot.documents {
                 if let drink = try? document.data(as: FBDrink.self) {
                     self.drinks.append(drink)
@@ -176,6 +182,7 @@ extension DrinkViewModel {
     func fetchImage(category: DrinkType, detailedCategory: String, drinkID: String) {
         guard let imageName = getImageName(category: category,
                                            detailedCategory: detailedCategory) else {
+            if isFirstAccess { intendedURLCount -= 1 }
             print("fetchImage - imageName 없음")
             return
         }
@@ -185,6 +192,9 @@ extension DrinkViewModel {
                 print("Error - fetchImageUrl: \(error.localizedDescription)")
             } else {
                 self.drinkImages[drinkID] = url
+                if self.drinkImages.count == self.intendedURLCount {
+                    self.isFirstAccess = false
+                }
             }
         }
     }

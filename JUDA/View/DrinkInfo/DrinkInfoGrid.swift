@@ -42,7 +42,8 @@ struct DrinkGridContent: View {
     var body: some View {
         // 그리드
         LazyVGrid(columns: columns, spacing: 10) {
-            if !drinkViewModel.isLoading {
+            if (!drinkViewModel.isFirstAccess && !drinkViewModel.isLoading) ||
+               (drinkViewModel.isFirstAccess && drinkViewModel.drinkImages.count == drinkViewModel.intendedURLCount) {
                 ForEach(drinkViewModel.drinks, id: \.drinkID) { drink in
                     // TODO: NavigationLink - value 로 수정
                     NavigationLink {
