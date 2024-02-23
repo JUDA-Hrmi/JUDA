@@ -34,12 +34,13 @@ enum Formatter {
         guard let birthdateDate = dateFormatter.date(from: birthdate) else {
             return nil
         }
-        // 현재 날짜
-        let currentDate = Date()
         // 생년월일 현재 날짜 사이의 연도 차이 계산
         let calendar = Calendar.current
-        let ageComponents = calendar.dateComponents([.year], from: birthdateDate, to: currentDate)
-        return ageComponents.year
+        let birthdateComponents = calendar.dateComponents([.year, .month, .day], from: birthdateDate)
+        let currentDateComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+        // 만 나이 X / 예전 한국 나이
+        let koreanAge = currentDateComponents.year! - birthdateComponents.year! + 1
+        return koreanAge
     }
 
     // 평점을 소수점 첫번째 자리까지 String으로 변환해주는 함수
