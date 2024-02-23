@@ -12,8 +12,6 @@ import Kingfisher
 struct DrinkListCell: View {
     @StateObject private var drinkImageViewModel = DrinkImageViewModel()
     let drink: FBDrink
-    
-    // UITest - Drink 하트
     @Binding var isLiked: Bool
     // searchTagView에서 사용하는지에 대한 여부
     var searchTag: Bool = false

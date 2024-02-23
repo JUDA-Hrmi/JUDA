@@ -111,6 +111,21 @@ final class AuthService: ObservableObject {
             return false
         }
     }
+    
+    // 유저 좋아하는 술 리스트에 추가 or 삭제
+    func addOrRemoveToLikedDrinks(isLiked: Bool, _ drinkID: String?) {
+        guard let drinkID = drinkID else {
+            print("addOrRemoveToLikedDrinks - 술 ID 없음")
+            return
+        }
+        if !isLiked { // 좋아요 X -> O
+            likedDrinks.removeAll { $0 == drinkID }
+            print("removeAll")
+        } else { // 좋아요 O -> X
+            likedDrinks.append(drinkID)
+            print("append")
+        }
+    }
 }
 
 // MARK: - 닉네임 수정 버튼 클릭 -> 닉네임 업데이트
@@ -166,7 +181,7 @@ extension AuthService {
     }
 }
 
-// MARK: - firestore : 유저 정보 불러오기 & 유저 저장
+// MARK: - firestore : 유저 정보 불러오기 & 유저 저장 & 유저 업데이트
 extension AuthService {
     // firestore 에 유저 존재 유무 체크
     func checkNewUser(uid: String) async -> Bool {
@@ -216,29 +231,28 @@ extension AuthService {
             print("유저 정보 저장 에러 : \(error.localizedDescription)")
         }
     }
-	
-	// firestore에 유저 정보 업데이트
-	func userLikedPostsUpdate() {
-		collectionRef.document(self.uid).updateData(["likedPosts": self.likedPosts]) { error in
-			if let error = error {
-				print("update error \(error.localizedDescription)")
-			}
-		}
-	}
-	
+    
+    // 유저 정보 업데이트 - post
+    func userLikedPostsUpdate() {
+        collectionRef.document(self.uid).updateData(["likedPosts": self.likedPosts]) { error in
+            if let error = error {
+                print("update error \(error.localizedDescription)")
+            }
+        }
+    }
+    
     // 유저 정보 업데이트 - drink
-	func userLikedDrinksUpdate() {
-		collectionRef.document(self.uid).updateData(["likedDrinks": self.likedDrinks]) { error in
-			if let error = error {
-				print("update error \(error.localizedDescription)")
-			}
-		}
-	}
+    func userLikedDrinksUpdate() {
+        collectionRef.document(self.uid).updateData(["likedDrinks": self.likedDrinks]) { error in
+            if let error = error {
+                print("update error \(error.localizedDescription)")
+            }
+        }
+    }
 }
 
 // MARK: - firestorage
 // 유저 가입 시, 프로필 이미지 생성 & 받아오기
-// 유저 정보 업데이트
 extension AuthService {
     // storage 에 유저 프로필 이미지 올리기
     func uploadProfileImageToStorage(image: UIImage?) {

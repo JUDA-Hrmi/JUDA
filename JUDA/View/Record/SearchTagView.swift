@@ -139,7 +139,3 @@ struct SearchTagListContent: View {
         }
     }
 }
-
-//#Preview {
-//    SearchTagView(drinkTags: .constant([]), isShowSearchTag: .constant(true))
-//}

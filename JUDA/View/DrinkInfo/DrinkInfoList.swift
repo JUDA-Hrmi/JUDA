@@ -46,7 +46,8 @@ struct DrinkListContent: View {
                         DrinkDetailView(drink: drink)
                             .modifier(TabBarHidden())
                     } label: {
-                        DrinkListCell(drink: drink, isLiked: .constant(true))
+                        DrinkListCell(drink: drink,
+                                      isLiked: .constant(true))
                             .task {
                                 if drink.name == drinkViewModel.drinks.last?.name {
                                     await drinkViewModel.loadDrinksNextPage()

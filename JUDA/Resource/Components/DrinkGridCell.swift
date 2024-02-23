@@ -11,16 +11,29 @@ import Kingfisher
 // MARK: - 술 그리드 셀
 struct DrinkGridCell: View {
     @StateObject private var drinkImageViewModel = DrinkImageViewModel()
+    @EnvironmentObject private var authService: AuthService
+
     let drink: FBDrink
+    @State private var isLiked: Bool
     
-    // UITest - Drink 하트
-    @State private var isLiked = false
+    private let debouncer = Debouncer(delay: 0.5)
+    
+    init(drink: FBDrink, isLiked: Bool) {
+        self.drink = drink
+        _isLiked = State(initialValue: isLiked)
+    }
     
     var body: some View {
         VStack(alignment: .trailing, spacing: 10) {
             // 하트
             Button {
                 isLiked.toggle()
+                // 디바운서 콜
+                debouncer.call {
+                    authService.addOrRemoveToLikedDrinks(isLiked: isLiked,
+                                                         drink.drinkID)
+                    authService.userLikedDrinksUpdate()
+                }
             } label: {
                 Image(systemName: isLiked ? "heart.fill" : "heart")
                     .foregroundStyle(isLiked ? .mainAccent02 : .gray01)
