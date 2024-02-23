@@ -53,23 +53,23 @@ struct TodayDrinkRecommended: View {
             }
             .onAppear {
                 Task {
-                    do {
-                        isLoading = true
-                        if shouldFetchWeather() && authService.signInStatus {
+                    if shouldFetchWeather() && authService.signInStatus {
+                        do {
+                            isLoading = true
                             await recommend.fetchDrinks()
-                            // Request AI recommendation
+                                                        // Request AI recommendation
                             let response = try await aiViewModel.requestToday(prompt: "Please recommend three drinks that go well with this weather. Please refer to the below list behind you . --weather: \(String(describing: weather?.main)) --drinks: \(recommend.recommend)")
-
+                            
                             // 텍스트 분할
                             let words = response.split(separator: ", ").map { String($0) }
-
+                            
                             // 단어수 검사 3개가 아니면 에러처리
                             // TODO: - 에러처리 이후에 다시 API 호출 하도록 수정 필요
                             guard words.count == todayDrink.count else {
                                 print("The number of words does not match the number of drinks.")
                                 return
                             }
-
+                            
                             // 출력
                             for (index, word) in words.enumerated() {
                                 todayDrink[index].words = [word]
@@ -77,8 +77,9 @@ struct TodayDrinkRecommended: View {
                             }
                             
                         }
-                    } catch {
-                        print("Error: \(error)")
+                        catch {
+                            print("Error: \(error)")
+                        }
                     }
                     isLoading = false
                 }
@@ -104,6 +105,7 @@ struct TodayDrinkRecommended: View {
         var body: some View {
             VStack {
                 if isLoading {
+                    // TODO: - 나중에 창준햄 CircularLoaderView 사용하기
                     ProgressView()
                 } else {
                     // 이미지
