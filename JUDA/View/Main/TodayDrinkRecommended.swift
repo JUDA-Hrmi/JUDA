@@ -9,7 +9,26 @@ import SwiftUI
 import Firebase
 import FirebaseFirestore
 import OpenAI
+import Kingfisher
+import FirebaseStorage
 
+@MainActor
+final class TodayRecommendViewModel: ObservableObject {
+    // 술 리스트
+    
+    // Drink 종류
+    let typesOfDrink: [DrinkTypes] = [
+        .all, .traditional, .wine, .whiskey, .beer
+    ]
+    // FireStore 기본 경로
+    private let firestore = Firestore.firestore()
+    private let drinkCollection = "drinks"
+
+    // FireStorage 기본 경로
+    private let storage = Storage.storage()
+    private let drinkImagesPath = "drinkImages/"
+
+}
 
 struct TodayDrink: Identifiable, Hashable {
     let id = UUID()
@@ -18,9 +37,9 @@ struct TodayDrink: Identifiable, Hashable {
 }
 
 var TodayDrinkData: [TodayDrink] = [
-    TodayDrink(image:"jipyeong", words: []),
-    TodayDrink(image:"jibibbo", words: []),
-    TodayDrink(image:"jinro", words: [])
+    TodayDrink(image:"", words: []),
+    TodayDrink(image:"", words: []),
+    TodayDrink(image:"", words: [])
 ]
 
 // MARK: - 오늘의 추천 술 이미지 + 이름
@@ -34,6 +53,7 @@ struct TodayDrinkRecommended: View {
     @State private var lastAPICallTimestamp: Date?
     @State private var isLoading = false
     @State var todayDrink: [TodayDrink] = TodayDrinkData
+    @State private var categoryValues: String = ""
     var body: some View {
         VStack {
             HStack(alignment: .top, spacing: 20) {
@@ -44,10 +64,10 @@ struct TodayDrinkRecommended: View {
                             DrinkDetailView(drink: Wine.wineSample01) // 임시 더미데이터
                                 .modifier(TabBarHidden())
                         } label: {
-                            TodayDrinkRecommendedCell(isLoading: $isLoading, drink: drink)
+                            TodayDrinkRecommendedCell(isLoading: $isLoading, drink: drink, categoryValues: $categoryValues)
                         }
                     } else {
-                        TodayDrinkRecommendedCell(isLoading: $isLoading, drink: drink)
+                        TodayDrinkRecommendedCell(isLoading: $isLoading, drink: drink, categoryValues: $categoryValues)
                     }
                 }
             }
@@ -75,6 +95,7 @@ struct TodayDrinkRecommended: View {
                             for (index, word) in words.enumerated() {
                                 todayDrink[index].words = [word]
                             }
+                            
                             lastAPICallTimestamp = Date()
                             print("결과값: \(aiViewModel.respondToday)")
                         }
@@ -101,7 +122,9 @@ struct TodayDrinkRecommended: View {
         @Binding var isLoading: Bool
         @State private var drinkImage: UIImage?
         let drink: TodayDrink
-        
+        @Binding var categoryValues: String
+        private let drinkImagesPath = "drinkImages/"
+        @State private var imageURL: URL?
         var body: some View {
             VStack {
                 if isLoading {
@@ -109,16 +132,58 @@ struct TodayDrinkRecommended: View {
                     ProgressView()
                 } else {
                     // 이미지
-                    Image("jinro")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 70, height: 103.48)
-                        .padding(.bottom, 10)
-                    //술 이름
-                    ForEach(drink.words, id: \.self) { word in
-                        Text(word)
-                            .lineLimit(1)
+                    if let imageURL = imageURL {
+                        KFImage(imageURL)
+                            .placeholder {
+                                ProgressView()
+                            }
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 70, height: 103.48)
+                            .padding(.bottom, 10)
+                        //술 이름
+                        ForEach(drink.words, id: \.self) { word in
+                            Text(word)
+                                .lineLimit(1)
+                        }
                     }
+                        
+                }
+            }
+            .onAppear {
+                fetchImage()
+            }
+        }
+//        private var imageURL: URL? {
+//            guard let category = DrinkTypes(rawValue: categoryValues)
+//                    
+//            else {
+//                return nil
+//            }
+//            print("\(category)")
+//            return getImageURL(for: category)
+//        }
+        
+        private func getImageURL(for category: DrinkTypes) -> URL? {
+            guard let detailedCategory = drink.words.last else { return nil }
+            guard let imageName = getImageName(category: category, detailedCategory: detailedCategory) else { return nil }
+            print("\(drinkImagesPath)")
+            return URL(string: "\(drinkImagesPath)\(imageName)")
+        }
+        
+        private func fetchImage() {
+            // Firebase Storage에 접근하여 이미지 다운로드
+            let storage = Storage.storage()
+            let storageRef = storage.reference()
+            let imageRef = storageRef.child("drinkImages/redWine.png") // 예시로 "darkBeer.png"를 사용합니다.
+
+            imageRef.downloadURL { url, error in
+                if let error = error {
+                    // 이미지 다운로드 중 에러 발생 시 처리
+                    print("Error downloading image: \(error.localizedDescription)")
+                } else if let url = url {
+                    // 이미지 다운로드 성공 시 imageURL 업데이트
+                    self.imageURL = url
                 }
             }
         }
@@ -127,10 +192,12 @@ struct TodayDrinkRecommended: View {
     struct FirebaseDrink: Codable, Hashable {
         let name: String
         let category: String
+//        let type: String
         
-        init(name: String, category: String) {
+        init(name: String, category: String/*, type: String*/) {
             self.name = name
             self.category = category
+//            self.type = type
         }
     }
     
@@ -182,6 +249,8 @@ struct TodayDrinkRecommended: View {
         
         return timeDifference >= minimumTimeDifference
     }
+    
+    
 }
 
 enum DrinkTypes: String {
@@ -193,66 +262,50 @@ enum DrinkTypes: String {
 }
 private func getImageName(category: DrinkTypes, detailedCategory: String) -> String? {
     switch category {
-        // 맥주
     case .beer:
-        switch detailedCategory {
-        case "흑맥주":
-            return "darkBeer.png"
-        case "논알콜":
-            return "nonAlcoholBeer.png"
-        case "과일", "기타":
-            return nil
-        default: // 나머지 모든 맥주
-            return "beer_bottled.png"
-        }
-        // 우리술
+        return "darkBeer.png"
+//        switch detailedCategory {
+//        case "":
+//            return "darkBeer.png"
+//        case "논알콜":
+//            return "nonAlcoholBeer.png"
+//        case "과일", "기타":
+//            return nil
+//        default: // 나머지 모든 맥주
+//            return "beer_bottled.png"
+//        }
     case .traditional:
-        switch detailedCategory {
-        case "탁주":
-            return "makgeolli.png"
-        case "증류주":
-            return "distilledAlcohol.png"
-        case "약주 청주":
-            return "yakju_cheongju.png"
-        default: // 기타주류, 과실주
-            return nil // TODO: - 수정 필요.
-        }
-        // 위스키
+        return "distilledAlcohol.png"
+//        switch detailedCategory {
+//        case "탁주":
+//            return "distilledAlcohol.png"
+//        case "증류주":
+//            return "distilledAlcohol.png"
+//        case "약주 청주":
+//            return "yakju_cheongju.png"
+//        default: // 기타주류, 과실주
+//            return nil // TODO: - 수정 필요.
+//        }
     case .whiskey:
         return "whiskey.png"
-        // 와인
     case .wine:
-        switch detailedCategory {
-        case "주정강화":
-            return "fortifiedWine.png"
-        case "로제":
-            return "roseWine.png"
-        case "스파클링":
-            return "sparklingWine.png"
-        case "화이트":
-            return "whiteWine.png"
-        case "레드":
-            return "redWine.png"
-        default: // 예외
-            return nil
-        }
+        return "distilledAlcohol.png"
+//        switch detailedCategory {
+//        case "주정강화":
+//            return "fortifiedWine.png"
+//        case "로제":
+//            return "roseWine.png"
+//        case "스파클링":
+//            return "sparklingWine.png"
+//        case "화이트":
+//            return "whiteWine.png"
+//        case "레드":
+//            return "redWine.png"
+//        default: // 예외
+//            return nil
+//        }
     default:
         return nil
     }
 }
 
-
-
-
-
-
-
-
-// MARK: - 사진 뿌리기 방법
-//1
-//음료 이름 보내 -> 받아옴 -> 뿌려
-//음료 이름 보내 -> 받아옴 -> (카테고리,이름) 파베에 있는거랑 비교 if == -> 출력
-//아니다 -> 다시 받아옴
-
-
-//2
