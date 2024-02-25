@@ -6,15 +6,17 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 // MARK: - 마이페이지 탭
 struct MypageView: View {
     @EnvironmentObject private var appViewModel: AppViewModel
+    @EnvironmentObject private var authService: AuthService
     
     // MARK: 데이터 구조 정해지면 바꿔야되는 부분
     @State var isLike: Bool = true
     @State var likeCount: Int = 303
-    
+    @State var isLoggedIn = false
     @Binding var selectedTabIndex: Int
     
     var body: some View {
@@ -44,16 +46,16 @@ struct MypageView: View {
                 // MARK: iOS 16.4 이상
                 if #available(iOS 16.4, *) {
                     ScrollView() {
-                        PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
+//                        PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
                     }
                     .scrollBounceBehavior(.basedOnSize, axes: .vertical)
                     // MARK: iOS 16.4 미만
                 } else {
                     ViewThatFits(in: .vertical) {
-                        PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
-                            .frame(maxHeight: .infinity, alignment: .top)
+//                        PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
+//                            .frame(maxHeight: .infinity, alignment: .top)
                         ScrollView {
-                            PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
+//                            PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
                         }
                     }
                 }
@@ -87,12 +89,9 @@ struct MypageView: View {
             .foregroundStyle(.mainBlack)
             .onAppear {
                 appViewModel.tabBarState = .visible
+                authService.startListeningForUser()
             }
         }
         .toolbar(appViewModel.tabBarState, for: .tabBar)
     }
-}
-
-#Preview {
-    MypageView(selectedTabIndex: .constant(4))
 }

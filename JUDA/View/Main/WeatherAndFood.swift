@@ -7,13 +7,6 @@
 
 import SwiftUI
 
-//struct WeatherAndFood: Identifiable, Hashable {
-//    let id = UUID()
-//    var words: String
-//}
-
-
-
 // MARK: - 날씨 & 술 + 음식 추천 뷰
 struct WeatherAndFood: View {
     @EnvironmentObject private var authService: AuthService
@@ -37,21 +30,27 @@ struct WeatherAndFood: View {
     ]
     
     var body: some View {
-        VStack(spacing: 10) {
-            VStack {
+        VStack(alignment: authService.signInStatus ? .leading : .center, spacing: 10) {
+            VStack(alignment: authService.signInStatus ? .leading : .center) {
                 // 날씨 애니메이션 뷰
                 if let weather = weather {
                     LottieView(jsonName: getAnimationName(for: weather.main))
                         .aspectRatio(1.0, contentMode: .fit)
-                        .frame(width: 200, height: 200)
+                        .frame(width: 180, height: 180)
                     if authService.signInStatus {
                         Text(getKoreanWeatherDescription(for: weather.main))
+                            .font(.semibold18)
+                            .frame(maxWidth: .infinity,
+                                   alignment: authService.signInStatus ? .leading : .center)
                     } else {
                         Text("오늘의 날씨와 어울리는")
+                            .font(.semibold18)
+                            .frame(maxWidth: .infinity,
+                                   alignment: authService.signInStatus ? .leading : .center)
                     }
                 } else {
                     LottieView(jsonName: "Sun")
-                        .frame(width: 200, height: 200)
+                        .frame(width: 180, height: 180)
                         .aspectRatio(1.0, contentMode: .fit)
                 }
             }
@@ -80,13 +79,12 @@ struct WeatherAndFood: View {
                     }
                 }
             }
-            
-            VStack(alignment:.center) {
+            VStack(alignment: .leading) {
                 if isLoading {
                     ProgressView()
                 } else {
                     if authService.signInStatus {
-                        HStack {
+                        VStack(alignment: .leading) {
                             Text(aiViewModel.respond)
                                 .foregroundStyle(.mainAccent03)
                             Text("한 잔 어때요?")
@@ -122,7 +120,7 @@ struct WeatherAndFood: View {
                 }
             }
         }
-        .font(authService.signInStatus ? .bold22 : .bold20)
+        .font(authService.signInStatus ? .bold28 : .bold22)
     }
     
     // fetch타임 설정 TimeInterval 300 == 5분으로 설정

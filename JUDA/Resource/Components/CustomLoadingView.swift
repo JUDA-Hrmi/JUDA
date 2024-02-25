@@ -18,10 +18,6 @@ struct CustomLoadingView: View {
     }
 }
 
-#Preview {
-    CustomLoadingView()
-}
-
 // MARK: - CustomLoadingView 모디파이어
 struct CustomLoadingViewModifier: ViewModifier {
     @Binding var isLoading: Bool

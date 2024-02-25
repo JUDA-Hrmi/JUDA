@@ -27,11 +27,14 @@ final class AuthService: ObservableObject {
     @Published var gender: String = ""
     @Published var profileImage: UIImage?
     @Published var notificationAllowed: Bool = false
+	@Published var likedPosts = [String]()
+	@Published var likedDrinks = [String]()
+
     // Error
     @Published var showError: Bool = false
     @Published var errorMessage: String = ""
-    // 로그인 중
-    @Published var signInButtonClicked: Bool = false
+    // 로딩 중
+    @Published var isLoading: Bool = false
     // Nonce : 암호와된 임의의 난수
     private var currentNonce: String?
     // Firestore - users 컬렉션
@@ -40,10 +43,12 @@ final class AuthService: ObservableObject {
     private let storage = Storage.storage()
     private let userImages = "userImages"
     private let userImageType = "image/jpg"
+    private var listener: ListenerRegistration?
     
     // 로그아웃 및 탈퇴 시, 초기화
-    func reset() {
+    private func reset() {
         self.signInStatus = false
+        self.isLoading = false
         self.isNewUser = false
         self.uid = ""
         self.name = ""
@@ -51,6 +56,8 @@ final class AuthService: ObservableObject {
         self.gender = ""
         self.profileImage = nil
         self.notificationAllowed = false
+        self.likedPosts = []
+        self.likedDrinks = []
     }
     
     // 로그아웃
@@ -93,22 +100,88 @@ final class AuthService: ObservableObject {
                 try await Auth.auth().revokeToken(withAuthorizationCode: authCodeString)
             }
             
-            let uid = user.uid
             try await user.delete()
-            deleteAccountData(uid: uid) // TODO: - Cloud Functions 을 통해서 지우는게 이상적
-            await deleteUserProfileImage()
             reset()
             errorMessage = ""
             return true
         } catch {
             print("deleteAccount error : \(error.localizedDescription)")
             errorMessage = error.localizedDescription
+            isLoading = false
             return false
+        }
+    }
+    
+    // 유저 좋아하는 술 리스트에 추가 or 삭제
+    func addOrRemoveToLikedDrinks(isLiked: Bool, _ drinkID: String?) {
+        guard let drinkID = drinkID else {
+            print("addOrRemoveToLikedDrinks - 술 ID 없음")
+            return
+        }
+        if !isLiked { // 좋아요 X -> O
+            likedDrinks.removeAll { $0 == drinkID }
+            print("removeAll")
+        } else { // 좋아요 O -> X
+            likedDrinks.append(drinkID)
+            print("append")
         }
     }
 }
 
-// MARK: - firestore : 유저 정보 불러오기 & 유저 저장 & 유저 삭제
+// MARK: - 닉네임 수정 버튼 클릭 -> 닉네임 업데이트
+extension AuthService {
+    func updateUserName(uid: String, userName: String) {
+        let docRef = collectionRef.document(uid)
+
+        docRef.updateData(["name": userName]) { error in
+            if let error = error {
+                print(error)
+            } else {
+                print("Successed merged in:", uid)
+            }
+        }
+    }
+}
+
+// MARK: - 데이터 실시간 업데이트
+extension AuthService {
+    private func updateUserFromSnapshot(_ documentSnapshot: DocumentSnapshot) {
+        // 문서의 데이터를 가져와서 User로 디코딩
+        if let user = try? documentSnapshot.data(as: UserField.self) {
+            // 해당 사용자의 데이터를 업데이트
+            self.uid = uid
+            self.name = user.name
+            self.age = user.age
+            self.gender = user.gender
+            self.likedPosts = user.likedPosts ?? []
+            self.likedDrinks = user.likedDrinks ?? []
+        }
+    }
+    
+    func startListeningForUser() {
+        let userRef = Firestore.firestore().collection("users").document(uid)
+
+        // 기존에 활성화된 리스너가 있다면 삭제
+        listener?.remove()
+
+        // 새로운 리스너 등록
+        listener = userRef.addSnapshotListener { [weak self] documentSnapshot, error in
+            guard let self = self else { return }
+
+            if let error = error {
+                print("Error fetching user data: \(error)")
+                return
+            }
+
+            // 사용자 데이터 업데이트 메서드 호출
+            if let documentSnapshot = documentSnapshot {
+                self.updateUserFromSnapshot(documentSnapshot)
+            }
+        }
+    }
+}
+
+// MARK: - firestore : 유저 정보 불러오기 & 유저 저장 & 유저 업데이트
 extension AuthService {
     // firestore 에 유저 존재 유무 체크
     func checkNewUser(uid: String) async -> Bool {
@@ -131,15 +204,17 @@ extension AuthService {
         do {
             let document = try await collectionRef.document(uid).getDocument(source: .cache)
             if document.exists {
-                let userData = try document.data(as: User.self)
+                let userData = try document.data(as: UserField.self)
                 self.uid = uid
                 self.name = userData.name
                 self.age = userData.age
                 fetchProfileImage()
                 self.gender = userData.gender
                 self.notificationAllowed = userData.notificationAllowed
+                self.likedDrinks = userData.likedDrinks ?? []
+                self.likedPosts = userData.likedPosts ?? []
             } else {
-                print("Document does not exist in cache")
+                print("Document does not exist")
             }
         } catch {
             print("Error getting document: \(error)")
@@ -147,7 +222,7 @@ extension AuthService {
     }
     
     // firestore 에 유저 저장
-    func addUserDataToStore(userData: User) {
+    func addUserDataToStore(userData: UserField) {
         do {
             try collectionRef.document(self.uid).setData(from: userData)
             print("Success - 유저 정보 저장")
@@ -156,12 +231,20 @@ extension AuthService {
         }
     }
     
-    // firestore 에서 유저 데이터 삭제
-    func deleteAccountData(uid: String) {
-        collectionRef.document(uid).delete { error in
+    // 유저 정보 업데이트 - post
+    func userLikedPostsUpdate() {
+        collectionRef.document(self.uid).updateData(["likedPosts": self.likedPosts]) { error in
             if let error = error {
-                print("deleteAccountData - firestore : \(error.localizedDescription)")
-                return
+                print("update error \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    // 유저 정보 업데이트 - drink
+    func userLikedDrinksUpdate() {
+        collectionRef.document(self.uid).updateData(["likedDrinks": self.likedDrinks]) { error in
+            if let error = error {
+                print("update error \(error.localizedDescription)")
             }
         }
     }
@@ -169,7 +252,6 @@ extension AuthService {
 
 // MARK: - firestorage
 // 유저 가입 시, 프로필 이미지 생성 & 받아오기
-// 유저 탈퇴 시, 프로필 이미지 삭제
 extension AuthService {
     // storage 에 유저 프로필 이미지 올리기
     func uploadProfileImageToStorage(image: UIImage?) {
@@ -188,7 +270,7 @@ extension AuthService {
                     return
                 }
             }
-            print("uploadProfileImageToStorage : \(self.uid)-profileImag)")
+            print("uploadProfileImageToStorage : \(self.uid)-profileImage)")
             self.profileImage = image
         } else {
             print("error - uploadProfileImageToStorage : data X")
@@ -208,22 +290,11 @@ extension AuthService {
             self.profileImage = image
         }
     }
-    
-    // 프로필 이미지 삭제
-    func deleteUserProfileImage() async {
-        let storageRef = storage.reference().child("\(userImages)/\(self.uid)")
-        do {
-            try await storageRef.delete()
-        } catch {
-            print("프로필 이미미 삭제 에러 - \(error.localizedDescription)")
-        }
-    }
 }
 
 // MARK: - SignInWithAppleButton : request & result
 extension AuthService {
     func handleSignInWithAppleRequest(_ request: ASAuthorizationAppleIDRequest) {
-        signInButtonClicked = true
         request.requestedScopes = [.fullName, .email]
         let nonce = randomNonceString()
         currentNonce = nonce
@@ -240,6 +311,8 @@ extension AuthService {
             let fullName = appleIDCredential.fullName
             self.name = (fullName?.familyName ?? "") + (fullName?.givenName ?? "")
             Task {
+                // 로그인 중 -
+                isLoading = true
                 // 로그인
                 await singInApple(appleIDCredential: appleIDCredential)
                 // 신규 유저 체크

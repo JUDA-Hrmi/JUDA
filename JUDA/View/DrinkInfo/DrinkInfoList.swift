@@ -9,23 +9,24 @@ import SwiftUI
 
 // MARK: - 술장 리스트 뷰
 struct DrinkInfoList: View {
-    let drinks: [Drink]
-
+    // DrinkInfo 에서 검색 중인지
+    var searchInDrinkInfo: Bool = false
+    
     var body: some View {
         // MARK: iOS 16.4 이상
         if #available(iOS 16.4, *) {
             ScrollView() {
-                DrinkListContent(drinks: drinks)
+                DrinkListContent(searchInDrinkInfo: searchInDrinkInfo)
             }
             .scrollBounceBehavior(.basedOnSize, axes: .vertical)
             .scrollDismissesKeyboard(.immediately)
         // MARK: iOS 16.4 미만
         } else {
             ViewThatFits(in: .vertical) {
-                DrinkListContent(drinks: drinks)
+                DrinkListContent(searchInDrinkInfo: searchInDrinkInfo)
                     .frame(maxHeight: .infinity, alignment: .top)
                 ScrollView {
-                    DrinkListContent(drinks: drinks)
+                    DrinkListContent(searchInDrinkInfo: searchInDrinkInfo)
                 }
                 .scrollDismissesKeyboard(.immediately)
             }
@@ -35,27 +36,60 @@ struct DrinkInfoList: View {
 
 // MARK: - 술장 리스트 뷰 내용
 struct DrinkListContent: View {
-    let drinks: [Drink]
+    @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var drinkViewModel: DrinkViewModel
+    @EnvironmentObject private var searchDrinkViewModel: SearchDrinkViewModel
+
+    // DrinkInfo 에서 검색 중인지
+    var searchInDrinkInfo: Bool = false
 
     var body: some View {
         // 리스트
         LazyVStack {
-            // TODO: 데이터 들어온 리스트로 ForEach
-            ForEach(drinks.indices, id: \.self) { index in
-                let drink = drinks[index]
-                // TODO: NavigationLink - value 로 수정
-                NavigationLink {
-                    DrinkDetailView(drink: drink)
-                        .modifier(TabBarHidden())
-                } label: {
-                    DrinkListCell(drink: drink)
+            // DrinkInfo 에서 검색 중일때
+            if searchInDrinkInfo {
+                ForEach(searchDrinkViewModel.searchDrinks.indices, id: \.self) { index in
+                    let drink = searchDrinkViewModel.searchDrinks[index]
+                    // TODO: NavigationLink - value 로 수정
+                    NavigationLink {
+                        DrinkDetailView(drink: drink)
+                            .modifier(TabBarHidden())
+                    } label: {
+                        DrinkListCell(drink: drink,
+                                      isLiked: authService.likedDrinks.contains{ $0 == drink.drinkID })
+                            .task {
+                                if drink.name == drinkViewModel.drinks.last?.name {
+                                    await drinkViewModel.loadDrinksNextPage()
+                                }
+                            }
+                    }
+                    .buttonStyle(EmptyActionStyle())
                 }
-                .buttonStyle(EmptyActionStyle())
+            // 검색 안할때, 평상시 View
+            } else {
+                if !drinkViewModel.isLoading {
+                    ForEach(drinkViewModel.drinks, id: \.drinkID) { drink in
+                        // TODO: NavigationLink - value 로 수정
+                        NavigationLink {
+                            DrinkDetailView(drink: drink)
+                                .modifier(TabBarHidden())
+                        } label: {
+                            DrinkListCell(drink: drink,
+                                          isLiked: authService.likedDrinks.contains{ $0 == drink.drinkID })
+                                .task {
+                                    if drink.name == drinkViewModel.drinks.last?.name {
+                                        await drinkViewModel.loadDrinksNextPage()
+                                    }
+                                }
+                        }
+                        .buttonStyle(EmptyActionStyle())
+                    }
+                } else {
+                    ForEach(0..<10) { _ in
+                        ShimmerDrinkListCell()
+                    }
+                }
             }
         }
     }
-}
-
-#Preview {
-    DrinkInfoList(drinks: Drinks.sampleData)
 }

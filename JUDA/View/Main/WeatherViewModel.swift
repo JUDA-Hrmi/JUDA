@@ -31,7 +31,7 @@ class WeatherAPI {
         }
         
         do {
-            let(data, response) = try await URLSession.shared.data(from: url)
+            let(data, _) = try await URLSession.shared.data(from: url)
             let decoder = JSONDecoder()
             if let weatherData = try? decoder.decode(WeatherData.self, from: data) {
                 return weatherData.weather.first
@@ -41,7 +41,6 @@ class WeatherAPI {
         } catch {
             return nil
         }
-        print("API Call")
     }
 }
 

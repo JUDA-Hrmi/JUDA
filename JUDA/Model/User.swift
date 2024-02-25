@@ -6,12 +6,36 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
-// MARK: - User 모델
-struct User: Codable, Hashable {
-    var name: String
-    var age: Int
-    var gender: String
-    var profileImage: String?
-    var notificationAllowed: Bool
+// Firebase users 컬렉션 데이터 모델
+struct User {
+	let userID: String
+    let userField: UserField
+    let posts: [String: Post]
+    let userNotification: [String: NotificationField]
+}
+
+// Firebase users 컬렉션 필드 데이터 모델
+struct UserField: Codable {
+	@DocumentID var userID: String?
+    let name: String
+    let age: Int
+    let gender: String
+    let notificationAllowed: Bool
+    var likedPosts: [String]?
+    var likedDrinks: [String]?
+}
+
+// Firebase users/notificationList 컬렉션 데이터 모델
+struct NotificationField: Codable, Hashable {
+    let likedUserId: String
+    let postId: String
+    let likedTime: Date
+}
+
+// MARK: - Notification 모델
+// TODO: 추후 수정 필요
+struct Alarm: Codable, Hashable {
+    var userName: String
 }

@@ -203,21 +203,23 @@ struct ProfileSettingView: View {
                         // 재로그인
                         let signWithApple = SignInWithApple()
                         let appleIDCredential = try await signWithApple()
+                        authService.isLoading = true
                         await authService.singInApple(appleIDCredential: appleIDCredential)
                         authService.signInStatus = true
                         // 유저 이름, 생일, 성별, 프로필, 알림 동의 등 forestore 에 저장
                         authService.addUserDataToStore(
-                            userData: User(
+                            userData: UserField(
                                 name: name,
                                 age: Formatter.calculateAge(birthdate: birthDate) ?? 20,
                                 gender: selectedGender!.rawValue,
-                                profileImage: "",
-                                notificationAllowed: authService.notificationAllowed))
+                                notificationAllowed: authService.notificationAllowed,
+                                likedPosts: [], likedDrinks: []))
                         // 유저 데이터 받기
                         await authService.fetchUserData()
                         // 프로필 이미지 storage 저장
                         authService.uploadProfileImageToStorage(image: userProfileImage)
                     }
+                    authService.isLoading = false
                     // TODO: NavigationPath 초기화 ( 메인 뷰로 이동 )
                     dismiss()
                 } label: {
@@ -259,6 +261,8 @@ struct ProfileSettingView: View {
                 )
             }
         }
+        // 회원 가입 시, 로딩 뷰
+        .loadingView($authService.isLoading)
     }
     
     private func updateImage() async throws {
