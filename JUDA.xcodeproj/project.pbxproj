@@ -89,6 +89,8 @@
 		AC5778E52B6FC20C00F7B04B /* NavigationProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5778E42B6FC20C00F7B04B /* NavigationProfileView.swift */; };
 		AC6D12882B6A8DD300169B23 /* TodayDrinkRecommended.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12872B6A8DD300169B23 /* TodayDrinkRecommended.swift */; };
 		AC6D128A2B6A8ED100169B23 /* WeatherAndFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12892B6A8ED100169B23 /* WeatherAndFood.swift */; };
+		AC797BDA2B8B8BEB0018D227 /* DrinkTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC797BD92B8B8BEB0018D227 /* DrinkTopView.swift */; };
+		AC797BDC2B8B8DD20018D227 /* PostTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC797BDB2B8B8DD20018D227 /* PostTopView.swift */; };
 		AC8058D92B83AC47004CCD37 /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC8058D72B83AC46004CCD37 /* APIKEYS.plist */; };
 		AC8058DA2B83AC47004CCD37 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC8058D82B83AC47004CCD37 /* GoogleService-Info.plist */; };
 		AC8058DC2B83AC6E004CCD37 /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = AC8058DB2B83AC6E004CCD37 /* DrinkLoading.json */; };
@@ -210,6 +212,8 @@
 		AC6D12852B6A8D7800169B23 /* PostOrLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOrLogin.swift; sourceTree = "<group>"; };
 		AC6D12872B6A8DD300169B23 /* TodayDrinkRecommended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayDrinkRecommended.swift; sourceTree = "<group>"; };
 		AC6D12892B6A8ED100169B23 /* WeatherAndFood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAndFood.swift; sourceTree = "<group>"; };
+		AC797BD92B8B8BEB0018D227 /* DrinkTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkTopView.swift; sourceTree = "<group>"; };
+		AC797BDB2B8B8DD20018D227 /* PostTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTopView.swift; sourceTree = "<group>"; };
 		AC8058D72B83AC46004CCD37 /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = APIKEYS.plist; path = ../../../../Downloads/APIKEYS.plist; sourceTree = "<group>"; };
 		AC8058D82B83AC47004CCD37 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AC8058DB2B83AC6E004CCD37 /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = DrinkLoading.json; path = ../../../../../../Downloads/DrinkLoading.json; sourceTree = "<group>"; };
@@ -506,6 +510,8 @@
 				AC6D12832B6A8D6100169B23 /* SuggestDrink.swift */,
 				AC6D12872B6A8DD300169B23 /* TodayDrinkRecommended.swift */,
 				AC6D12852B6A8D7800169B23 /* PostOrLogin.swift */,
+				AC797BD92B8B8BEB0018D227 /* DrinkTopView.swift */,
+				AC797BDB2B8B8DD20018D227 /* PostTopView.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -773,6 +779,7 @@
 				7BBDFF712B6B90EB0036FB8B /* MainViewModel.swift in Sources */,
 				2C5B0F422B6B10CF005F1A99 /* CustomDialog.swift in Sources */,
 				09BCC15F2B7CFC7E00FF4D1B /* TermsAndVerificationView.swift in Sources */,
+				AC797BDC2B8B8DD20018D227 /* PostTopView.swift in Sources */,
 				09BCC15A2B7C8CD300FF4D1B /* IdentityVerificationView.swift in Sources */,
 				B12BEE4B2B6A9E3B00580D29 /* NoticeView.swift in Sources */,
 				09F869BD2B6A4AAE00A56A4C /* LikedPostGrid.swift in Sources */,
@@ -790,6 +797,7 @@
 				B1EE249A2B6144C5007F68B0 /* RecordViewModel.swift in Sources */,
 				B1EE24732B61431A007F68B0 /* DummyModel.swift in Sources */,
 				2C63DD672B67EB1B00770E3A /* RecordView.swift in Sources */,
+				AC797BDA2B8B8BEB0018D227 /* DrinkTopView.swift in Sources */,
 				7B6D76AF2B67CFC900601B55 /* PostInfo.swift in Sources */,
 				B12BEE472B6A9E1000580D29 /* AppServiceInfoView.swift in Sources */,
 				B1EE249E2B6144DD007F68B0 /* DrinkInfoViewModel.swift in Sources */,

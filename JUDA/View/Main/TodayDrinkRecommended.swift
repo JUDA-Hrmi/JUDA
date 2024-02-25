@@ -23,11 +23,11 @@ final class TodayRecommendViewModel: ObservableObject {
     // FireStore 기본 경로
     private let firestore = Firestore.firestore()
     private let drinkCollection = "drinks"
-
+    
     // FireStorage 기본 경로
     private let storage = Storage.storage()
     private let drinkImagesPath = "drinkImages/"
-
+    
 }
 
 struct TodayDrink: Identifiable, Hashable {
@@ -54,6 +54,7 @@ struct TodayDrinkRecommended: View {
     @State private var isLoading = false
     @State var todayDrink: [TodayDrink] = TodayDrinkData
     @State private var categoryValues: String = ""
+    @Binding var weatherAndFoodData: String
     var body: some View {
         VStack {
             HStack(alignment: .top, spacing: 20) {
@@ -76,14 +77,13 @@ struct TodayDrinkRecommended: View {
                     if fetchTimeInterval() && authService.signInStatus {
                         do {
                             isLoading = true
-                            await recommend.fetchDrinks()
+                            await recommend.fetchDrinks(weatherAndFoodData: weatherAndFoodData)
+                        
                             // Request AI recommendation
-                            let response = try await aiViewModel.requestToday(prompt: "Please recommend three drinks and category that go well with this weather. Please refer to the below list behind you . --weather: \(String(describing: weather?.main)) --drinks: \(recommend.recommend)")
-                            print("\(recommend.recommend)")
+                            let response = try await aiViewModel.requestToday(prompt: "Please recommend three drinks and category that go well with this weather. Please refer to the below list behind you . --drinks: \(recommend.recommend)")
+                            print("\(response)")
                             // 텍스트 분할
                             let words = response.split(separator: ", ").map { String($0) }
-                            let categories = words.map { $0.split(separator: "/").map { String($0) } }
-                            let categoryValues = categories.map { $0[1] }
                             print("카테고리: \(categoryValues)")
                             // 단어수 검사 3개가 아니면 에러처리
                             // TODO: - 에러처리 이후에 다시 API 호출 하도록 수정 필요
@@ -112,7 +112,6 @@ struct TodayDrinkRecommended: View {
     
     // MARK: - 오늘의 추천 술 셀
     struct TodayDrinkRecommendedCell: View {
-        //    let todayDrink: TodayDrink
         @ObservedObject var recommend = Recommend.shared
         @EnvironmentObject var locationManager: LocationManager
         @EnvironmentObject var aiViewModel: AiTodayViewModel
@@ -128,10 +127,10 @@ struct TodayDrinkRecommended: View {
         var body: some View {
             VStack {
                 if isLoading {
-                    // TODO: - 나중에 창준햄 CircularLoaderView 사용하기
+                    // TODO: - CircularLoaderView later
                     ProgressView()
                 } else {
-                    // 이미지
+                    // Image
                     if let imageURL = imageURL {
                         KFImage(imageURL)
                             .placeholder {
@@ -147,165 +146,168 @@ struct TodayDrinkRecommended: View {
                                 .lineLimit(1)
                         }
                     }
-                        
                 }
             }
             .onAppear {
                 fetchImage()
             }
         }
-//        private var imageURL: URL? {
-//            guard let category = DrinkTypes(rawValue: categoryValues)
-//                    
-//            else {
-//                return nil
-//            }
-//            print("\(category)")
-//            return getImageURL(for: category)
-//        }
         
         private func getImageURL(for category: DrinkTypes) -> URL? {
             guard let detailedCategory = drink.words.last else { return nil }
             guard let imageName = getImageName(category: category, detailedCategory: detailedCategory) else { return nil }
-            print("\(drinkImagesPath)")
+            print("URL:\(drinkImagesPath)\(imageName)")
             return URL(string: "\(drinkImagesPath)\(imageName)")
         }
         
+        
+        
+        
         private func fetchImage() {
-            // Firebase Storage에 접근하여 이미지 다운로드
+            // Get the URL for the image
+            guard let imageURL = getImageURL(for:.traditional) else {
+                print("Error: Image URL is nil")
+                return
+            }
+            
+            // Access Firebase Storage to download image
             let storage = Storage.storage()
             let storageRef = storage.reference()
-            let imageRef = storageRef.child("drinkImages/redWine.png") // 예시로 "darkBeer.png"를 사용합니다.
-
+            let imageRef = storageRef.child(imageURL.path)
+            
+            // Download the image using the obtained URL
             imageRef.downloadURL { url, error in
                 if let error = error {
-                    // 이미지 다운로드 중 에러 발생 시 처리
+                    // Handle when an error occurs while downloading the image
                     print("Error downloading image: \(error.localizedDescription)")
                 } else if let url = url {
-                    // 이미지 다운로드 성공 시 imageURL 업데이트
+                    // Update imageURL when image download is successful
                     self.imageURL = url
                 }
             }
         }
     }
-    
-    struct FirebaseDrink: Codable, Hashable {
-        let name: String
-        let category: String
-//        let type: String
-        
-        init(name: String, category: String/*, type: String*/) {
-            self.name = name
-            self.category = category
-//            self.type = type
-        }
-    }
-    
-    struct Ai2Model: Decodable {
-        let openai: String
-    }
-    
-    
-    
-    class Recommend: ObservableObject {
-        var openAI: OpenAI?
-        static let shared = Recommend()
-        private init() {}
-        @Published var recommend = [FirebaseDrink]()
-        
-        let db = Firestore.firestore()
-        private var listener: ListenerRegistration?
-        
-        @MainActor
-        func fetchDrinks() async {
-            do {
-                let drinksSnapshot = try await db.collection("drinks").getDocuments() // Firebase의 collection 이름으로 수정
-                
-                for drinkDocument in drinksSnapshot.documents {
-                    if let drink = try? drinkDocument.data(as: FirebaseDrink.self) {
-                        self.recommend.append(drink)
-                    }
-                }
-            } catch {
-                print("Error fetching drinks:", error)
+        struct FirebaseDrink: Codable, Hashable {
+            let name: String
+            let category: String
+            //        let type: String
+            
+            init(name: String, category: String/*, type: String*/) {
+                self.name = name
+                self.category = category
+                //            self.type = type
             }
-            print("fetchDrinks")
         }
         
-        // 실시간 관찰 중지
-        func stopListening() {
-            listener?.remove()
-            print("stopListening")
-        }
-    }
-    private func fetchTimeInterval() -> Bool {
-        guard let lastTimestamp = lastAPICallTimestamp else {
-            return true
+        struct Ai2Model: Decodable {
+            let openai: String
         }
         
-        let currentTime = Date()
-        let timeDifference = currentTime.timeIntervalSince(lastTimestamp)
-        let minimumTimeDifference: TimeInterval = 300
         
-        return timeDifference >= minimumTimeDifference
+        
+        class Recommend: ObservableObject {
+            var openAI: OpenAI?
+            static let shared = Recommend()
+            private init() {}
+            @Published var recommend = [FirebaseDrink]()
+            
+            let db = Firestore.firestore()
+            private var listener: ListenerRegistration?
+            
+            @MainActor
+            func fetchDrinks(weatherAndFoodData:String) async {
+                do {
+                    let drinksSnapshot = try await db.collection("drinks").whereField("category", isEqualTo: weatherAndFoodData).getDocuments() // Firebase의 collection 이름으로 수정
+                    print("파베1 \(weatherAndFoodData)")
+                    
+                    print("파베2\(drinksSnapshot)")
+                    for drinkDocument in drinksSnapshot.documents {
+                        if let drink = try? drinkDocument.data(as: FirebaseDrink.self) {
+                            self.recommend.append(drink)
+                        }
+                    }
+                } catch {
+                    print("Error fetching drinks:", error)
+                }
+                print("fetchDrinks")
+            }
+            
+            // 실시간 관찰 중지
+            func stopListening() {
+                listener?.remove()
+                print("stopListening")
+            }
+        }
+        private func fetchTimeInterval() -> Bool {
+            guard let lastTimestamp = lastAPICallTimestamp else {
+                return true
+            }
+            
+            let currentTime = Date()
+            let timeDifference = currentTime.timeIntervalSince(lastTimestamp)
+            let minimumTimeDifference: TimeInterval = 300
+            
+            return timeDifference >= minimumTimeDifference
+        }
+        
+        
     }
     
-    
-}
-
-enum DrinkTypes: String {
-    case all = "전체"
-    case traditional = "우리술"
-    case beer = "맥주"
-    case wine = "와인"
-    case whiskey = "위스키"
-}
-private func getImageName(category: DrinkTypes, detailedCategory: String) -> String? {
-    switch category {
-    case .beer:
-        return "darkBeer.png"
-//        switch detailedCategory {
-//        case "":
-//            return "darkBeer.png"
-//        case "논알콜":
-//            return "nonAlcoholBeer.png"
-//        case "과일", "기타":
-//            return nil
-//        default: // 나머지 모든 맥주
-//            return "beer_bottled.png"
-//        }
-    case .traditional:
-        return "distilledAlcohol.png"
-//        switch detailedCategory {
-//        case "탁주":
-//            return "distilledAlcohol.png"
-//        case "증류주":
-//            return "distilledAlcohol.png"
-//        case "약주 청주":
-//            return "yakju_cheongju.png"
-//        default: // 기타주류, 과실주
-//            return nil // TODO: - 수정 필요.
-//        }
-    case .whiskey:
-        return "whiskey.png"
-    case .wine:
-        return "distilledAlcohol.png"
-//        switch detailedCategory {
-//        case "주정강화":
-//            return "fortifiedWine.png"
-//        case "로제":
-//            return "roseWine.png"
-//        case "스파클링":
-//            return "sparklingWine.png"
-//        case "화이트":
-//            return "whiteWine.png"
-//        case "레드":
-//            return "redWine.png"
-//        default: // 예외
-//            return nil
-//        }
-    default:
-        return nil
+    enum DrinkTypes: String,CaseIterable {
+        case all = "전체"
+        case traditional = "우리술"
+        case beer = "맥주"
+        case wine = "와인"
+        case whiskey = "위스키"
     }
-}
-
+    private func getImageName(category: DrinkTypes, detailedCategory: String) -> String? {
+        switch category {
+        case .all:
+            return "distilledAlcohol.png"
+        case .beer:
+            return "darkBeer.png"
+            //        switch detailedCategory {
+            //        case "":
+            //            return "darkBeer.png"
+            //        case "논알콜":
+            //            return "nonAlcoholBeer.png"
+            //        case "과일", "기타":
+            //            return nil
+            //        default: // 나머지 모든 맥주
+            //            return "beer_bottled.png"
+            //        }
+        case .traditional:
+            return "distilledAlcohol.png"
+            //        switch detailedCategory {
+            //        case "탁주":
+            //            return "distilledAlcohol.png"
+            //        case "증류주":
+            //            return "distilledAlcohol.png"
+            //        case "약주 청주":
+            //            return "yakju_cheongju.png"
+            //        default: // 기타주류, 과실주
+            //            return nil // TODO: - 수정 필요.
+            //        }
+        case .whiskey:
+            return "whiskey.png"
+        case .wine:
+            return "distilledAlcohol.png"
+            //        switch detailedCategory {
+            //        case "주정강화":
+            //            return "fortifiedWine.png"
+            //        case "로제":
+            //            return "roseWine.png"
+            //        case "스파클링":
+            //            return "sparklingWine.png"
+            //        case "화이트":
+            //            return "whiteWine.png"
+            //        case "레드":
+            //            return "redWine.png"
+            //        default: // 예외
+            //            return nil
+            //        }
+        default:
+            return nil
+        }
+    }
+    

@@ -32,8 +32,15 @@ struct PostOrLogin: View {
                 // 비로그인
             } else {
                 VStack(alignment: .center, spacing: 10) {
-                    Text("추천 안주와 술을 알고 싶다면?")
-                        .font(.medium18)
+                    VStack {
+                        Text("오늘의 날씨에 맞는")
+                        HStack {
+                            Text("술과 안주")
+                                .foregroundStyle(.mainAccent03)
+                            Text("를 추천 받고 싶다면?")
+                        }
+                    }
+                    .font(.medium18)
                     // TODO: NavigationLink - value 로 수정
                     NavigationLink {
                         LogInView()

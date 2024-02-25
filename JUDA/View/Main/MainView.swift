@@ -23,7 +23,8 @@ struct MainView: View {
                 WeatherAndFood()
                 Spacer()
                 // 오늘의 추천 술
-                SuggestDrink()
+//                SuggestDrink()
+                DrinkTopView()
                 Spacer()
                 // 추천 술상 보러가기 or 로그인 하러가기
                 PostOrLogin(selectedTabIndex: $selectedTabIndex)

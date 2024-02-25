@@ -33,8 +33,9 @@ class AiViewModel: ObservableObject {
     // 프롬프트 request 함수
     func request(prompt: String) async throws -> String {
         let query = ChatQuery(model: .gpt3_5Turbo_16k, messages: [
-            Chat(role: .system, content: "Please be sure to give recommendation answer in one word using Korean, only from each given list.And please print them out as 술 + 안주"),
-            Chat(role: .assistant, content: "카스 + 계란찜"),
+            Chat(role: .system, content: "Please be sure to give recommendation answer in one word using Korean, only from each given list."),
+            Chat(role: .assistant, content: "계란찜 + 우리술"),
+            Chat(role: .assistant, content: "찜닭 + 맥주"),
             Chat(role: .user, content: prompt),
         ])
         
@@ -52,19 +53,19 @@ class AiViewModel: ObservableObject {
     
     
     // 술 + 안주 respond 분리 함수
-    private func parseAndSetResponse(_ response: String) {
-        let components = response.components(separatedBy: " ")
-        guard components.count == 4 else {
-            print("Invalid response format")
-            return
-        }
-        
-        let drink = components[1]
-        let dish = components[3]
-        
-        respond = "술: \(drink) + 안주: \(dish)"
-        print(respond)
-    }
+//    private func parseAndSetResponse(_ response: String) {
+//        let components = response.components(separatedBy: "+")
+//        guard components.count == 3 else {
+//            print("Invalid response format")
+//            return
+//        }
+//        
+//        let drink = components[1]
+//        let dish = components[3]
+//        
+//        respond = "술: \(drink) + 안주: \(dish)"
+//        print(respond)
+//    }
     
 }
 
@@ -92,8 +93,8 @@ class AiTodayViewModel: ObservableObject {
     func requestToday (prompt: String) async throws -> String {
         let query = ChatQuery(model: .gpt3_5Turbo_16k, messages: [
             Chat(role: .system, content: "Please be sure to give recommendation answer in three word using Korean in once, only from each given list.And please print them out as three alcohol drink"), // with json type
-            Chat(role: .assistant, content: "매실원주/우리술, 카스/맥주, 공주애오디와인/우리술"),
-            Chat(role: .assistant, content: "크로넨버그 1664 블랑/맥주, 글렌고인 25년/위스키, 막시모40/우리술"),
+            Chat(role: .assistant, content: "매실원주, 엘리자베스 로제 샤도네이, 공주애오디와인"),
+            Chat(role: .assistant, content: "크로넨버그 1664 블랑, 글렌고인 25년, 막시모40"),
             Chat(role: .user, content: prompt),
         ])
         

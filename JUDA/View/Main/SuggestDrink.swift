@@ -16,7 +16,7 @@ struct SuggestDrink: View {
             Text("오늘의 추천 술")
                 .font(.semibold18)
             // 술 이미지 + 이름
-            TodayDrinkRecommended()
+            TodayDrinkRecommended(weatherAndFoodData: .constant("우리술") )
                 .opacity(authService.signInStatus ? 1.0 : 0.8)
                 .blur(radius: authService.signInStatus ? 0 : 3)
         }
