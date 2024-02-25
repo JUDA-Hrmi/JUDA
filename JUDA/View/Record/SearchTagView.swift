@@ -36,7 +36,7 @@ struct SearchTagView: View {
                     // 서치바 Text가 없을 때, 술 검색 결과 비워주기
                     .onChange(of: tagSearchText) { _ in
                         if tagSearchText == "" {
-                            recordViewModel.searchDrinks = [:]
+							recordViewModel.searchDrinks.removeAll()
                         }
                     }
                     // Sheet 내려주기
@@ -83,7 +83,7 @@ struct SearchTagView: View {
                 if let selectedDrinkTag = recordViewModel.selectedDrinkTag {
                     CustomDialog(type: .rating(
                         // 선택된 술 정보의 술 이름
-                        drinkName: selectedDrinkTag.1.drinkTag.name,
+						drinkName: selectedDrinkTag.drink.name,
                         leftButtonLabel: "취소",
                         leftButtonAction: {
                             // CustomRatingDialog 사라지게 하기
@@ -94,7 +94,11 @@ struct SearchTagView: View {
                             // 0보다 큰 점수를 매겼을 때 수정 버튼 동작
                             if rating > 0 {
                                 // dirnkTag 값 변경
-                                recordViewModel.drinkTags[selectedDrinkTag.0] = DrinkTag(drinkTag: selectedDrinkTag.1.drinkTag, rating: rating)
+								if let index = recordViewModel.drinkTags.firstIndex(where: { $0.drink.drinkID == selectedDrinkTag.drink.drinkID }) {
+									recordViewModel.drinkTags[index] = DrinkTag(drink: selectedDrinkTag.drink, rating: rating)
+								} else {
+									recordViewModel.drinkTags.append(DrinkTag(drink: selectedDrinkTag.drink, rating: rating))
+								}
                                 // 변경 후 CustomRatingDialog, SearchTagView 사라지게 하기
                                 isShowRatingDialog.toggle()
                                 isShowSearchTag.toggle()
@@ -123,11 +127,11 @@ struct SearchTagListContent: View {
         
     var body: some View {
         LazyVStack {
-            ForEach(recordViewModel.searchDrinks.map { ($0.key, $0.value) }, id: \.0) { drink in
-                DrinkListCell(drink: drink.1, isLiked: .constant(recordViewModel.userLikedDrinksID.contains(where: { $0 == drink.0 })), searchTag: true)
+			ForEach(recordViewModel.searchDrinks, id: \.drinkID) { drink in
+				DrinkListCell(drink: drink, isLiked: .constant(recordViewModel.userLikedDrinksID.contains(where: { $0 == drink.drinkID })), searchTag: true)
                     .onTapGesture {
                         // 현재 선택된 DrinkListCell의 술 정보를 받아오기
-                        recordViewModel.selectedDrinkTag = (drink.0, DrinkTag(drinkTag: drink.1, rating: 0))
+						recordViewModel.selectedDrinkTag = DrinkTag(drink: drink, rating: 0)
                         // CustomRatingDialog 띄우기
                         isShowRatingDialog.toggle()
                     }

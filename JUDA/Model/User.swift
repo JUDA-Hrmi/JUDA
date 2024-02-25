@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 // Firebase users 컬렉션 데이터 모델
 struct User {
+	let userID: String
     let userField: UserField
     let posts: [String: Post]
     let userNotification: [String: NotificationField]
@@ -16,6 +18,7 @@ struct User {
 
 // Firebase users 컬렉션 필드 데이터 모델
 struct UserField: Codable {
+	@DocumentID var userID: String?
     let name: String
     let age: Int
     let gender: String

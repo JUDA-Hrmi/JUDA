@@ -70,10 +70,6 @@ struct RecordView: View {
                     }
                 }
             }
-            // 화면 너비 받아오기
-            .task {
-                recordViewModel.windowWidth = TagHandler.getScreenWidthWithoutPadding(padding: 20)
-            }
         }
         // post upload 여부에 따라 loadingView 표시
         .loadingView($recordViewModel.isPostUploadSuccess)
@@ -113,11 +109,9 @@ struct RecordView: View {
                             await recordViewModel.multipleImageUpload()
                             
                             // post 데이터 모델 객체 생성
-                            recordViewModel.post = Post(user: (auth.uid, UserField(name: auth.name,
-                                                                            age: auth.age, gender: auth.gender,
-                                                                            notificationAllowed: auth.notificationAllowed)),
-                                                 drinkTags: recordViewModel.drinkTags,
-                                                 postField: PostField(imagesID: recordViewModel.imagesID, content: recordViewModel.content,
+							recordViewModel.post = Post(userField: UserField(userID: auth.uid ,name: auth.name, age: auth.age, gender: auth.gender, notificationAllowed: auth.notificationAllowed),
+														drinkTags: recordViewModel.drinkTags,
+														postField: PostField(imagesID: recordViewModel.imagesID, content: recordViewModel.content,
                                                                       likedCount: 0, postedTimeStamp: Date(), foodTags: recordViewModel.foodTags))
                             
                             // post upload

@@ -17,13 +17,13 @@ final class RecordViewModel: ObservableObject {
     // searchTagView에서 drink liked를 표시해주기 위한 drinkID를 갖는 배열
     @Published var userLikedDrinksID: [String] = []
     // [drinkID: drinkData] 딕셔너리 형태의 술 전체 Data
-    private var drinks: [String: FBDrink] = [:]
+    private var drinks: [FBDrink] = []
     // [drinkID: drinkData] 딕셔너리 형태의 검색된 술 결과 Data
-    @Published var searchDrinks: [String: FBDrink] = [:]
+    @Published var searchDrinks: [FBDrink] = []
     // (dirnkID, (drinkData, rating)) 튜플 형태의 선택한 술 Data
-    @Published var selectedDrinkTag: (String, DrinkTag)?
+    @Published var selectedDrinkTag: DrinkTag?
     // [drinkID: (drinkData, rating)] 딕셔너리 형태의 태그된 모든 술 Data
-    @Published var drinkTags: [String: DrinkTag] = [:]
+    @Published var drinkTags: [DrinkTag] = []
     // 라이브러리에서 선택된 모든 사진 Data
     @Published var images: [UIImage] = []
     // 선택된 모든 사진 Data의 ID를 갖는 배열
@@ -32,8 +32,10 @@ final class RecordViewModel: ObservableObject {
     @Published var content: String = ""
     // 음식 태그를 담는 배열
     @Published var foodTags: [String] = []
-    // 화면 가로 길이를 담는 프로퍼티
-    var windowWidth: CGFloat = 0
+    // 화면 너비 받아오기
+	var windowWidth: CGFloat {
+		TagHandler.getScreenWidthWithoutPadding(padding: 20)
+	}
     // post 업로드 완료 확인 및 로딩 뷰 출력용 프로퍼티
     @Published var isPostUploadSuccess = false
     
@@ -65,7 +67,7 @@ extension RecordViewModel {
             
             for document in drinkSnapshot.documents {
                 let drinkData = try document.data(as: FBDrink.self)
-                self.drinks[document.documentID] = drinkData
+				self.drinks.append(drinkData)
             }
         } catch {
             print("Drink Fetch Error")
@@ -75,10 +77,10 @@ extension RecordViewModel {
     // all drink data filtering with search
     @MainActor
     func searchDrinkTags(text: String) async {
-        searchDrinks = [:]
+        searchDrinks = []
         for drink in drinks {
-            if drink.value.name.contains(text) {
-                searchDrinks[drink.key] = drink.value
+			if drink.name.localizedCaseInsensitiveContains(text) {
+				searchDrinks.append(drink)
             }
         }
     }
@@ -127,11 +129,16 @@ extension RecordViewModel {
 extension RecordViewModel {
     // Firestore post data upload
     func uploadPost() async {
-        guard let post = post else { return }
+		guard let post = post, let userID = post.userField.userID else {
+			print("uploadPost() :: error -> don't get post & post's userID")
+			return
+		}
+		print(post)
+		print(userID)
         // posts documentID uuid 지정
         let postDocumentPath = UUID().uuidString
         let postRef = db.collection("posts")
-        let userPostRef = db.collection("users").document(post.user.0).collection("posts")
+		let userPostRef = db.collection("users").document(userID).collection("posts")
         let references: [CollectionReference] = [postRef, userPostRef]
         
         // 동일한 post collection data를 갖는 collection(posts, users/posts)에 data upload
@@ -140,7 +147,7 @@ extension RecordViewModel {
         }
         
         // 동일한 drink collection data를 갖는 collection(posts/drinkTags/drink, drinks)에 data update
-        await updateDrinkDataWithTag(documentPath: postDocumentPath)
+		await updateDrinkDataWithTag(documentPath: postDocumentPath, userID: userID)
     }
     
     // Firestore posts collection upload
@@ -150,16 +157,20 @@ extension RecordViewModel {
             // posts collection field data upload
             try ref.document(documentPath).setData(from: post.postField)
             // drinkTags collection data upload in posts collection
-            for drinkTag in post.drinkTags.map({ ($0.key, $0.value) }) {
-                try await ref.document(documentPath).collection("drinkTags").document(drinkTag.0).setData(["rating": drinkTag.1.rating])
-                try ref.document(documentPath).collection("drinkTags").document(drinkTag.0).collection("drink").document(drinkTag.0).setData(from: drinkTag.1.drinkTag)
-            }
+			for drinkTag in drinkTags {
+				guard let drinkID = drinkTag.drink.drinkID else {
+					print("firebaseUploadPost() :: error -> don't get drinkID")
+					continue
+				}
+				try await ref.document(documentPath).collection("drinkTags").document(drinkID).setData(["rating": drinkTag.rating])
+				try ref.document(documentPath).collection("drinkTags").document(drinkID).collection("drink").document(drinkID).setData(from: drinkTag.drink)
+			}
             
             // user collection data upload in posts collection
             try ref.document(documentPath)
                 .collection("user")
-                .document(post.user.0)
-                .setData(from: post.user.1)
+				.document(post.userField.userID ?? "")
+                .setData(from: post.userField)
             
         } catch {
             print("error :: post upload fail")
@@ -167,59 +178,66 @@ extension RecordViewModel {
     }
     
     // claculate rating data when user upload post with drinkTag
-    func calcDrinkRating(prev: Double, new: Double, count: Int) async -> Double {
+    func calcDrinkRating(prev: Double, new: Double, count: Int) -> Double {
         return (prev * Double(count) + new) / (Double(count) + 1)
     }
     
     // Firestore drink collection update
-    func updateDrinkDataWithTag(documentPath: String) async {
+	func updateDrinkDataWithTag(documentPath: String, userID: String) async {
         // drinks
         let drinkRef = db.collection("drinks")
         // posts/drinkTags/drink
         let drinkTagRef = db.collection("posts").document(documentPath).collection("drinkTags")
+		// users/posts/drinkTags/drink
+		let userPostDrinkTagRef = db.collection("users").document(userID).collection("posts").document(documentPath).collection("drinkTags")
         
         do {
-            for drink in drinkTags.map({ ($0.0, $0.1) }) {
-                if let post = post {
-                    var updateData: [String: Any] = [:]
-                    // drink 정보를 바탕으로 update
-                    let drinkData = try await drinkRef.document(drink.0).getDocument(as: FBDrink.self)
-                    // rating이 4보다 큰 경우
-                    // agePreference, genderPreference
-                    if drink.1.rating >= 4 {
-                        let userAge: Int = post.user.1.age / 10 * 10
-                        let stringUserAge = String(userAge < 20 ? 20 : userAge)
-                        let userGender = post.user.1.gender
-                        // agePreference + 1
-                        var agePreference = drinkData.agePreference
-                        agePreference[stringUserAge] = (agePreference[stringUserAge] ?? 0) + 1
-                        // genderPreference + 1
-                        var genderPreference = drinkData.genderPreference
-                        genderPreference[userGender] = (genderPreference[userGender] ?? 0) + 1
+            for drinkTag in drinkTags {
+				guard let post = post, let drinkID = drinkTag.drink.drinkID else { return }
+				var updateData: [String: Any] = [:]
+				// drink 정보를 바탕으로 update
+				let drinkData = try await drinkRef.document(drinkID).getDocument(as: FBDrink.self)
+				// rating이 4보다 큰 경우
+				// agePreference, genderPreference
+				if drinkTag.rating >= 4 {
+					let userAge: Int = post.userField.age / 10 * 10
+					let stringUserAge = String(userAge < 20 ? 20 : userAge)
+					let userGender = post.userField.gender
+					// agePreference + 1
+					var agePreference = drinkData.agePreference
+					agePreference[stringUserAge] = (agePreference[stringUserAge] ?? 0) + 1
+					// genderPreference + 1
+					var genderPreference = drinkData.genderPreference
+					genderPreference[userGender] = (genderPreference[userGender] ?? 0) + 1
 
-                        updateData["agePreference"] = agePreference
-                        updateData["genderPreference"] = genderPreference
-                    }
-                    // rating
-                    let prev = drinkData.rating
-                    let new = drink.1.rating
-                    let count = drinkData.taggedPostID.count
-                    let rating = await calcDrinkRating(prev: prev, new: new, count: count)
-                    
-                    // taggedPostID
-                    var taggedPostID = drinkData.taggedPostID
-                    taggedPostID.append(documentPath)
-                    
-                    updateData["rating"] = rating
-                    updateData["taggedPostID"] = taggedPostID
-                    
-                    // drink data(agePreference, genderPreference, rating, taggedPostId) update in drinks, posts collection(posts/drinkTags)
-                    try await drinkRef.document(drink.0).updateData(updateData)
-                    try await drinkTagRef.document(drink.0).collection("drink").document(drink.0).updateData(updateData)
-                }
+					updateData["agePreference"] = agePreference
+					updateData["genderPreference"] = genderPreference
+				}
+				// rating
+				let prev = drinkData.rating
+				let new = drinkTag.rating
+				let count = drinkData.taggedPostID.count
+				let rating = calcDrinkRating(prev: prev, new: new, count: count)
+				
+				// taggedPostID
+				var taggedPostID = drinkData.taggedPostID
+				taggedPostID.append(documentPath)
+				
+				updateData["rating"] = rating
+				updateData["taggedPostID"] = taggedPostID
+				
+				// drink data(agePreference, genderPreference, rating, taggedPostId) update in drinks, posts collection(posts/drinkTags)
+				try await drinkRef.document(drinkID).updateData(updateData)
+				try await drinkTagRef.document(drinkID).collection("drink").document(drinkID).updateData(updateData)
+				try await userPostDrinkTagRef.document(drinkID).collection("drink").document(drinkID).updateData(updateData)
             }
         } catch {
             print("update error")
         }
     }
+}
+
+// MARK: Post Modify
+extension RecordViewModel {
+	
 }

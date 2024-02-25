@@ -11,18 +11,30 @@ import SwiftUI
 struct PostPhotoScroll: View {
     @State private var selectedIndex = 0
     @State private var isFullSizePhotoPresented = false
-    
-	let postPhotos: [String]
+	@State private var windowWidth: CGFloat = 0
+	let postPhotos: [(imageID: String, uiImage: UIImage)]
 	
     var body: some View {
 		// 사진 페이징 스크롤 형식
 		TabView(selection: $selectedIndex) {
-			ForEach(0..<postPhotos.count, id: \.self) { index in
-				Image(postPhotos[index])
-					.resizable()
-					.aspectRatio(1.0, contentMode: .fill)
-					.onTapGesture {
-						isFullSizePhotoPresented = true
+			if !postPhotos.isEmpty {
+				ForEach(0..<postPhotos.count, id: \.self) { index in
+					Image(uiImage: postPhotos[index].uiImage)
+						.resizable()
+						.aspectRatio(contentMode: .fill)
+						.frame(width: windowWidth)// clipped() 문제로 frame 값 지정
+						.clipped()
+						.onTapGesture {
+							isFullSizePhotoPresented = true
+						}
+				}
+			} else {
+				Rectangle()
+					.fill(.mainBlack.opacity(0.09))
+					.frame(maxWidth: .infinity, maxHeight: .infinity)
+					.overlay {
+						CircularLoaderView(size: 20)
+							.frame(width: 70, height: 103.48)
 					}
 			}
 		}
@@ -36,7 +48,9 @@ struct PostPhotoScroll: View {
 				// 사진 넘겨서 보는 탭뷰
 				TabView(selection: $selectedIndex) {
 					ForEach(0..<postPhotos.count, id: \.self) { index in
-						Image(postPhotos[index])
+						Image(uiImage: postPhotos[index].uiImage)
+							.resizable()
+							.aspectRatio(contentMode: .fit)
 					}
 				}
 				.tabViewStyle(.page)
@@ -54,9 +68,8 @@ struct PostPhotoScroll: View {
 			}
 			.ignoresSafeArea()
 		}
+		.task {
+			windowWidth = TagHandler.getScreenWidthWithoutPadding(padding: 0)
+		}
     }
-}
-
-#Preview {
-	PostPhotoScroll(postPhotos: ["foodEx1", "foodEx2", "foodEx3", "foodEx4"])
 }
