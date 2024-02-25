@@ -16,7 +16,7 @@ struct AlarmStoreListCell: View {
             VStack(alignment: .leading, spacing: 2) {
                 // 게사물 좋아요 알람 내용
                 Group {
-                    Text(alarm.likedUserName)
+                    Text(alarm.userName)
                         .font(.medium14)
                     +
                     Text(" 님이 게시물에 하트를 남겼어요.")
@@ -24,22 +24,22 @@ struct AlarmStoreListCell: View {
                 }
                 .multilineTextAlignment(.leading)
                 .foregroundStyle(.mainBlack)
-                .overlay(alignment: .topLeading) {
-                    // TODO: NavigationLink - value 로 수정
-                    NavigationLink {
-                        NavigationProfileView(likeCount: 44, userType: .otheruser, userName: alarm.likedUserName)
-                            .modifier(TabBarHidden())
-                    } label: {
-                        Text(alarm.likedUserName)
-                            .font(.medium14)
-                            .foregroundStyle(.mainBlack)
-                    }
-                    .buttonStyle(EmptyActionStyle())
-                }
-                // 알람 왔던 시기
-                Text(Formatter.formattedDateBeforeStyle(pastDate: alarm.likedTime))
-                    .font(.regular12)
-                    .foregroundStyle(.gray01)
+//                .overlay(alignment: .topLeading) {
+//                    // TODO: NavigationLink - value 로 수정
+//                    NavigationLink {
+//                        NavigationProfileView(likeCount: 44, userType: .otheruser, userName: alarm.likedUserName)
+//                            .modifier(TabBarHidden())
+//                    } label: {
+//                        Text(alarm.likedUserName)
+//                            .font(.medium14)
+//                            .foregroundStyle(.mainBlack)
+//                    }
+//                    .buttonStyle(EmptyActionStyle())
+//                }
+//                // 알람 왔던 시기
+//                Text(Formatter.formattedDateBeforeStyle(pastDate: alarm.likedTime))
+//                    .font(.regular12)
+//                    .foregroundStyle(.gray01)
             }
             Spacer()
             // 해당 술상 이미지

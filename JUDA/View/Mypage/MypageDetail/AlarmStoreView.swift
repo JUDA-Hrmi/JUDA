@@ -50,7 +50,7 @@ struct AlarmStoreView: View {
             }
         }
         .task {
-            await notifications.fetchNotificationForUser(userId: Auth.auth().currentUser?.uid ?? "")
+            await notifications.fetchLikedUserName(userId: Auth.auth().currentUser?.uid ?? "")
         }
     }
 }
