@@ -32,6 +32,7 @@ extension Font {
     static let medium14: Font = .custom(FontType.Medium.name, size: 14)
     static let medium10: Font = .custom(FontType.Medium.name, size: 10)
     // Regular
+    static let regular50: Font = .custom(FontType.Regular.name, size: 50)
     static let regular24: Font = .custom(FontType.Regular.name, size: 24)
     static let regular20: Font = .custom(FontType.Regular.name, size: 20)
     static let regular18: Font = .custom(FontType.Regular.name, size: 18)

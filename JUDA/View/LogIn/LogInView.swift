@@ -25,11 +25,19 @@ struct LogInView: View {
             // 로고 + 이름
             VStack(alignment: .center, spacing: 20) {
                 // 앱 아이콘
-                Image("appIcon")
-                    .resizable()
-                    .aspectRatio(1.0, contentMode: .fit)
-                    .frame(width: 290)
-                    .cornerRadius(10)
+                if .light == colorScheme.selectedColor {
+                    Image("JUDA_AppLogo_ver1")
+                        .resizable()
+                        .aspectRatio(1.0, contentMode: .fit)
+                        .frame(width: 290)
+                        .cornerRadius(10)
+                } else {
+                    Image("JUDA_AppLogo_ver1_Dark")
+                        .resizable()
+                        .aspectRatio(1.0, contentMode: .fit)
+                        .frame(width: 290)
+                        .cornerRadius(10)
+                }
                 // 앱 이름
                 Text("주다 - JUDA")
                     .font(.semibold24)
