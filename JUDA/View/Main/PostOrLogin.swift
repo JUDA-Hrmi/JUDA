@@ -17,19 +17,7 @@ struct PostOrLogin: View {
         VStack(alignment: authService.signInStatus ? .leading : .center, spacing: 10) {
             // 로그인
             if authService.signInStatus {
-                Text("다른 사람들은 어떻게 먹었을까?")
-                    .font(.medium16)
-                // 술상 탭 이동
-                Button {
-                    // 술상 탭뷰로 이동
-                    selectedTabIndex = 2
-                } label: {
-                    Text("추천 술상 보러가기")
-                        .font(.medium16)
-                        .foregroundStyle(.mainAccent03)
-                        .underline()
-                }
-                // 비로그인
+                
             } else {
                 VStack(alignment: .center, spacing: 10) {
                     VStack {

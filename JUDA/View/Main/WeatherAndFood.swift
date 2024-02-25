@@ -92,13 +92,31 @@ struct WeatherAndFood: View {
                             Text("한 잔 어때요?")
                         }
                     } else {
-                        HStack(spacing: 6) {
-                            Text("안주")
-                                .foregroundStyle(.mainAccent03)
-                            Text("와")
-                            Text("술")
-                                .foregroundStyle(.mainAccent03)
-                            Text("조합을 확인하세요.")
+                        VStack(alignment: .center, spacing: 10) {
+                            VStack {
+                                Text("오늘의 날씨에 맞는")
+                                HStack {
+                                    Text("술과 안주")
+                                        .foregroundStyle(.mainAccent03)
+                                    Text("를 추천 받고 싶다면?")
+                                }
+                            }
+                            .font(.medium18)
+                            // TODO: NavigationLink - value 로 수정
+                            NavigationLink {
+                                LogInView()
+                                    .modifier(TabBarHidden())
+                            } label: {
+                                HStack(alignment: .center) {
+                                    Text("로그인 하러가기")
+                                        .font(.semibold16)
+                                        .foregroundStyle(.mainAccent03)
+                                }
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 10)
+                                .background(.mainAccent03.opacity(0.2))
+                                .clipShape(.rect(cornerRadius: 10))
+                            }
                         }
                     }
                 }

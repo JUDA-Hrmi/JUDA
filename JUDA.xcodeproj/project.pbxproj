@@ -15,7 +15,6 @@
 		090FF1D02B83436000AF22B5 /* View +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090FF1CF2B83436000AF22B5 /* View +.swift */; };
 		090FF1D52B83570F00AF22B5 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = ACCFECBB2B7FAA50009E5E9C /* FirebaseFirestore */; };
 		09254CA72B637C9900569D94 /* CustomDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09254CA62B637C9900569D94 /* CustomDivider.swift */; };
-		09394C4A2B74A49A0077F78B /* SuggestDrink.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12832B6A8D6100169B23 /* SuggestDrink.swift */; };
 		09394C4B2B74A49A0077F78B /* PostOrLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12852B6A8D7800169B23 /* PostOrLogin.swift */; };
 		0961B7972B6624D300A9F553 /* DrinkInfoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0961B7962B6624D300A9F553 /* DrinkInfoList.swift */; };
 		0961B7992B6624DD00A9F553 /* DrinkInfoGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */; };
@@ -87,7 +86,6 @@
 		AC110B572B69658C005390BB /* ChangeUserNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC110B562B69658C005390BB /* ChangeUserNameView.swift */; };
 		AC2A053C2B88EC32003F23F7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = AC2A053B2B88EC32003F23F7 /* Kingfisher */; };
 		AC5778E52B6FC20C00F7B04B /* NavigationProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5778E42B6FC20C00F7B04B /* NavigationProfileView.swift */; };
-		AC6D12882B6A8DD300169B23 /* TodayDrinkRecommended.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12872B6A8DD300169B23 /* TodayDrinkRecommended.swift */; };
 		AC6D128A2B6A8ED100169B23 /* WeatherAndFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12892B6A8ED100169B23 /* WeatherAndFood.swift */; };
 		AC797BDA2B8B8BEB0018D227 /* DrinkTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC797BD92B8B8BEB0018D227 /* DrinkTopView.swift */; };
 		AC797BDC2B8B8DD20018D227 /* PostTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC797BDB2B8B8DD20018D227 /* PostTopView.swift */; };
@@ -208,9 +206,7 @@
 		7B9265702B6941D000840095 /* PostReportToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportToolbar.swift; sourceTree = "<group>"; };
 		AC110B562B69658C005390BB /* ChangeUserNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeUserNameView.swift; sourceTree = "<group>"; };
 		AC5778E42B6FC20C00F7B04B /* NavigationProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationProfileView.swift; sourceTree = "<group>"; };
-		AC6D12832B6A8D6100169B23 /* SuggestDrink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestDrink.swift; sourceTree = "<group>"; };
 		AC6D12852B6A8D7800169B23 /* PostOrLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOrLogin.swift; sourceTree = "<group>"; };
-		AC6D12872B6A8DD300169B23 /* TodayDrinkRecommended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayDrinkRecommended.swift; sourceTree = "<group>"; };
 		AC6D12892B6A8ED100169B23 /* WeatherAndFood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAndFood.swift; sourceTree = "<group>"; };
 		AC797BD92B8B8BEB0018D227 /* DrinkTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkTopView.swift; sourceTree = "<group>"; };
 		AC797BDB2B8B8DD20018D227 /* PostTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTopView.swift; sourceTree = "<group>"; };
@@ -507,8 +503,6 @@
 				AC98D1D32B7358AE006F6EC9 /* AiViewModel.swift */,
 				AC98D1D72B7359CC006F6EC9 /* WeatherViewModel.swift */,
 				AC6D12892B6A8ED100169B23 /* WeatherAndFood.swift */,
-				AC6D12832B6A8D6100169B23 /* SuggestDrink.swift */,
-				AC6D12872B6A8DD300169B23 /* TodayDrinkRecommended.swift */,
 				AC6D12852B6A8D7800169B23 /* PostOrLogin.swift */,
 				AC797BD92B8B8BEB0018D227 /* DrinkTopView.swift */,
 				AC797BDB2B8B8DD20018D227 /* PostTopView.swift */,
@@ -767,7 +761,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				09394C4A2B74A49A0077F78B /* SuggestDrink.swift in Sources */,
 				0902EB492B7E3372003D555E /* ProfileSettingView.swift in Sources */,
 				09394C4B2B74A49A0077F78B /* PostOrLogin.swift in Sources */,
 				7BBDFF722B6B912C0036FB8B /* TabItem.swift in Sources */,
@@ -804,7 +797,6 @@
 				AC98D1D82B7359CC006F6EC9 /* WeatherViewModel.swift in Sources */,
 				09F8699C2B68E4CA00A56A4C /* WellMatched.swift in Sources */,
 				096E631A2B616F31009246CE /* DrinkGridCell.swift in Sources */,
-				AC6D12882B6A8DD300169B23 /* TodayDrinkRecommended.swift in Sources */,
 				0902EB4B2B7E4E72003D555E /* User.swift in Sources */,
 				09F869982B68E48400A56A4C /* DrinkDetails.swift in Sources */,
 				B12330492B6A99B400DE2A93 /* SettingView.swift in Sources */,
