@@ -65,9 +65,10 @@ struct AlarmListContent: View {
                 let alarm = notificationViewModel.notifications[index]
 //                let user = notificationViewModel.alarms[index]
                 // TODO: NavigationLink - value 로 수정
-                NavigationLink(destination: PostDetailView(postUserType: .writter, nickName: "Hrmi", isLike: .constant(false), likeCount: .constant(45))) {
-                    AlarmStoreListCell(alarm: alarm)
-                }
+//                NavigationLink(destination: PostDetailView(postUserType: .writter, nickName: "Hrmi", isLike: .constant(false), likeCount: .constant(45))) {
+//                    AlarmStoreListCell(alarm: alarm)
+//                }
+
                 if alarm != notificationViewModel.notifications.last {
                     CustomDivider()
                 }

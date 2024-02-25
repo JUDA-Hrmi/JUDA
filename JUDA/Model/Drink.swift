@@ -6,26 +6,20 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
-enum DrinkJsonType: CaseIterable {
-	case beer, wine, traditional, whiskey
-	
-	var jsonName: String {
-		switch self {
-		case .beer:
-			return "Beer_food"
-		case .wine:
-			return "test_wine"
-		case .traditional:
-			return "traditional_liqur_food"
-		case .whiskey:
-			return "test_whiskey"
-		}
-	}
+// MARK: - 술의 카테고리
+enum DrinkType: String {
+    case all = "전체"
+    case traditional = "우리술"
+    case beer = "맥주"
+    case wine = "와인"
+    case whiskey = "위스키"
 }
 
-// Firebase에서 사용하는 Drink Model
+// MARK: - Firebase에서 사용하는 Drink Model
 struct FBDrink: Codable {
+	@DocumentID var drinkID: String?
 	let category: String
 	let type: String
 	let name: String
@@ -48,68 +42,14 @@ struct FBDrink: Codable {
     let taggedPostID: [String]
 	let agePreference: [String: Int]
 	let genderPreference: [String: Int]
-}
 
-// Json 파싱 모델
-struct RawBeer: Codable {
-	let category: String
-	let type: String
-	let name: String
-	let amount: String
-	let price: Int
-	let alcohol: Double
-	let country: String
-	let aroma: [String]
-	let taste: [String]
-	let finish: [String]
-	let wellMatched: [String]
-}
-
-// Json 파싱 모델
-struct RawTraditional: Codable {
-	let category: String
-	let type: String
-	let name: String
-	let amount: String
-	let price: Int
-	let alcohol: Double
-	let country: String
-	let sweet: Int
-	let sour: Int
-	let refresh: Int
-	let body: Int
-	let carbonated: Int
-    let material: [String]
-	let wellMatched: [String]
-}
-
-// Json 파싱 모델
-struct RawWine: Codable {
-	let category: String
-	let type: String
-	let name: String
-	let amount: String
-	let price: Int
-	let alcohol: Double
-	let country: String
-	let province: String
-	let aroma: [String]
-	let taste: [String]
-	let finish: [String]
-	let wellMatched: [String]
-}
-
-// Json 파싱 모델
-struct RawWhiskey: Codable {
-	let category: String
-	let type: String
-	let name: String
-	let amount: String
-	let price: Int
-	let alcohol: Double
-	let country: String
-	let aroma: [String]
-	let taste: [String]
-	let finish: [String]
-	let wellMatched: [String]
+    static let dummyData = FBDrink(
+        category: "와인", type: "레드", name: "맥매니스, 캘리포니아 피노 누아",
+        amount: "750ml", price: 65000, alcohol: 13.5,
+        country: "미국", province: "캘리포니아",
+        aroma: ["딸기잼", "체리"], taste: ["바닐라", "크림", "블루베리"], finish: ["깔끔한"],
+        sweet: nil, sour: nil, refresh: nil, body: nil, carbonated: nil, material: nil,
+        wellMatched: ["치즈", "오리고기"], rating: 4.1,
+        taggedPostID: ["z", "s"], agePreference: ["20": 42, "30": 72, "40": 40, "50": 19],
+        genderPreference: ["female": 68, "male": 40 ])
 }

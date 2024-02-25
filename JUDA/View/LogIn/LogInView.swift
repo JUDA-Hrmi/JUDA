@@ -53,7 +53,7 @@ struct LogInView: View {
                 } onCompletion: { result in
                     authService.handleSignInWithAppleCompletion(result)
                 }
-                .signInWithAppleButtonStyle(colorScheme.selectedColor == .light ? .black: (colorScheme.selectedColor == .dark ? .white : .black))
+                .signInWithAppleButtonStyle(colorScheme.selectedColor == .light ? .black : .white)
                 .frame(width: 300, height: 48)
             }
             Spacer()

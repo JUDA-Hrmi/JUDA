@@ -17,7 +17,7 @@ struct MainView: View {
 	
     var body: some View {
         NavigationStack {
-            VStack(alignment: .center, spacing: 0) {
+            VStack(alignment: .leading, spacing: 0) {
                 Spacer()
                 // 날씨 와 어울리는 술 + 안주
 //                WeatherAndFood()

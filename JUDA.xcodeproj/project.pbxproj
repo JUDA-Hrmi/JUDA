@@ -20,14 +20,21 @@
 		0961B7992B6624DD00A9F553 /* DrinkInfoGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */; };
 		096E63182B616886009246CE /* DrinkListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096E63172B616886009246CE /* DrinkListCell.swift */; };
 		096E631A2B616F31009246CE /* DrinkGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096E63192B616F31009246CE /* DrinkGridCell.swift */; };
+		0974A1502B8B7B6C00476199 /* ShimmerPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A14F2B8B7B6C00476199 /* ShimmerPostCell.swift */; };
+		0974A1522B8B84B600476199 /* ShimmerDrinkGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A1512B8B84B600476199 /* ShimmerDrinkGridCell.swift */; };
+		0974A1542B8B84E900476199 /* ShimmerDrinkListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A1532B8B84E900476199 /* ShimmerDrinkListCell.swift */; };
 		0999125C2B84654400E72C73 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0999125B2B84654400E72C73 /* FirebaseCrashlytics */; };
+		099912652B85799800E72C73 /* CircularLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099912642B85799800E72C73 /* CircularLoaderView.swift */; };
+		099D9AA62B8720AC002261F7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 099D9AA52B8720AC002261F7 /* Kingfisher */; };
+		099D9AAE2B88749E002261F7 /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099D9AAD2B88749E002261F7 /* Debouncer.swift */; };
 		099F16192B750E7E00D8BEDA /* UINavigationController +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099F16182B750E7E00D8BEDA /* UINavigationController +.swift */; };
 		099F161B2B75347100D8BEDA /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099F161A2B75347100D8BEDA /* CheckBox.swift */; };
+		09A320142B8929CC00DE4646 /* URL +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A320132B8929CC00DE4646 /* URL +.swift */; };
+		09A320162B8B30D100DE4646 /* SearchDrinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A320152B8B30D100DE4646 /* SearchDrinkViewModel.swift */; };
 		09A6AD722B70B46E00606585 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD712B70B46E00606585 /* AppViewModel.swift */; };
 		09A6AD7A2B71F6D800606585 /* LibraryPhotosPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD792B71F6D800606585 /* LibraryPhotosPicker.swift */; };
 		09A6AD7E2B72A53C00606585 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD7D2B72A53C00606585 /* Errors.swift */; };
 		09B4A0452B6E5DAE0082B235 /* PresentationDetent +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B4A0442B6E5DAE0082B235 /* PresentationDetent +.swift */; };
-		09BCC0B12B79EB5D00FF4D1B /* DrinkDummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BCC0B02B79EB5D00FF4D1B /* DrinkDummyData.swift */; };
 		09BCC0B32B7A2BE600FF4D1B /* KoreanTastingNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BCC0B22B7A2BE600FF4D1B /* KoreanTastingNotes.swift */; };
 		09BCC1392B7B99D600FF4D1B /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BCC1382B7B99D600FF4D1B /* AuthService.swift */; };
 		09BCC13C2B7B99FF00FF4D1B /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 09BCC13B2B7B99FF00FF4D1B /* FirebaseAuth */; };
@@ -135,7 +142,6 @@
 		B1EE24662B613EB1007F68B0 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = B1EE24652B613EB1007F68B0 /* FirebaseAnalyticsOnDeviceConversion */; };
 		B1EE24682B613EB1007F68B0 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B1EE24672B613EB1007F68B0 /* FirebaseAnalyticsSwift */; };
 		B1EE246A2B613EB1007F68B0 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = B1EE24692B613EB1007F68B0 /* FirebaseAnalyticsWithoutAdIdSupport */; };
-		B1EE24732B61431A007F68B0 /* DummyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24722B61431A007F68B0 /* DummyModel.swift */; };
 		B1EE24882B61445E007F68B0 /* MypageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24872B61445E007F68B0 /* MypageView.swift */; };
 		B1EE248A2B614464007F68B0 /* LikedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24892B614464007F68B0 /* LikedView.swift */; };
 		B1EE248E2B614470007F68B0 /* PostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE248D2B614470007F68B0 /* PostsView.swift */; };
@@ -146,7 +152,7 @@
 		B1EE24982B6144BD007F68B0 /* LikedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24972B6144BD007F68B0 /* LikedViewModel.swift */; };
 		B1EE249A2B6144C5007F68B0 /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24992B6144C5007F68B0 /* RecordViewModel.swift */; };
 		B1EE249C2B6144CD007F68B0 /* PostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE249B2B6144CD007F68B0 /* PostsViewModel.swift */; };
-		B1EE249E2B6144DD007F68B0 /* DrinkInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE249D2B6144DD007F68B0 /* DrinkInfoViewModel.swift */; };
+		B1EE249E2B6144DD007F68B0 /* DrinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE249D2B6144DD007F68B0 /* DrinkViewModel.swift */; };
 		B1EE24A22B6144EA007F68B0 /* LogInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24A12B6144EA007F68B0 /* LogInViewModel.swift */; };
 		B1EE24A52B614872007F68B0 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24A42B614872007F68B0 /* SearchBar.swift */; };
 /* End PBXBuildFile section */
@@ -162,13 +168,20 @@
 		0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoGrid.swift; sourceTree = "<group>"; };
 		096E63172B616886009246CE /* DrinkListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkListCell.swift; sourceTree = "<group>"; };
 		096E63192B616F31009246CE /* DrinkGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkGridCell.swift; sourceTree = "<group>"; };
+		0974A14A2B8B787E00476199 /* JUDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JUDA.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0974A14F2B8B7B6C00476199 /* ShimmerPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerPostCell.swift; sourceTree = "<group>"; };
+		0974A1512B8B84B600476199 /* ShimmerDrinkGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerDrinkGridCell.swift; sourceTree = "<group>"; };
+		0974A1532B8B84E900476199 /* ShimmerDrinkListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerDrinkListCell.swift; sourceTree = "<group>"; };
+		099912642B85799800E72C73 /* CircularLoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularLoaderView.swift; sourceTree = "<group>"; };
+		099D9AAD2B88749E002261F7 /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		099F16182B750E7E00D8BEDA /* UINavigationController +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController +.swift"; sourceTree = "<group>"; };
 		099F161A2B75347100D8BEDA /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
+		09A320132B8929CC00DE4646 /* URL +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL +.swift"; sourceTree = "<group>"; };
+		09A320152B8B30D100DE4646 /* SearchDrinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDrinkViewModel.swift; sourceTree = "<group>"; };
 		09A6AD712B70B46E00606585 /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		09A6AD792B71F6D800606585 /* LibraryPhotosPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryPhotosPicker.swift; sourceTree = "<group>"; };
 		09A6AD7D2B72A53C00606585 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		09B4A0442B6E5DAE0082B235 /* PresentationDetent +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PresentationDetent +.swift"; sourceTree = "<group>"; };
-		09BCC0B02B79EB5D00FF4D1B /* DrinkDummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDummyData.swift; sourceTree = "<group>"; };
 		09BCC0B22B7A2BE600FF4D1B /* KoreanTastingNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KoreanTastingNotes.swift; sourceTree = "<group>"; };
 		09BCC1352B7B956A00FF4D1B /* JUDA.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JUDA.entitlements; sourceTree = "<group>"; };
 		09BCC1382B7B99D600FF4D1B /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -269,7 +282,7 @@
 		B1EE24972B6144BD007F68B0 /* LikedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedViewModel.swift; sourceTree = "<group>"; };
 		B1EE24992B6144C5007F68B0 /* RecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
 		B1EE249B2B6144CD007F68B0 /* PostsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsViewModel.swift; sourceTree = "<group>"; };
-		B1EE249D2B6144DD007F68B0 /* DrinkInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoViewModel.swift; sourceTree = "<group>"; };
+		B1EE249D2B6144DD007F68B0 /* DrinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkViewModel.swift; sourceTree = "<group>"; };
 		B1EE249F2B6144E3007F68B0 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		B1EE24A12B6144EA007F68B0 /* LogInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewModel.swift; sourceTree = "<group>"; };
 		B1EE24A42B614872007F68B0 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
@@ -284,6 +297,7 @@
 				B14957F92B86584D00870297 /* FirebaseAppCheck in Frameworks */,
 				B1CF61212B83763000B59447 /* FirebaseFirestore in Frameworks */,
 				B14957F72B86584D00870297 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				099D9AA62B8720AC002261F7 /* Kingfisher in Frameworks */,
 				B1EE24682B613EB1007F68B0 /* FirebaseAnalyticsSwift in Frameworks */,
 				B14957F12B86584D00870297 /* FirebaseAnalytics in Frameworks */,
 				B14958072B86593C00870297 /* Lottie in Frameworks */,
@@ -333,11 +347,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		099912662B85C43E00E72C73 /* JsonUploadFiles */ = {
+			isa = PBXGroup;
+			children = (
+				7BE14B962B84767000C1F6C3 /* DrinkUploadViewModel.swift */,
+			);
+			path = JsonUploadFiles;
+			sourceTree = "<group>";
+		};
 		09BCC1362B7B99BD00FF4D1B /* App */ = {
 			isa = PBXGroup;
 			children = (
 				09A6AD712B70B46E00606585 /* AppViewModel.swift */,
-				7BE14B962B84767000C1F6C3 /* DrinkUploadViewModel.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -399,8 +420,10 @@
 				090FF1CF2B83436000AF22B5 /* View +.swift */,
 				09B4A0442B6E5DAE0082B235 /* PresentationDetent +.swift */,
 				099F16182B750E7E00D8BEDA /* UINavigationController +.swift */,
+				09A320132B8929CC00DE4646 /* URL +.swift */,
 				B158F83E2B657A9000E33C47 /* Theme.swift */,
 				09F869922B68E36800A56A4C /* Formatter.swift */,
+				099D9AAD2B88749E002261F7 /* Debouncer.swift */,
 				B1EE24A32B614508007F68B0 /* Components */,
 				B121A5682B5F8D4800667D42 /* Pretendard */,
 			);
@@ -445,7 +468,7 @@
 			children = (
 				B1B8FE7B2B5EA9D900921BBE /* JUDA */,
 				090FF1C82B82ED8400AF22B5 /* Frameworks */,
-				2C7FD54A2B848E0300169512 /* JUDA.app */,
+				0974A14A2B8B787E00476199 /* JUDA.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -479,8 +502,6 @@
 		B1EE246D2B614280007F68B0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B1EE24722B61431A007F68B0 /* DummyModel.swift */,
-				09BCC0B02B79EB5D00FF4D1B /* DrinkDummyData.swift */,
 				0902EB4A2B7E4E72003D555E /* User.swift */,
 				7BE14B942B84733900C1F6C3 /* Drink.swift */,
 				2C7FD5512B848EEF00169512 /* Post.swift */,
@@ -491,13 +512,14 @@
 		B1EE246E2B614289007F68B0 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				099912662B85C43E00E72C73 /* JsonUploadFiles */,
 				09BCC1362B7B99BD00FF4D1B /* App */,
 				09BCC1372B7B99C500FF4D1B /* Auth */,
 				B1EE24802B6143C7007F68B0 /* Mypage */,
 				B1EE24812B6143CD007F68B0 /* Liked */,
 				B1EE24822B6143D2007F68B0 /* Record */,
 				B1EE24832B6143DC007F68B0 /* Posts */,
-				B1EE24842B6143E4007F68B0 /* DrinkInfo */,
+				B1EE24842B6143E4007F68B0 /* Drink */,
 				B1EE24852B6143EA007F68B0 /* Main */,
 				B1EE24862B6143EF007F68B0 /* LogIn */,
 			);
@@ -649,12 +671,13 @@
 			path = Posts;
 			sourceTree = "<group>";
 		};
-		B1EE24842B6143E4007F68B0 /* DrinkInfo */ = {
+		B1EE24842B6143E4007F68B0 /* Drink */ = {
 			isa = PBXGroup;
 			children = (
-				B1EE249D2B6144DD007F68B0 /* DrinkInfoViewModel.swift */,
+				B1EE249D2B6144DD007F68B0 /* DrinkViewModel.swift */,
+				09A320152B8B30D100DE4646 /* SearchDrinkViewModel.swift */,
 			);
-			path = DrinkInfo;
+			path = Drink;
 			sourceTree = "<group>";
 		};
 		B1EE24852B6143EA007F68B0 /* Main */ = {
@@ -678,8 +701,11 @@
 			children = (
 				B1EE24A42B614872007F68B0 /* SearchBar.swift */,
 				096E63192B616F31009246CE /* DrinkGridCell.swift */,
+				0974A1512B8B84B600476199 /* ShimmerDrinkGridCell.swift */,
 				096E63172B616886009246CE /* DrinkListCell.swift */,
+				0974A1532B8B84E900476199 /* ShimmerDrinkListCell.swift */,
 				7B904C652B6168C60052384A /* PostCell.swift */,
+				0974A14F2B8B7B6C00476199 /* ShimmerPostCell.swift */,
 				7B904C672B6184560052384A /* CustomTextSegment.swift */,
 				2C2FF2972B63916700B2301A /* StarRating.swift */,
 				B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */,
@@ -689,6 +715,7 @@
 				09A6AD792B71F6D800606585 /* LibraryPhotosPicker.swift */,
 				099F161A2B75347100D8BEDA /* CheckBox.swift */,
 				090FF1CD2B83413100AF22B5 /* CustomLoadingView.swift */,
+				099912642B85799800E72C73 /* CircularLoaderView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -734,9 +761,10 @@
 				B14958042B86590400870297 /* OpenAI */,
 				B14958062B86593C00870297 /* Lottie */,
 				B10307282B8A367800CEAD98 /* FirebaseMessaging */,
+				099D9AA52B8720AC002261F7 /* Kingfisher */,
 			);
 			productName = FinalHrmiProjects;
-			productReference = 2C7FD54A2B848E0300169512 /* JUDA.app */;
+			productReference = 0974A14A2B8B787E00476199 /* JUDA.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -768,6 +796,7 @@
 				B1EE24622B613EB1007F68B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				AC98D1CB2B735765006F6EC9 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				AC98D1D02B73586F006F6EC9 /* XCRemoteSwiftPackageReference "OpenAI" */,
+				099D9AA42B8720AC002261F7 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = B1B8FE702B5EA9D900921BBE;
 			projectDirPath = "";
@@ -811,6 +840,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0974A1542B8B84E900476199 /* ShimmerDrinkListCell.swift in Sources */,
 				09394C4A2B74A49A0077F78B /* SuggestDrink.swift in Sources */,
 				0902EB492B7E3372003D555E /* ProfileSettingView.swift in Sources */,
 				09394C4B2B74A49A0077F78B /* PostOrLogin.swift in Sources */,
@@ -818,6 +848,7 @@
 				7BBDFF732B6B912C0036FB8B /* DrinkInfoSegment.swift in Sources */,
 				7BBDFF6E2B6B90EB0036FB8B /* JUDAApp.swift in Sources */,
 				7BBDFF6F2B6B90EB0036FB8B /* AddTagView.swift in Sources */,
+				09A320162B8B30D100DE4646 /* SearchDrinkViewModel.swift in Sources */,
 				7BBDFF702B6B90EB0036FB8B /* PostGrid.swift in Sources */,
 				090FF1CE2B83413100AF22B5 /* CustomLoadingView.swift in Sources */,
 				7BBDFF712B6B90EB0036FB8B /* MainViewModel.swift in Sources */,
@@ -836,14 +867,16 @@
 				09A6AD722B70B46E00606585 /* AppViewModel.swift in Sources */,
 				7B6D76B32B67D3B700601B55 /* PostDrinkRating.swift in Sources */,
 				7B6D76B12B67D1E100601B55 /* PostPhotoScroll.swift in Sources */,
+				0974A1502B8B7B6C00476199 /* ShimmerPostCell.swift in Sources */,
 				09F869B52B6A47B700A56A4C /* AlarmStoreListCell.swift in Sources */,
 				B1EE249A2B6144C5007F68B0 /* RecordViewModel.swift in Sources */,
-				B1EE24732B61431A007F68B0 /* DummyModel.swift in Sources */,
 				2C63DD672B67EB1B00770E3A /* RecordView.swift in Sources */,
 				7B6D76AF2B67CFC900601B55 /* PostInfo.swift in Sources */,
 				7BE14B972B84767000C1F6C3 /* DrinkUploadViewModel.swift in Sources */,
+				0974A1522B8B84B600476199 /* ShimmerDrinkGridCell.swift in Sources */,
+				099D9AAE2B88749E002261F7 /* Debouncer.swift in Sources */,
 				B12BEE472B6A9E1000580D29 /* AppServiceInfoView.swift in Sources */,
-				B1EE249E2B6144DD007F68B0 /* DrinkInfoViewModel.swift in Sources */,
+				B1EE249E2B6144DD007F68B0 /* DrinkViewModel.swift in Sources */,
 				AC98D1D82B7359CC006F6EC9 /* WeatherViewModel.swift in Sources */,
 				09F8699C2B68E4CA00A56A4C /* WellMatched.swift in Sources */,
 				096E631A2B616F31009246CE /* DrinkGridCell.swift in Sources */,
@@ -851,7 +884,6 @@
 				0902EB4B2B7E4E72003D555E /* User.swift in Sources */,
 				09F869982B68E48400A56A4C /* DrinkDetails.swift in Sources */,
 				B12330492B6A99B400DE2A93 /* SettingView.swift in Sources */,
-				09BCC0B12B79EB5D00FF4D1B /* DrinkDummyData.swift in Sources */,
 				7B904C682B6184560052384A /* CustomTextSegment.swift in Sources */,
 				2C2AD4FD2B68891C00C681F4 /* SearchTagView.swift in Sources */,
 				B1EE24A22B6144EA007F68B0 /* LogInViewModel.swift in Sources */,
@@ -882,6 +914,7 @@
 				0961B7992B6624DD00A9F553 /* DrinkInfoGrid.swift in Sources */,
 				B1EE24902B614477007F68B0 /* DrinkInfoView.swift in Sources */,
 				09254CA72B637C9900569D94 /* CustomDivider.swift in Sources */,
+				099912652B85799800E72C73 /* CircularLoaderView.swift in Sources */,
 				09BCC1582B7C805400FF4D1B /* UserAgreementView.swift in Sources */,
 				B121A5722B5F8EE100667D42 /* Font +.swift in Sources */,
 				B1EE249C2B6144CD007F68B0 /* PostsViewModel.swift in Sources */,
@@ -902,6 +935,7 @@
 				B1EE24882B61445E007F68B0 /* MypageView.swift in Sources */,
 				09F869A02B68E50000A56A4C /* TaggedTrendingPosts.swift in Sources */,
 				AC98D1D42B7358AE006F6EC9 /* AiViewModel.swift in Sources */,
+				09A320142B8929CC00DE4646 /* URL +.swift in Sources */,
 				7B6D76B52B67D5F900601B55 /* PostTags.swift in Sources */,
 				7BE14B952B84733900C1F6C3 /* Drink.swift in Sources */,
 				09A6AD7E2B72A53C00606585 /* Errors.swift in Sources */,
@@ -1146,6 +1180,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		099D9AA42B8720AC002261F7 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.11.0;
+			};
+		};
 		AC98D1CB2B735765006F6EC9 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
@@ -1182,6 +1224,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B1EE24622B613EB1007F68B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
+		};
+		099D9AA52B8720AC002261F7 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 099D9AA42B8720AC002261F7 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 		09BCC13B2B7B99FF00FF4D1B /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;

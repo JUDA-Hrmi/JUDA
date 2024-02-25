@@ -27,6 +27,9 @@ final class AuthService: ObservableObject {
     @Published var gender: String = ""
     @Published var profileImage: UIImage?
     @Published var notificationAllowed: Bool = false
+	@Published var likedPosts = [String]()
+	@Published var likedDrinks = [String]()
+
     // Error
     @Published var showError: Bool = false
     @Published var errorMessage: String = ""
@@ -43,7 +46,7 @@ final class AuthService: ObservableObject {
     private var listener: ListenerRegistration?
     
     // 로그아웃 및 탈퇴 시, 초기화
-    func reset() {
+    private func reset() {
         self.signInStatus = false
         self.isLoading = false
         self.isNewUser = false
@@ -53,6 +56,8 @@ final class AuthService: ObservableObject {
         self.gender = ""
         self.profileImage = nil
         self.notificationAllowed = false
+        self.likedPosts = []
+        self.likedDrinks = []
     }
     
     // 로그아웃
@@ -106,6 +111,21 @@ final class AuthService: ObservableObject {
             return false
         }
     }
+    
+    // 유저 좋아하는 술 리스트에 추가 or 삭제
+    func addOrRemoveToLikedDrinks(isLiked: Bool, _ drinkID: String?) {
+        guard let drinkID = drinkID else {
+            print("addOrRemoveToLikedDrinks - 술 ID 없음")
+            return
+        }
+        if !isLiked { // 좋아요 X -> O
+            likedDrinks.removeAll { $0 == drinkID }
+            print("removeAll")
+        } else { // 좋아요 O -> X
+            likedDrinks.append(drinkID)
+            print("append")
+        }
+    }
 }
 
 // MARK: - 닉네임 수정 버튼 클릭 -> 닉네임 업데이트
@@ -126,41 +146,42 @@ extension AuthService {
 // MARK: - 데이터 실시간 업데이트
 extension AuthService {
     private func updateUserFromSnapshot(_ documentSnapshot: DocumentSnapshot) {
-            // 문서의 데이터를 가져와서 User로 디코딩
-            if let user = try? documentSnapshot.data(as: UserField.self) {
-                // 해당 사용자의 데이터를 업데이트
-                self.uid = uid
-                self.name = user.name
-                self.age = user.age
-                self.gender = user.gender
-            }
+        // 문서의 데이터를 가져와서 User로 디코딩
+        if let user = try? documentSnapshot.data(as: UserField.self) {
+            // 해당 사용자의 데이터를 업데이트
+            self.uid = uid
+            self.name = user.name
+            self.age = user.age
+            self.gender = user.gender
+            self.likedPosts = user.likedPosts ?? []
+            self.likedDrinks = user.likedDrinks ?? []
         }
+    }
     
     func startListeningForUser() {
-            let userRef = Firestore.firestore().collection("users").document(uid)
+        let userRef = Firestore.firestore().collection("users").document(uid)
 
-            // 기존에 활성화된 리스너가 있다면 삭제
-            listener?.remove()
+        // 기존에 활성화된 리스너가 있다면 삭제
+        listener?.remove()
 
-            // 새로운 리스너 등록
-            listener = userRef.addSnapshotListener { [weak self] documentSnapshot, error in
-                guard let self = self else { return }
+        // 새로운 리스너 등록
+        listener = userRef.addSnapshotListener { [weak self] documentSnapshot, error in
+            guard let self = self else { return }
 
-                if let error = error {
-                    print("Error fetching user data: \(error)")
-                    return
-                }
+            if let error = error {
+                print("Error fetching user data: \(error)")
+                return
+            }
 
-                // 사용자 데이터 업데이트 메서드 호출
-                if let documentSnapshot = documentSnapshot {
-                    self.updateUserFromSnapshot(documentSnapshot)
-                }
+            // 사용자 데이터 업데이트 메서드 호출
+            if let documentSnapshot = documentSnapshot {
+                self.updateUserFromSnapshot(documentSnapshot)
             }
         }
-
+    }
 }
 
-// MARK: - firestore : 유저 정보 불러오기 & 유저 저장
+// MARK: - firestore : 유저 정보 불러오기 & 유저 저장 & 유저 업데이트
 extension AuthService {
     // firestore 에 유저 존재 유무 체크
     func checkNewUser(uid: String) async -> Bool {
@@ -190,9 +211,10 @@ extension AuthService {
                 fetchProfileImage()
                 self.gender = userData.gender
                 self.notificationAllowed = userData.notificationAllowed
-                print("Data:", userData)
+                self.likedDrinks = userData.likedDrinks ?? []
+                self.likedPosts = userData.likedPosts ?? []
             } else {
-                print("Document does not exist in cache")
+                print("Document does not exist")
             }
         } catch {
             print("Error getting document: \(error)")
@@ -206,6 +228,24 @@ extension AuthService {
             print("Success - 유저 정보 저장")
         } catch {
             print("유저 정보 저장 에러 : \(error.localizedDescription)")
+        }
+    }
+    
+    // 유저 정보 업데이트 - post
+    func userLikedPostsUpdate() {
+        collectionRef.document(self.uid).updateData(["likedPosts": self.likedPosts]) { error in
+            if let error = error {
+                print("update error \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    // 유저 정보 업데이트 - drink
+    func userLikedDrinksUpdate() {
+        collectionRef.document(self.uid).updateData(["likedDrinks": self.likedDrinks]) { error in
+            if let error = error {
+                print("update error \(error.localizedDescription)")
+            }
         }
     }
 }
@@ -230,7 +270,7 @@ extension AuthService {
                     return
                 }
             }
-            print("uploadProfileImageToStorage : \(self.uid)-profileImag)")
+            print("uploadProfileImageToStorage : \(self.uid)-profileImage)")
             self.profileImage = image
         } else {
             print("error - uploadProfileImageToStorage : data X")
@@ -255,7 +295,6 @@ extension AuthService {
 // MARK: - SignInWithAppleButton : request & result
 extension AuthService {
     func handleSignInWithAppleRequest(_ request: ASAuthorizationAppleIDRequest) {
-//        signInButtonClicked = true
         request.requestedScopes = [.fullName, .email]
         let nonce = randomNonceString()
         currentNonce = nonce

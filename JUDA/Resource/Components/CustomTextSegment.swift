@@ -7,12 +7,6 @@
 
 import SwiftUI
 
-// MARK: - PostView와 LikedView의 세그먼트에서 사용될 문자열을 저장
-enum PostOrLiked {
-	static let post = ["인기", "최신"]
-	static let liked = ["술찜 리스트", "술상 리스트"]
-}
-
 // MARK: - 텍스트 형태 세그먼트
 struct CustomTextSegment: View {
 	let segments: [String]
@@ -52,5 +46,6 @@ struct CustomTextSegment: View {
 }
 
 #Preview {
-	CustomTextSegment(segments: PostOrLiked.post, selectedSegmentIndex: .constant(1))
+    CustomTextSegment(segments: ["인기", "최신"],
+                      selectedSegmentIndex: .constant(1))
 }
