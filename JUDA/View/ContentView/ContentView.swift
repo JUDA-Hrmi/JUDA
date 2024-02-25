@@ -55,6 +55,16 @@ struct ContentView: View {
                     .tag(index)
             }
         }
+        // deepLink 통해서, url 의 host 에 따라 탭 이동.
+        .onOpenURL { url in
+            guard let tabID = url.tabIdentifier else { return }
+            switch tabID {
+            case .drinks:
+                selectedTabIndex = 1
+            case .posts:
+                selectedTabIndex = 2
+            }
+        }
         .tint(.mainAccent03)
         // SettingView - 화면 모드 -> 선택한 옵션에 따라 배경색 변환
         .preferredColorScheme(colorScheme.selectedColor == .light ? .light : colorScheme.selectedColor == .dark ? .dark : .none)
@@ -79,6 +89,8 @@ struct ContentView: View {
         case .liked:
             if authService.signInStatus {
                 LikedView()
+                    .environmentObject(recordViewModel)
+                    .environmentObject(drinkViewModel)
                     .environmentObject(likedViewModel)
             } else {
                 EmptyView()

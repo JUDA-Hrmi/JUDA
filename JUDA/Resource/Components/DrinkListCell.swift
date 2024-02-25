@@ -13,6 +13,7 @@ struct DrinkListCell: View {
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var drinkViewModel: DrinkViewModel
     @EnvironmentObject private var likedViewModel: LikedViewModel
+    @EnvironmentObject private var recordViewModel: RecordViewModel
 
     let drink: FBDrink
     let searchTag: Bool // searchTagView에서 사용하는지에 대한 여부
@@ -33,7 +34,21 @@ struct DrinkListCell: View {
             // 술 정보
             HStack(alignment: .center, spacing: 20) {
                 // 술 사진
-                if liked,
+                if searchTag,
+                   let url = recordViewModel.searchDrinksImageURL[drink.drinkID ?? ""] {
+                    KFImage.url(url)
+                        .placeholder {
+                            CircularLoaderView(size: 20)
+                                .frame(width: 70, height: 103.48)
+                        }
+                        .loadDiskFileSynchronously(true) // 디스크에서 동기적으로 이미지 가져오기
+                        .cancelOnDisappear(true) // 화면 이동 시, 진행중인 다운로드 중단
+                        .cacheMemoryOnly() // 메모리 캐시만 사용 (디스크 X)
+                        .fade(duration: 0.2) // 이미지 부드럽게 띄우기
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 70, height: 103.48)
+                } else if liked,
                    let url = likedViewModel.drinkImages[drink.drinkID ?? ""] {
                     KFImage.url(url)
                         .placeholder {
@@ -47,8 +62,7 @@ struct DrinkListCell: View {
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 70, height: 103.48)
-                } else if !liked,
-                          let url = drinkViewModel.drinkImages[drink.drinkID ?? ""] {
+                } else if let url = drinkViewModel.drinkImages[drink.drinkID ?? ""] {
                     KFImage.url(url)
                         .placeholder {
                             CircularLoaderView(size: 20)

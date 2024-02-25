@@ -14,7 +14,8 @@ struct DrinkDetailView: View {
     @EnvironmentObject private var drinkViewModel: DrinkViewModel
     
     @State private var windowWidth: CGFloat = 0
-    
+    @State private var shareImage: Image = Image("AppIcon") // shareLink 용 이미지
+
     let drink: FBDrink
     
     var body: some View {
@@ -56,6 +57,12 @@ struct DrinkDetailView: View {
         }
         .task {
             windowWidth = TagHandler.getScreenWidthWithoutPadding(padding: 20)
+            // shareLink 용 이미지 가져오기
+            if let uiImage = await drinkViewModel.getUIImage(
+                                category: DrinkType(rawValue: drink.category) ?? .all,
+                                detailedCategory: drink.type) {
+                shareImage = Image(uiImage: uiImage)
+            }
         }
         .navigationBarBackButtonHidden()
         .toolbar {
@@ -74,7 +81,7 @@ struct DrinkDetailView: View {
                           // 미리보기
                           preview: SharePreview(
                             Text(drink.name + " " + drink.amount),
-                            image: Image(systemName: "AppIcon")) // TODO: 변경
+                            image: shareImage)
                 ) {
                     Image(systemName: "square.and.arrow.up")
                 }
@@ -83,4 +90,3 @@ struct DrinkDetailView: View {
         .tint(.mainBlack)
     }
 }
-

@@ -270,7 +270,7 @@ extension AuthService {
                     return
                 }
             }
-            print("uploadProfileImageToStorage : \(self.uid)-profileImag)")
+            print("uploadProfileImageToStorage : \(self.uid)-profileImage)")
             self.profileImage = image
         } else {
             print("error - uploadProfileImageToStorage : data X")

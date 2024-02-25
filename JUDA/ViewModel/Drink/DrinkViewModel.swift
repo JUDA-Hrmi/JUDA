@@ -178,9 +178,26 @@ extension DrinkViewModel {
 
 // MARK: - FireStorage 에서 술 카테고리에 맞는 이미지 가져오기
 extension DrinkViewModel {
+    // 이미지 uiimage 로 1개만 받아오기
+    func getUIImage(category: DrinkType, detailedCategory: String) async -> UIImage? {
+        guard let imageName = Formatter.getImageName(category: category,
+                                           detailedCategory: detailedCategory) else {
+            print("fetchImage - imageName 없음")
+            return nil
+        }
+        let reference = storage.reference(withPath: "\(drinkImagesPath)\(imageName)")
+        do {
+            let data = try await reference.data(maxSize: 1 * 1024 * 1024)
+            return UIImage(data: data)
+        } catch {
+            print("Error - getUIImage: \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
     // 이미지 storage 에서 받아오기
     func fetchImage(category: DrinkType, detailedCategory: String, drinkID: String) {
-        guard let imageName = getImageName(category: category,
+        guard let imageName = Formatter.getImageName(category: category,
                                            detailedCategory: detailedCategory) else {
             if isFirstAccess { intendedURLCount -= 1 }
             print("fetchImage - imageName 없음")
@@ -196,58 +213,6 @@ extension DrinkViewModel {
                     self.isFirstAccess = false
                 }
             }
-        }
-    }
-    
-    // 술 데이터의 상세분류 ( db 에서 type ) 에 따라, 이미지 반환
-    // category : 술 종류, detailedCategory : 상세분류
-    private func getImageName(category: DrinkType, detailedCategory: String) -> String? {
-        switch category {
-        // 맥주
-        case .beer:
-            switch detailedCategory {
-            case "흑맥주":
-                return "darkBeer.png"
-            case "논알콜":
-                return "nonAlcoholBeer.png"
-            case "과일", "기타":
-                return nil
-            default: // 나머지 모든 맥주
-                return "beer_bottled.png"
-            }
-        // 우리술
-        case .traditional:
-            switch detailedCategory {
-            case "탁주":
-                return "makgeolli.png"
-            case "증류주":
-                return "distilledAlcohol.png"
-            case "약주 청주":
-                return "yakju_cheongju.png"
-            default: // 기타주류, 과실주
-                return nil
-            }
-        // 위스키
-        case .whiskey:
-            return "whiskey.png"
-        // 와인
-        case .wine:
-            switch detailedCategory {
-            case "주정강화":
-                return "fortifiedWine.png"
-            case "로제":
-                return "roseWine.png"
-            case "스파클링":
-                return "sparklingWine.png"
-            case "화이트":
-                return "whiteWine.png"
-            case "레드":
-                return "redWine.png"
-            default: // 예외
-                return nil
-            }
-        default:
-            return nil
         }
     }
 }

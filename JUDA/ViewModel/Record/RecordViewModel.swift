@@ -20,6 +20,8 @@ final class RecordViewModel: ObservableObject {
     private var drinks: [FBDrink] = []
     // [drinkID: drinkData] 딕셔너리 형태의 검색된 술 결과 Data
     @Published var searchDrinks: [FBDrink] = []
+    // [drinkID: imageURL] 딕셔너리 형태의 검색된 술 결과 Data
+    @Published var searchDrinksImageURL: [String: URL] = [:]
     // (dirnkID, (drinkData, rating)) 튜플 형태의 선택한 술 Data
     @Published var selectedDrinkTag: DrinkTag?
     // [drinkID: (drinkData, rating)] 딕셔너리 형태의 태그된 모든 술 Data
@@ -41,6 +43,10 @@ final class RecordViewModel: ObservableObject {
     
     // Firestore connection
     private let db = Firestore.firestore()
+    
+    // FireStorage 기본 경로
+    private let storage = Storage.storage()
+    private let drinkImagesPath = "drinkImages/"
 }
 
 // MARK: - User Data Fetch
@@ -68,6 +74,10 @@ extension RecordViewModel {
             for document in drinkSnapshot.documents {
                 let drinkData = try document.data(as: FBDrink.self)
 				self.drinks.append(drinkData)
+                // 술 이미지 받아오기
+                fetchImage(category: DrinkType(rawValue: drinkData.category) ?? .all,
+                               detailedCategory: drinkData.type,
+                               drinkID: document.documentID)
             }
         } catch {
             print("Drink Fetch Error")
@@ -81,6 +91,23 @@ extension RecordViewModel {
         for drink in drinks {
 			if drink.name.localizedCaseInsensitiveContains(text) {
 				searchDrinks.append(drink)
+            }
+        }
+    }
+    
+    @MainActor
+    func fetchImage(category: DrinkType, detailedCategory: String, drinkID: String) {
+        guard let imageName = Formatter.getImageName(category: category,
+                                           detailedCategory: detailedCategory) else {
+            print("fetchImage - imageName 없음")
+            return
+        }
+        let reference = storage.reference(withPath: "\(drinkImagesPath)\(imageName)")
+        reference.downloadURL() { url, error in
+            if let error = error {
+                print("Error - fetchImageUrl: \(error.localizedDescription)")
+            } else {
+                self.searchDrinksImageURL[drinkID] = url
             }
         }
     }

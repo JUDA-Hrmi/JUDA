@@ -29,6 +29,7 @@
 		099D9AAE2B88749E002261F7 /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099D9AAD2B88749E002261F7 /* Debouncer.swift */; };
 		099F16192B750E7E00D8BEDA /* UINavigationController +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099F16182B750E7E00D8BEDA /* UINavigationController +.swift */; };
 		099F161B2B75347100D8BEDA /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099F161A2B75347100D8BEDA /* CheckBox.swift */; };
+		09A320142B8929CC00DE4646 /* URL +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A320132B8929CC00DE4646 /* URL +.swift */; };
 		09A6AD722B70B46E00606585 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD712B70B46E00606585 /* AppViewModel.swift */; };
 		09A6AD7A2B71F6D800606585 /* LibraryPhotosPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD792B71F6D800606585 /* LibraryPhotosPicker.swift */; };
 		09A6AD7E2B72A53C00606585 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD7D2B72A53C00606585 /* Errors.swift */; };
@@ -171,6 +172,7 @@
 		099D9AAD2B88749E002261F7 /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		099F16182B750E7E00D8BEDA /* UINavigationController +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController +.swift"; sourceTree = "<group>"; };
 		099F161A2B75347100D8BEDA /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
+		09A320132B8929CC00DE4646 /* URL +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL +.swift"; sourceTree = "<group>"; };
 		09A6AD712B70B46E00606585 /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		09A6AD792B71F6D800606585 /* LibraryPhotosPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryPhotosPicker.swift; sourceTree = "<group>"; };
 		09A6AD7D2B72A53C00606585 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -409,6 +411,7 @@
 				090FF1CF2B83436000AF22B5 /* View +.swift */,
 				09B4A0442B6E5DAE0082B235 /* PresentationDetent +.swift */,
 				099F16182B750E7E00D8BEDA /* UINavigationController +.swift */,
+				09A320132B8929CC00DE4646 /* URL +.swift */,
 				B158F83E2B657A9000E33C47 /* Theme.swift */,
 				09F869922B68E36800A56A4C /* Formatter.swift */,
 				099D9AAD2B88749E002261F7 /* Debouncer.swift */,
@@ -916,6 +919,7 @@
 				B1EE24882B61445E007F68B0 /* MypageView.swift in Sources */,
 				09F869A02B68E50000A56A4C /* TaggedTrendingPosts.swift in Sources */,
 				AC98D1D42B7358AE006F6EC9 /* AiViewModel.swift in Sources */,
+				09A320142B8929CC00DE4646 /* URL +.swift in Sources */,
 				7B6D76B52B67D5F900601B55 /* PostTags.swift in Sources */,
 				7BE14B952B84733900C1F6C3 /* Drink.swift in Sources */,
 				09A6AD7E2B72A53C00606585 /* Errors.swift in Sources */,

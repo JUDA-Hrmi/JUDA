@@ -35,7 +35,7 @@ struct DrinkInfoGrid: View {
 struct DrinkGridContent: View {
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var drinkViewModel: DrinkViewModel
-
+    
     // 술 그리드 셀 2개 column
     private let columns: [GridItem] = [GridItem(.flexible()), GridItem(.flexible())]
         

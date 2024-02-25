@@ -118,8 +118,7 @@ struct SearchTagView: View {
     }
 }
 
-// MARK: - 스크롤 뷰 or 뷰 로 보여질 태그 추가 시, 찜 목록이 있을 때 DrinkListCell 리스트
-// TODO: 찜목록 불러와서 Default로 띄워주기
+// MARK: - 스크롤 뷰 or 뷰 로 보여질 태그 추가 시, DrinkListCell 리스트
 struct SearchTagListContent: View {
     @EnvironmentObject private var recordViewModel: RecordViewModel
     // CostomRatingDialog를 띄워주는 상태 프로퍼티
