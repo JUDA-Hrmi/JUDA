@@ -22,7 +22,7 @@ struct PostDrinkRating: View {
 				// TODO: NavigationLink - value 로 수정
 				NavigationLink {
 					// TODO: 술 태그 선택 시, 해당 술 디테일 뷰 이동
-					DrinkDetailView(drink: Whiskey.whiskeySample02) // 임시 더미데이터
+					DrinkDetailView(drink: FBDrink.dummyData) // 임시 더미데이터
 						.modifier(TabBarHidden())
 				} label: {
 					HStack(spacing: 2) {

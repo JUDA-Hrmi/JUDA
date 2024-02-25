@@ -10,6 +10,9 @@ import SwiftUI
 // MARK: - Font 커스텀 [ pretendard ]
 extension Font {
     // Bold
+    static let bold28: Font = .custom(FontType.Bold.name, size: 28)
+    static let bold26: Font = .custom(FontType.Bold.name, size: 26)
+    static let bold24: Font = .custom(FontType.Bold.name, size: 24)
     static let bold22: Font = .custom(FontType.Bold.name, size: 22)
     static let bold20: Font = .custom(FontType.Bold.name, size: 20)
     static let bold18: Font = .custom(FontType.Bold.name, size: 18)

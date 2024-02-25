@@ -10,7 +10,7 @@ import FirebaseCore
 import FirebaseStorage
 import FirebaseFirestore
 
-enum LikedType {
+enum LikedActionType {
 	case plus, minus
 }
 
@@ -224,7 +224,7 @@ extension PostsViewModel {
 
 // MARK: Update
 extension PostsViewModel {
-	func postLikedUpdate(likeType: LikedType, postID: String) async {
+	func postLikedUpdate(likeType: LikedActionType, postID: String) async {
 		do {
 			let postDocument = db.collection("posts").document(postID)
 			let postField = try await postDocument.getDocument().data(as: PostField.self)
