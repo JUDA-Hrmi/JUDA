@@ -45,15 +45,14 @@ struct LikedDrinkListContent: View {
     var body: some View {
         LazyVStack {
             if !likedViewModel.isLoading {
-                ForEach(likedViewModel.likedDrinks.indices, id: \.self) { index in
-                    let drink = likedViewModel.likedDrinks[index]
+                ForEach(likedViewModel.likedDrinks, id: \.drinkID) { drink in
                     // TODO: NavigationLink - value 로 수정
                     NavigationLink {
                         DrinkDetailView(drink: drink)
                             .modifier(TabBarHidden())
                     } label: {
                         DrinkListCell(drink: drink,
-                                      isLiked: true,
+                                      isLiked: authService.likedDrinks.contains{ $0 == drink.drinkID },
                                       usedTo: .liked)
                     }
                     .buttonStyle(EmptyActionStyle())

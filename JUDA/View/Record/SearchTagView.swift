@@ -52,15 +52,28 @@ struct SearchTagView: View {
                 .padding(.top, 20)
                 // 검색 텍스트 X
                 if tagSearchText.isEmpty {
-                    Rectangle()
-                        .fill(.background)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    Text("술 이름을 검색해보세요.")
-                        .font(.regular16)
-                        .foregroundStyle(.gray01)
-                    Rectangle()
-                        .fill(.background)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)                
+                    VStack {
+                        Rectangle()
+                            .fill(.background)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        Text("술 이름을 검색해보세요.")
+                            .font(.regular16)
+                            .foregroundStyle(.gray01)
+                        Rectangle()
+                            .fill(.background)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
+                // 검색 중
+                } else if searchDrinkViewModel.isLoading {
+                    VStack {
+                        Rectangle()
+                            .fill(.background)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        CircularLoaderView(size: 40)
+                        Rectangle()
+                            .fill(.background)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
                 // 검색 텍스트 O
                 } else {
                     // MARK: iOS 16.4 이상

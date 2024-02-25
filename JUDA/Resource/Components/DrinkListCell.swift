@@ -42,46 +42,13 @@ struct DrinkListCell: View {
                 // 술 사진
                 if usedTo == .searchTag,
                    let url = searchDrinkViewModel.searchDrinksImageURL[drink.drinkID ?? ""] {
-                    KFImage.url(url)
-                        .placeholder {
-                            CircularLoaderView(size: 20)
-                                .frame(width: 70, height: 103.48)
-                        }
-                        .loadDiskFileSynchronously(true) // 디스크에서 동기적으로 이미지 가져오기
-                        .cancelOnDisappear(true) // 화면 이동 시, 진행중인 다운로드 중단
-                        .cacheMemoryOnly() // 메모리 캐시만 사용 (디스크 X)
-                        .fade(duration: 0.2) // 이미지 부드럽게 띄우기
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 70, height: 103.48)
+                    DrinkListCellKFImage(url: url)
                 } else if usedTo == .liked,
                    let url = likedViewModel.drinkImages[drink.drinkID ?? ""] {
-                    KFImage.url(url)
-                        .placeholder {
-                            CircularLoaderView(size: 20)
-                                .frame(width: 70, height: 103.48)
-                        }
-                        .loadDiskFileSynchronously(true) // 디스크에서 동기적으로 이미지 가져오기
-                        .cancelOnDisappear(true) // 화면 이동 시, 진행중인 다운로드 중단
-                        .cacheMemoryOnly() // 메모리 캐시만 사용 (디스크 X)
-                        .fade(duration: 0.2) // 이미지 부드럽게 띄우기
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 70, height: 103.48)
+                    DrinkListCellKFImage(url: url)
                 } else if usedTo == .drinkInfo,
                     let url = drinkViewModel.drinkImages[drink.drinkID ?? ""] {
-                    KFImage.url(url)
-                        .placeholder {
-                            CircularLoaderView(size: 20)
-                                .frame(width: 70, height: 103.48)
-                        }
-                        .loadDiskFileSynchronously(true) // 디스크에서 동기적으로 이미지 가져오기
-                        .cancelOnDisappear(true) // 화면 이동 시, 진행중인 다운로드 중단
-                        .cacheMemoryOnly() // 메모리 캐시만 사용 (디스크 X)
-                        .fade(duration: 0.2) // 이미지 부드럽게 띄우기
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 70, height: 103.48)
+                    DrinkListCellKFImage(url: url)
                 } else {
                     Text("No Image")
                         .font(.medium16)
@@ -141,6 +108,26 @@ struct DrinkListCell: View {
         .padding(.vertical, 10)
         .padding(.horizontal, 20)
         .frame(height: 130)
+    }
+}
+
+// MARK: - 술 리스트 셀 사용 KingFisher 이미지
+struct DrinkListCellKFImage: View {
+    let url: URL
+    
+    var body: some View {
+        KFImage.url(url)
+            .placeholder {
+                CircularLoaderView(size: 20)
+                    .frame(width: 70, height: 103.48)
+            }
+            .loadDiskFileSynchronously(true) // 디스크에서 동기적으로 이미지 가져오기
+            .cancelOnDisappear(true) // 화면 이동 시, 진행중인 다운로드 중단
+            .cacheMemoryOnly() // 메모리 캐시만 사용 (디스크 X)
+            .fade(duration: 0.2) // 이미지 부드럽게 띄우기
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(width: 70, height: 103.48)
     }
 }
 
