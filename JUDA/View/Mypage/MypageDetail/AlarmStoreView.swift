@@ -11,7 +11,7 @@ import FirebaseAuth
 // MARK: - 알람 쌓여있는 리스트 화면
 struct AlarmStoreView: View {
     @Environment(\.dismiss) private var dismiss
-    @StateObject var notifications = Alarms.shared
+    @EnvironmentObject private var notificationViewModel: AlarmViewModel
 
     var body: some View {
         VStack(spacing: 0) {
@@ -19,16 +19,16 @@ struct AlarmStoreView: View {
             // MARK: iOS 16.4 이상
             if #available(iOS 16.4, *) {
                 ScrollView() {
-                    AlarmListContent(notifications: notifications)
+                    AlarmListContent()
                 }
                 .scrollBounceBehavior(.basedOnSize, axes: .vertical)
             // MARK: iOS 16.4 미만
             } else {
                 ViewThatFits(in: .vertical) {
-                    AlarmListContent(notifications: notifications)
+                    AlarmListContent()
                         .frame(maxHeight: .infinity, alignment: .top)
                     ScrollView {
-                        AlarmListContent(notifications: notifications)
+                        AlarmListContent()
                     }
                 }
             }
@@ -50,24 +50,26 @@ struct AlarmStoreView: View {
             }
         }
         .task {
-            await notifications.fetchNotificationForUser(userId: Auth.auth().currentUser?.uid ?? "")
+            await notificationViewModel.fetchNotificationList(userId: Auth.auth().currentUser?.uid ?? "")
         }
     }
 }
 
 // MARK: - 스크롤 뷰 or 뷰 로 보여질 알람 리스트
 struct AlarmListContent: View {
-    @StateObject var notifications: Alarms
+    @EnvironmentObject private var notificationViewModel: AlarmViewModel
 
     var body: some View {
         LazyVStack {
-            ForEach(notifications.alarms, id: \.self) { alarm in
+            ForEach(notificationViewModel.notifications.indices, id: \.self) { index in
+                let alarm = notificationViewModel.notifications[index]
+//                let user = notificationViewModel.alarms[index]
                 // TODO: NavigationLink - value 로 수정
 //                NavigationLink(destination: PostDetailView(postUserType: .writter, nickName: "Hrmi", isLike: .constant(false), likeCount: .constant(45))) {
 //                    AlarmStoreListCell(alarm: alarm)
 //                }
 
-                if alarm != notifications.alarms.last {
+                if alarm != notificationViewModel.notifications.last {
                     CustomDivider()
                 }
             }

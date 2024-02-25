@@ -9,14 +9,18 @@ import SwiftUI
 
 // MARK: - 알람 리스트 셀
 struct AlarmStoreListCell: View {
-    let alarm: Alarm
+//    @EnvironmentObject private var notificationViewModel: AlarmViewModel
+    
+    let alarm: NotificationField
+//    let user: Alarm
     
     var body: some View {
         HStack(alignment: .center) {
             VStack(alignment: .leading, spacing: 2) {
                 // 게사물 좋아요 알람 내용
+                // TODO: 해당 ID 값에 따른 유저 닉네임으로 바꾸기
                 Group {
-                    Text(alarm.likedUserName)
+                    Text(alarm.likedUserId)
                         .font(.medium14)
                     +
                     Text(" 님이 게시물에 하트를 남겼어요.")
@@ -27,10 +31,10 @@ struct AlarmStoreListCell: View {
                 .overlay(alignment: .topLeading) {
                     // TODO: NavigationLink - value 로 수정
                     NavigationLink {
-                        NavigationProfileView(likeCount: 44, userType: .otheruser, userName: alarm.likedUserName)
+                        NavigationProfileView(likeCount: 44, userType: .otheruser, userName: alarm.likedUserId)
                             .modifier(TabBarHidden())
                     } label: {
-                        Text(alarm.likedUserName)
+                        Text(alarm.likedUserId)
                             .font(.medium14)
                             .foregroundStyle(.mainBlack)
                     }

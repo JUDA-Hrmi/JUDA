@@ -19,10 +19,11 @@ struct ContentView: View {
     @StateObject private var recordViewModel = RecordViewModel()
     @StateObject private var postsViewModel = PostsViewModel()
     @StateObject private var likedViewModel = LikedViewModel()
+    @StateObject private var notificationViewModel = AlarmViewModel()
 
     // 현재 선택된 탭의 인덱스. 초기값 0
     @State private var selectedTabIndex = 0
-    
+
     // Tabbar 불투명하게 설정 (색상 백그라운드)
     init() {
         UITabBar.appearance().shadowImage = UIImage()
@@ -98,6 +99,7 @@ struct ContentView: View {
         case .myPage:
             if authService.signInStatus {
                 MypageView(selectedTabIndex: $selectedTabIndex)
+                    .environmentObject(notificationViewModel)
             } else {
                 unauthenticatedMypageView(selectedTabIndex: $selectedTabIndex)
             }

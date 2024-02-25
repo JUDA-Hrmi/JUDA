@@ -35,12 +35,28 @@ struct SettingView: View {
             if authService.signInStatus {
                 VStack(alignment: .leading) {
                     // 알림 설정
-                    Toggle(isOn: $isAlarmOn) {
-                        Text("알림 설정: \(String(authService.notificationAllowed) == "true" ? "켜기" : "끄기")")
-                        Text("알림 설정: \(String(authService.notificationAllowed))")
+                    VStack(alignment: .leading, spacing: -10) {
+                        Text("JUDA 알림을 켜주세요!")
+                            .modifier(CustomText())
+                        
+                        Text("정보 알림을 받기 위해서 기기 알림을 켜주세요")
+                            .font(.light14)
+                            .foregroundStyle(.gray01)
+                            .padding(.horizontal, 20)
                     }
-                    .tint(.mainAccent03)
-                    .modifier(CustomText())
+                    
+                    Button("기기 알림 켜기") {
+                        openAppSettings()
+                    }
+                    .font(.medium20)
+                    .foregroundStyle(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+                    .background(.mainAccent03)
+                    .clipShape(.rect(cornerRadius: 10))
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 10)
+
                     // 화면 모드 설정
                     // 버튼 클릭 시 반짝이는 애니메이션 제거 코드 추가하기
                     Button {
@@ -254,8 +270,20 @@ struct SettingView: View {
 					.font(.medium16)
 					.foregroundStyle(.mainBlack)
 			}
-		}
-	}
+        }
+        
+    }
+    
+    // '기기 설정 - 주다' 페이지 이동
+    func openAppSettings() {
+        guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
+            return
+        }
+        
+        if UIApplication.shared.canOpenURL(settingsURL) {
+            UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
+        }
+    }
 }
 
 // 반복되는 UI 설정 ViewModifier를 통해 한꺼번에 묶기
