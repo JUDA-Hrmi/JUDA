@@ -142,10 +142,6 @@ struct AddTagView: View {
             // SearchTageView Sheet 띄워주기
             .sheet(isPresented: $isShowSearchTag) {
                 SearchTagView(isShowSearchTag: $isShowSearchTag)
-                // SearchTagView Disappear시, 검색 결과 비워주기
-                    .onDisappear {
-						recordViewModel.searchDrinks.removeAll()
-                    }
             }
         }
     }

@@ -9,21 +9,24 @@ import SwiftUI
 
 // MARK: - 술장 리스트 뷰
 struct DrinkInfoList: View {
+    // DrinkInfo 에서 검색 중인지
+    var searchInDrinkInfo: Bool = false
+    
     var body: some View {
         // MARK: iOS 16.4 이상
         if #available(iOS 16.4, *) {
             ScrollView() {
-                DrinkListContent()
+                DrinkListContent(searchInDrinkInfo: searchInDrinkInfo)
             }
             .scrollBounceBehavior(.basedOnSize, axes: .vertical)
             .scrollDismissesKeyboard(.immediately)
         // MARK: iOS 16.4 미만
         } else {
             ViewThatFits(in: .vertical) {
-                DrinkListContent()
+                DrinkListContent(searchInDrinkInfo: searchInDrinkInfo)
                     .frame(maxHeight: .infinity, alignment: .top)
                 ScrollView {
-                    DrinkListContent()
+                    DrinkListContent(searchInDrinkInfo: searchInDrinkInfo)
                 }
                 .scrollDismissesKeyboard(.immediately)
             }
@@ -35,12 +38,18 @@ struct DrinkInfoList: View {
 struct DrinkListContent: View {
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var drinkViewModel: DrinkViewModel
+    @EnvironmentObject private var searchDrinkViewModel: SearchDrinkViewModel
+
+    // DrinkInfo 에서 검색 중인지
+    var searchInDrinkInfo: Bool = false
 
     var body: some View {
         // 리스트
         LazyVStack {
-            if !drinkViewModel.isLoading {
-                ForEach(drinkViewModel.drinks, id: \.drinkID) { drink in
+            // DrinkInfo 에서 검색 중일때
+            if searchInDrinkInfo {
+                ForEach(searchDrinkViewModel.searchDrinks.indices, id: \.self) { index in
+                    let drink = searchDrinkViewModel.searchDrinks[index]
                     // TODO: NavigationLink - value 로 수정
                     NavigationLink {
                         DrinkDetailView(drink: drink)
@@ -56,15 +65,31 @@ struct DrinkListContent: View {
                     }
                     .buttonStyle(EmptyActionStyle())
                 }
+            // 검색 안할때, 평상시 View
             } else {
-                ForEach(0..<10) { _ in
-                    ShimmerDrinkListCell()
+                if !drinkViewModel.isLoading {
+                    ForEach(drinkViewModel.drinks, id: \.drinkID) { drink in
+                        // TODO: NavigationLink - value 로 수정
+                        NavigationLink {
+                            DrinkDetailView(drink: drink)
+                                .modifier(TabBarHidden())
+                        } label: {
+                            DrinkListCell(drink: drink,
+                                          isLiked: authService.likedDrinks.contains{ $0 == drink.drinkID })
+                                .task {
+                                    if drink.name == drinkViewModel.drinks.last?.name {
+                                        await drinkViewModel.loadDrinksNextPage()
+                                    }
+                                }
+                        }
+                        .buttonStyle(EmptyActionStyle())
+                    }
+                } else {
+                    ForEach(0..<10) { _ in
+                        ShimmerDrinkListCell()
+                    }
                 }
             }
         }
     }
-}
-
-#Preview {
-    DrinkInfoList()
 }

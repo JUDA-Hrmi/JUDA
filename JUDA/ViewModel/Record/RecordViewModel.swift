@@ -14,14 +14,6 @@ import PhotosUI
 final class RecordViewModel: ObservableObject { 
     // post 업로드용 Post 모델 객체
     @Published var post: Post?
-    // searchTagView에서 drink liked를 표시해주기 위한 drinkID를 갖는 배열
-    @Published var userLikedDrinksID: [String] = []
-    // [drinkID: drinkData] 딕셔너리 형태의 술 전체 Data
-    private var drinks: [FBDrink] = []
-    // [drinkID: drinkData] 딕셔너리 형태의 검색된 술 결과 Data
-    @Published var searchDrinks: [FBDrink] = []
-    // [drinkID: imageURL] 딕셔너리 형태의 검색된 술 결과 Data
-    @Published var searchDrinksImageURL: [String: URL] = [:]
     // (dirnkID, (drinkData, rating)) 튜플 형태의 선택한 술 Data
     @Published var selectedDrinkTag: DrinkTag?
     // [drinkID: (drinkData, rating)] 딕셔너리 형태의 태그된 모든 술 Data
@@ -47,70 +39,6 @@ final class RecordViewModel: ObservableObject {
     // FireStorage 기본 경로
     private let storage = Storage.storage()
     private let drinkImagesPath = "drinkImages/"
-}
-
-// MARK: - User Data Fetch
-extension RecordViewModel {
-    // users likedDrinks drink ID fetch
-    @MainActor
-    func fetchUserLikedDrinksID(uid: String) async {
-        do {
-            let userRef = db.collection("users")
-            userLikedDrinksID = try await userRef.document(uid).getDocument(as: UserField.self).likedDrinks ?? []
-        } catch {
-            print("fetch UserLikedDrinksID error")
-        }
-    }
-}
-
-// MARK: - Search Drink
-extension RecordViewModel {
-    // drinks collection all data fetch
-    @MainActor
-    func fetchDrinkData() async {
-        do {
-            let drinkSnapshot = try await db.collection("drinks").getDocuments()
-            
-            for document in drinkSnapshot.documents {
-                let drinkData = try document.data(as: FBDrink.self)
-				self.drinks.append(drinkData)
-                // 술 이미지 받아오기
-                fetchImage(category: DrinkType(rawValue: drinkData.category) ?? .all,
-                               detailedCategory: drinkData.type,
-                               drinkID: document.documentID)
-            }
-        } catch {
-            print("Drink Fetch Error")
-        }
-    }
-    
-    // all drink data filtering with search
-    @MainActor
-    func searchDrinkTags(text: String) async {
-        searchDrinks = []
-        for drink in drinks {
-			if drink.name.localizedCaseInsensitiveContains(text) {
-				searchDrinks.append(drink)
-            }
-        }
-    }
-    
-    @MainActor
-    func fetchImage(category: DrinkType, detailedCategory: String, drinkID: String) {
-        guard let imageName = Formatter.getImageName(category: category,
-                                           detailedCategory: detailedCategory) else {
-            print("fetchImage - imageName 없음")
-            return
-        }
-        let reference = storage.reference(withPath: "\(drinkImagesPath)\(imageName)")
-        reference.downloadURL() { url, error in
-            if let error = error {
-                print("Error - fetchImageUrl: \(error.localizedDescription)")
-            } else {
-                self.searchDrinksImageURL[drinkID] = url
-            }
-        }
-    }
 }
 
 // MARK: - FirebaseStorage Image Upload

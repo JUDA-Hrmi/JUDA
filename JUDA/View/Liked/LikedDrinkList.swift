@@ -54,7 +54,7 @@ struct LikedDrinkListContent: View {
                     } label: {
                         DrinkListCell(drink: drink,
                                       isLiked: true,
-                                      liked: true)
+                                      usedTo: .liked)
                     }
                     .buttonStyle(EmptyActionStyle())
                 }

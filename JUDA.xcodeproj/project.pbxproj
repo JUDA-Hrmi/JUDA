@@ -30,6 +30,7 @@
 		099F16192B750E7E00D8BEDA /* UINavigationController +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099F16182B750E7E00D8BEDA /* UINavigationController +.swift */; };
 		099F161B2B75347100D8BEDA /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099F161A2B75347100D8BEDA /* CheckBox.swift */; };
 		09A320142B8929CC00DE4646 /* URL +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A320132B8929CC00DE4646 /* URL +.swift */; };
+		09A320162B8B30D100DE4646 /* SearchDrinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A320152B8B30D100DE4646 /* SearchDrinkViewModel.swift */; };
 		09A6AD722B70B46E00606585 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD712B70B46E00606585 /* AppViewModel.swift */; };
 		09A6AD7A2B71F6D800606585 /* LibraryPhotosPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD792B71F6D800606585 /* LibraryPhotosPicker.swift */; };
 		09A6AD7E2B72A53C00606585 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD7D2B72A53C00606585 /* Errors.swift */; };
@@ -173,6 +174,7 @@
 		099F16182B750E7E00D8BEDA /* UINavigationController +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController +.swift"; sourceTree = "<group>"; };
 		099F161A2B75347100D8BEDA /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		09A320132B8929CC00DE4646 /* URL +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL +.swift"; sourceTree = "<group>"; };
+		09A320152B8B30D100DE4646 /* SearchDrinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDrinkViewModel.swift; sourceTree = "<group>"; };
 		09A6AD712B70B46E00606585 /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		09A6AD792B71F6D800606585 /* LibraryPhotosPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryPhotosPicker.swift; sourceTree = "<group>"; };
 		09A6AD7D2B72A53C00606585 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -666,6 +668,7 @@
 			isa = PBXGroup;
 			children = (
 				B1EE249D2B6144DD007F68B0 /* DrinkViewModel.swift */,
+				09A320152B8B30D100DE4646 /* SearchDrinkViewModel.swift */,
 			);
 			path = Drink;
 			sourceTree = "<group>";
@@ -834,6 +837,7 @@
 				7BBDFF732B6B912C0036FB8B /* DrinkInfoSegment.swift in Sources */,
 				7BBDFF6E2B6B90EB0036FB8B /* JUDAApp.swift in Sources */,
 				7BBDFF6F2B6B90EB0036FB8B /* AddTagView.swift in Sources */,
+				09A320162B8B30D100DE4646 /* SearchDrinkViewModel.swift in Sources */,
 				7BBDFF702B6B90EB0036FB8B /* PostGrid.swift in Sources */,
 				090FF1CE2B83413100AF22B5 /* CustomLoadingView.swift in Sources */,
 				7BBDFF712B6B90EB0036FB8B /* MainViewModel.swift in Sources */,

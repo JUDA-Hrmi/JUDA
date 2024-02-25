@@ -8,25 +8,31 @@
 import SwiftUI
 import Kingfisher
 
+// MARK: - 어느 뷰에서 DrinkListCell 이 사용되는지 enum
+enum WhereUsedListCell {
+    case drinkInfo
+    case drinkSearch
+    case searchTag
+    case liked
+}
+
 // MARK: - 술 리스트 셀
 struct DrinkListCell: View {
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var drinkViewModel: DrinkViewModel
     @EnvironmentObject private var likedViewModel: LikedViewModel
-    @EnvironmentObject private var recordViewModel: RecordViewModel
+    @EnvironmentObject private var searchDrinkViewModel: SearchDrinkViewModel
 
     let drink: FBDrink
-    let searchTag: Bool // searchTagView에서 사용하는지에 대한 여부
-    let liked: Bool // LikedView 에서 사용하는지에 대한 여부
+    let usedTo: WhereUsedListCell
     @State private var isLiked: Bool
     
     private let debouncer = Debouncer(delay: 0.5)
     
-    init(drink: FBDrink, isLiked: Bool, searchTag: Bool = false, liked: Bool = false) {
+    init(drink: FBDrink, isLiked: Bool, usedTo: WhereUsedListCell = .drinkInfo) {
         self.drink = drink
         _isLiked = State(initialValue: isLiked)
-        self.searchTag = searchTag
-        self.liked = liked
+        self.usedTo = usedTo
     }
     
     var body: some View {
@@ -34,8 +40,8 @@ struct DrinkListCell: View {
             // 술 정보
             HStack(alignment: .center, spacing: 20) {
                 // 술 사진
-                if searchTag,
-                   let url = recordViewModel.searchDrinksImageURL[drink.drinkID ?? ""] {
+                if usedTo == .searchTag,
+                   let url = searchDrinkViewModel.searchDrinksImageURL[drink.drinkID ?? ""] {
                     KFImage.url(url)
                         .placeholder {
                             CircularLoaderView(size: 20)
@@ -48,7 +54,7 @@ struct DrinkListCell: View {
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 70, height: 103.48)
-                } else if liked,
+                } else if usedTo == .liked,
                    let url = likedViewModel.drinkImages[drink.drinkID ?? ""] {
                     KFImage.url(url)
                         .placeholder {
@@ -62,7 +68,8 @@ struct DrinkListCell: View {
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 70, height: 103.48)
-                } else if let url = drinkViewModel.drinkImages[drink.drinkID ?? ""] {
+                } else if usedTo == .drinkInfo,
+                    let url = drinkViewModel.drinkImages[drink.drinkID ?? ""] {
                     KFImage.url(url)
                         .placeholder {
                             CircularLoaderView(size: 20)
@@ -114,7 +121,7 @@ struct DrinkListCell: View {
             Spacer()
             // 하트
             // searchTagView에서 사용 시, 버튼이 아닌 이미지 처리
-            if searchTag {
+            if usedTo == .searchTag {
                 Image(systemName: isLiked ? "heart.fill" : "heart")
                     .foregroundStyle(isLiked ? .mainAccent02 : .gray01)
             } else {

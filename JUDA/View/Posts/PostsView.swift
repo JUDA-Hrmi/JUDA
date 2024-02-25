@@ -12,12 +12,14 @@ struct PostsView: View {
     @EnvironmentObject private var appViewModel: AppViewModel
 	@EnvironmentObject private var authService: AuthService
 	@EnvironmentObject private var postsViewModel: PostsViewModel
+
+    @FocusState private var isFocused: Bool
 	
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 // 상단 서치바
-				SearchBar(inputText: $postsViewModel.postSearchText) {  }
+                SearchBar(inputText: $postsViewModel.postSearchText, isFocused: $isFocused) {  }
                 HStack(alignment: .center) {
                     // 인기, 최신 순으로 선택하여 정렬하기 위한 CustomSegment
 					CustomTextSegment(segments: postsViewModel.postSortType.map { $0.rawValue },
