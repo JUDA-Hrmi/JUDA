@@ -19,12 +19,13 @@ struct MainView: View {
         NavigationStack {
             VStack(alignment: .center, spacing: 0) {
                 Spacer()
-                // 날씨 와 어울리는 술 + 안주
+                // 날씨와 어울리는 술 + 안주
                 WeatherAndFood()
                 Spacer()
-                // 오늘의
+                // 오늘의 술장 Top3
                 DrinkTopView(selectedTabIndex: $selectedTabIndex)
                 Spacer()
+                // 오늘의 술상 Top3
                 PostTopView(selectedTabIndex: $selectedTabIndex)
             }
             .padding(.bottom, 15)
