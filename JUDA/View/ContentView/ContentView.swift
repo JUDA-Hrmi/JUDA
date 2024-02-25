@@ -14,7 +14,6 @@ struct ContentView: View {
 
     @StateObject private var locationManager = LocationManager()
     @StateObject private var aiViewModel = AiViewModel()
-    @StateObject private var aiTodayViewModel = AiTodayViewModel()
     @StateObject private var drinkViewModel = DrinkViewModel()
     @StateObject private var recordViewModel = RecordViewModel()
     @StateObject private var postsViewModel = PostsViewModel()
@@ -79,7 +78,7 @@ struct ContentView: View {
             MainView(selectedTabIndex: $selectedTabIndex)
                 .environmentObject(locationManager)
                 .environmentObject(aiViewModel)
-                .environmentObject(aiTodayViewModel)
+//                .environmentObject(aiTodayViewModel)
         case .drinkInfo:
             DrinkInfoView()
                 .environmentObject(drinkViewModel)
