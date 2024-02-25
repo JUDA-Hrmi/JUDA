@@ -26,7 +26,7 @@ struct UserField: Codable {
 
 // Firebase users/notificationList 컬렉션 데이터 모델
 struct NotificationField: Codable, Hashable {
-    let likedUserID: String
+    let likedUserId: String
     let postId: String
     let likedTime: Date
 }

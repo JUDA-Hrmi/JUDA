@@ -19,6 +19,7 @@ struct ContentView: View {
     @StateObject var aiViewModel = AiViewModel()
     @StateObject var aiTodayViewModel = AiTodayViewModel()
     @StateObject private var recordViewModel = RecordViewModel()
+    @StateObject private var notificationViewModel = AlarmViewModel()
     // Tabbar 불투명하게 설정 (색상 백그라운드)
     init() {
         UITabBar.appearance().shadowImage = UIImage()
@@ -79,6 +80,7 @@ struct ContentView: View {
         case .myPage:
             if authService.signInStatus {
                 MypageView(selectedTabIndex: $selectedTabIndex)
+                    .environmentObject(notificationViewModel)
             } else {
                 unauthenticatedMypageView(selectedTabIndex: $selectedTabIndex)
             }
