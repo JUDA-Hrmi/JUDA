@@ -23,6 +23,8 @@
 		0974A14D2B8B7B5000476199 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0974A14B2B8B7B4F00476199 /* GoogleService-Info.plist */; };
 		0974A14E2B8B7B5000476199 /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0974A14C2B8B7B5000476199 /* APIKEYS.plist */; };
 		0974A1502B8B7B6C00476199 /* ShimmerPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A14F2B8B7B6C00476199 /* ShimmerPostCell.swift */; };
+		0974A1522B8B84B600476199 /* ShimmerDrinkGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A1512B8B84B600476199 /* ShimmerDrinkGridCell.swift */; };
+		0974A1542B8B84E900476199 /* ShimmerDrinkListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A1532B8B84E900476199 /* ShimmerDrinkListCell.swift */; };
 		0999125C2B84654400E72C73 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0999125B2B84654400E72C73 /* FirebaseCrashlytics */; };
 		099912652B85799800E72C73 /* CircularLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099912642B85799800E72C73 /* CircularLoaderView.swift */; };
 		099D9AA62B8720AC002261F7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 099D9AA52B8720AC002261F7 /* Kingfisher */; };
@@ -169,6 +171,8 @@
 		0974A14B2B8B7B4F00476199 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../흐르미/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0974A14C2B8B7B5000476199 /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = APIKEYS.plist; path = "../../흐르미/APIKEYS.plist"; sourceTree = "<group>"; };
 		0974A14F2B8B7B6C00476199 /* ShimmerPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerPostCell.swift; sourceTree = "<group>"; };
+		0974A1512B8B84B600476199 /* ShimmerDrinkGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerDrinkGridCell.swift; sourceTree = "<group>"; };
+		0974A1532B8B84E900476199 /* ShimmerDrinkListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerDrinkListCell.swift; sourceTree = "<group>"; };
 		099912642B85799800E72C73 /* CircularLoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularLoaderView.swift; sourceTree = "<group>"; };
 		099D9AAD2B88749E002261F7 /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		099F16182B750E7E00D8BEDA /* UINavigationController +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController +.swift"; sourceTree = "<group>"; };
@@ -264,7 +268,6 @@
 		B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B1B8FE832B5EA9DA00921BBE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B1B8FE8C2B5EAAAB00921BBE /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
-		B1EE24722B61431A007F68B0 /* DummyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyModel.swift; sourceTree = "<group>"; };
 		B1EE24872B61445E007F68B0 /* MypageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageView.swift; sourceTree = "<group>"; };
 		B1EE24892B614464007F68B0 /* LikedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedView.swift; sourceTree = "<group>"; };
 		B1EE248B2B61446A007F68B0 /* AddTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagView.swift; sourceTree = "<group>"; };
@@ -694,7 +697,9 @@
 			children = (
 				B1EE24A42B614872007F68B0 /* SearchBar.swift */,
 				096E63192B616F31009246CE /* DrinkGridCell.swift */,
+				0974A1512B8B84B600476199 /* ShimmerDrinkGridCell.swift */,
 				096E63172B616886009246CE /* DrinkListCell.swift */,
+				0974A1532B8B84E900476199 /* ShimmerDrinkListCell.swift */,
 				7B904C652B6168C60052384A /* PostCell.swift */,
 				0974A14F2B8B7B6C00476199 /* ShimmerPostCell.swift */,
 				7B904C672B6184560052384A /* CustomTextSegment.swift */,
@@ -830,6 +835,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0974A1542B8B84E900476199 /* ShimmerDrinkListCell.swift in Sources */,
 				09394C4A2B74A49A0077F78B /* SuggestDrink.swift in Sources */,
 				0902EB492B7E3372003D555E /* ProfileSettingView.swift in Sources */,
 				09394C4B2B74A49A0077F78B /* PostOrLogin.swift in Sources */,
@@ -862,6 +868,7 @@
 				2C63DD672B67EB1B00770E3A /* RecordView.swift in Sources */,
 				7B6D76AF2B67CFC900601B55 /* PostInfo.swift in Sources */,
 				7BE14B972B84767000C1F6C3 /* DrinkUploadViewModel.swift in Sources */,
+				0974A1522B8B84B600476199 /* ShimmerDrinkGridCell.swift in Sources */,
 				099D9AAE2B88749E002261F7 /* Debouncer.swift in Sources */,
 				B12BEE472B6A9E1000580D29 /* AppServiceInfoView.swift in Sources */,
 				B1EE249E2B6144DD007F68B0 /* DrinkViewModel.swift in Sources */,
