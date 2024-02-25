@@ -38,7 +38,7 @@ struct PostCell: View {
 						}
 				}
 				// 게시글 사진이 2장 이상일 경우, 상자 아이콘이 사진의 trailing 상단에 보여짐
-				if post.postField.imagesID.count >= 2 {
+				if post.postField.imagesURL.count >= 2 {
 					Image(systemName: "square.on.square.fill")
 						.frame(width: 18, height: 18)
 						.foregroundStyle(.white)
@@ -104,12 +104,6 @@ struct PostCell: View {
 				self.isLike = authService.likedPosts.contains(where: { $0 == post.postField.postID })
 			}
 			self.likeCount = post.postField.likedCount
-			
-			if postsViewModel.postImages[post.postField.postID ?? ""] == nil {
-				for imageID in (post.postField.imagesID) {
-					await postsViewModel.fetchImage(folderType: .post, postID: post.postField.postID, imageID: imageID)
-				}
-			}
 		}
 	}
 	

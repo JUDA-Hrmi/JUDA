@@ -65,10 +65,10 @@ struct WeatherAndFood: View {
                                 weather = weatherData
                                 // Request
                                 aiViewModel.respond = try await aiViewModel.request(prompt: "Please recommend snacks and drinks that go well with this weather. Please refer to the below list behind you for the sake of snacks. Please recommend one each for snacks and drinks. When printing snacks and drinks \(String(describing: weather?.main)) ---dish List: \(koreanSnacks) ---drink List:\(beerNames)")
-                                print("\(aiViewModel.respond)")
-                                let drinkword = aiViewModel.respond.split(separator: " + ").map({String($0)})
-                                weatherAndFoodData = drinkword[1]
-                                print("\(weatherAndFoodData)")
+//                                print("\(aiViewModel.respond)")
+//                                let drinkword = aiViewModel.respond.split(separator: " + ").map({String($0)})
+//                                weatherAndFoodData = drinkword[1]
+//                                print("\(weatherAndFoodData)")
                                 
                                 lastAPICallTimestamp = Date()
                             } catch {

@@ -84,10 +84,12 @@ struct ContentView: View {
             DrinkInfoView()
                 .environmentObject(aiWellMatchViewModel)
                 .environmentObject(drinkViewModel)
+                .environmentObject(postsViewModel)
         case .posts:
             PostsView()
                 .environmentObject(recordViewModel)
 				.environmentObject(postsViewModel)
+                .environmentObject(drinkViewModel)
         case .liked:
             if authService.signInStatus {
                 LikedView()

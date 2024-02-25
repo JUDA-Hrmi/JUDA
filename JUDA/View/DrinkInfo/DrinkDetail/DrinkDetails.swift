@@ -21,7 +21,9 @@ struct DrinkDetails: View {
                 KFImage.url(url)
                     .placeholder {
                         CircularLoaderView(size: 20)
-                            .frame(width: 70, height: 103.48)
+                            .frame(height: 180)
+                            .padding(10)
+                            .frame(width: 100) 
                     }
                     .loadDiskFileSynchronously(true) // 디스크에서 동기적으로 이미지 가져오기
                     .cancelOnDisappear(true) // 화면 이동 시, 진행중인 다운로드 중단

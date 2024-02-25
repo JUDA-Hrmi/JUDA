@@ -18,7 +18,7 @@ struct Post {
 // Firebase posts 컬렉션 필드 데이터 모델
 struct PostField: Codable {
 	@DocumentID var postID: String?
-    var imagesID: [String]
+    var imagesURL: [URL]
 	var content: String
 	var likedCount: Int
     var postedTimeStamp: Date

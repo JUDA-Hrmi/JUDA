@@ -54,7 +54,7 @@ struct DrinkDetailView: View {
                     CustomDivider()
                 }
                 // 태그된 인기 게시물
-                TaggedTrendingPosts()
+                TaggedTrendingPosts(drink: drink)
             }
         }
         .task {

@@ -6,20 +6,30 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 // MARK: - 술상 디테일에서 사진 스크롤뷰
 struct PostPhotoScroll: View {
     @State private var selectedIndex = 0
     @State private var isFullSizePhotoPresented = false
 	@State private var windowWidth: CGFloat = 0
-	let postPhotos: [(imageID: String, uiImage: UIImage)]
-	
+    let postPhotos: [URL]
+
     var body: some View {
 		// 사진 페이징 스크롤 형식
 		TabView(selection: $selectedIndex) {
 			if !postPhotos.isEmpty {
 				ForEach(0..<postPhotos.count, id: \.self) { index in
-					Image(uiImage: postPhotos[index].uiImage)
+                    KFImage.url(postPhotos[index])
+                        .placeholder {
+                            CircularLoaderView(size: 20)
+                                .frame(width: windowWidth)// clipped() 문제로 frame 값 지정
+                                .clipped()
+                        }
+                        .loadDiskFileSynchronously(true) // 디스크에서 동기적으로 이미지 가져오기
+                        .cancelOnDisappear(true) // 화면 이동 시, 진행중인 다운로드 중단
+                        .cacheMemoryOnly() // 메모리 캐시만 사용 (디스크 X)
+                        .fade(duration: 0.2) // 이미지 부드럽게 띄우기
 						.resizable()
 						.aspectRatio(contentMode: .fill)
 						.frame(width: windowWidth)// clipped() 문제로 frame 값 지정
@@ -48,7 +58,16 @@ struct PostPhotoScroll: View {
 				// 사진 넘겨서 보는 탭뷰
 				TabView(selection: $selectedIndex) {
 					ForEach(0..<postPhotos.count, id: \.self) { index in
-						Image(uiImage: postPhotos[index].uiImage)
+                        KFImage.url(postPhotos[index])
+                            .placeholder {
+                                CircularLoaderView(size: 20)
+                                    .frame(width: windowWidth)// clipped() 문제로 frame 값 지정
+                                    .clipped()
+                            }
+                            .loadDiskFileSynchronously(true) // 디스크에서 동기적으로 이미지 가져오기
+                            .cancelOnDisappear(true) // 화면 이동 시, 진행중인 다운로드 중단
+                            .cacheMemoryOnly() // 메모리 캐시만 사용 (디스크 X)
+                            .fade(duration: 0.2) // 이미지 부드럽게 띄우기
 							.resizable()
 							.aspectRatio(contentMode: .fit)
 					}

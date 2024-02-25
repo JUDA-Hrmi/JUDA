@@ -9,8 +9,8 @@ import SwiftUI
 
 // MARK: - 태그된 인기 술상에 보여줄 술상 셀
 struct PostListCell: View {
-    // UITest - Post DummyData
-    let postDummyData: TaggedTrendingPostsDummyData
+    let post: Post
+    
     // 제안 - 여기서는 하트를 눌러서 on off 하지 않고, 현재 유저가 좋아요 눌렀는지만 체크하는 것?
     private let isLiked = false
     @State private var windowWidth: CGFloat = 0
@@ -18,7 +18,8 @@ struct PostListCell: View {
     var body: some View {
         HStack(alignment: .center, spacing: 20) {
             // Post 이미지
-            Image(postDummyData.image)
+//            Image(post.postField.imagesID.first)
+            Image("foodEx4")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 70, height: 70)
@@ -27,10 +28,10 @@ struct PostListCell: View {
             // 유저, 태그, 좋아요
             VStack(alignment: .leading, spacing: 6) {
                 // 유저
-                Text(postDummyData.author)
+                Text(post.userField.name)
                     .font(.regular16)
                 // 태그
-                Text(getTagListToString(list: postDummyData.tags))
+                Text(getTagListToString(list: Array(post.postField.foodTags.prefix(2))))
                     .font(.light14)
                     .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -40,7 +41,7 @@ struct PostListCell: View {
                         .font(.regular14)
                         .foregroundStyle(isLiked ? Color.red : Color.gray)
                     // 좋아요 숫자 1000 넘으면 k, 1000000 넘으면 m 으로 변경
-                    Text(Formatter.formattedPostLikesCount(postDummyData.postLikesCount))
+                    Text(Formatter.formattedPostLikesCount(post.postField.likedCount))
                         .font(.regular14)
                         .foregroundStyle(.gray01)
                 }
@@ -57,8 +58,4 @@ struct PostListCell: View {
         let spacing = "    "
         return list.map { tagString + $0 }.joined(separator: spacing)
     }
-}
-
-#Preview {
-    PostListCell(postDummyData: TaggedTrendingPostsDummyData.sampleDataList.last!)
 }
