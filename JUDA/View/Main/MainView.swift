@@ -22,14 +22,12 @@ struct MainView: View {
                 // 날씨 와 어울리는 술 + 안주
                 WeatherAndFood()
                 Spacer()
-                // 오늘의 추천 술
-                DrinkTopView()
+                // 오늘의
+                DrinkTopView(selectedTabIndex: $selectedTabIndex)
                 Spacer()
-                PostTopView()
-                // 추천 술상 보러가기 or 로그인 하러가기
-                PostOrLogin(selectedTabIndex: $selectedTabIndex)
-                Spacer()
+                PostTopView(selectedTabIndex: $selectedTabIndex)
             }
+            .padding(.bottom, 15)
             .padding(.horizontal, 20)
             .onAppear {
                 appViewModel.tabBarState = .visible

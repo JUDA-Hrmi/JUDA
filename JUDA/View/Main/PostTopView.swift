@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PostTopView: View {
     @State private var postSearchText = ""
+    @Binding var selectedTabIndex: Int
     var body: some View {
         VStack(spacing: 24) {
             HStack {
@@ -17,8 +18,8 @@ struct PostTopView: View {
                 
                 Spacer()
                 
-                NavigationLink {
-                    PostsView(postSearchText: $postSearchText)
+                Button {
+                    selectedTabIndex = 2
                 } label: {
                     Text("더보기")
                         .foregroundStyle(.gray01)
@@ -30,8 +31,4 @@ struct PostTopView: View {
                 .foregroundStyle(.gray)
         }
     }
-}
-
-#Preview {
-    PostTopView()
 }

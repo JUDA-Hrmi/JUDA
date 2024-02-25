@@ -15,7 +15,7 @@ struct ContentView: View {
     @State private var postSearchText = ""
     @StateObject var locationManager = LocationManager()
     @StateObject var aiViewModel = AiViewModel()
-    @StateObject var aiTodayViewModel = AiTodayViewModel()
+//    @StateObject var aiTodayViewModel = AiTodayViewModel()
     // Tabbar 불투명하게 설정 (색상 백그라운드)
     init() {
         UITabBar.appearance().shadowImage = UIImage()
@@ -59,7 +59,7 @@ struct ContentView: View {
             MainView(selectedTabIndex: $selectedTabIndex)
                 .environmentObject(locationManager)
                 .environmentObject(aiViewModel)
-                .environmentObject(aiTodayViewModel)
+//                .environmentObject(aiTodayViewModel)
         case .drinkInfo:
             DrinkInfoView()
         case .posts:

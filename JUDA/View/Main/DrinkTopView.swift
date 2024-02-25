@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct DrinkTopView: View {
+    @Binding var selectedTabIndex: Int
+    
     var body: some View {
         VStack(spacing: 24) {
             HStack {
@@ -16,8 +18,8 @@ struct DrinkTopView: View {
                 
                 Spacer()
                 
-                NavigationLink {
-                    DrinkInfoView()
+                Button {
+                    selectedTabIndex = 1
                 } label: {
                     Text("더보기")
                         .foregroundStyle(.gray01)
@@ -31,6 +33,3 @@ struct DrinkTopView: View {
     }
 }
 
-#Preview {
-    DrinkTopView()
-}
