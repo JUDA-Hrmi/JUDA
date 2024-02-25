@@ -48,10 +48,10 @@ struct LikedDrinkGridContent: View {
             ForEach(0..<8, id: \.self) { _ in
                 // TODO: NavigationLink - value 로 수정
                 NavigationLink {
-                    PostDetailView(postUserType: .reader, nickName: "Hrmi", isLike: $isLikePost, likeCount: $postLikeCount)
-                        .modifier(TabBarHidden())
+//                    PostDetailView(postUserType: .reader, nickName: "Hrmi", isLike: $isLikePost, likeCount: $postLikeCount)
+//                        .modifier(TabBarHidden())
                 } label: {
-                    PostCell(isLike: $isLikePost, likeCount: $postLikeCount)
+//                    PostCell(isLike: $isLikePost, likeCount: $postLikeCount)
                 }
                 .buttonStyle(EmptyActionStyle())
             }

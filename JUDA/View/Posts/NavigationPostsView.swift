@@ -19,47 +19,47 @@ struct NavigationPostsView: View {
     
     var body: some View {
         VStack {
-            // 세그먼트 (인기 / 최신)
-            CustomTextSegment(segments: PostOrLiked.post, selectedSegmentIndex: $selectedSegmentIndex)
-                .padding(.vertical, 14)
-                .padding(.horizontal, 20)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            // 인기 or 최신 탭뷰
-            TabView(selection: $selectedSegmentIndex) {
-                ForEach(0..<PostOrLiked.post.count, id: \.self) { index in
-                    ScrollViewReader { value in
-                        Group {
-                            if index == 0 {
-                                // 인기순
-                                PostGrid(isLike: $isLike, likeCount: $likeCount, postUserType: .reader)
-                            } else {
-                                // 최신순
-                                PostGrid(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
-                            }
-                        }
-                        .onChange(of: selectedSegmentIndex) { newValue in
-                            value.scrollTo(newValue, anchor: .center)
-                        }
-                    }
-                }
-            }
-            .tabViewStyle(.page(indexDisplayMode: .never))
-            .ignoresSafeArea()
-        }
-        .navigationBarBackButtonHidden()
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "chevron.left")
-                }
-            }
-            ToolbarItem(placement: .principal) {
-                Text(postSearchText)
-                    .font(.medium16)
-                    .lineLimit(1)
-            }
+//            // 세그먼트 (인기 / 최신)
+//            CustomTextSegment(segments: PostOrLiked.post, selectedSegmentIndex: $selectedSegmentIndex)
+//                .padding(.vertical, 14)
+//                .padding(.horizontal, 20)
+//                .frame(maxWidth: .infinity, alignment: .leading)
+//            // 인기 or 최신 탭뷰
+//            TabView(selection: $selectedSegmentIndex) {
+//                ForEach(0..<PostOrLiked.post.count, id: \.self) { index in
+//                    ScrollViewReader { value in
+//                        Group {
+//                            if index == 0 {
+//                                // 인기순
+//                                PostGrid(isLike: $isLike, likeCount: $likeCount, postUserType: .reader)
+//                            } else {
+//                                // 최신순
+//                                PostGrid(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
+//                            }
+//                        }
+//                        .onChange(of: selectedSegmentIndex) { newValue in
+//                            value.scrollTo(newValue, anchor: .center)
+//                        }
+//                    }
+//                }
+//            }
+//            .tabViewStyle(.page(indexDisplayMode: .never))
+//            .ignoresSafeArea()
+//        }
+//        .navigationBarBackButtonHidden()
+//        .toolbar {
+//            ToolbarItem(placement: .topBarLeading) {
+//                Button {
+//                    dismiss()
+//                } label: {
+//                    Image(systemName: "chevron.left")
+//                }
+//            }
+//            ToolbarItem(placement: .principal) {
+//                Text(postSearchText)
+//                    .font(.medium16)
+//                    .lineLimit(1)
+//            }
         }
         .foregroundStyle(.mainBlack)
     }

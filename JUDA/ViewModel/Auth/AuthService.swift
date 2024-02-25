@@ -27,6 +27,8 @@ final class AuthService: ObservableObject {
     @Published var gender: String = ""
     @Published var profileImage: UIImage?
     @Published var notificationAllowed: Bool = false
+	@Published var likedPosts = [String]()
+	@Published var likedDrinks = [String]()
     // Error
     @Published var showError: Bool = false
     @Published var errorMessage: String = ""
@@ -133,6 +135,8 @@ extension AuthService {
                 self.name = user.name
                 self.age = user.age
                 self.gender = user.gender
+				self.likedPosts = user.likedPosts ?? []
+				self.likedDrinks = user.likedDrinks ?? []
             }
         }
     
@@ -190,6 +194,8 @@ extension AuthService {
                 fetchProfileImage()
                 self.gender = userData.gender
                 self.notificationAllowed = userData.notificationAllowed
+				self.likedPosts = userData.likedPosts ?? []
+				self.likedDrinks = userData.likedDrinks ?? []
                 print("Data:", userData)
             } else {
                 print("Document does not exist in cache")
@@ -208,6 +214,23 @@ extension AuthService {
             print("유저 정보 저장 에러 : \(error.localizedDescription)")
         }
     }
+	
+	// firestore에 유저 정보 업데이트
+	func userLikedPostsUpdate() {
+		collectionRef.document(self.uid).updateData(["likedPosts": self.likedPosts]) { error in
+			if let error = error {
+				print("update error \(error.localizedDescription)")
+			}
+		}
+	}
+	
+	func userLikedDrinksUpdate() {
+		collectionRef.document(self.uid).updateData(["likedDrinks": self.likedDrinks]) { error in
+			if let error = error {
+				print("update error \(error.localizedDescription)")
+			}
+		}
+	}
 }
 
 // MARK: - firestorage

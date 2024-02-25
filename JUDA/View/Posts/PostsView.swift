@@ -10,23 +10,19 @@ import SwiftUI
 // MARK: - 술상 탭
 struct PostsView: View {
     @EnvironmentObject private var appViewModel: AppViewModel
-
-	@Binding var postSearchText: String
+	@EnvironmentObject private var authService: AuthService
+	@EnvironmentObject private var postsViewModel: PostsViewModel
 	
-	@State private var selectedSegmentIndex = 0
-	
-	@State private var isLike = false
-	@State private var likeCount = 45
 	
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 // 상단 서치바
-                SearchBar(inputText: $postSearchText) {  }
+				SearchBar(inputText: $postsViewModel.postSearchText) {  }
                 HStack(alignment: .center) {
                     // 인기, 최신 순으로 선택하여 정렬하기 위한 CustomSegment
-                    CustomTextSegment(segments: PostOrLiked.post,
-                                      selectedSegmentIndex: $selectedSegmentIndex)
+					CustomTextSegment(segments: postsViewModel.postSortType.map { $0.rawValue },
+									  selectedSegmentIndex: $postsViewModel.selectedSegmentIndex)
                     .padding(.bottom, 14)
                     .padding(.top, 20)
                     //
@@ -40,22 +36,25 @@ struct PostsView: View {
                             .font(.medium16)
                             .foregroundStyle(.mainBlack)
                     }
+					// 비로그인 상태일 때 네비게이션링크 비활성화
+					.opacity(authService.signInStatus ? 1.0 : 0.3)
+					.disabled(!authService.signInStatus)
                 }
                 .padding(.horizontal, 20)
                 // 인기 or 최신 탭뷰
-                TabView(selection: $selectedSegmentIndex) {
+				TabView(selection: $postsViewModel.selectedSegmentIndex) {
                     ForEach(0..<PostOrLiked.post.count, id: \.self) { index in
                         ScrollViewReader { value in
                             Group {
                                 if index == 0 {
                                     // 인기순
-                                    PostGrid(isLike: $isLike, likeCount: $likeCount, postUserType: .reader)
+									PostGrid()
                                 } else {
                                     // 최신순
-                                    PostGrid(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
+									PostGrid()
                                 }
                             }
-                            .onChange(of: selectedSegmentIndex) { newValue in
+							.onChange(of: postsViewModel.selectedSegmentIndex) { newValue in
                                 value.scrollTo(newValue, anchor: .center)
                             }
                         }
@@ -63,6 +62,24 @@ struct PostsView: View {
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
             }
+			.task {
+				if postsViewModel.posts.isEmpty {
+					let postSortType = postsViewModel.postSortType[postsViewModel.selectedSegmentIndex]
+					let query = postsViewModel.getPostSortType(postSortType: postSortType)
+					await postsViewModel.firstFetchPost(query: query)
+				}
+			}
+			.onChange(of: postsViewModel.selectedSegmentIndex) { _ in
+				Task {
+					postsViewModel.isLoading = true
+					postsViewModel.posts = []
+					postsViewModel.postImages = [:]
+					postsViewModel.postThumbnailImages = [:]
+					let postSortType = postsViewModel.postSortType[postsViewModel.selectedSegmentIndex]
+					let query = postsViewModel.getPostSortType(postSortType: postSortType)
+					await postsViewModel.firstFetchPost(query: query)
+				}
+			}
             .onAppear {
                 appViewModel.tabBarState = .visible
             }
@@ -72,5 +89,5 @@ struct PostsView: View {
 }
 
 #Preview {
-    PostsView(postSearchText: .constant(""))
+	PostsView()
 }

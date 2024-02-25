@@ -9,32 +9,31 @@ import SwiftUI
 
 // MARK: - 술상 디테일에서, 술 평가
 struct PostDrinkRating: View {
-	let userName: String
-	let postDrinks: [String]
-	let postDrinksStarRating: [Double]
+	let post: Post
 	
     var body: some View {
 		VStack(spacing: 20) {
             // 술 평가 텍스트
-            Text("\(userName)의 술평가")
+			Text("\(post.userField.name)의 술평가")
                 .font(.bold16)
                 .frame(maxWidth: .infinity, alignment: .leading)
             // 각 술 이름 + 평점
-			ForEach(0..<postDrinks.count, id:\.self) { index in
-                // TODO: NavigationLink - value 로 수정
-                NavigationLink {
-                    DrinkDetailView(drink: Whiskey.whiskeySample02) // 임시 더미데이터
-                        .modifier(TabBarHidden())
+			ForEach(post.drinkTags, id:\.drink.drinkID) { drinkTag in
+				// TODO: NavigationLink - value 로 수정
+				NavigationLink {
+					// TODO: 술 태그 선택 시, 해당 술 디테일 뷰 이동
+					DrinkDetailView(drink: Whiskey.whiskeySample02) // 임시 더미데이터
+						.modifier(TabBarHidden())
 				} label: {
 					HStack(spacing: 2) {
-                        // 술 이름
-						Text(postDrinks[index])
+						// 술 이름
+						Text(drinkTag.drink.name)
 							.font(.semibold16)
 							.lineLimit(1)
 						Spacer()
 						// 술 평가 별점
 						HStack(spacing: 5) {
-							StarRating(rating: postDrinksStarRating[index], color: .mainAccent02, starSize: .regular16, fontSize: .semibold14, starRatingType: .withText)
+							StarRating(rating: drinkTag.rating, color: .mainAccent02, starSize: .regular16, fontSize: .semibold14, starRatingType: .withText)
 							Image(systemName: "chevron.forward")
 						}
 					}
@@ -44,10 +43,4 @@ struct PostDrinkRating: View {
 			}
 		}
     }
-}
-
-#Preview {
-	PostDrinkRating(userName: "hrmi",
-					postDrinks: ["카누카 칵테일 700ml", "글렌알라키 10년 캐스크 스트래쓰 700ml", "카누카 칵테일 700ml"],
-					postDrinksStarRating: [4.5, 4.0, 5.0])
 }

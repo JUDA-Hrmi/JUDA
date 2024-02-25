@@ -45,16 +45,16 @@ struct NavigationProfileView: View {
             // MARK: iOS 16.4 이상
             if #available(iOS 16.4, *) {
                 ScrollView() {
-                    PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
+//                    PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
                 }
                 .scrollBounceBehavior(.basedOnSize, axes: .vertical)
                 // MARK: iOS 16.4 미만
             } else {
                 ViewThatFits(in: .vertical) {
-                    PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
-                        .frame(maxHeight: .infinity, alignment: .top)
+//                    PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
+//                        .frame(maxHeight: .infinity, alignment: .top)
                     ScrollView {
-                        PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
+//                        PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
                     }
                 }
             }

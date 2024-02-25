@@ -69,7 +69,7 @@ struct AddTagView: View {
                 if isShowRatingDialog {
                     CustomDialog(type: .rating(
                         // 선택된 술 태그의 술 이름
-                        drinkName: recordViewModel.selectedDrinkTag?.1.drinkTag.name ?? "",
+                        drinkName: recordViewModel.selectedDrinkTag?.drink.name ?? "",
                         leftButtonLabel: "취소",
                         leftButtonAction: {
                             // CustomRatingDialog 사라지게 하기
@@ -80,8 +80,9 @@ struct AddTagView: View {
                             // 0보다 큰 점수를 매겼을 때 수정 버튼 동작
                             if rating > 0 {
                                 // 술 태그 배열에서 해당 술 태그의 점수를 변경
-                                if let selectedDrinkTag = recordViewModel.selectedDrinkTag {
-                                    recordViewModel.drinkTags[selectedDrinkTag.0] = DrinkTag(drinkTag: selectedDrinkTag.1.drinkTag, rating: rating)
+								if let selectedDrinkTag = recordViewModel.selectedDrinkTag,
+								   let index = recordViewModel.drinkTags.firstIndex(where: { $0.drink.drinkID == selectedDrinkTag.drink.drinkID }) {
+									recordViewModel.drinkTags[index] = DrinkTag(drink: selectedDrinkTag.drink, rating: rating)
                                 }
                                 // 점수 변경 후 CustomRatingDialog 사라지게 하기
                                 isShowRatingDialog = false
@@ -92,7 +93,7 @@ struct AddTagView: View {
                     )
                     // 선택한 drinkTag의 rating을 CustomDialog에 표시하기 위한 rating 값 변경
                     .onAppear {
-                        if let rating = recordViewModel.selectedDrinkTag?.1.rating {
+						if let rating = recordViewModel.selectedDrinkTag?.rating {
                             self.rating = rating
                         }
                     }
@@ -143,7 +144,7 @@ struct AddTagView: View {
                 SearchTagView(isShowSearchTag: $isShowSearchTag)
                 // SearchTagView Disappear시, 검색 결과 비워주기
                     .onDisappear {
-                        recordViewModel.searchDrinks = [:]
+						recordViewModel.searchDrinks.removeAll()
                     }
             }
         }

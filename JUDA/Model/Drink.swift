@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 enum DrinkJsonType: CaseIterable {
 	case beer, wine, traditional, whiskey
@@ -26,6 +27,7 @@ enum DrinkJsonType: CaseIterable {
 
 // Firebase에서 사용하는 Drink Model
 struct FBDrink: Codable {
+	@DocumentID var drinkID: String?
 	let category: String
 	let type: String
 	let name: String
