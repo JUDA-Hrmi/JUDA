@@ -63,10 +63,6 @@ struct LikedDrinkListContent: View {
                 }
             }
         }
-        .task {
-            await likedViewModel
-                .getLikedDrinks(likedDrinksIDList: authService.likedDrinks)
-        }
     }
 }
 

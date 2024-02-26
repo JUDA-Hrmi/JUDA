@@ -17,11 +17,16 @@ final class LikedViewModel: ObservableObject {
     @Published var likedDrinks = [FBDrink]()
     // 술 이미지 딕셔너리 *[drinkID: imageURL]
     @Published var drinkImages = [String: URL]()
+    // 현재 유저가 좋아요 누른 술상 목록
+    @Published var likedPosts = [Post]()
+    // 전체 포스트에 사용되는 작성자의 이미지를 갖는 딕셔너리 [포스트ID: 이미지]
+    @Published var postUserImages: [String: UIImage] = [:]
     // 데이터 로딩 중인지 체크
     @Published var isLoading: Bool = true
     // Firestore 경로
     private let firestore = Firestore.firestore()
     private let drinksCollection = "drinks"
+    private let postsCollection = "posts"
     
     // FireStorage 기본 경로
     private let storage = Storage.storage()
@@ -58,6 +63,86 @@ extension LikedViewModel {
             }
         }
         isLoading = false
+    }
+    
+    // 좋아요 누른 술상 ID 받아서 [PostField] 로 반환
+    private func getPostFieldList(to postsIDList: [String]) async -> [PostField] {
+        let postReference = firestore.collection(postsCollection)
+        var result = [PostField]()
+        
+        for postID in postsIDList {
+            do {
+                let document = try await postReference.document(postID).getDocument()
+                let postField = try document.data(as: PostField.self)
+                result.append(postField)
+            } catch {
+                print("get Liked Posts Error")
+            }
+        }
+        return result
+    }
+    
+    // 좋아요 누른 술상 목록 가져오기
+    func getLikedPosts(likedPostsIDList: [String]?) async {
+        guard let likedPostsIDList = likedPostsIDList else {
+            print("좋아요 누른 술상 없음")
+            return
+        }
+        isLoading = true
+        let postReference = firestore.collection(postsCollection)
+        let snapshot = await getPostFieldList(to: likedPostsIDList)
+        
+        var tasks: [Task<(Int, Post)?, Error>] = []
+        for (index, postField) in snapshot.enumerated() {
+            let postID = postField.postID ?? ""
+            let task = Task<(Int, Post)?, Error> {
+                let postDrinkTagRef = postReference.document(postID).collection("drinkTags")
+                let drinkTagSnapshot = try await postDrinkTagRef.getDocuments()
+                var drinkTags = [DrinkTag]()
+                for drinkTag in drinkTagSnapshot.documents {
+                    let drinkTagID = drinkTag.documentID
+                    let rating = drinkTag.data()["rating"] as! Double
+                    if let drinkTagDocument = try await postDrinkTagRef.document(drinkTagID).collection("drink").getDocuments().documents.first {
+                        let drinkTagField = try drinkTagDocument.data(as: FBDrink.self)
+                        drinkTags.append(DrinkTag(drink: drinkTagField, rating: rating))
+                    }
+                }
+                if let userDocument = try await postReference.document(postID).collection("user").getDocuments().documents.first {
+                    let userField = try userDocument.data(as: UserField.self)
+                    await userFetchImage(imageID: userField.userID ?? "")
+                    return (index, Post(userField: userField, drinkTags: drinkTags, postField: postField))
+                }
+                return nil
+            }
+            tasks.append(task)
+        }
+        // 결과를 비동기적으로 수집
+        var results: [(Int, Post)] = []
+        for task in tasks {
+            do {
+                if let result = try await task.value {
+                    results.append(result)
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        // 원본 문서의 인덱스를 기준으로 결과를 정렬
+        results.sort { $0.0 < $1.0 }
+        // 인덱스를 제거하고 최종 결과를 추출
+        self.likedPosts = results.map { $1 }
+        isLoading = false
+    }
+    
+    func userFetchImage(imageID: String) async {
+        let storageRef = Storage.storage().reference().child("userImages/\(imageID)")
+        storageRef.getData(maxSize: (1 * 1024 * 1024)) { data, error in
+            if let data = data, let uiImage = UIImage(data: data) {
+                self.postUserImages[imageID] = uiImage
+            } else {
+                print("fetch user image error \(String(describing: error?.localizedDescription))")
+            }
+        }
     }
 }
 
