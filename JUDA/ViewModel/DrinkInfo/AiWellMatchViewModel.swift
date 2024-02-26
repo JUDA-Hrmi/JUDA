@@ -34,7 +34,7 @@ class AiWellMatchViewModel: ObservableObject {
     @MainActor
     func request(prompt: String) async throws -> String {
         let query = ChatQuery(model: .gpt3_5Turbo_16k, messages: [
-            Chat(role: .system, content: "Please be sure to give recommendation Three answer in one word using Korean"),
+            Chat(role: .system, content: "Please recommend various kinds of snacks from around the world to match the alcohol. Please three answer in one word using Korean"),
             Chat(role: .assistant, content: "피자, 갈릭 쉬림프, 타코"),
             Chat(role: .assistant, content: "찜닭, 감바스, 소고기 구이"),
             Chat(role: .user, content: prompt),

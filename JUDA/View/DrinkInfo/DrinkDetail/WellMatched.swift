@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// TODO: - 실제 데이터와 연동 작업 필요 -> merge 이후 수정 필요
 struct WellMatched: View {
     @EnvironmentObject var aiWellMatchViewModel: AiWellMatchViewModel
     @ObservedObject var recommend = Recommend.shared
@@ -22,11 +23,12 @@ struct WellMatched: View {
                     .font(.semibold16)
                     .foregroundStyle(.mainAccent05)
             }
-            // 추천 받은 음식
+            
             if isLoading {
                 ProgressView()
             } else {
                 HStack(alignment: .center, spacing: 16) {
+                    // 추천 받은 음식
                     Text(aiWellMatchViewModel.respond)
                 }
             }
