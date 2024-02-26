@@ -18,8 +18,7 @@ struct PostDetailView: View {
 	
 	let postUserType: PostUserType
 	let post: Post
-
-	let postPhotos: [URL]
+	let postPhotosURL: [URL]
 	
 	@State private var isReportPresented = false
 	@State private var isDeleteDialogPresented = false
@@ -30,16 +29,16 @@ struct PostDetailView: View {
             // MARK: iOS 16.4 이상
             if #available(iOS 16.4, *) {
                 ScrollView {
-					PostDetailContent(post: post, postPhotos: postPhotos)
+					PostDetailContent(post: post, postPhotosURL: postPhotosURL)
                 }
                 .scrollBounceBehavior(.basedOnSize, axes: .vertical)
                 // MARK: iOS 16.4 미만
             } else {
                 ViewThatFits(in: .vertical) {
-					PostDetailContent(post: post, postPhotos: postPhotos)
+					PostDetailContent(post: post, postPhotosURL: postPhotosURL)
                         .frame(maxHeight: .infinity, alignment: .top)
                     ScrollView {
-						PostDetailContent(post: post, postPhotos: postPhotos)
+						PostDetailContent(post: post, postPhotosURL: postPhotosURL)
                     }
                 }
             }
@@ -56,11 +55,8 @@ struct PostDetailView: View {
                         isDeleteDialogPresented = false
                         // TODO: write view dismiss code
 						Task {
-							guard let userID = post.userField.userID,
-								  let postID = post.postField.postID else {
-								return
-							}
-							await postsViewModel.postDelete(userID: userID, postID: postID)
+							await postDeleteButtonAction()
+							await postReFetch()
 						}
 						dismiss()
                     })
@@ -133,8 +129,26 @@ struct PostDetailView: View {
 		.foregroundStyle(.mainBlack)
 		// 신고뷰를 풀스크린커버로 아래에서 위로 올라오는 뷰
 		.fullScreenCover(isPresented: $isReportPresented) {
-			PostReportView(isReportPresented: $isReportPresented)
+			PostReportView(post: post, isReportPresented: $isReportPresented)
 		}
+	}
+	
+	private func postDeleteButtonAction() async {
+		guard let userID = post.userField.userID,
+			  let postID = post.postField.postID else {
+			return
+		}
+		await postsViewModel.postDelete(userID: userID, postID: postID)
+	}
+	
+	private func postReFetch() async {
+		postsViewModel.isLoading = true
+		postsViewModel.posts = []
+		postsViewModel.postImagesURL = [:]
+		postsViewModel.postThumbnailImagesURL = [:]
+		let postSortType = postsViewModel.postSortType[postsViewModel.selectedSegmentIndex]
+		let query = postsViewModel.getPostSortType(postSortType: postSortType)
+		await postsViewModel.firstFetchPost(query: query)
 	}
 }
 
@@ -142,14 +156,14 @@ struct PostDetailView: View {
 struct PostDetailContent: View {
 	@EnvironmentObject private var postsViewModel: PostsViewModel
 	let post: Post
-    let postPhotos: [URL]
-
+	let postPhotosURL: [URL]
+	
     var body: some View {
         VStack {
             // Bar 형태로 된 게시글 정보를 보여주는 뷰
 			PostInfo(post: post)
 			// 게시글의 사진을 페이징 스크롤 형식으로 보여주는 뷰
-			PostPhotoScroll(postPhotos: postPhotos)
+			PostPhotoScroll(postPhotosURL: postPhotosURL)
 			// 술 평가 + 글 + 음식 태그
 			VStack(alignment: .leading, spacing: 20) {
 				// 술 평가
@@ -165,6 +179,9 @@ struct PostDetailContent: View {
 			}
 			.padding(.horizontal, 20)
         }
+		.task {
+			print(postPhotosURL)
+		}
     }
 }
 

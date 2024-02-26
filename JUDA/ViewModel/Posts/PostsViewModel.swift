@@ -33,6 +33,7 @@ enum FireStorageImageFolderType: CaseIterable {
 	}
 }
 
+
 // MARK: - 술상 정렬 enum
 enum PostSortType: String, CaseIterable {
 	case popularity = "인기"
@@ -44,23 +45,26 @@ final class PostsViewModel: ObservableObject {
 	private let db = Firestore.firestore()
 	// 게시글 객체 배열 생성
 	@Published var posts = [Post]()
+	// 게시글 신고 객체
+	@Published var report: Report?
 	// 마지막 포스트 확인용(페이징)
 	@Published var lastQuerydocumentSnapshot: QueryDocumentSnapshot?
-	// 전체 포스트에 사용되는 이미지를 갖는 튜플 형태의 배열을 갖고있는 딕셔너리 [포스트ID: [이미지 URL]]
-	@Published var postImages: [String: [URL]] = [:]
-	@Published var postThumbnailImages: [String: UIImage] = [:]
+	// 전체 포스트에 사용되는 이미지를 갖는 튜플 형태의 배열을 갖고있는 딕셔너리 [포스트ID: [URL]]
+	@Published var postImagesURL: [String: [URL]] = [:]
+	// 전체 포스트의 썸네일 이미지로 사용되는 딕셔너리 [포스트ID: URL]
+	@Published var postThumbnailImagesURL: [String: URL] = [:]
 	// 전체 포스트에 사용되는 작성자의 이미지를 갖는 딕셔너리 [포스트ID: 이미지]
 	@Published var postUserImages: [String: UIImage] = [:]
-	// 게시글 검색 텍스트
-	@Published var postSearchText = ""
-    // 태그된 게시글 리스트 ( DrinkDetail 에서 이동할 때 사용 )
-    @Published var drinkTaggedPosts = [Post]()
-	// 게시글 정렬 타입
 	// 게시글 정렬용 세그먼트 인덱스
 	@Published var selectedSegmentIndex = 0
-	// 게시글 불러오는 동안 보여줄 임시 로딩뷰 바인딩용 프로퍼티
+	// 게시글 정렬 타입
 	@Published var postSortType = PostSortType.allCases
+	// 게시글 불러오기/업로드/삭제/수정 작업이 진행중인지 나타내는 상태 프로퍼티
 	@Published var isLoading = false
+	// 게시글이 수정이 되었는지 유무 판단하는 상태 프로퍼티
+	@Published var isUpdate = false
+	// 태그된 게시글 리스트 ( DrinkDetail 에서 이동할 때 사용 )
+	@Published var drinkTaggedPosts = [Post]()
 }
 
 // MARK: Fetch
@@ -120,6 +124,12 @@ extension PostsViewModel {
 			let task = Task<(Int, Post)?, Error> {
 				let postID = document.documentID
 				let postField = try document.data(as: PostField.self)
+				if self.postImagesURL[postID] == nil {
+					self.postImagesURL[postID] = []
+				}
+				for imageURL in postField.imagesURL {
+					self.postImagesURL[postID]?.append(imageURL)
+				}
 				
 				let postDrinkTagRef = postRef.document(postID).collection("drinkTags")
 				let drinkTagSnapshot = try await postDrinkTagRef.getDocuments()
@@ -132,10 +142,14 @@ extension PostsViewModel {
 						drinkTags.append(DrinkTag(drink: drinkTagField, rating: rating))
 					}
 				}
+				
+				if let thumbnailImageURL = postField.imagesURL.first {
+					self.postThumbnailImagesURL[postID] = thumbnailImageURL
+				}
 
 				if let userDocument = try await postRef.document(postID).collection("user").getDocuments().documents.first {
 					let userField = try userDocument.data(as: UserField.self)
-                    await userFetchImage(imageID: userField.userID ?? "")
+					await userFetchImage(imageID: userField.userID ?? "defaultprofileimage")
 					return (index, Post(userField: userField, drinkTags: drinkTags, postField: postField))
 				}
 				return nil
@@ -161,6 +175,8 @@ extension PostsViewModel {
 		// 인덱스를 제거하고 최종 결과를 추출
 		let posts = results.map { $1 }
 		self.posts.append(contentsOf: posts)
+		
+		self.isLoading = false
 	}
 	
 	@MainActor
@@ -225,10 +241,10 @@ extension PostsViewModel {
 extension PostsViewModel {
 	// post delete 과정에서 연관된 데이터 삭제
 	func postDelete(userID: String, postID: String) async {
-//		let postRef = db.collection("posts")
+		let postRef = db.collection("posts")
 		let userRef = db.collection("users")
+		await postsCollectionPostDelete(postRef: postRef, postID: postID)
 		await usersCollectionPostDelete(userRef: userRef, userID: userID, postID: postID)
-//		await postsCollectionPostDelete(postRef: postRef, postID: postID)
 	}
 	
 	func postsCollectionPostDelete(postRef: CollectionReference, postID: String) async {
@@ -299,6 +315,34 @@ extension PostsViewModel {
 	// 전체 유저의 likedPosts에서 삭제되는 postId 삭제 후 업데이트
 	func allUsersliekdPostsUpdate() {
 		
+	}
+	
+	func postImagesURLDelete(postRef: CollectionReference, postID: String) async {
+		do {
+			// TODO: 이미지 storage에서 삭제
+			let storageRef = Storage.storage().reference()
+			let imagesURL = try await postRef.document(postID).getDocument().data(as: PostField.self).imagesURL
+			
+			for imageURL in imagesURL {
+				if let fileName = getImageFileName(imageURL: imageURL) {
+					let imageRef = storageRef.child("postImages/\(fileName)")
+					try await imageRef.delete()
+				} else {
+					print("postImagesURLDelete() -> error dont't get fileName")
+				}
+			}
+		} catch {
+			print("postImagesURLDelete() -> error \(error.localizedDescription)")
+		}
+	}
+	
+	// fileName 추추
+	func getImageFileName(imageURL: URL) -> String? {
+		let path = imageURL.path
+		// '%' 인코딩된 문자 디코딩
+		guard let decodedPath = path.removingPercentEncoding else { return nil }
+		// '/'를 기준으로 문자열 분리 후 마지막 요소 추출 후 리턴
+		return decodedPath.components(separatedBy: "/").last
 	}
 }
 
@@ -392,4 +436,20 @@ extension PostsViewModel {
         }
         self.drinkTaggedPosts = await fetchTaggedPosts(postFields: result)
     }
+}
+
+// MARK: Post Report
+extension PostsViewModel {
+	func postReportUpload() {
+		guard let report = report else { return }
+		do {
+			let reportDocumentPath = UUID().uuidString
+			
+			let reportRef = db.collection("reports")
+			try reportRef.document(reportDocumentPath).setData(from: report)
+			
+		} catch {
+			print("Report upload Error :: \(error.localizedDescription)")
+		}
+	}
 }

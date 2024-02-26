@@ -81,6 +81,7 @@ struct DrinkDetails: View {
                     // TODO: NavigationLink - value 로 수정
                     NavigationLink {
                         NavigationPostsView(usedTo: .drinkDetail,
+											searchTagType: nil,
                                             taggedPostID: drink.taggedPostID)
                     } label: {
                         Text("\(drink.taggedPostID.count)개의 태그된 게시물")

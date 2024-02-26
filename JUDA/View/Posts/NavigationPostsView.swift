@@ -11,8 +11,10 @@ import SwiftUI
 struct NavigationPostsView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject private var postsViewModel: PostsViewModel
-    
-    let usedTo: WhereUsedPostGridContent
+	@EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
+	@State private var selectedSegmentIndex = 0
+	let usedTo: WhereUsedPostGridContent
+	let searchTagType: SearchTagType?
 
     // drink detail 에서 올때 받아야 할 정보
     var taggedPostID: [String]?
@@ -20,25 +22,25 @@ struct NavigationPostsView: View {
     var body: some View {
         VStack {
             // 세그먼트 (인기 / 최신)
-            CustomTextSegment(segments: postsViewModel.postSortType.map { $0.rawValue },
-                              selectedSegmentIndex: $postsViewModel.selectedSegmentIndex)
+            CustomTextSegment(segments: searchPostsViewModel.postSortType.map { $0.rawValue },
+                              selectedSegmentIndex: $selectedSegmentIndex)
                 .padding(.vertical, 14)
                 .padding(.horizontal, 20)
                 .frame(maxWidth: .infinity, alignment: .leading)
             // 인기 or 최신 탭뷰
-            TabView(selection: $postsViewModel.selectedSegmentIndex) {
+            TabView(selection: $searchPostsViewModel.selectedSegmentIndex) {
                 ForEach(0..<PostSortType.allCases.count, id: \.self) { index in
                     ScrollViewReader { value in
                         Group {
-                            if postsViewModel.postSortType[index] == .popularity {
+                            if searchPostsViewModel.postSortType[index] == .popularity {
                                 // 인기순
-                                PostGrid(usedTo: usedTo)
+								PostGrid(usedTo: usedTo, searchTagType: searchTagType)
                             } else {
                                 // 최신순
-                                PostGrid(usedTo: usedTo)
+								PostGrid(usedTo: usedTo, searchTagType: searchTagType)
                             }
                         }
-                        .onChange(of: postsViewModel.selectedSegmentIndex) { newValue in
+                        .onChange(of: selectedSegmentIndex) { newValue in
                             value.scrollTo(newValue, anchor: .center)
                         }
                     }
@@ -74,6 +76,23 @@ struct NavigationPostsView: View {
                 }
             }
         }
+		.onChange(of: selectedSegmentIndex) { _ in
+			if let searchTagType = searchTagType {
+				print("dpdpdpdppdpdpdpd")
+				Task {
+					await searchPostsViewModel.postSortBySearchTagType(searchTagType: searchTagType,
+																	   postSortType: searchPostsViewModel.postSortType[selectedSegmentIndex])
+				}
+			}
+			print("NavigationPostsView onChange(of: selectedSegmentIndex)")
+		}
+		.task {
+			if let searchTagType = searchTagType {
+				await searchPostsViewModel.postSortBySearchTagType(searchTagType: searchTagType,
+																   postSortType: searchPostsViewModel.postSortType[selectedSegmentIndex])
+			}
+			print("NavigationPostsView onAppear()")
+		}
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -84,7 +103,7 @@ struct NavigationPostsView: View {
                 }
             }
             ToolbarItem(placement: .principal) {
-                Text(postsViewModel.postSearchText)
+                Text(searchPostsViewModel.postSearchText)
                     .font(.medium16)
                     .lineLimit(1)
             }

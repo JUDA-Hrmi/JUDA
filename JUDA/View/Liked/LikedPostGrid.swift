@@ -16,16 +16,16 @@ struct LikedPostGrid: View {
             // MARK: iOS 16.4 이상
             if #available(iOS 16.4, *) {
                 ScrollView() {
-                    LikedDrinkGridContent()
+                    LikedPostGridContent()
                 }
                 .scrollBounceBehavior(.basedOnSize, axes: .vertical)
                 // MARK: iOS 16.4 미만
             } else {
                 ViewThatFits(in: .vertical) {
-                    LikedDrinkGridContent()
+					LikedPostGridContent()
                         .frame(maxHeight: .infinity, alignment: .top)
                     ScrollView {
-                        LikedDrinkGridContent()
+						LikedPostGridContent()
                     }
                 }
             }
@@ -38,7 +38,7 @@ struct LikedPostGrid: View {
 }
 
 // MARK: - 스크롤 뷰 or 뷰 로 보여질 술상 그리드
-struct LikedDrinkGridContent: View {
+struct LikedPostGridContent: View {
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var likedViewModel: LikedViewModel
 
@@ -53,9 +53,9 @@ struct LikedDrinkGridContent: View {
                     NavigationLink {
                         PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
                                        post: post,
-                                       postPhotos: post.postField.imagesURL)
+									   postPhotosURL: post.postField.imagesURL)
                     } label: {
-                        PostCell(post: post)
+						PostCell(usedTo: .liked, post: post)
                     }
                     .buttonStyle(EmptyActionStyle())
                 }

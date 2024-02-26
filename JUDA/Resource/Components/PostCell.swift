@@ -12,11 +12,14 @@ import Kingfisher
 struct PostCell: View {
 	@EnvironmentObject private var authService: AuthService
 	@EnvironmentObject private var postsViewModel: PostsViewModel
+	@EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
 
 	@State private var isLike: Bool = false
 	@State private var likeCount: Int = 0
 	
+	let usedTo: WhereUsedPostGridContent
 	let post: Post
+	private let debouncer = Debouncer(delay: 0.5)
 	
 	var body: some View {
 		// VStack에 기본적인 spacing이 들어가기 때문에 0으로 설정
@@ -78,7 +81,20 @@ struct PostCell: View {
 					Button {
 						// TODO: 로그인 안 되어 있을 때, 로그인 페이지 넘어가기
 						if authService.signInStatus {
-							likeButtonAction()
+							debouncer.call {
+								switch usedTo {
+								case .post:
+									postLikeButtonAction()
+								case .postSearch:
+									postSearchLikeButtonAction()
+								case .drinkDetail:
+									return
+								case .liked:
+									return
+								case .myPage:
+									return
+								}
+							}
 						}
 					} label: {
 						Image(systemName: isLike ? "heart.fill" : "heart")
@@ -108,7 +124,7 @@ struct PostCell: View {
 	}
 	
 	// 좋아요 버튼 액션 메서드
-	private func likeButtonAction() {
+	private func postLikeButtonAction() {
 		// 좋아요 등록 -> 좋아요 수에 + 1
 		// 좋아요 해제 -> 좋아요 수에 - 1
 		guard let postID = post.postField.postID else {
@@ -133,6 +149,39 @@ struct PostCell: View {
 			
 			if let index = postsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
 				postsViewModel.posts[index].postField.likedCount += 1
+			}
+			Task {
+				await postsViewModel.postLikedUpdate(likeType: .plus, postID: postID)
+			}
+		}
+		isLike.toggle()
+	}
+	
+	private func postSearchLikeButtonAction() {
+		// 좋아요 등록 -> 좋아요 수에 + 1
+		// 좋아요 해제 -> 좋아요 수에 - 1
+		guard let postID = post.postField.postID else {
+			print("PostCell :: likeButtonAction() error -> dot't get postID")
+			return
+		}
+		if isLike {
+			likeCount -= 1
+			authService.likedPosts.removeAll(where: { $0 == postID })
+			authService.userLikedPostsUpdate()
+			
+			if let index = searchPostsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
+				searchPostsViewModel.posts[index].postField.likedCount -= 1
+			}
+			Task {
+				await postsViewModel.postLikedUpdate(likeType: .minus, postID: postID)
+			}
+		} else {
+			likeCount += 1
+			authService.likedPosts.append(postID)
+			authService.userLikedPostsUpdate()
+			
+			if let index = searchPostsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
+				searchPostsViewModel.posts[index].postField.likedCount += 1
 			}
 			Task {
 				await postsViewModel.postLikedUpdate(likeType: .plus, postID: postID)

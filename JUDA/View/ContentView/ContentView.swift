@@ -15,6 +15,7 @@ struct ContentView: View {
     @StateObject private var locationManager = LocationManager()
     @StateObject private var aiViewModel = AiViewModel()
     @StateObject private var recordViewModel = RecordViewModel()
+	@StateObject private var searchPostsViewModel = SearchPostsViewModel()
     @StateObject private var likedViewModel = LikedViewModel()
     @StateObject private var notificationViewModel = AlarmViewModel()
     @StateObject private var aiWellMatchViewModel = AiWellMatchViewModel()
@@ -86,6 +87,7 @@ struct ContentView: View {
         case .posts:
             PostsView()
                 .environmentObject(recordViewModel)
+				.environmentObject(searchPostsViewModel)
         case .liked:
             if authService.signInStatus {
                 LikedView()

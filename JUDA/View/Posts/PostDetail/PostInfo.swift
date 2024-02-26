@@ -15,6 +15,7 @@ struct PostInfo: View {
 	@State private var isLike: Bool = false
 	@State private var likeCount: Int = 0
 	let post: Post
+	private let debouncer = Debouncer(delay: 0.5)
 
     var body: some View {
         HStack {
@@ -65,7 +66,9 @@ struct PostInfo: View {
             }
             .font(.regular16)
             .onTapGesture {
-                likeButtonAction()
+				debouncer.call {
+					likeButtonAction()
+				}
             }
         }
         .padding(.horizontal, 20)
