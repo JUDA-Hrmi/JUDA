@@ -122,8 +122,10 @@ final class AuthService: ObservableObject {
             likedDrinks.removeAll { $0 == drinkID }
             print("removeAll")
         } else { // 좋아요 O -> X
-            likedDrinks.append(drinkID)
-            print("append")
+            if !likedDrinks.contains(drinkID) {
+                likedDrinks.append(drinkID)
+                print("append")
+            }
         }
     }
 }

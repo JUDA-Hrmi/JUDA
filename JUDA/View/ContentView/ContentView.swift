@@ -97,6 +97,7 @@ struct ContentView: View {
                     .environmentObject(recordViewModel)
                     .environmentObject(drinkViewModel)
                     .environmentObject(likedViewModel)
+                    .environmentObject(postsViewModel)
             } else {
                 EmptyView()
             }

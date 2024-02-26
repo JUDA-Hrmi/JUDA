@@ -55,7 +55,9 @@ struct DrinkDetailView: View {
                     CustomDivider()
                 }
                 // 태그된 인기 게시물
-                TaggedTrendingPosts(drink: drink)
+                if drink.taggedPostID.count > 0 {
+                    TaggedTrendingPosts(drink: drink)
+                }
             }
         }
         .task {

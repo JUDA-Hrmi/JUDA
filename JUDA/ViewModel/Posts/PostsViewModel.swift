@@ -53,6 +53,8 @@ final class PostsViewModel: ObservableObject {
 	@Published var postUserImages: [String: UIImage] = [:]
 	// 게시글 검색 텍스트
 	@Published var postSearchText = ""
+    // 태그된 게시글 리스트 ( DrinkDetail 에서 이동할 때 사용 )
+    @Published var drinkTaggedPosts = [Post]()
 	// 게시글 정렬 타입
 	// 게시글 정렬용 세그먼트 인덱스
 	@Published var selectedSegmentIndex = 0
@@ -370,16 +372,17 @@ extension PostsViewModel {
     
     // Drink Detail View 에서 사용 : 태그된 게시물 [Post] 반환
     @MainActor
-    func getTaggedPosts(taggedPostID: [String], sortType: PostSortType) async -> [Post] {
+    func getTaggedPosts(taggedPostID: [String], sortType: PostSortType) async {
         let postRef = db.collection("posts")
         var result = [PostField]()
         for postID in taggedPostID {
             do {
                 let document = try await postRef.document(postID).getDocument()
                 let postField = try document.data(as: PostField.self)
+                self.isLoading = true
                 result.append(postField)
             } catch {
-                print("get Top Trending Posts Error")
+                print("get Tagged Posts Error")
             }
         }
         if sortType == .popularity {
@@ -387,6 +390,6 @@ extension PostsViewModel {
         } else {
             result.sort { $0.postedTimeStamp > $1.postedTimeStamp} // 최신순
         }
-        return await fetchTaggedPosts(postFields: result)
+        self.drinkTaggedPosts = await fetchTaggedPosts(postFields: result)
     }
 }

@@ -38,9 +38,11 @@ struct PostListCell: View {
                 // 유저
                 Text(post.userField.name)
                     .font(.regular16)
+                    .foregroundStyle(.mainBlack)
                 // 태그
                 Text(getTagListToString(list: Array(post.postField.foodTags.prefix(2))))
                     .font(.light14)
+                    .foregroundStyle(.mainBlack)
                     .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 // 좋아요

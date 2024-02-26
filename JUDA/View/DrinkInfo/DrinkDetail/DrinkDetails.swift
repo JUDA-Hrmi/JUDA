@@ -77,20 +77,21 @@ struct DrinkDetails: View {
                 StarRating(rating: drink.rating, color: .mainAccent05,
                            starSize: .regular16, fontSize: .regular16, starRatingType: .withText)
                 // 태그된 게시물
-                // TODO: NavigationLink - value 로 수정
-                NavigationLink {
-					NavigationPostsView()
-                } label: {
-                    if drink.taggedPostID.count > 0 {
+                if drink.taggedPostID.count > 0 {
+                    // TODO: NavigationLink - value 로 수정
+                    NavigationLink {
+                        NavigationPostsView(usedTo: .drinkDetail,
+                                            taggedPostID: drink.taggedPostID)
+                    } label: {
                         Text("\(drink.taggedPostID.count)개의 태그된 게시물")
                             .font(.regular16)
                             .foregroundStyle(.gray01)
                             .underline()
-                    } else {
-                        Text("태그된 게시물 없음")
-                            .font(.regular16)
-                            .foregroundStyle(.gray01)
                     }
+                }  else {
+                    Text("태그된 게시물 없음")
+                        .font(.regular16)
+                        .foregroundStyle(.gray01)
                 }
             }
         }

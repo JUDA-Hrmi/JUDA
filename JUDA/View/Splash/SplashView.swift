@@ -86,10 +86,6 @@ struct SplashView: View {
                 // 인기 술상 미리 받아오기
                 taskGroup.addTask { await mainViewModel.getHottestPosts() }
             }
-//            // 인기 술 미리 받아오기
-//            await mainViewModel.getHottestDrinks()
-//            // 인기 술상 미리 받아오기
-//            await mainViewModel.getHottestPosts()
         }
         // SettingView - 화면 모드 -> 선택한 옵션에 따라 배경색 변환
         .preferredColorScheme(colorScheme.selectedColor == .light ? .light : colorScheme.selectedColor == .dark ? .dark : .none)

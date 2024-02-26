@@ -24,6 +24,7 @@
 		0974A1582B8BA2BD00476199 /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0974A1562B8BA2BD00476199 /* APIKEYS.plist */; };
 		0974A1592B8BA2BD00476199 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0974A1572B8BA2BD00476199 /* GoogleService-Info.plist */; };
 		0974A15B2B8BD71B00476199 /* ShimmerPostListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A15A2B8BD71B00476199 /* ShimmerPostListCell.swift */; };
+		0974A15D2B8C60DE00476199 /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 0974A15C2B8C60DE00476199 /* DrinkLoading.json */; };
 		0999125C2B84654400E72C73 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0999125B2B84654400E72C73 /* FirebaseCrashlytics */; };
 		099912652B85799800E72C73 /* CircularLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099912642B85799800E72C73 /* CircularLoaderView.swift */; };
 		099D9AAE2B88749E002261F7 /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099D9AAD2B88749E002261F7 /* Debouncer.swift */; };
@@ -48,7 +49,6 @@
 		09BCC15A2B7C8CD300FF4D1B /* IdentityVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BCC1592B7C8CD300FF4D1B /* IdentityVerificationView.swift */; };
 		09BCC15D2B7CF2CB00FF4D1B /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		09BCC15F2B7CFC7E00FF4D1B /* TermsAndVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BCC15E2B7CFC7E00FF4D1B /* TermsAndVerificationView.swift */; };
-		09C7C9A42B8CCC1100F62617 /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 09C7C9A32B8CCC1100F62617 /* DrinkLoading.json */; };
 		09F869932B68E36800A56A4C /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869922B68E36800A56A4C /* Formatter.swift */; };
 		09F869962B68E46500A56A4C /* DrinkDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869952B68E46500A56A4C /* DrinkDetailView.swift */; };
 		09F869982B68E48400A56A4C /* DrinkDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869972B68E48400A56A4C /* DrinkDetails.swift */; };
@@ -177,6 +177,7 @@
 		0974A1562B8BA2BD00476199 /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = APIKEYS.plist; path = "../../흐르미/APIKEYS.plist"; sourceTree = "<group>"; };
 		0974A1572B8BA2BD00476199 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../흐르미/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0974A15A2B8BD71B00476199 /* ShimmerPostListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerPostListCell.swift; sourceTree = "<group>"; };
+		0974A15C2B8C60DE00476199 /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = DrinkLoading.json; path = "../../../../흐르미/Lottie/DrinkLoading.json"; sourceTree = "<group>"; };
 		099912642B85799800E72C73 /* CircularLoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularLoaderView.swift; sourceTree = "<group>"; };
 		099D9AAD2B88749E002261F7 /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		099F16182B750E7E00D8BEDA /* UINavigationController +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController +.swift"; sourceTree = "<group>"; };
@@ -199,7 +200,6 @@
 		09BCC1572B7C805400FF4D1B /* UserAgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgreementView.swift; sourceTree = "<group>"; };
 		09BCC1592B7C8CD300FF4D1B /* IdentityVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityVerificationView.swift; sourceTree = "<group>"; };
 		09BCC15E2B7CFC7E00FF4D1B /* TermsAndVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndVerificationView.swift; sourceTree = "<group>"; };
-		09C7C9A32B8CCC1100F62617 /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = DrinkLoading.json; path = "../../../../흐르미/Lottie/DrinkLoading.json"; sourceTree = "<group>"; };
 		09F869922B68E36800A56A4C /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		09F869952B68E46500A56A4C /* DrinkDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailView.swift; sourceTree = "<group>"; };
 		09F869972B68E48400A56A4C /* DrinkDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetails.swift; sourceTree = "<group>"; };
@@ -376,13 +376,13 @@
 		09BCC1482B7C7E1500FF4D1B /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
-				09C7C9A32B8CCC1100F62617 /* DrinkLoading.json */,
 				09BCC14E2B7C7E2900FF4D1B /* Clouds.json */,
 				09BCC1492B7C7E2900FF4D1B /* Loading.json */,
 				09BCC14C2B7C7E2900FF4D1B /* Rain.json */,
 				09BCC14D2B7C7E2900FF4D1B /* Snow.json */,
 				09BCC14B2B7C7E2900FF4D1B /* Sun.json */,
 				09BCC14A2B7C7E2900FF4D1B /* Thunder.json */,
+				0974A15C2B8C60DE00476199 /* DrinkLoading.json */,
 			);
 			path = Lottie;
 			sourceTree = "<group>";
@@ -824,7 +824,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				09BCC1512B7C7E2900FF4D1B /* Sun.json in Resources */,
-				09C7C9A42B8CCC1100F62617 /* DrinkLoading.json in Resources */,
+				0974A15D2B8C60DE00476199 /* DrinkLoading.json in Resources */,
+				AC8058DC2B83AC6E004CCD37 /* (null) in Resources */,
 				09BCC1502B7C7E2900FF4D1B /* Thunder.json in Resources */,
 				B1B8FE8D2B5EAAAB00921BBE /* Colors.xcassets in Resources */,
 				B121A5732B5F910900667D42 /* Pretendard-Bold.otf in Resources */,
