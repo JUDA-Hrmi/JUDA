@@ -11,7 +11,7 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject var colorScheme: SystemColorTheme
-
+    
     @StateObject private var locationManager = LocationManager()
     @StateObject private var aiViewModel = AiViewModel()
     @StateObject private var drinkViewModel = DrinkViewModel()
@@ -19,7 +19,8 @@ struct ContentView: View {
     @StateObject private var postsViewModel = PostsViewModel()
     @StateObject private var likedViewModel = LikedViewModel()
     @StateObject private var notificationViewModel = AlarmViewModel()
-
+    @StateObject var aiWellMatchViewModel = AiWellMatchViewModel()
+    
     // 현재 선택된 탭의 인덱스. 초기값 0
     @State private var selectedTabIndex = 0
 
@@ -81,6 +82,7 @@ struct ContentView: View {
 //                .environmentObject(aiTodayViewModel)
         case .drinkInfo:
             DrinkInfoView()
+                .environmentObject(aiWellMatchViewModel)
                 .environmentObject(drinkViewModel)
         case .posts:
             PostsView()

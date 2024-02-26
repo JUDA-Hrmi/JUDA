@@ -14,6 +14,7 @@ struct DrinkDetailView: View {
     @EnvironmentObject private var drinkViewModel: DrinkViewModel
     
     @State private var windowWidth: CGFloat = 0
+    @StateObject var aiWellMatchViewModel = AiWellMatchViewModel() // wellmatch AIModel
     @State private var shareImage: Image = Image("AppIcon") // shareLink 용 이미지
 
     let drink: FBDrink
@@ -41,6 +42,7 @@ struct DrinkDetailView: View {
                 CustomDivider()
                 // 잘어울리는 음식
                 WellMatched(wellMatched: drink.wellMatched, windowWidth: windowWidth)
+                
                 CustomDivider()
                 // 차트 - 선호하는 연령, 성별 ( 데이터 있을 때만 보여주기 )
                 if drink.agePreference.values.reduce(0, +) > 0,
