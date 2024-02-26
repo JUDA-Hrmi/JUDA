@@ -31,7 +31,8 @@ struct KoreanTastingNotes: View {
             KoreanTastingNotesContent(title: "신맛", value: sour)
             KoreanTastingNotesContent(title: "청량감", value: refresh)
             KoreanTastingNotesContent(title: "바디감", value: bodyFeel)
-            KoreanTastingNotesContent(title: "탄산", value: carbonated)
+            KoreanTastingNotesContent(title: "탄산", value: carbonated, 
+                                      carbonatedContent: true)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 20)
@@ -43,6 +44,7 @@ struct KoreanTastingNotes: View {
 struct KoreanTastingNotesContent: View {
     let title: String
     let value: Int?
+    var carbonatedContent: Bool = false
     
     var body: some View {
         HStack(alignment: .center, spacing: 20) {
@@ -55,9 +57,15 @@ struct KoreanTastingNotesContent: View {
                 .frame(width: 20, alignment: .center)
             // 원형 수치 표시 - 단맛 / 신맛 / 청량 / 바디 / 탄산
             HStack(alignment: .center, spacing: 3) {
-                ForEach(1..<6) { index in
+                if !carbonatedContent {
+                    ForEach(1..<6) { index in
+                        Circle()
+                            .fill((value ?? 0) >= index ? .mainAccent05.opacity(0.8) : .gray04)
+                            .frame(width: 14)
+                    }
+                } else {
                     Circle()
-                        .fill((value ?? 0) >= index ? .mainAccent05.opacity(0.8) : .gray04)
+                        .fill(value != 0 ? .mainAccent05.opacity(0.8) : .gray04)
                         .frame(width: 14)
                 }
             }

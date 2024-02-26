@@ -21,6 +21,10 @@
 		0974A1502B8B7B6C00476199 /* ShimmerPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A14F2B8B7B6C00476199 /* ShimmerPostCell.swift */; };
 		0974A1522B8B84B600476199 /* ShimmerDrinkGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A1512B8B84B600476199 /* ShimmerDrinkGridCell.swift */; };
 		0974A1542B8B84E900476199 /* ShimmerDrinkListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A1532B8B84E900476199 /* ShimmerDrinkListCell.swift */; };
+		0974A1582B8BA2BD00476199 /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0974A1562B8BA2BD00476199 /* APIKEYS.plist */; };
+		0974A1592B8BA2BD00476199 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0974A1572B8BA2BD00476199 /* GoogleService-Info.plist */; };
+		0974A15B2B8BD71B00476199 /* ShimmerPostListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A15A2B8BD71B00476199 /* ShimmerPostListCell.swift */; };
+		0974A15D2B8C60DE00476199 /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 0974A15C2B8C60DE00476199 /* DrinkLoading.json */; };
 		0999125C2B84654400E72C73 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0999125B2B84654400E72C73 /* FirebaseCrashlytics */; };
 		099912652B85799800E72C73 /* CircularLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099912642B85799800E72C73 /* CircularLoaderView.swift */; };
 		099D9AAE2B88749E002261F7 /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099D9AAD2B88749E002261F7 /* Debouncer.swift */; };
@@ -45,6 +49,7 @@
 		09BCC15A2B7C8CD300FF4D1B /* IdentityVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BCC1592B7C8CD300FF4D1B /* IdentityVerificationView.swift */; };
 		09BCC15D2B7CF2CB00FF4D1B /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		09BCC15F2B7CFC7E00FF4D1B /* TermsAndVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BCC15E2B7CFC7E00FF4D1B /* TermsAndVerificationView.swift */; };
+		09C7C9A22B8CAA0B00F62617 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C7C9A12B8CAA0B00F62617 /* MyPageViewModel.swift */; };
 		09F869932B68E36800A56A4C /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869922B68E36800A56A4C /* Formatter.swift */; };
 		09F869962B68E46500A56A4C /* DrinkDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869952B68E46500A56A4C /* DrinkDetailView.swift */; };
 		09F869982B68E48400A56A4C /* DrinkDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869972B68E48400A56A4C /* DrinkDetails.swift */; };
@@ -104,8 +109,6 @@
 		AC98D1D22B73586F006F6EC9 /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = AC98D1D12B73586F006F6EC9 /* OpenAI */; };
 		AC98D1D42B7358AE006F6EC9 /* AiViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98D1D32B7358AE006F6EC9 /* AiViewModel.swift */; };
 		AC98D1D82B7359CC006F6EC9 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98D1D72B7359CC006F6EC9 /* WeatherViewModel.swift */; };
-		ACE48F1B2B7CF8B900D5728F /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACE48F1A2B7CF8B900D5728F /* APIKEYS.plist */; };
-		ACE48F1D2B7CF8C300D5728F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACE48F1C2B7CF8C300D5728F /* GoogleService-Info.plist */; };
 		B10307292B8A367800CEAD98 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = B10307282B8A367800CEAD98 /* FirebaseMessaging */; };
 		B1198FA02B84EAF3002BE0DE /* unauthenticatedMypageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1198F9F2B84EAF3002BE0DE /* unauthenticatedMypageView.swift */; };
 		B121A5722B5F8EE100667D42 /* Font +.swift in Sources */ = {isa = PBXBuildFile; fileRef = B121A5712B5F8EE100667D42 /* Font +.swift */; };
@@ -148,7 +151,7 @@
 		B1EE24902B614477007F68B0 /* DrinkInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE248F2B614477007F68B0 /* DrinkInfoView.swift */; };
 		B1EE24922B61447F007F68B0 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24912B61447F007F68B0 /* MainView.swift */; };
 		B1EE24942B614485007F68B0 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24932B614485007F68B0 /* LogInView.swift */; };
-		B1EE24962B6144A5007F68B0 /* MypageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24952B6144A5007F68B0 /* MypageViewModel.swift */; };
+		B1EE24962B6144A5007F68B0 /* AlarmViewModell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24952B6144A5007F68B0 /* AlarmViewModell.swift */; };
 		B1EE24982B6144BD007F68B0 /* LikedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24972B6144BD007F68B0 /* LikedViewModel.swift */; };
 		B1EE249A2B6144C5007F68B0 /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24992B6144C5007F68B0 /* RecordViewModel.swift */; };
 		B1EE249C2B6144CD007F68B0 /* PostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE249B2B6144CD007F68B0 /* PostsViewModel.swift */; };
@@ -172,6 +175,10 @@
 		0974A14F2B8B7B6C00476199 /* ShimmerPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerPostCell.swift; sourceTree = "<group>"; };
 		0974A1512B8B84B600476199 /* ShimmerDrinkGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerDrinkGridCell.swift; sourceTree = "<group>"; };
 		0974A1532B8B84E900476199 /* ShimmerDrinkListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerDrinkListCell.swift; sourceTree = "<group>"; };
+		0974A1562B8BA2BD00476199 /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = APIKEYS.plist; path = "../../흐르미/APIKEYS.plist"; sourceTree = "<group>"; };
+		0974A1572B8BA2BD00476199 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../흐르미/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0974A15A2B8BD71B00476199 /* ShimmerPostListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerPostListCell.swift; sourceTree = "<group>"; };
+		0974A15C2B8C60DE00476199 /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = DrinkLoading.json; path = "../../../../흐르미/Lottie/DrinkLoading.json"; sourceTree = "<group>"; };
 		099912642B85799800E72C73 /* CircularLoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularLoaderView.swift; sourceTree = "<group>"; };
 		099D9AAD2B88749E002261F7 /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		099F16182B750E7E00D8BEDA /* UINavigationController +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController +.swift"; sourceTree = "<group>"; };
@@ -194,6 +201,7 @@
 		09BCC1572B7C805400FF4D1B /* UserAgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgreementView.swift; sourceTree = "<group>"; };
 		09BCC1592B7C8CD300FF4D1B /* IdentityVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityVerificationView.swift; sourceTree = "<group>"; };
 		09BCC15E2B7CFC7E00FF4D1B /* TermsAndVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndVerificationView.swift; sourceTree = "<group>"; };
+		09C7C9A12B8CAA0B00F62617 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		09F869922B68E36800A56A4C /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		09F869952B68E46500A56A4C /* DrinkDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailView.swift; sourceTree = "<group>"; };
 		09F869972B68E48400A56A4C /* DrinkDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetails.swift; sourceTree = "<group>"; };
@@ -245,8 +253,6 @@
 		AC98D1CE2B7357DA006F6EC9 /* Lottie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lottie.swift; sourceTree = "<group>"; };
 		AC98D1D32B7358AE006F6EC9 /* AiViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AiViewModel.swift; sourceTree = "<group>"; };
 		AC98D1D72B7359CC006F6EC9 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
-		ACE48F1A2B7CF8B900D5728F /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = APIKEYS.plist; path = ../../../../Downloads/APIKEYS.plist; sourceTree = "<group>"; };
-		ACE48F1C2B7CF8C300D5728F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B1198F9F2B84EAF3002BE0DE /* unauthenticatedMypageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = unauthenticatedMypageView.swift; sourceTree = "<group>"; };
 		B121A5692B5F8D5D00667D42 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		B121A56A2B5F8D5D00667D42 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
@@ -275,7 +281,7 @@
 		B1EE248F2B614477007F68B0 /* DrinkInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoView.swift; sourceTree = "<group>"; };
 		B1EE24912B61447F007F68B0 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		B1EE24932B614485007F68B0 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
-		B1EE24952B6144A5007F68B0 /* MypageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageViewModel.swift; sourceTree = "<group>"; };
+		B1EE24952B6144A5007F68B0 /* AlarmViewModell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewModell.swift; sourceTree = "<group>"; };
 		B1EE24972B6144BD007F68B0 /* LikedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedViewModel.swift; sourceTree = "<group>"; };
 		B1EE24992B6144C5007F68B0 /* RecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
 		B1EE249B2B6144CD007F68B0 /* PostsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsViewModel.swift; sourceTree = "<group>"; };
@@ -338,13 +344,6 @@
 			path = Splash;
 			sourceTree = "<group>";
 		};
-		090FF1C82B82ED8400AF22B5 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		099912662B85C43E00E72C73 /* JsonUploadFiles */ = {
 			isa = PBXGroup;
 			children = (
@@ -378,6 +377,7 @@
 				09BCC14D2B7C7E2900FF4D1B /* Snow.json */,
 				09BCC14B2B7C7E2900FF4D1B /* Sun.json */,
 				09BCC14A2B7C7E2900FF4D1B /* Thunder.json */,
+				0974A15C2B8C60DE00476199 /* DrinkLoading.json */,
 			);
 			path = Lottie;
 			sourceTree = "<group>";
@@ -392,7 +392,6 @@
 				09F8699B2B68E4CA00A56A4C /* WellMatched.swift */,
 				09F8699D2B68E4E400A56A4C /* PeferenceChart.swift */,
 				09F8699F2B68E50000A56A4C /* TaggedTrendingPosts.swift */,
-				09F869A12B68E51600A56A4C /* PostListCell.swift */,
 			);
 			path = DrinkDetail;
 			sourceTree = "<group>";
@@ -472,7 +471,6 @@
 			children = (
 				B1B8FE7B2B5EA9D900921BBE /* JUDA */,
 				AC588E822B8C55F70063AAB0 /* Frameworks */,
-				090FF1C82B82ED8400AF22B5 /* Frameworks */,
 				0974A14A2B8B787E00476199 /* JUDA.app */,
 			);
 			sourceTree = "<group>";
@@ -489,8 +487,8 @@
 				B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */,
 				B1B8FE8C2B5EAAAB00921BBE /* Colors.xcassets */,
 				B121A56F2B5F8DA100667D42 /* Info.plist */,
-				ACE48F1C2B7CF8C300D5728F /* GoogleService-Info.plist */,
-				ACE48F1A2B7CF8B900D5728F /* APIKEYS.plist */,
+				0974A1562B8BA2BD00476199 /* APIKEYS.plist */,
+				0974A1572B8BA2BD00476199 /* GoogleService-Info.plist */,
 				B1B8FE822B5EA9DA00921BBE /* Preview Content */,
 			);
 			path = JUDA;
@@ -646,7 +644,8 @@
 		B1EE24802B6143C7007F68B0 /* Mypage */ = {
 			isa = PBXGroup;
 			children = (
-				B1EE24952B6144A5007F68B0 /* MypageViewModel.swift */,
+				B1EE24952B6144A5007F68B0 /* AlarmViewModell.swift */,
+				09C7C9A12B8CAA0B00F62617 /* MyPageViewModel.swift */,
 			);
 			path = Mypage;
 			sourceTree = "<group>";
@@ -711,6 +710,8 @@
 				0974A1532B8B84E900476199 /* ShimmerDrinkListCell.swift */,
 				7B904C652B6168C60052384A /* PostCell.swift */,
 				0974A14F2B8B7B6C00476199 /* ShimmerPostCell.swift */,
+				09F869A12B68E51600A56A4C /* PostListCell.swift */,
+				0974A15A2B8BD71B00476199 /* ShimmerPostListCell.swift */,
 				7B904C672B6184560052384A /* CustomTextSegment.swift */,
 				2C2FF2972B63916700B2301A /* StarRating.swift */,
 				B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */,
@@ -818,6 +819,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09BCC1512B7C7E2900FF4D1B /* Sun.json in Resources */,
+				0974A15D2B8C60DE00476199 /* DrinkLoading.json in Resources */,
 				09BCC1502B7C7E2900FF4D1B /* Thunder.json in Resources */,
 				B1B8FE8D2B5EAAAB00921BBE /* Colors.xcassets in Resources */,
 				B121A5732B5F910900667D42 /* Pretendard-Bold.otf in Resources */,
@@ -827,9 +829,9 @@
 				B121A5772B5F911900667D42 /* Pretendard-SemiBold.otf in Resources */,
 				09BCC1532B7C7E2900FF4D1B /* Snow.json in Resources */,
 				09BCC1542B7C7E2900FF4D1B /* Clouds.json in Resources */,
+				0974A1592B8BA2BD00476199 /* GoogleService-Info.plist in Resources */,
+				0974A1582B8BA2BD00476199 /* APIKEYS.plist in Resources */,
 				B121A5742B5F910B00667D42 /* Pretendard-Light.otf in Resources */,
-				ACE48F1B2B7CF8B900D5728F /* APIKEYS.plist in Resources */,
-				ACE48F1D2B7CF8C300D5728F /* GoogleService-Info.plist in Resources */,
 				09BCC1522B7C7E2900FF4D1B /* Rain.json in Resources */,
 				B121A5762B5F911700667D42 /* Pretendard-Regular.otf in Resources */,
 				B1B8FE812B5EA9DA00921BBE /* Assets.xcassets in Resources */,
@@ -883,6 +885,8 @@
 				B12BEE472B6A9E1000580D29 /* AppServiceInfoView.swift in Sources */,
 				B1EE249E2B6144DD007F68B0 /* DrinkViewModel.swift in Sources */,
 				AC98D1D82B7359CC006F6EC9 /* WeatherViewModel.swift in Sources */,
+				0974A15B2B8BD71B00476199 /* ShimmerPostListCell.swift in Sources */,
+				09C7C9A22B8CAA0B00F62617 /* MyPageViewModel.swift in Sources */,
 				09F8699C2B68E4CA00A56A4C /* WellMatched.swift in Sources */,
 				096E631A2B616F31009246CE /* DrinkGridCell.swift in Sources */,
 				0902EB4B2B7E4E72003D555E /* User.swift in Sources */,
@@ -904,7 +908,7 @@
 				7B92656D2B692F0700840095 /* PostReportContent.swift in Sources */,
 				AC5778E52B6FC20C00F7B04B /* NavigationProfileView.swift in Sources */,
 				B1EE24982B6144BD007F68B0 /* LikedViewModel.swift in Sources */,
-				B1EE24962B6144A5007F68B0 /* MypageViewModel.swift in Sources */,
+				B1EE24962B6144A5007F68B0 /* AlarmViewModell.swift in Sources */,
 				B1EE24922B61447F007F68B0 /* MainView.swift in Sources */,
 				7B92656B2B692E7200840095 /* PostReportTitle.swift in Sources */,
 				090FF1C72B80A0C600AF22B5 /* SplashView.swift in Sources */,

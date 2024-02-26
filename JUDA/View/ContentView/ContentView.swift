@@ -14,12 +14,10 @@ struct ContentView: View {
     
     @StateObject private var locationManager = LocationManager()
     @StateObject private var aiViewModel = AiViewModel()
-    @StateObject private var drinkViewModel = DrinkViewModel()
     @StateObject private var recordViewModel = RecordViewModel()
-    @StateObject private var postsViewModel = PostsViewModel()
     @StateObject private var likedViewModel = LikedViewModel()
     @StateObject private var notificationViewModel = AlarmViewModel()
-    @StateObject var aiWellMatchViewModel = AiWellMatchViewModel()
+    @StateObject private var aiWellMatchViewModel = AiWellMatchViewModel()
     
     // 현재 선택된 탭의 인덱스. 초기값 0
     @State private var selectedTabIndex = 0
@@ -68,7 +66,7 @@ struct ContentView: View {
         }
         .tint(.mainAccent03)
         // SettingView - 화면 모드 -> 선택한 옵션에 따라 배경색 변환
-        .preferredColorScheme(colorScheme.selectedColor == .light ? .light : colorScheme.selectedColor == .dark ? .dark : .none)
+        .preferredColorScheme(colorScheme.selectedColor == .light ? .light : colorScheme.selectedColor == .dark ? .dark : nil)
     }
     
     // viewType에 따라 특정 View를 리턴해주는 함수
@@ -79,20 +77,19 @@ struct ContentView: View {
             MainView(selectedTabIndex: $selectedTabIndex)
                 .environmentObject(locationManager)
                 .environmentObject(aiViewModel)
-//                .environmentObject(aiTodayViewModel)
+                .environmentObject(recordViewModel)
+                .environmentObject(aiWellMatchViewModel)
         case .drinkInfo:
             DrinkInfoView()
                 .environmentObject(aiWellMatchViewModel)
-                .environmentObject(drinkViewModel)
+                .environmentObject(recordViewModel)
         case .posts:
             PostsView()
                 .environmentObject(recordViewModel)
-				.environmentObject(postsViewModel)
         case .liked:
             if authService.signInStatus {
                 LikedView()
                     .environmentObject(recordViewModel)
-                    .environmentObject(drinkViewModel)
                     .environmentObject(likedViewModel)
             } else {
                 EmptyView()
@@ -101,6 +98,7 @@ struct ContentView: View {
             if authService.signInStatus {
                 MypageView(selectedTabIndex: $selectedTabIndex)
                     .environmentObject(notificationViewModel)
+                    .environmentObject(recordViewModel)
             } else {
                 unauthenticatedMypageView(selectedTabIndex: $selectedTabIndex)
             }

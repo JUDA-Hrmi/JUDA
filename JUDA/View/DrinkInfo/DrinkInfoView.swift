@@ -176,7 +176,9 @@ struct DrinkInfoView: View {
             }
             // 시작할 때, 데이터 받아오기
             .task {
-                await drinkViewModel.loadDrinksFirstPage()
+                if drinkViewModel.drinks.isEmpty {
+                    await drinkViewModel.loadDrinksFirstPage()
+                }
             }
             .onAppear {
                 appViewModel.tabBarState = .visible

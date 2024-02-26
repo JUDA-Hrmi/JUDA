@@ -9,7 +9,9 @@ import SwiftUI
 
 // MARK: - SplashView
 struct SplashView: View {
+    @Environment (\.colorScheme) var systemColorScheme
     @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var mainViewModel: MainViewModel
     @EnvironmentObject var colorScheme: SystemColorTheme
     
     @Binding var isActive: Bool
@@ -30,7 +32,8 @@ struct SplashView: View {
             Spacer()
             ZStack(alignment: .topLeading) {
                 // 다크 모드
-                if .dark == colorScheme.selectedColor {
+                if .dark == colorScheme.selectedColor ||
+                    (colorScheme.selectedColor == nil && systemColorScheme == .dark) {
                     Image("JUDA_AppLogo_ver2_Dark")
                         .resizable()
                         .scaledToFit()
@@ -77,7 +80,16 @@ struct SplashView: View {
                 }
             }
         }
+        // MainView 에서 보여줄 데이터
+        .task {
+            await withTaskGroup(of: Void.self) { taskGroup in
+                // 인기 술 미리 받아오기
+                taskGroup.addTask { await mainViewModel.getHottestDrinks() }
+                // 인기 술상 미리 받아오기
+                taskGroup.addTask { await mainViewModel.getHottestPosts() }
+            }
+        }
         // SettingView - 화면 모드 -> 선택한 옵션에 따라 배경색 변환
-        .preferredColorScheme(colorScheme.selectedColor == .light ? .light : colorScheme.selectedColor == .dark ? .dark : .none)
+        .preferredColorScheme(colorScheme.selectedColor == .light ? .light : colorScheme.selectedColor == .dark ? .dark : nil)
     }
 }

@@ -19,7 +19,7 @@ struct PostDetailView: View {
 	let postUserType: PostUserType
 	let post: Post
 
-	let postPhotos: [(imageID: String, uiImage: UIImage)]
+	let postPhotos: [URL]
 	
 	@State private var isReportPresented = false
 	@State private var isDeleteDialogPresented = false
@@ -142,8 +142,8 @@ struct PostDetailView: View {
 struct PostDetailContent: View {
 	@EnvironmentObject private var postsViewModel: PostsViewModel
 	let post: Post
-	let postPhotos: [(imageID: String, uiImage: UIImage)]
-	
+    let postPhotos: [URL]
+
     var body: some View {
         VStack {
             // Bar 형태로 된 게시글 정보를 보여주는 뷰

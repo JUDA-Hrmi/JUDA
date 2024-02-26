@@ -46,13 +46,15 @@ final class PostsViewModel: ObservableObject {
 	@Published var posts = [Post]()
 	// 마지막 포스트 확인용(페이징)
 	@Published var lastQuerydocumentSnapshot: QueryDocumentSnapshot?
-	// 전체 포스트에 사용되는 이미지를 갖는 튜플 형태의 배열을 갖고있는 딕셔너리 [포스트ID: [(이미지ID, 이미지)]]
-	@Published var postImages: [String: [(imageID: String, uiImage: UIImage)]] = [:]
+	// 전체 포스트에 사용되는 이미지를 갖는 튜플 형태의 배열을 갖고있는 딕셔너리 [포스트ID: [이미지 URL]]
+	@Published var postImages: [String: [URL]] = [:]
 	@Published var postThumbnailImages: [String: UIImage] = [:]
 	// 전체 포스트에 사용되는 작성자의 이미지를 갖는 딕셔너리 [포스트ID: 이미지]
 	@Published var postUserImages: [String: UIImage] = [:]
 	// 게시글 검색 텍스트
 	@Published var postSearchText = ""
+    // 태그된 게시글 리스트 ( DrinkDetail 에서 이동할 때 사용 )
+    @Published var drinkTaggedPosts = [Post]()
 	// 게시글 정렬 타입
 	// 게시글 정렬용 세그먼트 인덱스
 	@Published var selectedSegmentIndex = 0
@@ -130,14 +132,10 @@ extension PostsViewModel {
 						drinkTags.append(DrinkTag(drink: drinkTagField, rating: rating))
 					}
 				}
-				
-				if let firstImageID = postField.imagesID.first {
-					await fetchImage(folderType: .postThumbnail, postID: postID, imageID: firstImageID)
-				}
 
 				if let userDocument = try await postRef.document(postID).collection("user").getDocuments().documents.first {
 					let userField = try userDocument.data(as: UserField.self)
-					await fetchImage(folderType: .user, imageID: userField.userID ?? "")
+                    await userFetchImage(imageID: userField.userID ?? "")
 					return (index, Post(userField: userField, drinkTags: drinkTags, postField: postField))
 				}
 				return nil
@@ -191,35 +189,17 @@ extension PostsViewModel {
 		}
 	}
 	
-	@MainActor
-	func fetchImage(folderType: FireStorageImageFolderType, postID: String? = nil , imageID: String) async {
-		let storageRef = Storage.storage().reference().child("\(folderType.description)/\(imageID).jpg")
-		storageRef.getData(maxSize: (1 * 1024 * 1024)) { data, error in
-			if let data = data, let uiImage = UIImage(data: data) {
-				switch folderType {
-				case .fcm:
-					return
-				case .drink:
-					return
-				case .post:
-					if let postID = postID {
-						if self.postImages[postID] == nil { 
-							self.postImages[postID] = []
-						}
-						self.postImages[postID]?.append((imageID, uiImage))
-					}
-				case .postThumbnail:
-					if let postID = postID {
-						self.postThumbnailImages[postID] = uiImage
-					}
-				case .user:
-					self.postUserImages[imageID] = uiImage
-				}
-			} else {
-				print("\(folderType) fetch image error \(String(describing: error?.localizedDescription))")
-			}
-		}
-	}
+    @MainActor
+    func userFetchImage(imageID: String) async {
+        let storageRef = Storage.storage().reference().child("userImages/\(imageID)")
+        storageRef.getData(maxSize: (1 * 1024 * 1024)) { data, error in
+            if let data = data, let uiImage = UIImage(data: data) {
+                self.postUserImages[imageID] = uiImage
+            } else {
+                print("fetch user image error \(String(describing: error?.localizedDescription))")
+            }
+        }
+    }
 }
 
 // MARK: Update
@@ -320,4 +300,96 @@ extension PostsViewModel {
 	func allUsersliekdPostsUpdate() {
 		
 	}
+}
+
+// MARK: - 태그 된 인기 게시물 / 태그 된 게시물 Fetch ( Drink Detail View )
+extension PostsViewModel {
+    // Drink Detail View 에서 사용 : PostField 를 받아서 Post 로 반환
+    @MainActor
+    private func fetchTaggedPosts(postFields: [PostField]) async -> [Post] {
+        let postRef = db.collection("posts")
+        var tasks: [Task<(Int, Post)?, Error>] = []
+
+        for (index, postField) in postFields.enumerated() {
+            let postID = postField.postID ?? ""
+            let task = Task<(Int, Post)?, Error> {
+                let postDrinkTagRef = postRef.document(postID).collection("drinkTags")
+                let drinkTagSnapshot = try await postDrinkTagRef.getDocuments()
+                var drinkTags = [DrinkTag]()
+                for drinkTag in drinkTagSnapshot.documents {
+                    let drinkTagID = drinkTag.documentID
+                    let rating = drinkTag.data()["rating"] as! Double
+                    if let drinkTagDocument = try await postDrinkTagRef.document(drinkTagID).collection("drink").getDocuments().documents.first {
+                        let drinkTagField = try drinkTagDocument.data(as: FBDrink.self)
+                        drinkTags.append(DrinkTag(drink: drinkTagField, rating: rating))
+                    }
+                }
+                if let userDocument = try await postRef.document(postID).collection("user").getDocuments().documents.first {
+                    let userField = try userDocument.data(as: UserField.self)
+                    await userFetchImage(imageID: userField.userID ?? "")
+                    return (index, Post(userField: userField, drinkTags: drinkTags, postField: postField))
+                }
+                return nil
+            }
+            tasks.append(task)
+        }
+        // 결과를 비동기적으로 수집
+        var results: [(Int, Post)] = []
+        for task in tasks {
+            do {
+                if let result = try await task.value {
+                    results.append(result)
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        // 원본 문서의 인덱스를 기준으로 결과를 정렬
+        results.sort { $0.0 < $1.0 }
+        // 인덱스를 제거하고 최종 결과를 추출
+        return results.map { $1 }
+    }
+    
+    // Drink Detail View 에서 사용 : 태그된 인기 게시물 최대 3개만 [Post] 반환
+    @MainActor
+    func getTopTrendingPosts(taggedPostID: [String]) async -> [Post] {
+        let postRef = db.collection("posts")
+        var result = [PostField]()
+        for postID in taggedPostID {
+            do {
+                let document = try await postRef.document(postID).getDocument()
+                let postField = try document.data(as: PostField.self)
+                result.append(postField)
+            } catch {
+                print("get Top Trending Posts Error")
+            }
+        }
+        result.sort { $0.likedCount > $1.likedCount }
+        result = Array(result.prefix(3))
+        
+        return await fetchTaggedPosts(postFields: result)
+    }
+    
+    // Drink Detail View 에서 사용 : 태그된 게시물 [Post] 반환
+    @MainActor
+    func getTaggedPosts(taggedPostID: [String], sortType: PostSortType) async {
+        let postRef = db.collection("posts")
+        var result = [PostField]()
+        for postID in taggedPostID {
+            do {
+                let document = try await postRef.document(postID).getDocument()
+                let postField = try document.data(as: PostField.self)
+                self.isLoading = true
+                result.append(postField)
+            } catch {
+                print("get Tagged Posts Error")
+            }
+        }
+        if sortType == .popularity {
+            result.sort { $0.likedCount > $1.likedCount} // 인기순
+        } else {
+            result.sort { $0.postedTimeStamp > $1.postedTimeStamp} // 최신순
+        }
+        self.drinkTaggedPosts = await fetchTaggedPosts(postFields: result)
+    }
 }

@@ -32,8 +32,8 @@ struct SettingView: View {
 	
 	var body: some View {
 		ZStack {
-            if authService.signInStatus {
-                VStack(alignment: .leading) {
+            VStack(alignment: .leading) {
+                if authService.signInStatus {
                     // 알림 설정
                     VStack(alignment: .leading, spacing: -10) {
                         Text("JUDA 알림을 켜주세요!")
@@ -44,44 +44,51 @@ struct SettingView: View {
                             .foregroundStyle(.gray01)
                             .padding(.horizontal, 20)
                     }
-                    
-                    Button("기기 알림 켜기") {
-                        openAppSettings()
-                    }
-                    .font(.medium20)
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 10)
-                    .background(.mainAccent03)
-                    .clipShape(.rect(cornerRadius: 10))
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 10)
-
-                    // 화면 모드 설정
-                    // 버튼 클릭 시 반짝이는 애니메이션 제거 코드 추가하기
                     Button {
-                        isShowingSheet.toggle()
+                        openAppSettings()
                     } label: {
-                        HStack {
-                            Text("화면 모드 설정")
-                            Spacer()
-                            CustomSortingButton(optionNameList: optionNameList, selectedSortingOption: selectedSortingOption, isShowingSheet: $isShowingSheet)
-                            // CustomSortingButton에서 선택한 selectedSortingOption로 화면 색상 설정하기
-                            .onChange(of: selectedSortingOption) { _ in
-                                switch selectedSortingOption {
-                                case "라이트 모드":
-                                    colorScheme.selectedColor = .light
-                                case "다크 모드":
-                                    colorScheme.selectedColor = .dark
-                                case "시스템 모드":
-                                    colorScheme.selectedColor = .none
-                                default:
-                                    colorScheme.selectedColor = .none
-                                }
+                        Text("기기 알림 켜기")
+                            .font(.medium20)
+                            .foregroundStyle(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 10)
+                            .background(.mainAccent03)
+                            .clipShape(.rect(cornerRadius: 10))
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 10)
+                    }
+                    //
+                    CustomDivider()
+                }
+
+                // 화면 모드 설정
+                // 버튼 클릭 시 반짝이는 애니메이션 제거 코드 추가하기
+                Button {
+                    isShowingSheet.toggle()
+                } label: {
+                    HStack {
+                        Text("화면 모드 설정")
+                        Spacer()
+                        CustomSortingButton(optionNameList: optionNameList, selectedSortingOption: selectedSortingOption, isShowingSheet: $isShowingSheet)
+                        // CustomSortingButton에서 선택한 selectedSortingOption로 화면 색상 설정하기
+                        .onChange(of: selectedSortingOption) { _ in
+                            switch selectedSortingOption {
+                            case "라이트 모드":
+                                colorScheme.selectedColor = .light
+                            case "다크 모드":
+                                colorScheme.selectedColor = .dark
+                            case "시스템 모드":
+                                colorScheme.selectedColor = nil
+                            default:
+                                break
                             }
                         }
-                        .modifier(CustomText())
                     }
+                    .modifier(CustomText())
+                }
+                
+                
+                if authService.signInStatus {
                     // 로그아웃
                     Button {
                         isLogoutClicked.toggle() // 버튼 클릭 시, 커스텀 다이얼로그 활성화
@@ -108,146 +115,87 @@ struct SettingView: View {
                     }
                     //
                     CustomDivider()
-                    // 공지사항
-                    // TODO: NavigationLink - value 로 수정
-                    NavigationLink {
-                        NoticeView()
-                    } label: {
-                        HStack {
-                            Text("공지사항")
-                            Spacer()
-                            Image(systemName: "chevron.forward")
-                        }
-                        .modifier(CustomText())
-                    }
-                    //
-                    CustomDivider()
-                    // 이용약관 및 정보 처리 방침
-                    ForEach(0..<webViewNameList.count, id: \.self) { index in
-                        AppServiceInfoView(text: webViewNameList[index], urlString: webViewurlList[index])
-                    }
-                    // 버전 정보
-                    Text("버전 정보 0.0.1")
-                        .font(.regular16)
-                        .foregroundStyle(.gray01)
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 10)
-                    //
-                    CustomDivider()
-                    Spacer()
                 }
-                // 화면 모드 설정 - CustomBottomSheet (.displaySetting)
-                .sheet(isPresented: $isShowingSheet) {
-                    CustomBottomSheetContent(optionNameList: optionNameList,
-                                             isShowingSheet: $isShowingSheet,
-                                             selectedSortingOption: $selectedSortingOption,
-                                             bottomSheetTypeText: BottomSheetType.displaySetting)
-                        .presentationDetents([.displaySetting])
-                        .presentationDragIndicator(.hidden) // 시트 상단 인디케이터 비활성화
-                        .interactiveDismissDisabled() // 내려서 닫기 비활성화
-                }
-        
-                // 로그아웃 - CustomAlert
-                if isLogoutClicked {
-                    CustomDialog(type: .twoButton(
-                        message: "로그아웃 하시겠습니까?",
-                        leftButtonLabel: "취소",
-                        leftButtonAction: {
-                            isLogoutClicked.toggle()
-                        },
-                        rightButtonLabel: "로그아웃",
-                        rightButtonAction: {
-                            // 로그아웃 - AppStorage 에서 변경
-                            authService.signOut()
-                            isLogoutClicked.toggle()
-                            // MainView 로 보내기
-                            selectedTabIndex = 0
-                        })
-                    )
-                }
-                
-                // 회원탈퇴 - CustomAlert
-                // TODO: - 탈퇴 문구 수정하기
-                if isDeletAccount {
-                    CustomDialog(type: .twoButton(
-                        message: "탈퇴 하시겠습니까?",
-                        leftButtonLabel: "취소",
-                        leftButtonAction: {
-                            isDeletAccount.toggle()
-                        },
-                        rightButtonLabel: "탈퇴하기",
-                        rightButtonAction: {
-                            Task {
-                                authService.isLoading = true
-                                if await authService.deleteAccount() {
-                                    authService.isLoading = false
-                                    isDeletAccount.toggle()
-                                    // 메인 화면으로 이동
-                                    selectedTabIndex = 0
-                                }
-                            }
-                        })
-                    )
-                }
-            } else {
                 // 공지사항
                 // TODO: NavigationLink - value 로 수정
-                VStack(alignment: .leading) {
-                    Button {
-                        isShowingSheet.toggle()
-                    } label: {
-                        HStack {
-                            Text("화면 모드 설정")
-                            Spacer()
-                            CustomSortingButton(optionNameList: optionNameList, selectedSortingOption: selectedSortingOption, isShowingSheet: $isShowingSheet)
-                            .onChange(of: selectedSortingOption) { _ in
-                                switch selectedSortingOption {
-                                case "라이트 모드":
-                                    colorScheme.selectedColor = .light
-                                case "다크 모드":
-                                    colorScheme.selectedColor = .dark
-                                case "시스템 모드":
-                                    colorScheme.selectedColor = .none
-                                default:
-                                    colorScheme.selectedColor = .none
-                                }
+                NavigationLink {
+                    NoticeView()
+                } label: {
+                    HStack {
+                        Text("공지사항")
+                        Spacer()
+                        Image(systemName: "chevron.forward")
+                    }
+                    .modifier(CustomText())
+                }
+                //
+                CustomDivider()
+                // 이용약관 및 정보 처리 방침
+                ForEach(0..<webViewNameList.count, id: \.self) { index in
+                    AppServiceInfoView(text: webViewNameList[index], urlString: webViewurlList[index])
+                }
+                // 버전 정보
+                Text("버전 정보 0.0.1")
+                    .font(.regular16)
+                    .foregroundStyle(.gray01)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 10)
+                //
+                CustomDivider()
+                Spacer()
+            }
+            // 화면 모드 설정 - CustomBottomSheet (.displaySetting)
+            .sheet(isPresented: $isShowingSheet) {
+                CustomBottomSheetContent(optionNameList: optionNameList,
+                                         isShowingSheet: $isShowingSheet,
+                                         selectedSortingOption: $selectedSortingOption,
+                                         bottomSheetTypeText: BottomSheetType.displaySetting)
+                    .presentationDetents([.displaySetting])
+                    .presentationDragIndicator(.hidden) // 시트 상단 인디케이터 비활성화
+                    .interactiveDismissDisabled() // 내려서 닫기 비활성화
+            }
+    
+            // 로그아웃 - CustomAlert
+            if isLogoutClicked {
+                CustomDialog(type: .twoButton(
+                    message: "로그아웃 하시겠습니까?",
+                    leftButtonLabel: "취소",
+                    leftButtonAction: {
+                        isLogoutClicked.toggle()
+                    },
+                    rightButtonLabel: "로그아웃",
+                    rightButtonAction: {
+                        // 로그아웃 - AppStorage 에서 변경
+                        authService.signOut()
+                        isLogoutClicked.toggle()
+                        // MainView 로 보내기
+                        selectedTabIndex = 0
+                    })
+                )
+            }
+            
+            // 회원탈퇴 - CustomAlert
+            // TODO: - 탈퇴 문구 수정하기
+            if isDeletAccount {
+                CustomDialog(type: .twoButton(
+                    message: "탈퇴 하시겠습니까?",
+                    leftButtonLabel: "취소",
+                    leftButtonAction: {
+                        isDeletAccount.toggle()
+                    },
+                    rightButtonLabel: "탈퇴하기",
+                    rightButtonAction: {
+                        Task {
+                            authService.isLoading = true
+                            if await authService.deleteAccount() {
+                                authService.isLoading = false
+                                isDeletAccount.toggle()
+                                // 메인 화면으로 이동
+                                selectedTabIndex = 0
                             }
                         }
-                        .modifier(CustomText())
-                    }
-                    NavigationLink {
-                        NoticeView()
-                    } label: {
-                        HStack {
-                            Text("공지사항")
-                            Spacer()
-                            Image(systemName: "chevron.forward")
-                        }
-                        .modifier(CustomText())
-                    }
-                    // 이용약관 및 정보 처리 방침
-                    ForEach(0..<webViewNameList.count, id: \.self) { index in
-                        AppServiceInfoView(text: webViewNameList[index], urlString: webViewurlList[index])
-                    }
-                    // 버전 정보
-                    Text("버전 정보 0.0.1")
-                        .font(.regular16)
-                        .foregroundStyle(.gray01)
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 10)
-                    //
-                    CustomDivider()
-                    Spacer()
-                }
-                .sheet(isPresented: $isShowingSheet) {
-                    CustomBottomSheetContent(optionNameList: optionNameList,
-                                             isShowingSheet: $isShowingSheet,
-                                             selectedSortingOption: $selectedSortingOption,
-                                             bottomSheetTypeText: BottomSheetType.displaySetting)
-                        .presentationDetents([.displaySetting])
-                        .presentationDragIndicator(.hidden) // 시트 상단 인디케이터 비활성화
-                        .interactiveDismissDisabled() // 내려서 닫기 비활성화
-                }
+                    })
+                )
             }
 		}
         .onDisappear {

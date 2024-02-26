@@ -12,6 +12,7 @@ import FirebaseAuth
 struct MypageView: View {
     @EnvironmentObject private var appViewModel: AppViewModel
     @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var myPageViewModel: MyPageViewModel
     
     // MARK: 데이터 구조 정해지면 바꿔야되는 부분
     @State var isLike: Bool = true
@@ -46,18 +47,24 @@ struct MypageView: View {
                 // MARK: iOS 16.4 이상
                 if #available(iOS 16.4, *) {
                     ScrollView() {
-//                        PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
+                        PostGridContent(usedTo: .myPage)
                     }
                     .scrollBounceBehavior(.basedOnSize, axes: .vertical)
                     // MARK: iOS 16.4 미만
                 } else {
                     ViewThatFits(in: .vertical) {
-//                        PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
-//                            .frame(maxHeight: .infinity, alignment: .top)
+                        PostGridContent(usedTo: .myPage)
+                            .frame(maxHeight: .infinity, alignment: .top)
                         ScrollView {
-//                            PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
+                            PostGridContent(usedTo: .myPage)
                         }
                     }
+                }
+            }
+            // 작성한 술상 데이터 가져오기
+            .task {
+                if myPageViewModel.userPosts.isEmpty {
+                    await myPageViewModel.getUsersPosts(userID: authService.uid)
                 }
             }
             .toolbar {

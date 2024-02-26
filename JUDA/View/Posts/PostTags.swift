@@ -24,7 +24,7 @@ struct PostTags: View {
 						NavigationLink {
                             // TODO: NavigationLink - value 로 수정
                             // TODO: 태그 값 서치바로 전달해서 검색된 화면으로..!
-							NavigationPostsView()
+                            NavigationPostsView(usedTo: .postSearch)
 						} label: {
 							Text("# \(tag)")
 								.font(.semibold14)

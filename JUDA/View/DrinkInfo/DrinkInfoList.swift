@@ -57,11 +57,6 @@ struct DrinkListContent: View {
                     } label: {
                         DrinkListCell(drink: drink,
                                       isLiked: authService.likedDrinks.contains{ $0 == drink.drinkID })
-                            .task {
-                                if drink.name == drinkViewModel.drinks.last?.name {
-                                    await drinkViewModel.loadDrinksNextPage()
-                                }
-                            }
                     }
                     .buttonStyle(EmptyActionStyle())
                 }

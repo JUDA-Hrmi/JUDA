@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 // MARK: - 술상 그리드 셀
 struct PostCell: View {
@@ -22,23 +23,22 @@ struct PostCell: View {
 		VStack(spacing: 0) {
 			ZStack(alignment: .topTrailing) {
 				// 게시글 사진리스트의 첫 번째 사진
-				if let thumbnailImage = postsViewModel.postThumbnailImages[post.postField.postID ?? ""] {
-					Image(uiImage: thumbnailImage)
-						.resizable()
-						.aspectRatio(contentMode: .fill)
-						.frame(width: 170, height: 170)
-						.clipped()
-				} else {
-					RoundedRectangle(cornerRadius: 10)
-						.fill(.mainBlack.opacity(0.09))
-						.frame(height: 170)
-						.overlay {
-							CircularLoaderView(size: 20)
-								.frame(width: 70, height: 103.48)
-						}
-				}
+                KFImage.url(post.postField.imagesURL.first)
+                    .placeholder {
+                        CircularLoaderView(size: 20)
+                            .frame(width: 170, height: 170)
+                            .clipped()
+                    }
+                    .loadDiskFileSynchronously(true) // 디스크에서 동기적으로 이미지 가져오기
+                    .cancelOnDisappear(true) // 화면 이동 시, 진행중인 다운로드 중단
+                    .cacheMemoryOnly() // 메모리 캐시만 사용 (디스크 X)
+                    .fade(duration: 0.2) // 이미지 부드럽게 띄우기
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 170, height: 170)
+                    .clipped()
 				// 게시글 사진이 2장 이상일 경우, 상자 아이콘이 사진의 trailing 상단에 보여짐
-				if post.postField.imagesID.count >= 2 {
+				if post.postField.imagesURL.count >= 2 {
 					Image(systemName: "square.on.square.fill")
 						.frame(width: 18, height: 18)
 						.foregroundStyle(.white)
@@ -104,12 +104,6 @@ struct PostCell: View {
 				self.isLike = authService.likedPosts.contains(where: { $0 == post.postField.postID })
 			}
 			self.likeCount = post.postField.likedCount
-			
-			if postsViewModel.postImages[post.postField.postID ?? ""] == nil {
-				for imageID in (post.postField.imagesID) {
-					await postsViewModel.fetchImage(folderType: .post, postID: post.postField.postID, imageID: imageID)
-				}
-			}
 		}
 	}
 	

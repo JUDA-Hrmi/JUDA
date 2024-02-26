@@ -103,21 +103,30 @@ struct RecordView: View {
                     // TODO: 술상 저장 후, 작성 or 수정 하기 전에 있었던 화면으로 이동 (path 조절)
                     DispatchQueue.main.async {
                         Task {
-                            // loadingView 띄우기
-                            recordViewModel.isPostUploadSuccess = true
-                            // FirevaseStorage multiple image upload
-                            await recordViewModel.multipleImageUpload()
-                            
-                            // post 데이터 모델 객체 생성
-							recordViewModel.post = Post(userField: UserField(userID: auth.uid ,name: auth.name, age: auth.age, gender: auth.gender, notificationAllowed: auth.notificationAllowed),
-														drinkTags: recordViewModel.drinkTags,
-														postField: PostField(imagesID: recordViewModel.imagesID, content: recordViewModel.content,
-                                                                      likedCount: 0, postedTimeStamp: Date(), foodTags: recordViewModel.foodTags))
-                            
-                            // post upload
-                            await recordViewModel.uploadPost()
-                            // loadingView 없애기
-                            recordViewModel.isPostUploadSuccess = false
+                            do {
+                                // loadingView 띄우기
+                                recordViewModel.isPostUploadSuccess = true
+                                // FirevaseStorage multiple image upload
+                                let imagesData = recordViewModel.images.compactMap { recordViewModel.compressImage($0) }  // 압축된 이미지 데이터 배열
+                                
+                                // 여러 이미지 업로드
+                                try await recordViewModel.uploadMultipleImagesToFirebaseStorageAsync(imagesData)
+                                // 다운로드 URL 사용
+                                print("Download URLs: \(recordViewModel.imagesURL)")
+                                
+                                // post 데이터 모델 객체 생성
+                                recordViewModel.post = Post(userField: UserField(userID: auth.uid ,name: auth.name, age: auth.age, gender: auth.gender, notificationAllowed: auth.notificationAllowed),
+                                                            drinkTags: recordViewModel.drinkTags,
+                                                            postField: PostField(imagesURL: recordViewModel.imagesURL, content: recordViewModel.content,
+                                                                                 likedCount: 0, postedTimeStamp: Date(), foodTags: recordViewModel.foodTags))
+                                
+                                // post upload
+                                await recordViewModel.uploadPost()
+                                // loadingView 없애기
+                                recordViewModel.isPostUploadSuccess = false
+                            } catch {
+                                print("Error uploading images: \(error)")
+                            }
                         }
                     }
                     

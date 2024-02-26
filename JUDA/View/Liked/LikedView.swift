@@ -16,6 +16,8 @@ enum LikedType: String, CaseIterable {
 // MARK: - 하트 누른 술 + 술상 볼 수 있는 탭
 struct LikedView: View {
     @EnvironmentObject private var appViewModel: AppViewModel
+    @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var likedViewModel: LikedViewModel
 
     @State private var selectedSegmentIndex = 0
     private let likedType = LikedType.allCases
@@ -36,9 +38,21 @@ struct LikedView: View {
                                 if likedType[index] == .drink {
                                     // 술찜 리스트
                                     LikedDrinkList()
+                                        .task {
+                                            if likedViewModel.likedDrinks.isEmpty {
+                                                await likedViewModel
+                                                    .getLikedDrinks(likedDrinksIDList: authService.likedDrinks)
+                                            }
+                                        }
                                 } else {
                                     // 술상 리스트
                                     LikedPostGrid()
+                                        .task {
+                                            if likedViewModel.likedPosts.isEmpty {
+                                                await likedViewModel
+                                                    .getLikedPosts(likedPostsIDList: authService.likedPosts)
+                                            }
+                                        }
                                 }
                             }
                             .onChange(of: selectedSegmentIndex) { newValue in
@@ -48,6 +62,19 @@ struct LikedView: View {
                     }
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
+            }
+            .onChange(of: selectedSegmentIndex) { newValue in
+                Task {
+                    // 술 -> 술상
+                    if newValue == 1 {
+                        await likedViewModel
+                            .getLikedDrinks(likedDrinksIDList: authService.likedDrinks)
+                        // 술상 -> 술
+                    } else {
+                        await likedViewModel
+                            .getLikedPosts(likedPostsIDList: authService.likedPosts)
+                    }
+                }
             }
             .onAppear {
                 appViewModel.tabBarState = .visible

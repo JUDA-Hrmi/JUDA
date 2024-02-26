@@ -40,13 +40,7 @@ struct WeatherAndFood: View {
                     if authService.signInStatus {
                         Text(getKoreanWeatherDescription(for: weather.main))
                             .font(.semibold18)
-                            .frame(maxWidth: .infinity,
-                                   alignment: authService.signInStatus ? .leading : .center)
-                    } else {
-                        Text("오늘의 날씨와 어울리는")
-                            .font(.semibold18)
-                            .frame(maxWidth: .infinity,
-                                   alignment: authService.signInStatus ? .leading : .center)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 } else {
                     LottieView(jsonName: "Sun")
@@ -54,6 +48,7 @@ struct WeatherAndFood: View {
                         .aspectRatio(1.0, contentMode: .fit)
                 }
             }
+            .frame(maxWidth: .infinity, alignment: authService.signInStatus ? .leading : .center)
             .onChange(of: locationManager.location) { location in
                 if shouldFetchWeather() && authService.signInStatus {
                     if let location = location {
@@ -65,10 +60,10 @@ struct WeatherAndFood: View {
                                 weather = weatherData
                                 // Request
                                 aiViewModel.respond = try await aiViewModel.request(prompt: "Please recommend snacks and drinks that go well with this weather. Please refer to the below list behind you for the sake of snacks. Please recommend one each for snacks and drinks. When printing snacks and drinks \(String(describing: weather?.main)) ---dish List: \(koreanSnacks) ---drink List:\(beerNames)")
-                                print("\(aiViewModel.respond)")
-                                let drinkword = aiViewModel.respond.split(separator: " + ").map({String($0)})
-                                weatherAndFoodData = drinkword[1]
-                                print("\(weatherAndFoodData)")
+//                                print("\(aiViewModel.respond)")
+//                                let drinkword = aiViewModel.respond.split(separator: " + ").map({String($0)})
+//                                weatherAndFoodData = drinkword[1]
+//                                print("\(weatherAndFoodData)")
                                 
                                 lastAPICallTimestamp = Date()
                             } catch {
@@ -79,7 +74,7 @@ struct WeatherAndFood: View {
                     }
                 }
             }
-            VStack(alignment: .leading) {
+            VStack(alignment: authService.signInStatus ? .leading : .center) {
                 if isLoading {
                     ProgressView()
                 } else {
@@ -90,7 +85,7 @@ struct WeatherAndFood: View {
                             Text("한 잔 어때요?")
                         }
                     } else {
-                        VStack(alignment: .center, spacing: 10) {
+                        VStack(alignment: .center, spacing: 20) {
                             VStack {
                                 Text("오늘의 날씨에 맞는")
                                 HStack {
@@ -119,8 +114,10 @@ struct WeatherAndFood: View {
                     }
                 }
             }
+            .frame(maxWidth: .infinity, alignment: authService.signInStatus ? .leading : .center)
         }
         .font(authService.signInStatus ? .bold28 : .bold22)
+        .padding(.horizontal, 20)
     }
     
     // fetch타임 설정 TimeInterval 300 == 5분으로 설정

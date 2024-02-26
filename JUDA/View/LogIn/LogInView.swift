@@ -12,6 +12,7 @@ import AuthenticationServices
 // MARK: - 로그인 화면
 struct LogInView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment (\.colorScheme) var systemColorScheme
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var appViewModel: AppViewModel
     @EnvironmentObject var colorScheme: SystemColorTheme
@@ -25,7 +26,8 @@ struct LogInView: View {
             // 로고 + 이름
             VStack(alignment: .center, spacing: 20) {
                 // 앱 아이콘
-                if .light == colorScheme.selectedColor {
+                if .light == colorScheme.selectedColor ||
+                    (colorScheme.selectedColor == nil && systemColorScheme == .light) {
                     Image("JUDA_AppLogo_ver1")
                         .resizable()
                         .aspectRatio(1.0, contentMode: .fit)
@@ -53,7 +55,7 @@ struct LogInView: View {
                 } onCompletion: { result in
                     authService.handleSignInWithAppleCompletion(result)
                 }
-                .signInWithAppleButtonStyle(colorScheme.selectedColor == .light ? .black : .white)
+                .signInWithAppleButtonStyle(colorScheme.selectedColor == .light ? .black : colorScheme.selectedColor == .dark ? .white : systemColorScheme == .light ? .black : .white)
                 .frame(width: 300, height: 48)
             }
             Spacer()

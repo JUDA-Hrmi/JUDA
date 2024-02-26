@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct PostTopView: View {
-    @State private var postSearchText = ""
+    @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var mainViewModel: MainViewModel
+    
     @Binding var selectedTabIndex: Int
     var body: some View {
-        VStack(spacing: 24) {
-            HStack {
-                Text("술장 TOP3")
-                    .font(.semibold18)
+        VStack(spacing: 0) {
+            HStack(alignment: .lastTextBaseline) {
+                Text("인기 술상")
+                    .font(.semibold20)
                 
                 Spacer()
                 
@@ -23,12 +25,22 @@ struct PostTopView: View {
                 } label: {
                     Text("더보기")
                         .foregroundStyle(.gray01)
-                        .font(.semibold14)
+                        .font(.semibold16)
                 }
             }
-            Rectangle()
-                .frame(height: 138)
-                .foregroundStyle(.gray)
+            .padding(20)
+
+            ForEach(mainViewModel.posts, id: \.postField.postID) { post in
+                // TODO: NavigationLink - value 로 수정
+                NavigationLink {
+                    PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                                   post: post,
+                                   postPhotos: post.postField.imagesURL)
+                } label: {
+                    PostListCell(post: post,
+                                 isLiked: authService.likedPosts.contains(post.postField.postID ?? ""))
+                }
+            }
         }
     }
 }

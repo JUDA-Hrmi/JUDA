@@ -21,7 +21,7 @@ final class RecordViewModel: ObservableObject {
     // 라이브러리에서 선택된 모든 사진 Data
     @Published var images: [UIImage] = []
     // 선택된 모든 사진 Data의 ID를 갖는 배열
-    var imagesID: [String] = []
+    var imagesURL: [URL] = []
     // 글 내용을 담는 프로퍼티
     @Published var content: String = ""
     // 음식 태그를 담는 배열
@@ -43,14 +43,99 @@ final class RecordViewModel: ObservableObject {
 
 // MARK: - FirebaseStorage Image Upload
 extension RecordViewModel {
-    // get imageID & FirebaseStorage multiple image data upload
-    func multipleImageUpload() async {
-        for image in images {
-            let imagesID = UUID().uuidString
-            self.imagesID.append(imagesID)
-            await imageUpload(image: image, imageID: imagesID)
+    func compressImage(_ image: UIImage) -> Data? {
+        let maxHeight: CGFloat = 1024.0
+        let maxWidth: CGFloat = 1024.0
+        let compressionQuality: CGFloat = 0.7  // 70% 압축
+
+        var actualHeight: CGFloat = image.size.height
+        var actualWidth: CGFloat = image.size.width
+        var imgRatio: CGFloat = actualWidth / actualHeight
+        let maxRatio: CGFloat = maxWidth / maxHeight
+
+        if actualHeight > maxHeight || actualWidth > maxWidth {
+            if imgRatio < maxRatio {
+                // 세로 길이를 기준으로 크기 조정
+                imgRatio = maxHeight / actualHeight
+                actualWidth = imgRatio * actualWidth
+                actualHeight = maxHeight
+            } else if imgRatio > maxRatio {
+                // 가로 길이를 기준으로 크기 조정
+                imgRatio = maxWidth / actualWidth
+                actualHeight = imgRatio * actualHeight
+                actualWidth = maxWidth
+            } else {
+                actualHeight = maxHeight
+                actualWidth = maxWidth
+            }
         }
+
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: actualWidth, height: actualHeight), false, 0.0)
+        image.draw(in: CGRect(x: 0, y: 0, width: actualWidth, height: actualHeight))
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        guard let resizedImageData = resizedImage?.jpegData(compressionQuality: compressionQuality) else { return nil }
+        return resizedImageData
     }
+    
+    func uploadMultipleImagesToFirebaseStorageAsync(_ imagesData: [Data]) async throws {
+            // 여러 이미지 업로드를 동시에 처리하기 위한 비동기 작업 배열
+            var uploadTasks: [Task<(Int, URL), Error>] = []
+            
+            // 각 이미지 데이터에 대해 비동기 업로드 작업 생성 및 배열에 추가
+            for (index, imageData) in imagesData.enumerated() {
+                let uploadTask = Task { try await uploadImageToFirebaseStorageAsync(imageData, index: index) }
+                uploadTasks.append(uploadTask)
+            }
+
+            // 모든 업로드 작업이 완료될 때까지 기다린 후 결과 URL 배열 반환
+            return try await withThrowingTaskGroup(of: (Int, URL).self, body: { group in
+                var downloadURLs: [(Int, URL)] = []
+                
+                // 각 업로드 작업을 TaskGroup에 추가
+                for task in uploadTasks {
+                    group.addTask {
+                        // Task의 결과를 반환
+                        try await task.value
+                    }
+                }
+                
+                // TaskGroup의 모든 결과를 수집
+                for try await downloadURL in group {
+                    downloadURLs.append(downloadURL)
+                }
+
+                downloadURLs.sort(by: { $0.0 < $1.0 })
+                self.imagesURL = downloadURLs.map { $0.1 }
+            })
+        }
+
+        func uploadImageToFirebaseStorageAsync(_ imageData: Data, index: Int) async throws -> (Int, URL) {
+            let storageRef = Storage.storage().reference()
+            let imageID = UUID().uuidString  // 고유한 이미지 ID 생성
+            let imageRef = storageRef.child("postImages/\(imageID).jpg")
+
+            let metadata = StorageMetadata()
+            metadata.contentType = "image/jpg"
+            
+            // 이미지 업로드
+            let _ = try await imageRef.putDataAsync(imageData, metadata: metadata)
+            
+            // 업로드된 이미지의 URL 가져오기
+            let downloadURL = try await imageRef.downloadURL()
+            
+            return (index, downloadURL)
+        }
+    
+//    // get imageID & FirebaseStorage multiple image data upload
+//    func multipleImageUpload() async {
+//        for image in images {
+//            let imagesID = UUID().uuidString
+//            self.imagesID.append(imagesID)
+//            await imageUpload(image: image, imageID: imagesID)
+//        }
+//    }
     
     // FirebaseStorage single image data upload
     func imageUpload(image: UIImage, imageID: String) async {

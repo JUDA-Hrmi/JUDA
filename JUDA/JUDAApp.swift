@@ -83,6 +83,10 @@ struct JUDAApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject private var authService = AuthService()
     @StateObject private var appViewModel = AppViewModel()
+    @StateObject private var mainViewModel = MainViewModel()
+    @StateObject private var myPageViewModel = MyPageViewModel()
+    @StateObject private var drinkViewModel = DrinkViewModel()
+    @StateObject private var postsViewModel = PostsViewModel()
     @StateObject private var colorScheme = SystemColorTheme()
     @State private var isLoading = true
     
@@ -92,11 +96,16 @@ struct JUDAApp: App {
                 SplashView(isActive: $isLoading)
                     .environmentObject(authService)
                     .environmentObject(colorScheme)
+                    .environmentObject(mainViewModel)
             } else {
                 ContentView()
                     .environmentObject(authService)
                     .environmentObject(appViewModel)
                     .environmentObject(colorScheme)
+                    .environmentObject(mainViewModel)
+                    .environmentObject(myPageViewModel)
+                    .environmentObject(postsViewModel)
+                    .environmentObject(drinkViewModel)
             }
         }
     }
