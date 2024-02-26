@@ -15,6 +15,8 @@ struct WellMatched: View {
     @State private var isLoading = false
     let wellMatched: [String]?
     let windowWidth: CGFloat
+    let drinkName: String
+    let drinkCategory: String
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -28,22 +30,25 @@ struct WellMatched: View {
             }
             
             if isLoading {
-                ProgressView()
+                HStack {
+                    CircularLoaderView(size: 16)
+                }
+                .frame(height: 20)
+                .frame(maxWidth: .infinity, alignment: .center)
             } else {
-                HStack(alignment: .center, spacing: 16) {
-                    // 추천 받은 음식
-                    Text(aiWellMatchViewModel.respond)
-            // 추천 받은 음식
-//            ForEach(TagHandler.getRows(tags: wellMatched ?? [],
-//                                       spacing: 10,
-//                                       fontSize: 16,
-//                                       windowWidth: windowWidth,
-//                                       tagString: ""), id: \.self) { row in
-//                HStack(spacing: 10) {
-//                    ForEach(row, id: \.self) { value in
-//                        Text(value)
-//                            .font(.regular16)
-//                    }
+                // 추천 받은 음식
+                ForEach(TagHandler.getRows(tags: aiWellMatchViewModel.respond
+                    .split(separator: ", ").map { String($0) },
+                                           spacing: 14,
+                                           fontSize: 16,
+                                           windowWidth: windowWidth,
+                                           tagString: ""), id: \.self) { row in
+                    HStack(spacing: 14) {
+                        ForEach(row, id: \.self) { value in
+                            Text(value)
+                                .font(.regular16)
+                        }
+                    }
                 }
             }
         }
@@ -55,10 +60,7 @@ struct WellMatched: View {
                 if fetchTimeInterval() {
                     do {
                         isLoading = true
-                        await recommend.fetchDrinks()
-                        aiWellMatchViewModel.respond = try await aiWellMatchViewModel.request(prompt: "Please recommend three foods that go well with drinks. Only food except drinks. List below --- Beverages List: \(recommend.recommend)")
-                        print("\(aiWellMatchViewModel.respond)")
-                        print("\(recommend.recommend)")
+                        aiWellMatchViewModel.respond = try await aiWellMatchViewModel.request(prompt: "Please recommend three foods that go well with drinks. Only food except drinks. List below --- Beverages List: \(drinkName)")
                         lastAPICallTimestamp = Date()
                     } catch {
                         print("Error fetching recommendations: \(error)")

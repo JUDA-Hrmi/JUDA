@@ -78,6 +78,7 @@ struct ContentView: View {
                 .environmentObject(locationManager)
                 .environmentObject(aiViewModel)
                 .environmentObject(recordViewModel)
+                .environmentObject(aiWellMatchViewModel)
         case .drinkInfo:
             DrinkInfoView()
                 .environmentObject(aiWellMatchViewModel)

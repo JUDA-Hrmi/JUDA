@@ -42,8 +42,10 @@ struct DrinkDetailView: View {
                 }
                 CustomDivider()
                 // 잘어울리는 음식
-                WellMatched(wellMatched: drink.wellMatched, windowWidth: windowWidth)
-                
+                WellMatched(wellMatched: drink.wellMatched,
+                            windowWidth: windowWidth,
+                            drinkName: drink.name,
+                            drinkCategory: drink.category)
                 CustomDivider()
                 // 차트 - 선호하는 연령, 성별 ( 데이터 있을 때만 보여주기 )
                 if drink.agePreference.values.reduce(0, +) > 0,
