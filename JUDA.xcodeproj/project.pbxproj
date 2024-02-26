@@ -21,8 +21,6 @@
 		0974A1502B8B7B6C00476199 /* ShimmerPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A14F2B8B7B6C00476199 /* ShimmerPostCell.swift */; };
 		0974A1522B8B84B600476199 /* ShimmerDrinkGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A1512B8B84B600476199 /* ShimmerDrinkGridCell.swift */; };
 		0974A1542B8B84E900476199 /* ShimmerDrinkListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A1532B8B84E900476199 /* ShimmerDrinkListCell.swift */; };
-		0974A1582B8BA2BD00476199 /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0974A1562B8BA2BD00476199 /* APIKEYS.plist */; };
-		0974A1592B8BA2BD00476199 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0974A1572B8BA2BD00476199 /* GoogleService-Info.plist */; };
 		0974A15B2B8BD71B00476199 /* ShimmerPostListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A15A2B8BD71B00476199 /* ShimmerPostListCell.swift */; };
 		0974A15D2B8C60DE00476199 /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 0974A15C2B8C60DE00476199 /* DrinkLoading.json */; };
 		0999125C2B84654400E72C73 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0999125B2B84654400E72C73 /* FirebaseCrashlytics */; };
@@ -74,6 +72,13 @@
 		2C63DD652B67DFA400770E3A /* DrinkTagScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD642B67DFA400770E3A /* DrinkTagScroll.swift */; };
 		2C63DD672B67EB1B00770E3A /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD662B67EB1B00770E3A /* RecordView.swift */; };
 		2C7FD5522B848EEF00169512 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7FD5512B848EEF00169512 /* Post.swift */; };
+		7B0A8BC22B8BA24100740E61 /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7B0A8BC02B8BA24100740E61 /* APIKEYS.plist */; };
+		7B0A8BC32B8BA24100740E61 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7B0A8BC12B8BA24100740E61 /* GoogleService-Info.plist */; };
+		7B0A8BC52B8C163E00740E61 /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0A8BC42B8C163E00740E61 /* Report.swift */; };
+		7B0A8BC72B8C614000740E61 /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B0A8BC62B8C614000740E61 /* DrinkLoading.json */; };
+		7B0A8BC92B8C88F300740E61 /* SearchPostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0A8BC82B8C88F300740E61 /* SearchPostsViewModel.swift */; };
+		7B0A8BCD2B8CA7E900740E61 /* PostSearchList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0A8BCC2B8CA7E900740E61 /* PostSearchList.swift */; };
+		7B0A8BCF2B8CA8C300740E61 /* PostSearchListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0A8BCE2B8CA8C300740E61 /* PostSearchListCell.swift */; };
 		7B5174922B69EAB300915793 /* NavigationPostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5174912B69EAB300915793 /* NavigationPostsView.swift */; };
 		7B6D76A72B677A8F00601B55 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76A62B677A8F00601B55 /* Button.swift */; };
 		7B6D76AB2B67CE3D00601B55 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76AA2B67CE3D00601B55 /* PostDetailView.swift */; };
@@ -104,6 +109,7 @@
 		AC588E862B8CC8F10063AAB0 /* AiWellMatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC588E852B8CC8F10063AAB0 /* AiWellMatchViewModel.swift */; };
 		AC6D128A2B6A8ED100169B23 /* WeatherAndFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12892B6A8ED100169B23 /* WeatherAndFood.swift */; };
 		AC797BDA2B8B8BEB0018D227 /* DrinkTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC797BD92B8B8BEB0018D227 /* DrinkTopView.swift */; };
+
 		AC98D1CD2B735765006F6EC9 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = AC98D1CC2B735765006F6EC9 /* Lottie */; };
 		AC98D1CF2B7357DA006F6EC9 /* Lottie.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98D1CE2B7357DA006F6EC9 /* Lottie.swift */; };
 		AC98D1D22B73586F006F6EC9 /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = AC98D1D12B73586F006F6EC9 /* OpenAI */; };
@@ -175,8 +181,6 @@
 		0974A14F2B8B7B6C00476199 /* ShimmerPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerPostCell.swift; sourceTree = "<group>"; };
 		0974A1512B8B84B600476199 /* ShimmerDrinkGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerDrinkGridCell.swift; sourceTree = "<group>"; };
 		0974A1532B8B84E900476199 /* ShimmerDrinkListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerDrinkListCell.swift; sourceTree = "<group>"; };
-		0974A1562B8BA2BD00476199 /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = APIKEYS.plist; path = "../../흐르미/APIKEYS.plist"; sourceTree = "<group>"; };
-		0974A1572B8BA2BD00476199 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../흐르미/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0974A15A2B8BD71B00476199 /* ShimmerPostListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerPostListCell.swift; sourceTree = "<group>"; };
 		0974A15C2B8C60DE00476199 /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = DrinkLoading.json; path = "../../../../흐르미/Lottie/DrinkLoading.json"; sourceTree = "<group>"; };
 		099912642B85799800E72C73 /* CircularLoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularLoaderView.swift; sourceTree = "<group>"; };
@@ -227,6 +231,13 @@
 		2C63DD642B67DFA400770E3A /* DrinkTagScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkTagScroll.swift; sourceTree = "<group>"; };
 		2C63DD662B67EB1B00770E3A /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		2C7FD5512B848EEF00169512 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		7B0A8BC02B8BA24100740E61 /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = APIKEYS.plist; path = ../../../../../../Downloads/JUDA/APIKEYS.plist; sourceTree = "<group>"; };
+		7B0A8BC12B8BA24100740E61 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/JUDA/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7B0A8BC42B8C163E00740E61 /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
+		7B0A8BC62B8C614000740E61 /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = DrinkLoading.json; path = ../../../../../../../../Downloads/JUDA/Lottie/DrinkLoading.json; sourceTree = "<group>"; };
+		7B0A8BC82B8C88F300740E61 /* SearchPostsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPostsViewModel.swift; sourceTree = "<group>"; };
+		7B0A8BCC2B8CA7E900740E61 /* PostSearchList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostSearchList.swift; sourceTree = "<group>"; };
+		7B0A8BCE2B8CA8C300740E61 /* PostSearchListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostSearchListCell.swift; sourceTree = "<group>"; };
 		7B5174912B69EAB300915793 /* NavigationPostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationPostsView.swift; sourceTree = "<group>"; };
 		7B6D76A62B677A8F00601B55 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		7B6D76AA2B67CE3D00601B55 /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
@@ -371,6 +382,7 @@
 		09BCC1482B7C7E1500FF4D1B /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
+				7B0A8BC62B8C614000740E61 /* DrinkLoading.json */,
 				09BCC14E2B7C7E2900FF4D1B /* Clouds.json */,
 				09BCC1492B7C7E2900FF4D1B /* Loading.json */,
 				09BCC14C2B7C7E2900FF4D1B /* Rain.json */,
@@ -405,11 +417,28 @@
 			path = ContentView;
 			sourceTree = "<group>";
 		};
-		AC588E822B8C55F70063AAB0 /* Frameworks */ = {
+		7B0A8BCA2B8CA77400740E61 /* PostDetail */ = {
 			isa = PBXGroup;
 			children = (
+				7B6D76AA2B67CE3D00601B55 /* PostDetailView.swift */,
+				7B6D76AE2B67CFC900601B55 /* PostInfo.swift */,
+				7B6D76B02B67D1E100601B55 /* PostPhotoScroll.swift */,
+				7B6D76B22B67D3B700601B55 /* PostDrinkRating.swift */,
+				7B6D76B42B67D5F900601B55 /* PostTags.swift */,
 			);
-			name = Frameworks;
+			path = PostDetail;
+			sourceTree = "<group>";
+		};
+		7B0A8BCB2B8CA78400740E61 /* PostReport */ = {
+			isa = PBXGroup;
+			children = (
+				7B6D76B82B68D9C900601B55 /* PostReportView.swift */,
+				7B9265702B6941D000840095 /* PostReportToolbar.swift */,
+				7B92656A2B692E7200840095 /* PostReportTitle.swift */,
+				7B92656C2B692F0700840095 /* PostReportContent.swift */,
+				7B92656E2B69303F00840095 /* PostReportButton.swift */,
+			);
+			path = PostReport;
 			sourceTree = "<group>";
 		};
 		B121A5652B5F8D2000667D42 /* Resource */ = {
@@ -487,8 +516,8 @@
 				B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */,
 				B1B8FE8C2B5EAAAB00921BBE /* Colors.xcassets */,
 				B121A56F2B5F8DA100667D42 /* Info.plist */,
-				0974A1562B8BA2BD00476199 /* APIKEYS.plist */,
-				0974A1572B8BA2BD00476199 /* GoogleService-Info.plist */,
+				7B0A8BC02B8BA24100740E61 /* APIKEYS.plist */,
+				7B0A8BC12B8BA24100740E61 /* GoogleService-Info.plist */,
 				B1B8FE822B5EA9DA00921BBE /* Preview Content */,
 			);
 			path = JUDA;
@@ -508,6 +537,7 @@
 				0902EB4A2B7E4E72003D555E /* User.swift */,
 				7BE14B942B84733900C1F6C3 /* Drink.swift */,
 				2C7FD5512B848EEF00169512 /* Post.swift */,
+				7B0A8BC42B8C163E00740E61 /* Report.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -587,17 +617,11 @@
 			children = (
 				B1EE248D2B614470007F68B0 /* PostsView.swift */,
 				7B5174912B69EAB300915793 /* NavigationPostsView.swift */,
-				7B6D76AA2B67CE3D00601B55 /* PostDetailView.swift */,
-				7B6D76AE2B67CFC900601B55 /* PostInfo.swift */,
-				7B6D76B02B67D1E100601B55 /* PostPhotoScroll.swift */,
-				7B6D76B22B67D3B700601B55 /* PostDrinkRating.swift */,
-				7B6D76B42B67D5F900601B55 /* PostTags.swift */,
 				7B6D76B62B68972000601B55 /* PostGrid.swift */,
-				7B6D76B82B68D9C900601B55 /* PostReportView.swift */,
-				7B9265702B6941D000840095 /* PostReportToolbar.swift */,
-				7B92656A2B692E7200840095 /* PostReportTitle.swift */,
-				7B92656C2B692F0700840095 /* PostReportContent.swift */,
-				7B92656E2B69303F00840095 /* PostReportButton.swift */,
+				7B0A8BCC2B8CA7E900740E61 /* PostSearchList.swift */,
+				7B0A8BCE2B8CA8C300740E61 /* PostSearchListCell.swift */,
+				7B0A8BCA2B8CA77400740E61 /* PostDetail */,
+				7B0A8BCB2B8CA78400740E61 /* PostReport */,
 			);
 			path = Posts;
 			sourceTree = "<group>";
@@ -670,6 +694,7 @@
 			isa = PBXGroup;
 			children = (
 				B1EE249B2B6144CD007F68B0 /* PostsViewModel.swift */,
+				7B0A8BC82B8C88F300740E61 /* SearchPostsViewModel.swift */,
 			);
 			path = Posts;
 			sourceTree = "<group>";
@@ -819,7 +844,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09BCC1512B7C7E2900FF4D1B /* Sun.json in Resources */,
-				0974A15D2B8C60DE00476199 /* DrinkLoading.json in Resources */,
+				7B0A8BC72B8C614000740E61 /* DrinkLoading.json in Resources */,
 				09BCC1502B7C7E2900FF4D1B /* Thunder.json in Resources */,
 				B1B8FE8D2B5EAAAB00921BBE /* Colors.xcassets in Resources */,
 				B121A5732B5F910900667D42 /* Pretendard-Bold.otf in Resources */,
@@ -829,13 +854,13 @@
 				B121A5772B5F911900667D42 /* Pretendard-SemiBold.otf in Resources */,
 				09BCC1532B7C7E2900FF4D1B /* Snow.json in Resources */,
 				09BCC1542B7C7E2900FF4D1B /* Clouds.json in Resources */,
-				0974A1592B8BA2BD00476199 /* GoogleService-Info.plist in Resources */,
-				0974A1582B8BA2BD00476199 /* APIKEYS.plist in Resources */,
 				B121A5742B5F910B00667D42 /* Pretendard-Light.otf in Resources */,
 				09BCC1522B7C7E2900FF4D1B /* Rain.json in Resources */,
 				B121A5762B5F911700667D42 /* Pretendard-Regular.otf in Resources */,
 				B1B8FE812B5EA9DA00921BBE /* Assets.xcassets in Resources */,
+				7B0A8BC32B8BA24100740E61 /* GoogleService-Info.plist in Resources */,
 				B121A5752B5F911500667D42 /* Pretendard-Medium.otf in Resources */,
+				7B0A8BC22B8BA24100740E61 /* APIKEYS.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -928,6 +953,7 @@
 				B1EE249C2B6144CD007F68B0 /* PostsViewModel.swift in Sources */,
 				2C2AD5072B68A22A00C681F4 /* FoodTagXmarkButton.swift in Sources */,
 				2C63DD652B67DFA400770E3A /* DrinkTagScroll.swift in Sources */,
+				7B0A8BCF2B8CA8C300740E61 /* PostSearchListCell.swift in Sources */,
 				B1EE24A52B614872007F68B0 /* SearchBar.swift in Sources */,
 				B1EE24942B614485007F68B0 /* LogInView.swift in Sources */,
 				2C7FD5522B848EEF00169512 /* Post.swift in Sources */,
@@ -935,8 +961,10 @@
 				2C2AD5012B689CA500C681F4 /* SelectedPhotoHorizontalScroll.swift in Sources */,
 				2C2AD5032B68A15E00C681F4 /* FoodTagAddTextField.swift in Sources */,
 				B1198FA02B84EAF3002BE0DE /* unauthenticatedMypageView.swift in Sources */,
+				7B0A8BC52B8C163E00740E61 /* Report.swift in Sources */,
 				2C2AD5052B68A1AF00C681F4 /* FoodTagVertical.swift in Sources */,
 				09F869BB2B6A4A9C00A56A4C /* LikedDrinkList.swift in Sources */,
+				7B0A8BCD2B8CA7E900740E61 /* PostSearchList.swift in Sources */,
 				09F869962B68E46500A56A4C /* DrinkDetailView.swift in Sources */,
 				B158F83F2B657A9000E33C47 /* Theme.swift in Sources */,
 				09F869A22B68E51600A56A4C /* PostListCell.swift in Sources */,
@@ -944,6 +972,7 @@
 				09F869A02B68E50000A56A4C /* TaggedTrendingPosts.swift in Sources */,
 				AC98D1D42B7358AE006F6EC9 /* AiViewModel.swift in Sources */,
 				09A320142B8929CC00DE4646 /* URL +.swift in Sources */,
+				7B0A8BC92B8C88F300740E61 /* SearchPostsViewModel.swift in Sources */,
 				7B6D76B52B67D5F900601B55 /* PostTags.swift in Sources */,
 				7BE14B952B84733900C1F6C3 /* Drink.swift in Sources */,
 				09A6AD7E2B72A53C00606585 /* Errors.swift in Sources */,

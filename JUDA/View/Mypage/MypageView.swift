@@ -47,16 +47,16 @@ struct MypageView: View {
                 // MARK: iOS 16.4 이상
                 if #available(iOS 16.4, *) {
                     ScrollView() {
-                        PostGridContent(usedTo: .myPage)
+						PostGridContent(usedTo: .myPage, searchTagType: nil)
                     }
                     .scrollBounceBehavior(.basedOnSize, axes: .vertical)
                     // MARK: iOS 16.4 미만
                 } else {
                     ViewThatFits(in: .vertical) {
-                        PostGridContent(usedTo: .myPage)
+						PostGridContent(usedTo: .myPage, searchTagType: nil)
                             .frame(maxHeight: .infinity, alignment: .top)
                         ScrollView {
-                            PostGridContent(usedTo: .myPage)
+							PostGridContent(usedTo: .myPage, searchTagType: nil)
                         }
                     }
                 }
