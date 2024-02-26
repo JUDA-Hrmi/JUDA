@@ -344,13 +344,6 @@
 			path = Splash;
 			sourceTree = "<group>";
 		};
-		090FF1C82B82ED8400AF22B5 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		099912662B85C43E00E72C73 /* JsonUploadFiles */ = {
 			isa = PBXGroup;
 			children = (
@@ -478,7 +471,6 @@
 			children = (
 				B1B8FE7B2B5EA9D900921BBE /* JUDA */,
 				AC588E822B8C55F70063AAB0 /* Frameworks */,
-				090FF1C82B82ED8400AF22B5 /* Frameworks */,
 				0974A14A2B8B787E00476199 /* JUDA.app */,
 			);
 			sourceTree = "<group>";
@@ -828,7 +820,6 @@
 			files = (
 				09BCC1512B7C7E2900FF4D1B /* Sun.json in Resources */,
 				0974A15D2B8C60DE00476199 /* DrinkLoading.json in Resources */,
-				AC8058DC2B83AC6E004CCD37 /* (null) in Resources */,
 				09BCC1502B7C7E2900FF4D1B /* Thunder.json in Resources */,
 				B1B8FE8D2B5EAAAB00921BBE /* Colors.xcassets in Resources */,
 				B121A5732B5F910900667D42 /* Pretendard-Bold.otf in Resources */,

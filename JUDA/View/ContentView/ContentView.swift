@@ -14,9 +14,7 @@ struct ContentView: View {
     
     @StateObject private var locationManager = LocationManager()
     @StateObject private var aiViewModel = AiViewModel()
-    @StateObject private var drinkViewModel = DrinkViewModel()
     @StateObject private var recordViewModel = RecordViewModel()
-    @StateObject private var postsViewModel = PostsViewModel()
     @StateObject private var likedViewModel = LikedViewModel()
     @StateObject private var notificationViewModel = AlarmViewModel()
     @StateObject private var aiWellMatchViewModel = AiWellMatchViewModel()
@@ -80,26 +78,18 @@ struct ContentView: View {
                 .environmentObject(locationManager)
                 .environmentObject(aiViewModel)
                 .environmentObject(recordViewModel)
-                .environmentObject(postsViewModel)
-                .environmentObject(drinkViewModel)
         case .drinkInfo:
             DrinkInfoView()
                 .environmentObject(aiWellMatchViewModel)
                 .environmentObject(recordViewModel)
-                .environmentObject(drinkViewModel)
-                .environmentObject(postsViewModel)
         case .posts:
             PostsView()
                 .environmentObject(recordViewModel)
-				.environmentObject(postsViewModel)
-                .environmentObject(drinkViewModel)
         case .liked:
             if authService.signInStatus {
                 LikedView()
                     .environmentObject(recordViewModel)
-                    .environmentObject(drinkViewModel)
                     .environmentObject(likedViewModel)
-                    .environmentObject(postsViewModel)
             } else {
                 EmptyView()
             }
@@ -107,8 +97,6 @@ struct ContentView: View {
             if authService.signInStatus {
                 MypageView(selectedTabIndex: $selectedTabIndex)
                     .environmentObject(notificationViewModel)
-                    .environmentObject(postsViewModel)
-                    .environmentObject(drinkViewModel)
                     .environmentObject(recordViewModel)
             } else {
                 unauthenticatedMypageView(selectedTabIndex: $selectedTabIndex)
