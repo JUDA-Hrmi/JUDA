@@ -21,10 +21,7 @@
 		0974A1502B8B7B6C00476199 /* ShimmerPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A14F2B8B7B6C00476199 /* ShimmerPostCell.swift */; };
 		0974A1522B8B84B600476199 /* ShimmerDrinkGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A1512B8B84B600476199 /* ShimmerDrinkGridCell.swift */; };
 		0974A1542B8B84E900476199 /* ShimmerDrinkListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A1532B8B84E900476199 /* ShimmerDrinkListCell.swift */; };
-		0974A1582B8BA2BD00476199 /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0974A1562B8BA2BD00476199 /* APIKEYS.plist */; };
-		0974A1592B8BA2BD00476199 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0974A1572B8BA2BD00476199 /* GoogleService-Info.plist */; };
 		0974A15B2B8BD71B00476199 /* ShimmerPostListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A15A2B8BD71B00476199 /* ShimmerPostListCell.swift */; };
-		0974A15D2B8C60DE00476199 /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 0974A15C2B8C60DE00476199 /* DrinkLoading.json */; };
 		0999125C2B84654400E72C73 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0999125B2B84654400E72C73 /* FirebaseCrashlytics */; };
 		099912652B85799800E72C73 /* CircularLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099912642B85799800E72C73 /* CircularLoaderView.swift */; };
 		099D9AAE2B88749E002261F7 /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099D9AAD2B88749E002261F7 /* Debouncer.swift */; };
@@ -102,6 +99,9 @@
 		AC5778E52B6FC20C00F7B04B /* NavigationProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5778E42B6FC20C00F7B04B /* NavigationProfileView.swift */; };
 		AC588E842B8C55F70063AAB0 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = AC588E832B8C55F70063AAB0 /* FirebaseFirestore */; };
 		AC588E862B8CC8F10063AAB0 /* AiWellMatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC588E852B8CC8F10063AAB0 /* AiWellMatchViewModel.swift */; };
+		AC588E882B8CEA870063AAB0 /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = AC588E872B8CEA870063AAB0 /* DrinkLoading.json */; };
+		AC588E8B2B8CEAA20063AAB0 /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC588E892B8CEAA20063AAB0 /* APIKEYS.plist */; };
+		AC588E8C2B8CEAA20063AAB0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC588E8A2B8CEAA20063AAB0 /* GoogleService-Info.plist */; };
 		AC6D128A2B6A8ED100169B23 /* WeatherAndFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12892B6A8ED100169B23 /* WeatherAndFood.swift */; };
 		AC797BDA2B8B8BEB0018D227 /* DrinkTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC797BD92B8B8BEB0018D227 /* DrinkTopView.swift */; };
 		AC98D1CD2B735765006F6EC9 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = AC98D1CC2B735765006F6EC9 /* Lottie */; };
@@ -175,10 +175,7 @@
 		0974A14F2B8B7B6C00476199 /* ShimmerPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerPostCell.swift; sourceTree = "<group>"; };
 		0974A1512B8B84B600476199 /* ShimmerDrinkGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerDrinkGridCell.swift; sourceTree = "<group>"; };
 		0974A1532B8B84E900476199 /* ShimmerDrinkListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerDrinkListCell.swift; sourceTree = "<group>"; };
-		0974A1562B8BA2BD00476199 /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = APIKEYS.plist; path = "../../흐르미/APIKEYS.plist"; sourceTree = "<group>"; };
-		0974A1572B8BA2BD00476199 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../흐르미/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0974A15A2B8BD71B00476199 /* ShimmerPostListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerPostListCell.swift; sourceTree = "<group>"; };
-		0974A15C2B8C60DE00476199 /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = DrinkLoading.json; path = "../../../../흐르미/Lottie/DrinkLoading.json"; sourceTree = "<group>"; };
 		099912642B85799800E72C73 /* CircularLoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularLoaderView.swift; sourceTree = "<group>"; };
 		099D9AAD2B88749E002261F7 /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		099F16182B750E7E00D8BEDA /* UINavigationController +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController +.swift"; sourceTree = "<group>"; };
@@ -248,6 +245,9 @@
 		AC1BE8E52B8B99EC0015381D /* PostTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTopView.swift; sourceTree = "<group>"; };
 		AC5778E42B6FC20C00F7B04B /* NavigationProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationProfileView.swift; sourceTree = "<group>"; };
 		AC588E852B8CC8F10063AAB0 /* AiWellMatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AiWellMatchViewModel.swift; sourceTree = "<group>"; };
+		AC588E872B8CEA870063AAB0 /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = DrinkLoading.json; path = ../../../../../../Downloads/DrinkLoading.json; sourceTree = "<group>"; };
+		AC588E892B8CEAA20063AAB0 /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = APIKEYS.plist; path = ../../../../Downloads/APIKEYS.plist; sourceTree = "<group>"; };
+		AC588E8A2B8CEAA20063AAB0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AC6D12892B6A8ED100169B23 /* WeatherAndFood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAndFood.swift; sourceTree = "<group>"; };
 		AC797BD92B8B8BEB0018D227 /* DrinkTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkTopView.swift; sourceTree = "<group>"; };
 		AC98D1CE2B7357DA006F6EC9 /* Lottie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lottie.swift; sourceTree = "<group>"; };
@@ -377,7 +377,7 @@
 				09BCC14D2B7C7E2900FF4D1B /* Snow.json */,
 				09BCC14B2B7C7E2900FF4D1B /* Sun.json */,
 				09BCC14A2B7C7E2900FF4D1B /* Thunder.json */,
-				0974A15C2B8C60DE00476199 /* DrinkLoading.json */,
+				AC588E872B8CEA870063AAB0 /* DrinkLoading.json */,
 			);
 			path = Lottie;
 			sourceTree = "<group>";
@@ -486,9 +486,9 @@
 				B121A5652B5F8D2000667D42 /* Resource */,
 				B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */,
 				B1B8FE8C2B5EAAAB00921BBE /* Colors.xcassets */,
+				AC588E892B8CEAA20063AAB0 /* APIKEYS.plist */,
+				AC588E8A2B8CEAA20063AAB0 /* GoogleService-Info.plist */,
 				B121A56F2B5F8DA100667D42 /* Info.plist */,
-				0974A1562B8BA2BD00476199 /* APIKEYS.plist */,
-				0974A1572B8BA2BD00476199 /* GoogleService-Info.plist */,
 				B1B8FE822B5EA9DA00921BBE /* Preview Content */,
 			);
 			path = JUDA;
@@ -819,7 +819,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09BCC1512B7C7E2900FF4D1B /* Sun.json in Resources */,
-				0974A15D2B8C60DE00476199 /* DrinkLoading.json in Resources */,
+				AC588E882B8CEA870063AAB0 /* DrinkLoading.json in Resources */,
 				09BCC1502B7C7E2900FF4D1B /* Thunder.json in Resources */,
 				B1B8FE8D2B5EAAAB00921BBE /* Colors.xcassets in Resources */,
 				B121A5732B5F910900667D42 /* Pretendard-Bold.otf in Resources */,
@@ -829,8 +829,8 @@
 				B121A5772B5F911900667D42 /* Pretendard-SemiBold.otf in Resources */,
 				09BCC1532B7C7E2900FF4D1B /* Snow.json in Resources */,
 				09BCC1542B7C7E2900FF4D1B /* Clouds.json in Resources */,
-				0974A1592B8BA2BD00476199 /* GoogleService-Info.plist in Resources */,
-				0974A1582B8BA2BD00476199 /* APIKEYS.plist in Resources */,
+				AC588E8C2B8CEAA20063AAB0 /* GoogleService-Info.plist in Resources */,
+				AC588E8B2B8CEAA20063AAB0 /* APIKEYS.plist in Resources */,
 				B121A5742B5F910B00667D42 /* Pretendard-Light.otf in Resources */,
 				09BCC1522B7C7E2900FF4D1B /* Rain.json in Resources */,
 				B121A5762B5F911700667D42 /* Pretendard-Regular.otf in Resources */,

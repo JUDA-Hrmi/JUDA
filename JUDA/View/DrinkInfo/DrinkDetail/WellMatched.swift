@@ -10,14 +10,12 @@ import SwiftUI
 // TODO: - 실제 데이터와 연동 작업 필요 -> merge 이후 수정 필요
 struct WellMatched: View {
     @EnvironmentObject var aiWellMatchViewModel: AiWellMatchViewModel
-    @ObservedObject var recommend = Recommend.shared
-    @State private var lastAPICallTimestamp: Date? = nil
     @State private var isLoading = false
     let wellMatched: [String]?
     let windowWidth: CGFloat
     let drinkName: String
     let drinkCategory: String
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             // Well Matched
@@ -56,33 +54,10 @@ struct WellMatched: View {
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
         .onAppear {
-            Task {
-                if fetchTimeInterval() {
-                    do {
-                        isLoading = true
-                        aiWellMatchViewModel.respond = try await aiWellMatchViewModel.request(prompt: "Please recommend three foods that go well with drinks. Only food except drinks. List below --- Beverages List: \(drinkName)")
-                        lastAPICallTimestamp = Date()
-                    } catch {
-                        print("Error fetching recommendations: \(error)")
-                    }
-                }
-                isLoading = false
-            }
-            print("onappear call")
+            aiWellMatchViewModel.fetchRecommendationsIfNeeded(prompt: "Please recommend three foods that go well with drinks. Only food except drinks. List below --- Beverages List: \(drinkName)")
+            print("\(drinkName)")
         }
         
-    }
-    
-    private func fetchTimeInterval() -> Bool {
-        guard let lastTimestamp = lastAPICallTimestamp else {
-            return true
-        }
-        
-        let currentTime = Date()
-        let timeDifference = currentTime.timeIntervalSince(lastTimestamp)
-        let minimumTimeDifference: TimeInterval = 300
-        
-        return timeDifference >= minimumTimeDifference
     }
     
 }
