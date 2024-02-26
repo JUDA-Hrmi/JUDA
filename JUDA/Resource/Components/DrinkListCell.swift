@@ -95,7 +95,7 @@ struct DrinkListCell: View {
             Spacer()
             // 하트
             // searchTagView에서 사용 시, 버튼이 아닌 이미지 처리 / mainView 도 동일
-            if usedTo == .searchTag || usedTo == .main {
+            if usedTo == .searchTag {
                 Image(systemName: isLiked ? "heart.fill" : "heart")
                     .foregroundStyle(isLiked ? .mainAccent02 : .gray01)
             } else {

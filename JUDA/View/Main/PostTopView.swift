@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct PostTopView: View {
-    @State private var postSearchText = ""
+    @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var mainViewModel: MainViewModel
+    
     @Binding var selectedTabIndex: Int
     var body: some View {
         VStack(spacing: 0) {
@@ -28,9 +30,16 @@ struct PostTopView: View {
             }
             .padding(20)
 
-            Rectangle()
-                .frame(height: 138)
-                .foregroundStyle(.gray)
+            ForEach(mainViewModel.posts, id: \.postField.postID) { post in
+                // TODO: NavigationLink - value 로 수정
+                NavigationLink {
+                    PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                                   post: post,
+                                   postPhotos: post.postField.imagesURL)
+                } label: {
+                    PostListCell(post: post)
+                }
+            }
         }
     }
 }
