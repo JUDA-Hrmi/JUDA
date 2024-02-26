@@ -79,7 +79,8 @@ struct ContentView: View {
             MainView(selectedTabIndex: $selectedTabIndex)
                 .environmentObject(locationManager)
                 .environmentObject(aiViewModel)
-//                .environmentObject(aiTodayViewModel)
+                .environmentObject(postsViewModel)
+                .environmentObject(drinkViewModel)
         case .drinkInfo:
             DrinkInfoView()
                 .environmentObject(aiWellMatchViewModel)

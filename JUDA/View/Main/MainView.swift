@@ -17,19 +17,17 @@ struct MainView: View {
 	
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading, spacing: 0) {
-                Spacer()
-                // 날씨와 어울리는 술 + 안주
-                WeatherAndFood()
-                Spacer()
-                // 오늘의 술장 Top3
-                DrinkTopView(selectedTabIndex: $selectedTabIndex)
-                Spacer()
-                // 오늘의 술상 Top3
-                PostTopView(selectedTabIndex: $selectedTabIndex)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    // 날씨와 어울리는 술 + 안주
+                    WeatherAndFood()
+                    // 오늘의 술장 Top3
+                    DrinkTopView(selectedTabIndex: $selectedTabIndex)
+                    // 오늘의 술상 Top3
+                    PostTopView(selectedTabIndex: $selectedTabIndex)
+                }
+                .padding(.bottom, 15)
             }
-            .padding(.bottom, 15)
-            .padding(.horizontal, 20)
             .onAppear {
                 appViewModel.tabBarState = .visible
             }

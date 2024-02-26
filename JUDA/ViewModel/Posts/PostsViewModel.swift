@@ -300,13 +300,12 @@ extension PostsViewModel {
 	}
 }
 
-// MARK: - 인기 게시물 Fetch (Drink Detail View & Main View)
+// MARK: - 태그 된 인기 게시물 / 태그 된 게시물 Fetch ( Drink Detail View )
 extension PostsViewModel {
-    // Drink Detail View 에서 사용 : Top 3 PostField 를 받아서 Post 로 반환
+    // Drink Detail View 에서 사용 : PostField 를 받아서 Post 로 반환
     @MainActor
-    func fetchTaggedTrendingPosts(taggedPostID: [String]) async -> [Post] {
+    private func fetchTaggedPosts(postFields: [PostField]) async -> [Post] {
         let postRef = db.collection("posts")
-        let postFields = await getTopTrendingPosts(taggedPostID: taggedPostID)
         var tasks: [Task<(Int, Post)?, Error>] = []
 
         for (index, postField) in postFields.enumerated() {
@@ -349,9 +348,9 @@ extension PostsViewModel {
         return results.map { $1 }
     }
     
-    // Drink Detail View 에서 사용 : 태그된 게시물 중 Top 3개만 가져오기
+    // Drink Detail View 에서 사용 : 태그된 인기 게시물 최대 3개만 [Post] 반환
     @MainActor
-    private func getTopTrendingPosts(taggedPostID: [String]) async -> [PostField] {
+    func getTopTrendingPosts(taggedPostID: [String]) async -> [Post] {
         let postRef = db.collection("posts")
         var result = [PostField]()
         for postID in taggedPostID {
@@ -364,6 +363,30 @@ extension PostsViewModel {
             }
         }
         result.sort { $0.likedCount > $1.likedCount }
-        return Array(result.prefix(3))
+        result = Array(result.prefix(3))
+        
+        return await fetchTaggedPosts(postFields: result)
+    }
+    
+    // Drink Detail View 에서 사용 : 태그된 게시물 [Post] 반환
+    @MainActor
+    func getTaggedPosts(taggedPostID: [String], sortType: PostSortType) async -> [Post] {
+        let postRef = db.collection("posts")
+        var result = [PostField]()
+        for postID in taggedPostID {
+            do {
+                let document = try await postRef.document(postID).getDocument()
+                let postField = try document.data(as: PostField.self)
+                result.append(postField)
+            } catch {
+                print("get Top Trending Posts Error")
+            }
+        }
+        if sortType == .popularity {
+            result.sort { $0.likedCount > $1.likedCount} // 인기순
+        } else {
+            result.sort { $0.postedTimeStamp > $1.postedTimeStamp} // 최신순
+        }
+        return await fetchTaggedPosts(postFields: result)
     }
 }

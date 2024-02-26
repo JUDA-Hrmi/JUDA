@@ -11,10 +11,10 @@ struct PostTopView: View {
     @State private var postSearchText = ""
     @Binding var selectedTabIndex: Int
     var body: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 0) {
             HStack {
-                Text("술장 TOP3")
-                    .font(.semibold18)
+                Text("인기 술상")
+                    .font(.semibold20)
                 
                 Spacer()
                 
@@ -23,9 +23,11 @@ struct PostTopView: View {
                 } label: {
                     Text("더보기")
                         .foregroundStyle(.gray01)
-                        .font(.semibold14)
+                        .font(.semibold16)
                 }
             }
+            .padding(20)
+
             Rectangle()
                 .frame(height: 138)
                 .foregroundStyle(.gray)

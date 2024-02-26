@@ -48,7 +48,7 @@ struct LikedDrinkListContent: View {
                 ForEach(likedViewModel.likedDrinks, id: \.drinkID) { drink in
                     // TODO: NavigationLink - value 로 수정
                     NavigationLink {
-                        DrinkDetailView(drink: drink)
+                        DrinkDetailView(drink: drink, usedTo: .liked)
                             .modifier(TabBarHidden())
                     } label: {
                         DrinkListCell(drink: drink,

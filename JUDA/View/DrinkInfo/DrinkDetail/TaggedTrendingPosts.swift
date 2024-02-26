@@ -43,7 +43,7 @@ struct TaggedTrendingPosts: View {
         .task {
             // 태그된 인기 게시물 가져오기
             self.isLoading = true
-            self.posts = await postsViewModel.fetchTaggedTrendingPosts(taggedPostID: drink.taggedPostID)
+            self.posts = await postsViewModel.getTopTrendingPosts(taggedPostID: drink.taggedPostID)
             self.isLoading = false
         }
     }
