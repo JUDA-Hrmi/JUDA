@@ -6,30 +6,48 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 // MARK: - 술상 디테일에서 상단에 유저 + 글 작성 시간 + 좋아요
 struct PostInfo: View {
     @Environment(\.dismiss) private var dismiss
 	@EnvironmentObject private var authService: AuthService
 	@EnvironmentObject private var postsViewModel: PostsViewModel
-	@EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
+    @EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
+    @EnvironmentObject private var mainViewModel: MainViewModel
+    @EnvironmentObject private var myPageViewModel: MyPageViewModel
+    @EnvironmentObject private var likedViewModel: LikedViewModel
+    
 	@State private var isLike: Bool = false
 	@State private var likeCount: Int = 0
 	let post: Post
-	let usedTo: WhereUsedPostGridContent
+    let usedTo: WhereUsedPostGridContent
+    
 	private let debouncer = Debouncer(delay: 0.5)
 
+    private var profileImageURL: URL? {
+        let userID = post.userField.userID ?? ""
+        switch usedTo {
+        case .postSearch:
+            return searchPostsViewModel.postUserImages[userID]
+        case .liked:
+            return likedViewModel.postUserImages[userID]
+        case .myPage:
+            return myPageViewModel.postUserImages[userID]
+        case .main:
+            return mainViewModel.postUserImages[userID]
+        default: // post 그 외
+            return postsViewModel.postUserImages[userID]
+        }
+    }
+    
     var body: some View {
         HStack {
             // 사용자의 프로필
             HStack(alignment: .center, spacing: 10) {
                 // 이미지
-				if let userID = post.userField.userID,
-				   let uiImage = postsViewModel.postUserImages[userID] {
-					Image(uiImage: uiImage)
-						.resizable()
-						.frame(width: 30, height: 30)
-						.clipShape(.circle)
+                if let profileImageURL = profileImageURL {
+                    PostCellUserProfileKFImage(url: profileImageURL)
 				} else {
 					Image("defaultprofileimage")
 						.resizable()
@@ -39,7 +57,9 @@ struct PostInfo: View {
                 VStack(alignment: .leading) {
                     NavigationLink {
                         // TODO: NavigationLink - value 로 수정
-						NavigationProfileView(userType: UserType.otheruser, userName: post.userField.name)
+                        NavigationProfileView(postUserName: post.userField.name,
+                                              postUserID: post.userField.userID ?? "",
+                                              usedTo: usedTo)
                     } label: {
                         // 사용자의 닉네임
 						Text(post.userField.name)
@@ -83,7 +103,9 @@ struct PostInfo: View {
 						return
 					case .myPage:
 						return
-					}
+                    case .main:
+                        return
+                    }
 				}
             }
         }
@@ -238,4 +260,20 @@ struct PostInfo: View {
 		let dateString = myFormatter.string(from: date)
 		return dateString
 	}
+}
+
+// MARK: - PostInfo 의 이미지 프로필에서 사용하는 KFImage
+struct PostInfoUserProfileKFImage: View {
+    let url: URL
+    
+    var body: some View {
+        KFImage.url(url)
+            .loadDiskFileSynchronously(true) // 디스크에서 동기적으로 이미지 가져오기
+            .cancelOnDisappear(true) // 화면 이동 시, 진행중인 다운로드 중단
+            .cacheMemoryOnly() // 메모리 캐시만 사용 (디스크 X)
+            .fade(duration: 0.2) // 이미지 부드럽게 띄우기
+            .resizable()
+            .frame(width: 30, height: 30)
+            .clipShape(.circle)
+    }
 }

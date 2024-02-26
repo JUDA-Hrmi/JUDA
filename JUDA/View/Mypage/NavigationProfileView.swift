@@ -10,20 +10,26 @@ import SwiftUI
 // MARK: - 네비게이션 이동 시, 유저 프로필 화면
 struct NavigationProfileView: View {
     @Environment(\.dismiss) private var dismiss
-
-    @State var isLike: Bool = true
-    @State var likeCount: Int = 303
+    @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var myPageViewModel: MyPageViewModel
     
-    let userType: UserType
-    let userName: String
+    let postUserName: String
+    let postUserID: String
+    let usedTo: WhereUsedPostGridContent
+    var userType: UserType {
+        postUserID == authService.uid ? .user : .otheruser
+    }
     
     var body: some View {
         VStack {
             // 프로필 사진 -- 닉네임 -- 수정
-            UserProfileView(userType: .otheruser)
+            UserProfileView(userType: userType,
+                            userName: postUserName,
+                            userID: postUserID,
+                            usedTo: usedTo)
             // 내가 작성한 게시물 -- 술상 올리기
             HStack {
-                userType == .user ? Text("내가 작성한 술상") : Text("\(userName) 님이 작성한 술상")
+                userType == .user ? Text("내가 작성한 술상") : Text("\(postUserName) 님이 작성한 술상")
                     .font(.semibold18)
                 Spacer()
                 
@@ -45,19 +51,31 @@ struct NavigationProfileView: View {
             // MARK: iOS 16.4 이상
             if #available(iOS 16.4, *) {
                 ScrollView() {
-//                    PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
+                    PostGridContent(usedTo: .myPage,
+                                    searchTagType: nil,
+                                    userType: userType)
                 }
                 .scrollBounceBehavior(.basedOnSize, axes: .vertical)
                 // MARK: iOS 16.4 미만
             } else {
                 ViewThatFits(in: .vertical) {
-//                    PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
-//                        .frame(maxHeight: .infinity, alignment: .top)
+                    PostGridContent(usedTo: .myPage,
+                                    searchTagType: nil,
+                                    userType: userType)                 
+                    .frame(maxHeight: .infinity, alignment: .top)
                     ScrollView {
-//                        PostGridContent(isLike: $isLike, likeCount: $likeCount, postUserType: .writter)
+                        PostGridContent(usedTo: .myPage,
+                                        searchTagType: nil,
+                                        userType: userType)
                     }
                 }
             }
+        }
+        // 작성한 술상 데이터 가져오기
+        .task {
+            print(userType)
+            await myPageViewModel.getUsersPosts(userID: userType == .user ? authService.uid : postUserID,
+                                                userType: userType)
         }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -69,7 +87,7 @@ struct NavigationProfileView: View {
                 }
             }
             ToolbarItem(placement: .principal) {
-                userType == .user ? Text("마이페이지") : Text("\(userName) 님의 페이지")
+                userType == .user ? Text("마이페이지") : Text("\(postUserName) 님의 페이지")
                     .font(.medium16)
             }
         }

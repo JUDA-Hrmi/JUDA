@@ -11,8 +11,11 @@ import Kingfisher
 // MARK: - 술상 그리드 셀
 struct PostCell: View {
 	@EnvironmentObject private var authService: AuthService
-	@EnvironmentObject private var postsViewModel: PostsViewModel
-	@EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
+    @EnvironmentObject private var postsViewModel: PostsViewModel
+    @EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
+    @EnvironmentObject private var mainViewModel: MainViewModel
+    @EnvironmentObject private var myPageViewModel: MyPageViewModel
+	@EnvironmentObject private var likedViewModel: LikedViewModel
 
 	@State private var isLike: Bool = false
 	@State private var likeCount: Int = 0
@@ -20,7 +23,23 @@ struct PostCell: View {
 	let usedTo: WhereUsedPostGridContent
 	let post: Post
 	private let debouncer = Debouncer(delay: 0.5)
-	
+    
+    private var profileImageURL: URL? {
+        let userID = post.userField.userID ?? ""
+        switch usedTo {
+        case .postSearch:
+            return searchPostsViewModel.postUserImages[userID]
+        case .liked:
+            return likedViewModel.postUserImages[userID]
+        case .myPage:
+            return myPageViewModel.postUserImages[userID]
+        case .main:
+            return mainViewModel.postUserImages[userID]
+        default: // post 그 외
+            return postsViewModel.postUserImages[userID]
+        }
+    }
+    
 	var body: some View {
 		// VStack에 기본적인 spacing이 들어가기 때문에 0으로 설정
 		VStack(spacing: 0) {
@@ -49,21 +68,16 @@ struct PostCell: View {
 				}
 			}
 			HStack {
-				HStack {
-					// 사용자의 프로필 사진
-					let userID = post.userField.userID
-					if let userImage = postsViewModel.postUserImages[userID ?? ""] {
-						Image(uiImage: userImage)
-							.resizable()
-							.frame(width: 20, height: 20)
-							.clipShape(.circle)
-					} else {
+                HStack {
+                    // 사용자의 프로필 사진
+                    if let profileImageURL = profileImageURL {
+                        PostCellUserProfileKFImage(url: profileImageURL)
+                    } else {
 						Image("defaultprofileimage")
 							.resizable()
 							.frame(width: 20, height: 20)
 							.clipShape(.circle)
 					}
-					
 					// 사용자의 닉네임
 					Text(post.userField.name)
 						.lineLimit(1)
@@ -95,6 +109,8 @@ struct PostCell: View {
 									return
 								case .myPage:
 									return
+                                default:
+                                    return
 								}
 							}
 						}
@@ -262,4 +278,20 @@ struct PostCell: View {
 			}
 		}
 	}
+}
+
+// MARK: - PostCell 의 이미지 프로필에서 사용하는 KFImage
+struct PostCellUserProfileKFImage: View {
+    let url: URL
+    
+    var body: some View {
+        KFImage.url(url)
+            .loadDiskFileSynchronously(true) // 디스크에서 동기적으로 이미지 가져오기
+            .cancelOnDisappear(true) // 화면 이동 시, 진행중인 다운로드 중단
+            .cacheMemoryOnly() // 메모리 캐시만 사용 (디스크 X)
+            .fade(duration: 0.2) // 이미지 부드럽게 띄우기
+            .resizable()
+            .frame(width: 20, height: 20)
+            .clipShape(.circle)
+    }
 }

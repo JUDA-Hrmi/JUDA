@@ -15,6 +15,7 @@ enum WhereUsedPostGridContent {
     case drinkDetail
     case liked
     case myPage
+    case main
 }
 
 // MARK: - 스크롤 뷰 or 뷰 로 보여질 post grid
@@ -79,6 +80,13 @@ struct PostGridContent: View {
     
     let usedTo: WhereUsedPostGridContent
 	let searchTagType: SearchTagType?
+    let userType: UserType
+    
+    init(usedTo: WhereUsedPostGridContent, searchTagType: SearchTagType?, userType: UserType = .user) {
+        self.usedTo = usedTo
+        self.searchTagType = searchTagType
+        self.userType = userType
+    }
 	
     var body: some View {
         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 15) {
@@ -195,15 +203,35 @@ struct PostGridContent: View {
                     }
                 }
             } else if usedTo == .myPage {
-                ForEach(myPageViewModel.userPosts, id: \.postField.postID) { post in
-                    NavigationLink {
-                        PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
-									   post: post,
-									   usedTo: usedTo,
-									   postPhotosURL: post.postField.imagesURL)
-                        .modifier(TabBarHidden())
-                    } label: {
-						PostCell(usedTo: usedTo, post: post)
+                if !myPageViewModel.isLoading {
+                    if userType == .user {
+                        ForEach(myPageViewModel.userPosts, id: \.postField.postID) { post in
+                            NavigationLink {
+                                PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                                               post: post,
+                                               usedTo: usedTo,
+                                               postPhotosURL: post.postField.imagesURL)
+                                .modifier(TabBarHidden())
+                            } label: {
+                                PostCell(usedTo: usedTo, post: post)
+                            }
+                        }
+                    } else {
+                        ForEach(myPageViewModel.otherUserPosts, id: \.postField.postID) { post in
+                            NavigationLink {
+                                PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                                               post: post,
+                                               usedTo: usedTo,
+                                               postPhotosURL: post.postField.imagesURL)
+                                .modifier(TabBarHidden())
+                            } label: {
+                                PostCell(usedTo: usedTo, post: post)
+                            }
+                        }
+                    }
+                } else {
+                    ForEach(0..<4) { _ in
+                        ShimmerPostCell()
                     }
                 }
             }

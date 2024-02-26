@@ -31,8 +31,8 @@ struct AlarmStoreListCell: View {
                 .overlay(alignment: .topLeading) {
                     // TODO: NavigationLink - value 로 수정
                     NavigationLink {
-                        NavigationProfileView(likeCount: 44, userType: .otheruser, userName: alarm.likedUserId)
-                            .modifier(TabBarHidden())
+//                        NavigationProfileView(likeCount: 44, userType: .otheruser, userName: alarm.likedUserId)
+//                            .modifier(TabBarHidden())
                     } label: {
                         Text(alarm.likedUserId)
                             .font(.medium14)
