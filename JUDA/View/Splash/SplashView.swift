@@ -9,6 +9,7 @@ import SwiftUI
 
 // MARK: - SplashView
 struct SplashView: View {
+    @Environment (\.colorScheme) var systemColorScheme
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var mainViewModel: MainViewModel
     @EnvironmentObject var colorScheme: SystemColorTheme
@@ -31,7 +32,8 @@ struct SplashView: View {
             Spacer()
             ZStack(alignment: .topLeading) {
                 // 다크 모드
-                if .dark == colorScheme.selectedColor {
+                if .dark == colorScheme.selectedColor ||
+                    (colorScheme.selectedColor == nil && systemColorScheme == .dark) {
                     Image("JUDA_AppLogo_ver2_Dark")
                         .resizable()
                         .scaledToFit()
@@ -88,6 +90,6 @@ struct SplashView: View {
             }
         }
         // SettingView - 화면 모드 -> 선택한 옵션에 따라 배경색 변환
-        .preferredColorScheme(colorScheme.selectedColor == .light ? .light : colorScheme.selectedColor == .dark ? .dark : .none)
+        .preferredColorScheme(colorScheme.selectedColor == .light ? .light : colorScheme.selectedColor == .dark ? .dark : nil)
     }
 }
