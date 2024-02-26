@@ -14,7 +14,7 @@ struct PostTopView: View {
     @Binding var selectedTabIndex: Int
     var body: some View {
         VStack(spacing: 0) {
-            HStack {
+            HStack(alignment: .lastTextBaseline) {
                 Text("인기 술상")
                     .font(.semibold20)
                 
@@ -37,7 +37,8 @@ struct PostTopView: View {
                                    post: post,
                                    postPhotos: post.postField.imagesURL)
                 } label: {
-                    PostListCell(post: post)
+                    PostListCell(post: post,
+                                 isLiked: authService.likedPosts.contains(post.postField.postID ?? ""))
                 }
             }
         }

@@ -19,7 +19,7 @@ struct ContentView: View {
     @StateObject private var postsViewModel = PostsViewModel()
     @StateObject private var likedViewModel = LikedViewModel()
     @StateObject private var notificationViewModel = AlarmViewModel()
-    @StateObject var aiWellMatchViewModel = AiWellMatchViewModel()
+    @StateObject private var aiWellMatchViewModel = AiWellMatchViewModel()
     
     // 현재 선택된 탭의 인덱스. 초기값 0
     @State private var selectedTabIndex = 0
@@ -79,11 +79,13 @@ struct ContentView: View {
             MainView(selectedTabIndex: $selectedTabIndex)
                 .environmentObject(locationManager)
                 .environmentObject(aiViewModel)
+                .environmentObject(recordViewModel)
                 .environmentObject(postsViewModel)
                 .environmentObject(drinkViewModel)
         case .drinkInfo:
             DrinkInfoView()
                 .environmentObject(aiWellMatchViewModel)
+                .environmentObject(recordViewModel)
                 .environmentObject(drinkViewModel)
                 .environmentObject(postsViewModel)
         case .posts:
@@ -105,6 +107,9 @@ struct ContentView: View {
             if authService.signInStatus {
                 MypageView(selectedTabIndex: $selectedTabIndex)
                     .environmentObject(notificationViewModel)
+                    .environmentObject(postsViewModel)
+                    .environmentObject(drinkViewModel)
+                    .environmentObject(recordViewModel)
             } else {
                 unauthenticatedMypageView(selectedTabIndex: $selectedTabIndex)
             }

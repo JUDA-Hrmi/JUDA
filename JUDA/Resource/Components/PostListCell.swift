@@ -13,9 +13,14 @@ struct PostListCell: View {
     let post: Post
     
     // 여기서는 하트를 눌러서 on off 하지 않고, 현재 유저가 좋아요 눌렀는지만 체크하는 것
-    private let isLiked = false
+    @State private var isLiked: Bool
     @State private var windowWidth: CGFloat = 0
 
+    init(post: Post, isLiked: Bool) {
+        self.post = post
+        _isLiked = State(initialValue: isLiked)
+    }
+    
     var body: some View {
         HStack(alignment: .center, spacing: 20) {
             // Post 이미지

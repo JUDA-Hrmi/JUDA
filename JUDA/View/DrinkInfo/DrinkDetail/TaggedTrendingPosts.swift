@@ -31,7 +31,8 @@ struct TaggedTrendingPosts: View {
                                        postPhotos: post.postField.imagesURL)
                     } label: {
                         if !isLoading {
-                            PostListCell(post: post)
+                            PostListCell(post: post,
+                                         isLiked: authService.likedPosts.contains(post.postField.postID ?? ""))
                         } else {
                             ShimmerPostListCell()
                         }

@@ -1,5 +1,5 @@
 //
-//  MypageViewModel.swift
+//  AlarmViewModel.swift
 //  JUDA
 //
 //  Created by 홍세희 on 2024/01/24.
@@ -9,6 +9,7 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 
+// MARK: - Alarm
 class AlarmViewModel: ObservableObject {
     @Published var notifications = [NotificationField]()
     @Published var alarms = [Alarm]()
@@ -55,4 +56,3 @@ class AlarmViewModel: ObservableObject {
         }
     }
 }
-

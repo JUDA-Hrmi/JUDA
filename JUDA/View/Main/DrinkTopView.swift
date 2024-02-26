@@ -15,7 +15,7 @@ struct DrinkTopView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            HStack {
+            HStack(alignment: .lastTextBaseline) {
                 Text("인기 술")
                     .font(.semibold20)
                 

@@ -84,6 +84,7 @@ struct JUDAApp: App {
     @StateObject private var authService = AuthService()
     @StateObject private var appViewModel = AppViewModel()
     @StateObject private var mainViewModel = MainViewModel()
+    @StateObject private var myPageViewModel = MyPageViewModel()
     @StateObject private var colorScheme = SystemColorTheme()
     @State private var isLoading = true
     
@@ -100,6 +101,7 @@ struct JUDAApp: App {
                     .environmentObject(appViewModel)
                     .environmentObject(colorScheme)
                     .environmentObject(mainViewModel)
+                    .environmentObject(myPageViewModel)
             }
         }
     }

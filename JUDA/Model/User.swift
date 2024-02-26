@@ -10,9 +10,8 @@ import FirebaseFirestore
 
 // Firebase users 컬렉션 데이터 모델
 struct User {
-	let userID: String
     let userField: UserField
-    let posts: [String: Post]
+    let posts: [Post]
     let userNotification: [String: NotificationField]
 }
 
