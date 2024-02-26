@@ -28,7 +28,7 @@ struct NoticeView: View {
             }
             ToolbarItem(placement: .principal) {
                 Text("공지사항")
-                    .font(.regular16)
+                    .font(.medium16)
                     .foregroundStyle(.mainBlack)
             }
         }

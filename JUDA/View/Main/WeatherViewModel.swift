@@ -22,39 +22,35 @@ class WeatherAPI {
     static let shared = WeatherAPI()
     let baseURL = "https://api.openweathermap.org/data/2.5/weather"
     let apiKey = Bundle.main.apiKey  // OpenWeatherMap에서 발급받은 API
-
-    func getWeather(latitude: Double, longitude: Double, completion: @escaping (Weather?) -> Void) {
+    
+    func getWeather(latitude: Double, longitude: Double) async -> Weather? {
         let weatherURL = "\(baseURL)?lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)"
         
         guard let url = URL(string: weatherURL) else {
-            completion(nil)
-            return
+            return nil
         }
-
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data else {
-                completion(nil)
-                return
-            }
-            
+        
+        do {
+            let(data, _) = try await URLSession.shared.data(from: url)
             let decoder = JSONDecoder()
             if let weatherData = try? decoder.decode(WeatherData.self, from: data) {
-                completion(weatherData.weather.first)
-                print("API Call")
+                return weatherData.weather.first
             } else {
-                completion(nil)
+                return nil
             }
-        }.resume()
+        } catch {
+            return nil
+        }
     }
 }
 
 class LocationManager: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
-    @Published var location: CLLocation?
-
+    var location: CLLocation?
+    
     override init() {
         super.init()
-
+        
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.requestWhenInUseAuthorization()

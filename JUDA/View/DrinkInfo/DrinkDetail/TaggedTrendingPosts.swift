@@ -37,7 +37,7 @@ struct TaggedTrendingPosts: View {
                 ForEach(sampleDataList) { data in
                     // TODO: NavigationLink - value 로 수정
                     NavigationLink {
-                        PostDetailView(postUserType: .reader, nickName: data.author, isLike: .constant(false), likeCount: .constant(data.postLikesCount))
+//                        PostDetailView(postUserType: .reader, nickName: data.author, isLike: .constant(false), likeCount: .constant(data.postLikesCount))
                     } label: {
                         PostListCell(postDummyData: data)
                     }

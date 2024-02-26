@@ -9,10 +9,8 @@ import SwiftUI
 
 // MARK: - 술상 디테일에서, 음식 태그 부분
 struct PostTags: View {
-	@Binding var tags: [String]
-	@State private var tag = ""
-    
-	let windowWidth: CGFloat
+	let tags: [String]
+	@State private var windowWidth: CGFloat = 0
 	
 	var body: some View {
 		VStack(alignment: .leading, spacing: 10) {
@@ -26,7 +24,7 @@ struct PostTags: View {
 						NavigationLink {
                             // TODO: NavigationLink - value 로 수정
                             // TODO: 태그 값 서치바로 전달해서 검색된 화면으로..!
-							NavigationPostsView(postSearchText: "# \(tag)")
+							NavigationPostsView()
 						} label: {
 							Text("# \(tag)")
 								.font(.semibold14)
@@ -37,5 +35,8 @@ struct PostTags: View {
 			}
 		}
 		.frame(width: windowWidth, alignment: .leading)
+		.task {
+			windowWidth = TagHandler.getScreenWidthWithoutPadding(padding: 20)
+		}
 	}
 }

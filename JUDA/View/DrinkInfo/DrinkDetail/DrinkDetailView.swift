@@ -6,13 +6,19 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 // MARK: - 술 디테일 화면
 struct DrinkDetailView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var drinkViewModel: DrinkViewModel
+    
     @State private var windowWidth: CGFloat = 0
-    let drink: Drink
     @StateObject var aiWellMatchViewModel = AiWellMatchViewModel() // wellmatch AIModel
+    @State private var shareImage: Image = Image("AppIcon") // shareLink 용 이미지
+
+    let drink: FBDrink
+    
     var body: some View {
         // 세로 스크롤
         ScrollView {
@@ -21,42 +27,44 @@ struct DrinkDetailView: View {
                 DrinkDetails(drink: drink)
                 CustomDivider()
                 // 단맛 / 신맛 / 청량 / 바디 / 탄산  or  향 / 맛 / 여운
-                switch drink.drinkType {
-                case .korean:
-                    if let drink = drink as? Korean {
-                        // 단맛 / 신맛 / 청량 / 바디 / 탄산
-                        KoreanTastingNotes(sweet: drink.sweet, sour: drink.sour, refresh: drink.refresh,
-                                           bodyFeel: drink.body, carbonated: drink.carbonated)
-                        CustomDivider()
-                        // 재료
-                        DrinkMaterial(material: drink.material, windowWidth: windowWidth)
-                    }
+                switch drink.category {
+                case DrinkType.traditional.rawValue:
+                    // 단맛 / 신맛 / 청량 / 바디 / 탄산
+                    KoreanTastingNotes(sweet: drink.sweet, sour: drink.sour, refresh: drink.refresh,
+                                       bodyFeel: drink.body, carbonated: drink.carbonated)
+                    CustomDivider()
+                    // 재료
+                    DrinkMaterial(material: drink.material, windowWidth: windowWidth)
                 default:
                     // 향 / 맛 / 여운
-                    if let drink = drink as? Wine {
-                        TastingNotes(aroma: drink.aroma, taste: drink.taste, finish: drink.finish)
-                    } else if let drink = drink as? Whiskey {
-                        TastingNotes(aroma: drink.aroma, taste: drink.taste, finish: drink.finish)
-                    } else if let drink = drink as? Beer {
-                        TastingNotes(aroma: drink.aroma, taste: drink.taste, finish: drink.finish)
-                    } else {
-                        EmptyView()
-                    }
+                    TastingNotes(aroma: drink.aroma, taste: drink.taste, finish: drink.finish)
                 }
                 CustomDivider()
                 // 잘어울리는 음식
-                WellMatched()
+                WellMatched(wellMatched: drink.wellMatched, windowWidth: windowWidth)
                 
                 CustomDivider()
-                // 차트 - 선호하는 연령, 성별
-                PeferenceChart()
-                CustomDivider()
+                // 차트 - 선호하는 연령, 성별 ( 데이터 있을 때만 보여주기 )
+                if drink.agePreference.values.reduce(0, +) > 0,
+                   drink.genderPreference.values.reduce(0, +) > 0 {
+                    PeferenceChart(ageGroupPieData:
+                                    drinkViewModel.getPieModelData(ageData: drink.agePreference),
+                                   genderGroupPieData:
+                                    drinkViewModel.getPieModelData(genderData: drink.genderPreference))
+                    CustomDivider()
+                }
                 // 태그된 인기 게시물
                 TaggedTrendingPosts()
             }
         }
         .task {
             windowWidth = TagHandler.getScreenWidthWithoutPadding(padding: 20)
+            // shareLink 용 이미지 가져오기
+            if let uiImage = await drinkViewModel.getUIImage(
+                                category: DrinkType(rawValue: drink.category) ?? .all,
+                                detailedCategory: drink.type) {
+                shareImage = Image(uiImage: uiImage)
+            }
         }
         .navigationBarBackButtonHidden()
         .toolbar {
@@ -69,13 +77,13 @@ struct DrinkDetailView: View {
             }
             ToolbarItem(placement: .topBarTrailing) {
                 // 공유하기
-                ShareLink(item: "Test", // TODO: 실제 공유하려는 내용으로 변경 필요
+                ShareLink(item: drink.name,
                           subject: Text("이 링크를 확인해보세요."),
-                          message: Text("Hrmi 앱에서 술 정보를 공유했어요!"),
+                          message: Text("주다 - JUDA 에서 술 정보를 공유했어요!"),
                           // 미리보기
                           preview: SharePreview(
-                            Text("카누카 칵테일 700ml"), // TODO: 해당 술 이름으로 변경
-                            image: Image("canuca")) // TODO: 해당 술의 이미지로 변경
+                            Text(drink.name + " " + drink.amount),
+                            image: shareImage)
                 ) {
                     Image(systemName: "square.and.arrow.up")
                 }
@@ -83,8 +91,4 @@ struct DrinkDetailView: View {
         }
         .tint(.mainBlack)
     }
-}
-
-#Preview {
-    DrinkDetailView(drink: Beer.beerSample02)
 }

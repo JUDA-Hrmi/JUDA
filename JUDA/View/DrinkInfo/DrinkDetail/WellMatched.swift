@@ -13,6 +13,9 @@ struct WellMatched: View {
     @ObservedObject var recommend = Recommend.shared
     @State private var lastAPICallTimestamp: Date? = nil
     @State private var isLoading = false
+    let wellMatched: [String]?
+    let windowWidth: CGFloat
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             // Well Matched
@@ -30,6 +33,17 @@ struct WellMatched: View {
                 HStack(alignment: .center, spacing: 16) {
                     // 추천 받은 음식
                     Text(aiWellMatchViewModel.respond)
+            // 추천 받은 음식
+//            ForEach(TagHandler.getRows(tags: wellMatched ?? [],
+//                                       spacing: 10,
+//                                       fontSize: 16,
+//                                       windowWidth: windowWidth,
+//                                       tagString: ""), id: \.self) { row in
+//                HStack(spacing: 10) {
+//                    ForEach(row, id: \.self) { value in
+//                        Text(value)
+//                            .font(.regular16)
+//                    }
                 }
             }
         }
@@ -70,5 +84,3 @@ struct WellMatched: View {
     }
     
 }
-
-

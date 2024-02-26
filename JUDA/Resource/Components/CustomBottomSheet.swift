@@ -30,12 +30,13 @@ struct CustomBottomSheetContent: View{
             // 선택 리스트
             VStack(spacing: 30) {
                 ForEach(optionNameList, id: \.self) { option in
-                    BottomSheetContentListCell(sortingOptionName: option, selectedSortingOption: $selectedSortingOption, isShowingSheet: $isShowingSheet)
+                    BottomSheetContentListCell(sortingOptionName: option,
+                                               selectedSortingOption: $selectedSortingOption,
+                                               isShowingSheet: $isShowingSheet)
                 }
             }
-            
+            //
             CustomDivider()
-            
             // '닫기' 버튼
             Button {
                 isShowingSheet.toggle()

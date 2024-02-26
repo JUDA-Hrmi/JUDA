@@ -9,6 +9,59 @@ import Foundation
 
 // MARK: - 다양한 Formatter 모음
 enum Formatter {
+    // 각 ViewModel 에서 사용
+    // 술 데이터의 상세분류 ( db 에서 type ) 에 따라, 이미지 반환
+    // category : 술 종류, detailedCategory : 상세분류
+    static func getImageName(category: DrinkType, detailedCategory: String) -> String? {
+        switch category {
+        // 맥주
+        case .beer:
+            switch detailedCategory {
+            case "흑맥주":
+                return "darkBeer.png"
+            case "논알콜":
+                return "nonAlcoholBeer.png"
+            case "과일", "기타":
+                return nil
+            default: // 나머지 모든 맥주
+                return "beer_bottled.png"
+            }
+        // 우리술
+        case .traditional:
+            switch detailedCategory {
+            case "탁주":
+                return "makgeolli.png"
+            case "증류주":
+                return "distilledAlcohol.png"
+            case "약주 청주":
+                return "yakju_cheongju.png"
+            default: // 기타주류, 과실주
+                return nil
+            }
+        // 위스키
+        case .whiskey:
+            return "whiskey.png"
+        // 와인
+        case .wine:
+            switch detailedCategory {
+            case "주정강화":
+                return "fortifiedWine.png"
+            case "로제":
+                return "roseWine.png"
+            case "스파클링":
+                return "sparklingWine.png"
+            case "화이트":
+                return "whiteWine.png"
+            case "레드":
+                return "redWine.png"
+            default: // 예외
+                return nil
+            }
+        default:
+            return nil
+        }
+    }
+    
     // 좋아요 숫자 1000 넘으면 k, 1000000 넘으면 m 으로 변경해주는 함수
     static func formattedPostLikesCount(_ count: Int) -> String {
         let numberFormatter = NumberFormatter()
@@ -24,6 +77,23 @@ enum Formatter {
         } else {
             return "\(count)"
         }
+    }
+    
+    // 생년월일 문자열 -> 나이: Int 로 변환
+    static func calculateAge(birthdate: String) -> Int? {
+        // 생년월일 날짜 변환
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyMMdd"
+        guard let birthdateDate = dateFormatter.date(from: birthdate) else {
+            return nil
+        }
+        // 생년월일 현재 날짜 사이의 연도 차이 계산
+        let calendar = Calendar.current
+        let birthdateComponents = calendar.dateComponents([.year, .month, .day], from: birthdateDate)
+        let currentDateComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+        // 만 나이 X / 예전 한국 나이
+        let koreanAge = currentDateComponents.year! - birthdateComponents.year! + 1
+        return koreanAge
     }
 
     // 평점을 소수점 첫번째 자리까지 String으로 변환해주는 함수

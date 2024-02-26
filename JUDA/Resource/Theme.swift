@@ -23,3 +23,27 @@ struct Theme {
     }
   }
 }
+
+enum JUDAColorScheme: String {
+    case light = "light"
+    case dark = "dark"
+}
+
+final class SystemColorTheme: ObservableObject {
+    @Published var selectedColor: JUDAColorScheme? {
+        // selectedColor가 변경될 때마다 해당 값을 UserDefaults에 저장
+        // 사용자가 변경한 색상 테마가 유지, 다시 앱 실행할 때도 적용
+        didSet {
+            UserDefaults.standard.set(selectedColor?.rawValue, forKey: "selectedColor")
+        }
+    }
+
+    // 사용자가 이전에 선택한 색상 -> UserDefaults를 통해 가져온다.
+    // 다시 앱 실행할 때도 유지되도록 저장
+    init() {
+        if let storedColorName = UserDefaults.standard.string(forKey: "selectedColor"),
+            let storedColor = JUDAColorScheme(rawValue: storedColorName.lowercased()) {
+            selectedColor = storedColor
+        }
+    }
+}

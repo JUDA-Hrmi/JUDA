@@ -9,13 +9,21 @@ import SwiftUI
 
 // MARK: - 앱 전체 스타트 탭 뷰
 struct ContentView: View {
+    @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject var colorScheme: SystemColorTheme
+    
+    @StateObject private var locationManager = LocationManager()
+    @StateObject private var aiViewModel = AiViewModel()
+    @StateObject private var drinkViewModel = DrinkViewModel()
+    @StateObject private var recordViewModel = RecordViewModel()
+    @StateObject private var postsViewModel = PostsViewModel()
+    @StateObject private var likedViewModel = LikedViewModel()
+    @StateObject private var notificationViewModel = AlarmViewModel()
+    @StateObject var aiWellMatchViewModel = AiWellMatchViewModel()
+    
     // 현재 선택된 탭의 인덱스. 초기값 0
     @State private var selectedTabIndex = 0
-    // post 서치바 텍스트
-    @State private var postSearchText = ""
-    @StateObject var locationManager = LocationManager()
-    @StateObject var aiViewModel = AiViewModel() // 메인뷰 AIModel
-    @StateObject var aiWellMatchViewModel = AiWellMatchViewModel()
+
     // Tabbar 불투명하게 설정 (색상 백그라운드)
     init() {
         UITabBar.appearance().shadowImage = UIImage()
@@ -48,8 +56,19 @@ struct ContentView: View {
                     .tag(index)
             }
         }
+        // deepLink 통해서, url 의 host 에 따라 탭 이동.
+        .onOpenURL { url in
+            guard let tabID = url.tabIdentifier else { return }
+            switch tabID {
+            case .drinks:
+                selectedTabIndex = 1
+            case .posts:
+                selectedTabIndex = 2
+            }
+        }
         .tint(.mainAccent03)
-        
+        // SettingView - 화면 모드 -> 선택한 옵션에 따라 배경색 변환
+        .preferredColorScheme(colorScheme.selectedColor == .light ? .light : colorScheme.selectedColor == .dark ? .dark : .none)
     }
     
     // viewType에 따라 특정 View를 리턴해주는 함수
@@ -60,15 +79,31 @@ struct ContentView: View {
             MainView(selectedTabIndex: $selectedTabIndex)
                 .environmentObject(locationManager)
                 .environmentObject(aiViewModel)
+//                .environmentObject(aiTodayViewModel)
         case .drinkInfo:
             DrinkInfoView()
                 .environmentObject(aiWellMatchViewModel)
+                .environmentObject(drinkViewModel)
         case .posts:
-            PostsView(postSearchText: $postSearchText)
+            PostsView()
+                .environmentObject(recordViewModel)
+				.environmentObject(postsViewModel)
         case .liked:
-            LikedView()
+            if authService.signInStatus {
+                LikedView()
+                    .environmentObject(recordViewModel)
+                    .environmentObject(drinkViewModel)
+                    .environmentObject(likedViewModel)
+            } else {
+                EmptyView()
+            }
         case .myPage:
-            MypageView()
+            if authService.signInStatus {
+                MypageView(selectedTabIndex: $selectedTabIndex)
+                    .environmentObject(notificationViewModel)
+            } else {
+                unauthenticatedMypageView(selectedTabIndex: $selectedTabIndex)
+            }
         }
     }
 }

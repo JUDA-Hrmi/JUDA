@@ -53,24 +53,28 @@ struct KoreanTastingNotesContent: View {
             Text(value == nil ? "-" : "\(value ?? 0)")
                 .font(.regular16)
                 .frame(width: 20, alignment: .center)
-            // 막대 - 단맛 / 신맛 / 청량 / 바디 / 탄산
-            Rectangle()
-                .fill(.mainAccent05.opacity(0.8))
-                .frame(width: 30 * CGFloat(integerLiteral: value ?? 0), height: 12)
+            // 원형 수치 표시 - 단맛 / 신맛 / 청량 / 바디 / 탄산
+            HStack(alignment: .center, spacing: 3) {
+                ForEach(1..<6) { index in
+                    Circle()
+                        .fill((value ?? 0) >= index ? .mainAccent05.opacity(0.8) : .gray04)
+                        .frame(width: 14)
+                }
+            }
         }
     }
 }
 
 // MARK: - 재료 화면 부분
 struct DrinkMaterial: View {
-    let material: [String]
+    let material: [String]?
     let windowWidth: CGFloat
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("원재료")
                 .font(.semibold18)
-            ForEach(TagHandler.getRows(tags: material,
+            ForEach(TagHandler.getRows(tags: material ?? [],
                                        spacing: 10,
                                        fontSize: 16,
                                        windowWidth: windowWidth,

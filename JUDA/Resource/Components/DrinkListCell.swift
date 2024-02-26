@@ -6,24 +6,55 @@
 //
 
 import SwiftUI
+import Kingfisher
+
+// MARK: - 어느 뷰에서 DrinkListCell 이 사용되는지 enum
+enum WhereUsedListCell {
+    case drinkInfo
+    case drinkSearch
+    case searchTag
+    case liked
+}
 
 // MARK: - 술 리스트 셀
 struct DrinkListCell: View {
-    // UITest - Drink DummyData
-    let drink: Drink
-    // UITest - Drink 하트
-    @State private var isLiked = false
+    @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var drinkViewModel: DrinkViewModel
+    @EnvironmentObject private var likedViewModel: LikedViewModel
+    @EnvironmentObject private var searchDrinkViewModel: SearchDrinkViewModel
+
+    let drink: FBDrink
+    let usedTo: WhereUsedListCell
+    @State private var isLiked: Bool
+    
+    private let debouncer = Debouncer(delay: 0.5)
+    
+    init(drink: FBDrink, isLiked: Bool, usedTo: WhereUsedListCell = .drinkInfo) {
+        self.drink = drink
+        _isLiked = State(initialValue: isLiked)
+        self.usedTo = usedTo
+    }
     
     var body: some View {
         HStack(alignment: .top) {
             // 술 정보
             HStack(alignment: .center, spacing: 20) {
                 // 술 사진
-                Image(drink.image)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: 103.48)
-                    .frame(width: 70)
+                if usedTo == .searchTag,
+                   let url = searchDrinkViewModel.searchDrinksImageURL[drink.drinkID ?? ""] {
+                    DrinkListCellKFImage(url: url)
+                } else if usedTo == .liked,
+                   let url = likedViewModel.drinkImages[drink.drinkID ?? ""] {
+                    DrinkListCellKFImage(url: url)
+                } else if usedTo == .drinkInfo,
+                    let url = drinkViewModel.drinkImages[drink.drinkID ?? ""] {
+                    DrinkListCellKFImage(url: url)
+                } else {
+                    Text("No Image")
+                        .font(.medium16)
+                        .foregroundStyle(.mainBlack)
+                        .frame(width: 70, height: 103.48)
+                }
                 // 술 이름 + 나라, 도수 + 별점
                 VStack(alignment: .leading, spacing: 10) {
                     // 술 이름 + 용량
@@ -35,12 +66,13 @@ struct DrinkListCell: View {
                     HStack(spacing: 0) {
                         Text(drink.country)
                             .font(.semibold14)
-                        if drink.drinkType == .wine ,let wine = drink as? Wine {
-                            Text(wine.province)
+                        if drink.category == DrinkType.wine.rawValue,
+                            let province = drink.province {
+                            Text(province)
                                 .font(.semibold14)
                                 .padding(.leading, 6)
                         }
-                        Text(Formatter.formattedABVCount(abv: drink.abv))
+                        Text(Formatter.formattedABVCount(abv: drink.alcohol))
                             .font(.semibold14)
                             .padding(.leading, 10)
                     }
@@ -55,11 +87,22 @@ struct DrinkListCell: View {
             }
             Spacer()
             // 하트
-            Button {
-                isLiked.toggle()
-            } label: {
+            // searchTagView에서 사용 시, 버튼이 아닌 이미지 처리
+            if usedTo == .searchTag {
                 Image(systemName: isLiked ? "heart.fill" : "heart")
                     .foregroundStyle(isLiked ? .mainAccent02 : .gray01)
+            } else {
+                Button {
+                    isLiked.toggle()
+                    // 디바운서 콜
+                    debouncer.call {
+                        authService.addOrRemoveToLikedDrinks(isLiked: isLiked, drink.drinkID)
+                        authService.userLikedDrinksUpdate()
+                    }
+                } label: {
+                    Image(systemName: isLiked ? "heart.fill" : "heart")
+                        .foregroundStyle(isLiked ? .mainAccent02 : .gray01)
+                }
             }
         }
         .padding(.vertical, 10)
@@ -68,6 +111,22 @@ struct DrinkListCell: View {
     }
 }
 
-#Preview {
-    DrinkListCell(drink: Wine.wineSample01)
+// MARK: - 술 리스트 셀 사용 KingFisher 이미지
+struct DrinkListCellKFImage: View {
+    let url: URL
+    
+    var body: some View {
+        KFImage.url(url)
+            .placeholder {
+                CircularLoaderView(size: 20)
+                    .frame(width: 70, height: 103.48)
+            }
+            .loadDiskFileSynchronously(true) // 디스크에서 동기적으로 이미지 가져오기
+            .cancelOnDisappear(true) // 화면 이동 시, 진행중인 다운로드 중단
+            .cacheMemoryOnly() // 메모리 캐시만 사용 (디스크 X)
+            .fade(duration: 0.2) // 이미지 부드럽게 띄우기
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(width: 70, height: 103.48)
+    }
 }
