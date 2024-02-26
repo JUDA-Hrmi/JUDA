@@ -7,7 +7,8 @@
 
 import SwiftUI
 import OpenAI
-
+import Firebase
+import FirebaseFirestore
 
 struct AiWellMatchModel: Decodable {
     let openai: String
@@ -35,6 +36,7 @@ class AiWellMatchViewModel: ObservableObject {
         let query = ChatQuery(model: .gpt3_5Turbo_16k, messages: [
             Chat(role: .system, content: "Please be sure to give recommendation Three answer in one word using Korean"),
             Chat(role: .assistant, content: "피자, 갈릭 쉬림프, 타코"),
+            Chat(role: .assistant, content: "찜닭, 감바스, 소고기 구이"),
             Chat(role: .user, content: prompt),
         ])
         
@@ -47,9 +49,44 @@ class AiWellMatchViewModel: ObservableObject {
             print("AI error: \(error)")
             throw error
         }
-        print("WellMatched API")
         
     }
 }
 
-
+struct FirebaseDrink: Codable, Hashable {
+    let name: String
+    
+    init(name: String) {
+        self.name = name
+    }
+}
+class Recommend: ObservableObject {
+    var openAI: OpenAI?
+    static let shared = Recommend()
+    private init() {}
+    @Published var recommend = [FirebaseDrink]()
+    
+    let db = Firestore.firestore()
+    private var listener: ListenerRegistration?
+    
+    @MainActor
+    func fetchDrinks() async {
+        do {
+            let drinksSnapshot = try await db.collection("drinks").getDocuments() // Firebase의 collection 이름으로 수정
+            for drinkDocument in drinksSnapshot.documents {
+                if let drink = try? drinkDocument.data(as: FirebaseDrink.self) {
+                    self.recommend.append(drink)
+                }
+            }
+        } catch {
+            print("Error fetching drinks:", error)
+        }
+        print("fetchDrinks")
+    }
+    
+    // 실시간 관찰 중지
+    func stopListening() {
+        listener?.remove()
+        print("stopListening")
+    }
+}
