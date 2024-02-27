@@ -13,6 +13,7 @@ struct PostCell: View {
 	@EnvironmentObject private var authService: AuthService
 	@EnvironmentObject private var postsViewModel: PostsViewModel
 	@EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
+    @EnvironmentObject private var mypageViewModel: MyPageViewModel
 
 	@State private var isLike: Bool = false
 	@State private var likeCount: Int = 0
@@ -150,8 +151,11 @@ struct PostCell: View {
 			if let index = postsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
 				postsViewModel.posts[index].postField.likedCount += 1
 			}
+            
 			Task {
 				await postsViewModel.postLikedUpdate(likeType: .plus, postID: postID)
+                await mypageViewModel.sendLikeNotification(post.userField.userID ?? "", to:
+                                                            NotificationField(likedUserName: authService.name, likedUserId: authService.uid, postId: postID, thumbnailImageURL: post.postField.imagesURL.first, likedTime: Date()))
 			}
 		}
 		isLike.toggle()

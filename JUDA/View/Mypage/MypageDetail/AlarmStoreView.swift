@@ -11,7 +11,7 @@ import FirebaseAuth
 // MARK: - 알람 쌓여있는 리스트 화면
 struct AlarmStoreView: View {
     @Environment(\.dismiss) private var dismiss
-    @EnvironmentObject private var notificationViewModel: AlarmViewModel
+    @EnvironmentObject private var notificationViewModel: MyPageViewModel
 
     var body: some View {
         VStack(spacing: 0) {
@@ -57,18 +57,18 @@ struct AlarmStoreView: View {
 
 // MARK: - 스크롤 뷰 or 뷰 로 보여질 알람 리스트
 struct AlarmListContent: View {
-    @EnvironmentObject private var notificationViewModel: AlarmViewModel
+    @EnvironmentObject private var notificationViewModel: MyPageViewModel
 
     var body: some View {
         LazyVStack {
             ForEach(notificationViewModel.notifications.indices, id: \.self) { index in
                 let alarm = notificationViewModel.notifications[index]
-//                let user = notificationViewModel.alarms[index]
+                
                 // TODO: NavigationLink - value 로 수정
-//                NavigationLink(destination: PostDetailView(postUserType: .writter, nickName: "Hrmi", isLike: .constant(false), likeCount: .constant(45))) {
+//                NavigationLink(destination: TestView()) {
 //                    AlarmStoreListCell(alarm: alarm)
 //                }
-
+                AlarmStoreListCell(alarm: alarm)
                 if alarm != notificationViewModel.notifications.last {
                     CustomDivider()
                 }

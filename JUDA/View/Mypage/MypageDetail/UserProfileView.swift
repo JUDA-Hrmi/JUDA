@@ -69,9 +69,10 @@ struct UserProfileView: View {
                             }
                         }
                     }
-                    // 사용자 닉네임 표시
+                    
                     Text(authService.name)
                         .font(.medium18)
+                    
                     Spacer()
                     // 닉네임 수정
                     if userType == .user {

@@ -14,9 +14,16 @@ import FirebaseStorage
 @MainActor
 class MyPageViewModel: ObservableObject {
     // 해당 유저의 술상 리스트
+    @Published var notifications = [NotificationField]()
+    @Published var postUserImages = [String: UIImage]()
     @Published var userPosts = [Post]()
     // 데이터 로딩 중인지 체크
     @Published var isLoading: Bool = true
+    
+    @Published var likedUserID: String = ""
+    @Published var postId: String = ""
+    @Published var likedTime: Date = Date()
+    @Published var userName: String = ""
     
     // Firestore 경로
     private let firestore = Firestore.firestore()
@@ -84,4 +91,33 @@ extension MyPageViewModel {
         self.userPosts = results.map { $1 }
         isLoading = false
     }
+}
+
+
+extension MyPageViewModel {
+    func fetchNotificationList(userId: String) async {
+        do {
+            let alarmSnapshot = try await firestore.collection("users").document(userId).collection("notificationList").getDocuments()
+            
+            self.notifications.removeAll()
+            
+            for alarmDocument in alarmSnapshot.documents {
+                if let notification = try? alarmDocument.data(as: NotificationField.self) {
+                    self.notifications.append(notification)
+                    print("notification: ", notification)
+                }
+            }
+            print(notifications)
+        } catch {
+            print("Error fetching posts:", error)
+        }
+    }
+    
+    func sendLikeNotification(_ postUserId: String, to notificationField: NotificationField) async {
+        try? firestore.collection("users").document(postUserId).collection("notificationList").document(UUID().uuidString).setData(from: notificationField)
+    }
+}
+
+extension MyPageViewModel {
+    
 }

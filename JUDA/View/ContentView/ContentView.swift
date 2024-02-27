@@ -17,8 +17,8 @@ struct ContentView: View {
     @StateObject private var recordViewModel = RecordViewModel()
 	@StateObject private var searchPostsViewModel = SearchPostsViewModel()
     @StateObject private var likedViewModel = LikedViewModel()
-    @StateObject private var notificationViewModel = AlarmViewModel()
     @StateObject private var aiWellMatchViewModel = AiWellMatchViewModel()
+    @StateObject private var myPageViewModel = MyPageViewModel()
     
     // 현재 선택된 탭의 인덱스. 초기값 0
     @State private var selectedTabIndex = 0
@@ -99,8 +99,9 @@ struct ContentView: View {
         case .myPage:
             if authService.signInStatus {
                 MypageView(selectedTabIndex: $selectedTabIndex)
-                    .environmentObject(notificationViewModel)
                     .environmentObject(recordViewModel)
+                    .environmentObject(searchPostsViewModel)
+                    .environmentObject(myPageViewModel)
             } else {
                 unauthenticatedMypageView(selectedTabIndex: $selectedTabIndex)
             }
