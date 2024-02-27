@@ -12,6 +12,7 @@ final class AppViewModel: ObservableObject {
     // 탭바 상태
     @Published var tabBarState: Visibility = .visible
     @Published var selectedTabIndex: Int = 0 // 추가
+    @Published var locationManager = LocationManager()
 }
 
 // MARK: - 탭 바 숨기는 Modifier

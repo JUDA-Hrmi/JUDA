@@ -20,9 +20,9 @@ class AiWellMatchViewModel: ObservableObject {
     @Published var respond = ""
     @State private var lastAPICallTimestamp: Date? = nil
     @State private var isLoading = false
+    
     init() {
         guard let url = Bundle.main.url(forResource: "APIKEYS", withExtension: "plist") else { return }
-
         do {
             let data = try Data(contentsOf: url)
             let keys = try PropertyListDecoder().decode(AiWellMatchModel.self, from: data)
@@ -32,6 +32,7 @@ class AiWellMatchViewModel: ObservableObject {
             print("Decoding error")
         }
     }
+    
     @MainActor
     func request(prompt: String) async throws -> String {
         let query = ChatQuery(model: .gpt3_5Turbo_16k, messages: [
@@ -52,6 +53,7 @@ class AiWellMatchViewModel: ObservableObject {
         }
 
     }
+    
     @MainActor
     func fetchRecommendationsIfNeeded(prompt: String) {
            guard fetchTimeInterval() else { return }

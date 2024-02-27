@@ -13,7 +13,9 @@ struct SplashView: View {
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var mainViewModel: MainViewModel
     @EnvironmentObject var colorScheme: SystemColorTheme
-    
+    @EnvironmentObject var weatherViewModel: WeatherViewModel
+    @EnvironmentObject var aiViewModel: AiViewModel
+    @EnvironmentObject var appViewModel: AppViewModel
     @Binding var isActive: Bool
     @State private var imageIndex: Int = 0
     
@@ -87,6 +89,27 @@ struct SplashView: View {
                 taskGroup.addTask { await mainViewModel.getHottestDrinks() }
                 // 인기 술상 미리 받아오기
                 taskGroup.addTask { await mainViewModel.getHottestPosts() }
+            }
+        }
+        .onAppear {
+            if weatherViewModel.shouldFetchWeather() && authService.signInStatus {
+                
+                if let location = appViewModel.locationManager.location {
+                    weatherViewModel.isLoading = true
+                    Task {
+                        do {
+                            // Fetch weather data
+                            let weatherData = try await weatherViewModel.fetchWeather(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+                            weatherViewModel.weather = weatherData
+                            // Request
+                            aiViewModel.respond = try await aiViewModel.request(prompt: "Please recommend snacks and drinks that go well with this weather. Please refer to the below list behind you for the sake of snacks. Please recommend one each for snacks and drinks. When printing snacks and drinks \(String(describing: weatherViewModel.weather?.main)) ---dish List: \(aiViewModel.snacks) ---drink List:\(aiViewModel.drinkNames)")
+                            weatherViewModel.lastAPICallTimestamp = Date()
+                        } catch {
+                            print("Error: \(error)")
+                        }
+                        weatherViewModel.isLoading = false
+                    }
+                }
             }
         }
         // SettingView - 화면 모드 -> 선택한 옵션에 따라 배경색 변환

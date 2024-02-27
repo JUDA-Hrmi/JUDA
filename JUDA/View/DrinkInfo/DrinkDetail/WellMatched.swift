@@ -54,10 +54,14 @@ struct WellMatched: View {
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
         .onAppear {
-            aiWellMatchViewModel.fetchRecommendationsIfNeeded(prompt: "Please recommend three foods that go well with drinks. Only food except drinks. List below --- Beverages List: \(drinkName)")
-            print("\(drinkName)")
+            isLoading = true
+            Task {
+                do {
+                     aiWellMatchViewModel.fetchRecommendationsIfNeeded(prompt: "Please recommend three foods that go well with drinks. Only food except drinks. List below --- Beverages List: \(drinkName)")
+                }
+            }
+            isLoading = false
         }
-        
     }
     
 }
