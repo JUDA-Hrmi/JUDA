@@ -49,7 +49,7 @@ class AiViewModel: ObservableObject {
     // 프롬프트 request 함수
     func request(prompt: String) async throws -> String {
         let query = ChatQuery(model: .gpt3_5Turbo_16k, messages: [
-            Chat(role: .system, content: "Please be sure to give recommendation answer in one word using Korean, only from each given list."),
+            Chat(role: .system, content: "Please be sure to give recommendation answer in one word using Korean, only from each given list. The answer type it must be snack + drink"),
             Chat(role: .assistant, content: "계란찜 + 맥캘란 10년"),
             Chat(role: .assistant, content: "찜닭 + 산토리"),
             Chat(role: .user, content: prompt),

@@ -100,9 +100,6 @@
 		7BBDFF732B6B912C0036FB8B /* DrinkInfoSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */; };
 		7BE14B952B84733900C1F6C3 /* Drink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE14B942B84733900C1F6C3 /* Drink.swift */; };
 		7BE14B972B84767000C1F6C3 /* DrinkUploadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE14B962B84767000C1F6C3 /* DrinkUploadViewModel.swift */; };
-		7BE961B42B8E2A4D00341762 /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BE961B32B8E2A4D00341762 /* DrinkLoading.json */; };
-		7BE961B72B8E2A5B00341762 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7BE961B52B8E2A5B00341762 /* GoogleService-Info.plist */; };
-		7BE961B82B8E2A5B00341762 /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7BE961B62B8E2A5B00341762 /* APIKEYS.plist */; };
 		AC110B572B69658C005390BB /* ChangeUserNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC110B562B69658C005390BB /* ChangeUserNameView.swift */; };
 		AC1BE8E62B8B99EC0015381D /* PostTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1BE8E52B8B99EC0015381D /* PostTopView.swift */; };
 		AC2A053C2B88EC32003F23F7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = AC2A053B2B88EC32003F23F7 /* Kingfisher */; };
@@ -110,6 +107,9 @@
 		AC588E842B8C55F70063AAB0 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = AC588E832B8C55F70063AAB0 /* FirebaseFirestore */; };
 		AC588E862B8CC8F10063AAB0 /* AiWellMatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC588E852B8CC8F10063AAB0 /* AiWellMatchViewModel.swift */; };
 		AC6D128A2B6A8ED100169B23 /* WeatherAndFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12892B6A8ED100169B23 /* WeatherAndFood.swift */; };
+		AC6EEA082B8E89DB00B4FEE8 /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC6EEA062B8E89DB00B4FEE8 /* APIKEYS.plist */; };
+		AC6EEA092B8E89DB00B4FEE8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC6EEA072B8E89DB00B4FEE8 /* GoogleService-Info.plist */; };
+		AC6EEA0B2B8E8C8E00B4FEE8 /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = AC6EEA0A2B8E8C8E00B4FEE8 /* DrinkLoading.json */; };
 		AC797BDA2B8B8BEB0018D227 /* DrinkTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC797BD92B8B8BEB0018D227 /* DrinkTopView.swift */; };
 		AC7EA1D92B8D77EE00E3E5EC /* Bundle +.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7EA1D82B8D77EE00E3E5EC /* Bundle +.swift */; };
 		AC7EA1DB2B8D7D5000E3E5EC /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7EA1DA2B8D7D5000E3E5EC /* LocationManager.swift */; };
@@ -254,14 +254,14 @@
 		7B9265702B6941D000840095 /* PostReportToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportToolbar.swift; sourceTree = "<group>"; };
 		7BE14B942B84733900C1F6C3 /* Drink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drink.swift; sourceTree = "<group>"; };
 		7BE14B962B84767000C1F6C3 /* DrinkUploadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkUploadViewModel.swift; sourceTree = "<group>"; };
-		7BE961B32B8E2A4D00341762 /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = DrinkLoading.json; path = ../../../../../../../../Downloads/JUDA/Lottie/DrinkLoading.json; sourceTree = "<group>"; };
-		7BE961B52B8E2A5B00341762 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/JUDA/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		7BE961B62B8E2A5B00341762 /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = APIKEYS.plist; path = ../../../../../../Downloads/JUDA/APIKEYS.plist; sourceTree = "<group>"; };
 		AC110B562B69658C005390BB /* ChangeUserNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeUserNameView.swift; sourceTree = "<group>"; };
 		AC1BE8E52B8B99EC0015381D /* PostTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTopView.swift; sourceTree = "<group>"; };
 		AC5778E42B6FC20C00F7B04B /* NavigationProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationProfileView.swift; sourceTree = "<group>"; };
 		AC588E852B8CC8F10063AAB0 /* AiWellMatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AiWellMatchViewModel.swift; sourceTree = "<group>"; };
 		AC6D12892B6A8ED100169B23 /* WeatherAndFood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAndFood.swift; sourceTree = "<group>"; };
+		AC6EEA062B8E89DB00B4FEE8 /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = APIKEYS.plist; path = ../../../../Downloads/APIKEYS.plist; sourceTree = "<group>"; };
+		AC6EEA072B8E89DB00B4FEE8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AC6EEA0A2B8E8C8E00B4FEE8 /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = DrinkLoading.json; path = ../../../../../../Downloads/DrinkLoading.json; sourceTree = "<group>"; };
 		AC797BD92B8B8BEB0018D227 /* DrinkTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkTopView.swift; sourceTree = "<group>"; };
 		AC7EA1D82B8D77EE00E3E5EC /* Bundle +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle +.swift"; sourceTree = "<group>"; };
 		AC7EA1DA2B8D7D5000E3E5EC /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -392,7 +392,7 @@
 				09BCC14C2B7C7E2900FF4D1B /* Rain.json */,
 				09BCC14D2B7C7E2900FF4D1B /* Snow.json */,
 				09BCC14B2B7C7E2900FF4D1B /* Sun.json */,
-				7BE961B32B8E2A4D00341762 /* DrinkLoading.json */,
+				AC6EEA0A2B8E8C8E00B4FEE8 /* DrinkLoading.json */,
 				09BCC14A2B7C7E2900FF4D1B /* Thunder.json */,
 			);
 			path = Lottie;
@@ -519,9 +519,9 @@
 				B121A5652B5F8D2000667D42 /* Resource */,
 				B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */,
 				B1B8FE8C2B5EAAAB00921BBE /* Colors.xcassets */,
+				AC6EEA062B8E89DB00B4FEE8 /* APIKEYS.plist */,
+				AC6EEA072B8E89DB00B4FEE8 /* GoogleService-Info.plist */,
 				B121A56F2B5F8DA100667D42 /* Info.plist */,
-				7BE961B62B8E2A5B00341762 /* APIKEYS.plist */,
-				7BE961B52B8E2A5B00341762 /* GoogleService-Info.plist */,
 				B1B8FE822B5EA9DA00921BBE /* Preview Content */,
 			);
 			path = JUDA;
@@ -840,7 +840,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09BCC1512B7C7E2900FF4D1B /* Sun.json in Resources */,
-				7BE961B42B8E2A4D00341762 /* DrinkLoading.json in Resources */,
+				AC6EEA0B2B8E8C8E00B4FEE8 /* DrinkLoading.json in Resources */,
 				09BCC1502B7C7E2900FF4D1B /* Thunder.json in Resources */,
 				B1B8FE8D2B5EAAAB00921BBE /* Colors.xcassets in Resources */,
 				B121A5732B5F910900667D42 /* Pretendard-Bold.otf in Resources */,
@@ -850,9 +850,9 @@
 				B121A5772B5F911900667D42 /* Pretendard-SemiBold.otf in Resources */,
 				09BCC1532B7C7E2900FF4D1B /* Snow.json in Resources */,
 				09BCC1542B7C7E2900FF4D1B /* Clouds.json in Resources */,
-				7BE961B72B8E2A5B00341762 /* GoogleService-Info.plist in Resources */,
+				AC6EEA092B8E89DB00B4FEE8 /* GoogleService-Info.plist in Resources */,
+				AC6EEA082B8E89DB00B4FEE8 /* APIKEYS.plist in Resources */,
 				B121A5742B5F910B00667D42 /* Pretendard-Light.otf in Resources */,
-				7BE961B82B8E2A5B00341762 /* APIKEYS.plist in Resources */,
 				09BCC1522B7C7E2900FF4D1B /* Rain.json in Resources */,
 				B121A5762B5F911700667D42 /* Pretendard-Regular.otf in Resources */,
 				B1B8FE812B5EA9DA00921BBE /* Assets.xcassets in Resources */,
