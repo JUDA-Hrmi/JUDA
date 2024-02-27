@@ -120,11 +120,9 @@ final class AuthService: ObservableObject {
         }
         if !isLiked { // 좋아요 X -> O
             likedDrinks.removeAll { $0 == drinkID }
-            print("removeAll")
         } else { // 좋아요 O -> X
             if !likedDrinks.contains(drinkID) {
                 likedDrinks.append(drinkID)
-                print("append")
             }
         }
     }

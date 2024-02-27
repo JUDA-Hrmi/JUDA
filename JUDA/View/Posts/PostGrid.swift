@@ -67,7 +67,6 @@ struct PostGrid: View {
 		let postSortType = postsViewModel.postSortType[postsViewModel.selectedSegmentIndex]
 		let query = postsViewModel.getPostSortType(postSortType: postSortType)
 		await postsViewModel.firstFetchPost(query: query)
-		print(postsViewModel.posts.count)
 	}
 }
 
@@ -93,22 +92,20 @@ struct PostGridContent: View {
             if usedTo == .post {
 				if !postsViewModel.isLoading {
 					ForEach(postsViewModel.posts, id: \.postField.postID) { post in
-						NavigationLink {
-							PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
-										   post: post,
-										   usedTo: usedTo,
-										   postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])
-							.modifier(TabBarHidden())
-						} label: {
-							PostCell(usedTo: .post, post: post)
-								.task {
-									if let lastPostID = postsViewModel.posts.last?.postField.postID, post.postField.postID == lastPostID {
-										let postSortType = postsViewModel.postSortType[postsViewModel.selectedSegmentIndex]
-										let query = postsViewModel.getPostSortType(postSortType: postSortType)
-										await postsViewModel.nextFetchPost(query: query)
-									}
-								}
-						}
+                        NavigationLink(value: Route
+                            .PostDetail(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                                        post: post,
+                                        usedTo: usedTo,
+                                        postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {
+                            PostCell(usedTo: .post, post: post)
+                                .task {
+                                    if let lastPostID = postsViewModel.posts.last?.postField.postID, post.postField.postID == lastPostID {
+                                        let postSortType = postsViewModel.postSortType[postsViewModel.selectedSegmentIndex]
+                                        let query = postsViewModel.getPostSortType(postSortType: postSortType)
+                                        await postsViewModel.nextFetchPost(query: query)
+                                    }
+                                }
+                        }
 						.buttonStyle(EmptyActionStyle())
 						// TODO: 비로그인 상태인 경우 눌렀을 때 로그인뷰로 이동
 						.disabled(!authService.signInStatus)
@@ -124,13 +121,11 @@ struct PostGridContent: View {
 					switch searchTagType {
 					case .userName:
 						ForEach(searchPostsViewModel.searchPostsByUserName, id: \.postField.postID) { post in
-							NavigationLink {
-								PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
-											   post: post,
-											   usedTo: usedTo,
-											   postPhotosURL: searchPostsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])
-								.modifier(TabBarHidden())
-							} label: {
+							NavigationLink(value: Route
+                                .PostDetail(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                                            post: post,
+                                            usedTo: usedTo,
+                                            postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {
 								PostCell(usedTo: .postSearch, post: post)
 							}
 							.buttonStyle(EmptyActionStyle())
@@ -139,13 +134,11 @@ struct PostGridContent: View {
 						}
 					case .drinkTag:
 						ForEach(searchPostsViewModel.searchPostsByDrinkTag, id: \.postField.postID) { post in
-							NavigationLink {
-								PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
-											   post: post,
-											   usedTo: usedTo,
-											   postPhotosURL: searchPostsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])
-								.modifier(TabBarHidden())
-							} label: {
+							NavigationLink(value: Route
+                                .PostDetail(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                                            post: post,
+                                            usedTo: usedTo,
+                                            postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {
 								PostCell(usedTo: .postSearch, post: post)
 							}
 							.buttonStyle(EmptyActionStyle())
@@ -154,13 +147,11 @@ struct PostGridContent: View {
 						}
 					case .foodTag:
 						ForEach(searchPostsViewModel.searchPostsByFoodTag, id: \.postField.postID) { post in
-							NavigationLink {
-								PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
-											   post: post,
-											   usedTo: usedTo,
-											   postPhotosURL: searchPostsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])
-								.modifier(TabBarHidden())
-							} label: {
+							NavigationLink(value: Route
+                                .PostDetail(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                                            post: post,
+                                            usedTo: usedTo,
+                                            postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {
 								PostCell(usedTo: .postSearch, post: post)
 							}
 							.buttonStyle(EmptyActionStyle())
@@ -171,13 +162,11 @@ struct PostGridContent: View {
 				}
 			} else if usedTo == .postFoodTag {
 				ForEach(searchPostsViewModel.searchPostsByFoodTag, id: \.postField.postID) { post in
-					NavigationLink {
-						PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
-									   post: post,
-									   usedTo: usedTo,
-									   postPhotosURL: searchPostsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])
-						.modifier(TabBarHidden())
-					} label: {
+					NavigationLink(value: Route
+                        .PostDetail(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                                    post: post,
+                                    usedTo: usedTo,
+                                    postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {
 						PostCell(usedTo: .postSearch, post: post)
 					}
 					.buttonStyle(EmptyActionStyle())
@@ -187,13 +176,11 @@ struct PostGridContent: View {
 			} else if usedTo == .drinkDetail {
                 if !postsViewModel.isLoading {
                     ForEach(postsViewModel.drinkTaggedPosts, id: \.postField.postID) { post in
-                        NavigationLink {
-                            PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
-                                           post: post,
-										   usedTo: usedTo,
-										   postPhotosURL: post.postField.imagesURL)
-                            .modifier(TabBarHidden())
-                        } label: {
+                        NavigationLink(value: Route
+                            .PostDetail(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                                        post: post,
+                                        usedTo: usedTo,
+                                        postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {
 							PostCell(usedTo: usedTo, post: post)
                         }
                     }
@@ -206,25 +193,21 @@ struct PostGridContent: View {
                 if !myPageViewModel.isLoading {
                     if userType == .user {
                         ForEach(myPageViewModel.userPosts, id: \.postField.postID) { post in
-                            NavigationLink {
-                                PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
-                                               post: post,
-                                               usedTo: usedTo,
-                                               postPhotosURL: post.postField.imagesURL)
-                                .modifier(TabBarHidden())
-                            } label: {
+                            NavigationLink(value: Route
+                                .PostDetail(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                                            post: post,
+                                            usedTo: usedTo,
+                                            postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {
                                 PostCell(usedTo: usedTo, post: post)
                             }
                         }
                     } else {
                         ForEach(myPageViewModel.otherUserPosts, id: \.postField.postID) { post in
-                            NavigationLink {
-                                PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
-                                               post: post,
-                                               usedTo: usedTo,
-                                               postPhotosURL: post.postField.imagesURL)
-                                .modifier(TabBarHidden())
-                            } label: {
+                            NavigationLink(value: Route
+                                .PostDetail(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                                            post: post,
+                                            usedTo: usedTo,
+                                            postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {
                                 PostCell(usedTo: usedTo, post: post)
                             }
                         }

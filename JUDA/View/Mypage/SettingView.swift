@@ -10,6 +10,7 @@ import WebKit
 
 // MARK: - 환경설정 세팅 화면
 struct SettingView: View {
+    @EnvironmentObject private var navigationRouter: NavigationRouter
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var appViewModel: AppViewModel
     @EnvironmentObject var colorScheme: SystemColorTheme
@@ -19,9 +20,7 @@ struct SettingView: View {
 	private let webViewurlList = ["https://bit.ly/HrmiService",
                                   "https://bit.ly/HrmiPrivacyPolicy",
                                   "https://bit.ly/HrmiLocationPolicy"] // webViewNameList에 해당하는 url 주소
-	
-	@Environment(\.dismiss) private var dismiss
-    
+	    
     @AppStorage("selectedSortingOption") private var selectedSortingOption: String = "시스템 모드"
     @State private var isAlarmOn: Bool = false // 알람 설정 toggle
 	@State private var isShowingSheet: Bool = false // CustomBottomSheet 올라오기
@@ -30,6 +29,18 @@ struct SettingView: View {
     
     @Binding var selectedTabIndex: Int
 	
+    var version: String? {
+        guard let dictionary = Bundle.main.infoDictionary,
+        let version = dictionary["CFBundleShortVersionString"] as? String else {return nil}
+        return version //1.0.0
+    }
+
+    var build: String? {
+        guard let dictionary = Bundle.main.infoDictionary,
+        let build = dictionary["CFBundleVersion"] as? String else {return nil}
+        return build //1
+    }
+    
 	var body: some View {
 		ZStack {
             VStack(alignment: .leading) {
@@ -117,10 +128,7 @@ struct SettingView: View {
                     CustomDivider()
                 }
                 // 공지사항
-                // TODO: NavigationLink - value 로 수정
-                NavigationLink {
-                    NoticeView()
-                } label: {
+                NavigationLink(value: Route.Notice) {
                     HStack {
                         Text("공지사항")
                         Spacer()
@@ -135,7 +143,7 @@ struct SettingView: View {
                     AppServiceInfoView(text: webViewNameList[index], urlString: webViewurlList[index])
                 }
                 // 버전 정보
-                Text("버전 정보 0.0.1")
+                Text("버전 정보 \(version ?? "1.1.4")")
                     .font(.regular16)
                     .foregroundStyle(.gray01)
                     .padding(.horizontal, 20)
@@ -190,6 +198,7 @@ struct SettingView: View {
                             if await authService.deleteAccount() {
                                 authService.isLoading = false
                                 isDeletAccount.toggle()
+                                navigationRouter.back()
                                 // 메인 화면으로 이동
                                 selectedTabIndex = 0
                             }
@@ -198,16 +207,16 @@ struct SettingView: View {
                 )
             }
 		}
-        .onDisappear {
-            dismiss()
-        }
+//        .onDisappear {
+//            navigationRouter.back()
+//        }
         // 회원탈퇴 시, 생기는 로딩
         .loadingView($authService.isLoading)
 		.navigationBarBackButtonHidden()
 		.toolbar {
 			ToolbarItem(placement: .topBarLeading) {
 				Button {
-					dismiss()
+                    navigationRouter.back()
 				} label: {
 					Image(systemName: "chevron.backward")
 				}

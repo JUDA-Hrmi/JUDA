@@ -55,11 +55,7 @@ struct WeatherAndFood: View {
                                 }
                             }
                             .font(.medium18)
-                            // TODO: NavigationLink - value 로 수정
-                            NavigationLink {
-                                LogInView()
-                                    .modifier(TabBarHidden())
-                            } label: {
+                            NavigationLink(value: Route.Login) {
                                 HStack(alignment: .center) {
                                     Text("로그인 하러가기")
                                         .font(.semibold16)

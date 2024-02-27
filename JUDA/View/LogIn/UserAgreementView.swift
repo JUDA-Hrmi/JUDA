@@ -17,7 +17,6 @@ struct TermsOfService: Hashable {
 
 // MARK: - 신규 유저의 경우, 개인 정보 활용 동의 체크 
 struct UserAgreementView: View {
-    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var authService: AuthService
 
     private let webViewurlList = ["https://bit.ly/HrmiService",

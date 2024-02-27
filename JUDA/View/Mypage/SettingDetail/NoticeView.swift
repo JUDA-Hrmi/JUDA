@@ -9,8 +9,8 @@ import SwiftUI
 
 // MARK: - 공지사항 화면
 struct NoticeView: View {
-    @Environment(\.dismiss) private var dismiss
-    
+    @EnvironmentObject private var navigationRouter: NavigationRouter
+
     var body: some View {
         VStack {
             Text("공지사항 뷰입니다. ")
@@ -20,7 +20,7 @@ struct NoticeView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    dismiss()
+                    navigationRouter.back()
                 } label: {
                     Image(systemName: "chevron.backward")
                 }

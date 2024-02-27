@@ -46,11 +46,9 @@ struct LikedDrinkListContent: View {
         LazyVStack {
             if !likedViewModel.isLoading {
                 ForEach(likedViewModel.likedDrinks, id: \.drinkID) { drink in
-                    // TODO: NavigationLink - value 로 수정
-                    NavigationLink {
-                        DrinkDetailView(drink: drink, usedTo: .liked)
-                            .modifier(TabBarHidden())
-                    } label: {
+                    NavigationLink(value: Route
+                        .DrinkDetailWithUsedTo(drink: drink,
+                                               usedTo: .liked)) {
                         DrinkListCell(drink: drink,
                                       isLiked: authService.likedDrinks.contains{ $0 == drink.drinkID },
                                       usedTo: .liked)

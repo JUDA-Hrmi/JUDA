@@ -126,10 +126,8 @@ extension MyPageViewModel {
             for alarmDocument in alarmSnapshot.documents {
                 if let notification = try? alarmDocument.data(as: NotificationField.self) {
                     self.notifications.append(notification)
-                    print("notification: ", notification)
                 }
             }
-            print(notifications)
         } catch {
             print("Error fetching posts:", error)
         }

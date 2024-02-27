@@ -13,9 +13,9 @@ enum PostUserType {
 
 // MARK: - 술상 디테일 화면
 struct PostDetailView: View {
-	@EnvironmentObject private var postsViewModel: PostsViewModel
+    @EnvironmentObject private var navigationRouter: NavigationRouter
+    @EnvironmentObject private var postsViewModel: PostsViewModel
 	@EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
-	@Environment(\.dismiss) var dismiss
 	
 	let postUserType: PostUserType
 	let post: Post
@@ -55,12 +55,11 @@ struct PostDetailView: View {
                     rightButtonLabel: "확인",
                     rightButtonAction: {
                         isDeleteDialogPresented = false
-                        // TODO: write view dismiss code
 						Task {
 							await postDeleteButtonAction()
 							await postReFetch()
 						}
-						dismiss()
+                        navigationRouter.back()
                     })
                 )
             }
@@ -69,7 +68,7 @@ struct PostDetailView: View {
 		.toolbar {
 			ToolbarItem(placement: .topBarLeading) {
 				Button {
-					dismiss()
+                    navigationRouter.back()
 				} label: {
 					Image(systemName: "chevron.left")
 				}
@@ -183,9 +182,6 @@ struct PostDetailContent: View {
 			}
 			.padding(.horizontal, 20)
         }
-		.task {
-			print(postPhotosURL)
-		}
     }
 }
 

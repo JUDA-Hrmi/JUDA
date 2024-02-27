@@ -88,18 +88,14 @@ extension PostsViewModel {
 	
 	@MainActor
 	func firstFetchPost(query: Query) async {
-		let clock = ContinuousClock()
-		let time = await clock.measure {
-			do {
-				let firstSnapshot = try await query.limit(to: 20).getDocuments()
-				lastQuerydocumentSnapshot = firstSnapshot.documents.last
-				isLoading = true
-				await fetchPosts(querySnapshots: firstSnapshot)
-			} catch {
-				print("posts paging fetch error \(error.localizedDescription)")
-			}
-		}
-		print(time)
+        do {
+            let firstSnapshot = try await query.limit(to: 20).getDocuments()
+            lastQuerydocumentSnapshot = firstSnapshot.documents.last
+            isLoading = true
+            await fetchPosts(querySnapshots: firstSnapshot)
+        } catch {
+            print("posts paging fetch error \(error.localizedDescription)")
+        }
 	}
 	
 	@MainActor

@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// TODO: - 실제 데이터와 연동 작업 필요 -> merge 이후 수정 필요
 struct WellMatched: View {
     @EnvironmentObject var aiWellMatchViewModel: AiWellMatchViewModel
     let wellMatched: [String]?

@@ -9,6 +9,7 @@ import SwiftUI
 
 // MARK: - 태그된 인기 술상
 struct TaggedTrendingPosts: View {
+    @EnvironmentObject private var navigationRouter: NavigationRouter
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var postsViewModel: PostsViewModel
 
@@ -24,13 +25,11 @@ struct TaggedTrendingPosts: View {
                 .padding(.horizontal, 20)
             VStack(spacing: 0) {
                 ForEach(posts, id: \.postField.postID) { post in
-                    // TODO: NavigationLink - value 로 수정
-                    NavigationLink {
-                        PostDetailView(postUserType: post.userField.userID == authService.uid ? .writter : .reader,
-                                       post: post,
-									   usedTo: .drinkDetail,
-									   postPhotosURL: post.postField.imagesURL)
-                    } label: {
+                    NavigationLink(value: Route
+                        .PostDetail(postUserType: post.userField.userID == authService.uid ? .writter : .reader,
+                                    post: post,
+                                    usedTo: .drinkDetail,
+                                    postPhotosURL: post.postField.imagesURL)) {
                         if !isLoading {
                             PostListCell(post: post,
                                          isLiked: authService.likedPosts.contains(post.postField.postID ?? ""))

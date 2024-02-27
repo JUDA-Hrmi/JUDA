@@ -11,11 +11,11 @@ import AuthenticationServices
 
 // MARK: - 로그인 화면
 struct LogInView: View {
-    @Environment(\.dismiss) private var dismiss
     @Environment (\.colorScheme) var systemColorScheme
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var appViewModel: AppViewModel
-    @EnvironmentObject var colorScheme: SystemColorTheme
+    @EnvironmentObject private var colorScheme: SystemColorTheme
+    @EnvironmentObject private var navigationRouter: NavigationRouter
     
     @State private var nextView: Bool = false
     
@@ -70,7 +70,7 @@ struct LogInView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    dismiss()
+                    navigationRouter.back()
                 } label: {
                     Image(systemName: "chevron.backward")
                 }
@@ -82,7 +82,7 @@ struct LogInView: View {
             authService.isLoading = false
             if newValue == true {
                 // 기존 유저의 경우, 뒤로 가기 ( 메인 뷰로 이동 )
-                dismiss()
+                navigationRouter.back()
             }
         }
         .onChange(of: authService.isNewUser) { _ in

@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: - 네비게이션 이동 시, 술상 화면
 struct NavigationPostsView: View {
-    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject private var navigationRouter: NavigationRouter
     @EnvironmentObject private var postsViewModel: PostsViewModel
 	@EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
 	@State private var selectedSegmentIndex = 0
@@ -18,7 +18,22 @@ struct NavigationPostsView: View {
 
     // drink detail 에서 올때 받아야 할 정보
     var taggedPostID: [String]?
+    var selectedDrinkName: String?
+    // post detail 에서 올때 받아야 할 정보
 	var selectedFoodTag: String?
+    
+    var titleText: String {
+        switch usedTo {
+        case .postSearch:
+            return searchPostsViewModel.postSearchText
+        case .postFoodTag:
+            return selectedFoodTag ?? ""
+        case .drinkDetail:
+            return selectedDrinkName ?? ""
+        default:
+            return ""
+        }
+    }
     
     var body: some View {
         VStack {
@@ -82,16 +97,13 @@ struct NavigationPostsView: View {
             }
         }
 		.onChange(of: selectedSegmentIndex) { _ in
-			print("onChange() -> selectedSegmentIndex \(selectedSegmentIndex)")
 			if let searchTagType = searchTagType {
-				print("dpdpdpdppdpdpdpd")
 				Task {
 					await searchPostsViewModel
 						.postSortBySearchTagType(searchTagType: searchTagType,
 												 postSortType: searchPostsViewModel.postSortType[selectedSegmentIndex])
 				}
 			}
-			print("NavigationPostsView onChange(of: selectedSegmentIndex)")
 		}
 		.task {
 			if let searchTagType = searchTagType {
@@ -99,19 +111,18 @@ struct NavigationPostsView: View {
 					.postSortBySearchTagType(searchTagType: searchTagType,
 											 postSortType: searchPostsViewModel.postSortType[selectedSegmentIndex])
 			}
-			print("NavigationPostsView onAppear()")
 		}
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    dismiss()
+                    navigationRouter.back()
                 } label: {
                     Image(systemName: "chevron.left")
                 }
             }
             ToolbarItem(placement: .principal) {
-                Text(searchPostsViewModel.postSearchText)
+                Text(titleText)
                     .font(.medium16)
                     .lineLimit(1)
             }

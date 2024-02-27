@@ -9,7 +9,6 @@ import SwiftUI
 
 // MARK: - 단맛 / 신맛 / 청량 / 바디 / 탄산
 struct KoreanTastingNotes: View {
-    // UITest - Drink Detail DummyData
     let sweet: Int?
     let sour: Int?
     let refresh: Int?

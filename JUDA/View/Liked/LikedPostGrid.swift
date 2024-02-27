@@ -49,14 +49,12 @@ struct LikedPostGridContent: View {
         LazyVGrid(columns: columns, spacing: 10) {
             if !likedViewModel.isLoading {
                 ForEach(likedViewModel.likedPosts, id: \.postField.postID) { post in
-                    // TODO: NavigationLink - value 로 수정
-                    NavigationLink {
-                        PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
-                                       post: post,
-									   usedTo: .liked,
-									   postPhotosURL: post.postField.imagesURL)
-                    } label: {
-						PostCell(usedTo: .liked, post: post)
+                    NavigationLink(value: Route
+                        .PostDetail(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                                    post: post,
+                                    usedTo: .liked,
+                                    postPhotosURL: post.postField.imagesURL)) {
+                        PostCell(usedTo: .liked, post: post)
                     }
                     .buttonStyle(EmptyActionStyle())
                 }

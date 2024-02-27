@@ -50,11 +50,8 @@ struct DrinkListContent: View {
             if searchInDrinkInfo {
                 ForEach(searchDrinkViewModel.searchDrinks.indices, id: \.self) { index in
                     let drink = searchDrinkViewModel.searchDrinks[index]
-                    // TODO: NavigationLink - value 로 수정
-                    NavigationLink {
-                        DrinkDetailView(drink: drink)
-                            .modifier(TabBarHidden())
-                    } label: {
+                    NavigationLink(value: Route
+                        .DrinkDetail(drink: drink)) {
                         DrinkListCell(drink: drink,
                                       isLiked: authService.likedDrinks.contains{ $0 == drink.drinkID })
                     }
@@ -64,18 +61,15 @@ struct DrinkListContent: View {
             } else {
                 if !drinkViewModel.isLoading {
                     ForEach(drinkViewModel.drinks, id: \.drinkID) { drink in
-                        // TODO: NavigationLink - value 로 수정
-                        NavigationLink {
-                            DrinkDetailView(drink: drink)
-                                .modifier(TabBarHidden())
-                        } label: {
+                        NavigationLink(value: Route
+                            .DrinkDetail(drink: drink)) {
                             DrinkListCell(drink: drink,
                                           isLiked: authService.likedDrinks.contains{ $0 == drink.drinkID })
-                                .task {
-                                    if drink.name == drinkViewModel.drinks.last?.name {
-                                        await drinkViewModel.loadDrinksNextPage()
-                                    }
+                            .task {
+                                if drink.name == drinkViewModel.drinks.last?.name {
+                                    await drinkViewModel.loadDrinksNextPage()
                                 }
+                            }
                         }
                         .buttonStyle(EmptyActionStyle())
                     }

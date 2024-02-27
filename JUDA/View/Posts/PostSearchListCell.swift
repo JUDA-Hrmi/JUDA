@@ -15,21 +15,17 @@ struct PostSearchListCell: View {
 		VStack(spacing: 20) {
 			HStack(alignment: .firstTextBaseline) {
 				Text("\(searchTagType.rawValue)")
-					.font(.regular18)
-					.foregroundStyle(.mainBlack)
+					.font(.regular16)
 				Text("'\(searchText)'")
-					.font(.medium20)
-					.foregroundStyle(.mainBlack)
+					.font(.medium16)
 				HStack(spacing: 0) {
 					Text("\(postCount)")
-						.font(.regular20)
+						.font(.regular16)
 						.foregroundStyle(.mainAccent03)
 					Text("개")
-						.font(.regular20)
-						.foregroundStyle(.mainBlack)
+						.font(.regular16)
 				}
 				Image(systemName: "chevron.right")
-					.foregroundStyle(.mainBlack)
 				
 				Spacer()
 			}

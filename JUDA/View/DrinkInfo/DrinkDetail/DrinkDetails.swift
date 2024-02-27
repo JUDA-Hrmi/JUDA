@@ -18,6 +18,7 @@ enum WhereUsedDrinkDetails {
 
 // MARK: - 술 디테일에서 보여주는 상단의 술 정보 부분 (이미지, 이름, 가격 등)
 struct DrinkDetails: View {
+    @EnvironmentObject private var navigationRouter: NavigationRouter
     @EnvironmentObject private var mainViewModel: MainViewModel
     @EnvironmentObject private var drinkViewModel: DrinkViewModel
     @EnvironmentObject private var postsViewModel: PostsViewModel
@@ -78,12 +79,12 @@ struct DrinkDetails: View {
                            starSize: .regular16, fontSize: .regular16, starRatingType: .withText)
                 // 태그된 게시물
                 if drink.taggedPostID.count > 0 {
-                    // TODO: NavigationLink - value 로 수정
-                    NavigationLink {
-                        NavigationPostsView(usedTo: .drinkDetail,
-											searchTagType: nil,
-                                            taggedPostID: drink.taggedPostID)
-                    } label: {
+                    NavigationLink(value: Route
+                        .NavigationPosts(usedTo: .drinkDetail,
+                                         searchTagType: nil,
+                                         taggedPostID: drink.taggedPostID,
+                                         selectedDrinkName: drink.name,
+                                         selectedFoodTag: nil)) {
                         Text("\(drink.taggedPostID.count)개의 태그된 게시물")
                             .font(.regular16)
                             .foregroundStyle(.gray01)

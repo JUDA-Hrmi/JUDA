@@ -66,19 +66,14 @@ final class DrinkViewModel: ObservableObject {
         let reference = firestore.collection(drinkCollection)
         switch category {
         case .all:
-            print("선택된 술 카테고리 all")
             return reference
         case .beer:
-            print("선택된 술 카테고리 beer")
             return reference.whereField("category", isEqualTo: DrinkType.beer.rawValue)
         case .traditional:
-            print("선택된 술 카테고리 traditional")
             return reference.whereField("category", isEqualTo: DrinkType.traditional.rawValue)
         case .whiskey:
-            print("선택된 술 카테고리 whiskey")
             return reference.whereField("category", isEqualTo: DrinkType.whiskey.rawValue)
         case .wine:
-            print("선택된 술 카테고리 wine")
             return reference.whereField("category", isEqualTo: DrinkType.wine.rawValue)
         }
     }
@@ -88,23 +83,18 @@ final class DrinkViewModel: ObservableObject {
         switch sortType {
         // 인기순 - 내림차순
         case .popularity:
-            print("선택된 술 정렬 방식 popularity")
             return reference.order(by: "rating", descending: true)
         // 도수 높은 순 - 내림차순
         case .highAlcoholContent:
-            print("선택된 술 정렬 방식 highAlcoholContent")
             return reference.order(by: "alcohol", descending: true)
         // 도수 낮은 순
         case .lowAlcoholContent:
-            print("선택된 술 정렬 방식 lowAlcoholContent")
             return reference.order(by: "alcohol")
         // 금액 높은 순 - 내림차순
         case .highPrice:
-            print("선택된 술 정렬 방식 highPrice")
             return reference.order(by: "price", descending: true)
         // 금액 낮은 순
         case .lowPrice:
-            print("선택된 술 정렬 방식 lowPrice")
             return reference.order(by: "price")
         }
     }

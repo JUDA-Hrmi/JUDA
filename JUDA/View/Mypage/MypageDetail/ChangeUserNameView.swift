@@ -10,9 +10,9 @@ import FirebaseAuth
 
 // MARK: - 유저 닉네임 수정 화면
 struct ChangeUserNameView: View {
+    @EnvironmentObject private var navigationRouter: NavigationRouter
     @EnvironmentObject private var authService: AuthService
-	@Environment(\.dismiss) var dismiss
-    
+
 	@FocusState var isFocused: Bool
     
 	@State private var userChangeNickName: String = ""
@@ -67,7 +67,7 @@ struct ChangeUserNameView: View {
             Button {
                 // TODO: update 코드 작성하기
                 authService.updateUserName(uid: Auth.auth().currentUser?.uid ?? "", userName: userChangeNickName)
-                dismiss()
+                navigationRouter.back()
             } label: {
                 Text("변경 완료")
                     .font(.medium20)
@@ -89,7 +89,7 @@ struct ChangeUserNameView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    dismiss()
+                    navigationRouter.back()
                 } label: {
                     Image(systemName: "chevron.left")
                 }

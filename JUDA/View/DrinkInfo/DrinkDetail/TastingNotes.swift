@@ -9,7 +9,6 @@ import SwiftUI
 
 // MARK: - 향 / 맛 / 여운
 struct TastingNotes: View {
-    // UITest - Drink Detail DummyData
     let aroma: [String]?
     let taste: [String]?
     let finish: [String]?

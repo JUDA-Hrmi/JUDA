@@ -30,3 +30,13 @@ struct DrinkTag: Codable {
     let drink: FBDrink
 	let rating: Double
 }
+
+extension Post: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.postField.postID)
+    }
+    
+    static func == (lhs: Post, rhs: Post) -> Bool {
+        return lhs.postField.postID == rhs.postField.postID
+    }
+}

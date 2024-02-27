@@ -137,8 +137,6 @@ extension RecordViewModel {
 			print("uploadPost() :: error -> don't get post & post's userID")
 			return
 		}
-		print(post)
-		print(userID)
         // posts documentID uuid 지정
         let postDocumentPath = UUID().uuidString
         let postRef = db.collection("posts")

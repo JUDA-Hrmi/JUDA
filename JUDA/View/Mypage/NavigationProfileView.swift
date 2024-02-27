@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: - 네비게이션 이동 시, 유저 프로필 화면
 struct NavigationProfileView: View {
-    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var navigationRouter: NavigationRouter
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var myPageViewModel: MyPageViewModel
     
@@ -34,11 +34,7 @@ struct NavigationProfileView: View {
                 Spacer()
                 
                 if userType == .user {
-                    // TODO: NavigationLink - value 로 수정
-                    NavigationLink {
-                        AddTagView()
-                            .modifier(TabBarHidden())
-                    } label: {
+                    NavigationLink(value: Route.AddTag) {
                         Text("술상 올리기")
                             .font(.light14)
                             .foregroundStyle(.mainBlack)
@@ -73,14 +69,13 @@ struct NavigationProfileView: View {
         }
         // 작성한 술상 데이터 가져오기
         .task {
-            print(userType)
             await myPageViewModel.getUsersPosts(userID: userType == .user ? authService.uid : postUserID,
                                                 userType: userType)
         }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    dismiss()
+                    navigationRouter.back()
                 } label: {
                     Image(systemName: "chevron.backward")
                         .foregroundStyle(Color.mainBlack)

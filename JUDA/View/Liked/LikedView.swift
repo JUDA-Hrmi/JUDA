@@ -15,6 +15,7 @@ enum LikedType: String, CaseIterable {
 
 // MARK: - 하트 누른 술 + 술상 볼 수 있는 탭
 struct LikedView: View {
+    @StateObject private var navigationRouter = NavigationRouter()
     @EnvironmentObject private var appViewModel: AppViewModel
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var likedViewModel: LikedViewModel
@@ -23,7 +24,7 @@ struct LikedView: View {
     private let likedType = LikedType.allCases
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationRouter.path) {
             VStack(spacing: 0) {
                 // 세그먼트 (술찜 리스트 / 술상 리스트)
                 CustomTextSegment(segments: likedType.map { $0.rawValue }, selectedSegmentIndex: $selectedSegmentIndex)
@@ -63,6 +64,45 @@ struct LikedView: View {
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
             }
+            .navigationDestination(for: Route.self) { value in
+                switch value {
+                case .AddTag:
+                    AddTagView()
+                        .modifier(TabBarHidden())
+                case .NavigationProfile(let postUserName,
+                                      let postUserID,
+                                      let usedTo):
+                    NavigationProfileView(postUserName: postUserName,
+                                          postUserID: postUserID,
+                                          usedTo: usedTo)
+                case .Record(let recordType):
+                    RecordView(recordType: recordType)
+                case .ChangeUserName:
+                    ChangeUserNameView()
+                        .modifier(TabBarHidden())
+                //
+                case .DrinkDetail(let drink):
+                    DrinkDetailView(drink: drink)
+                        .modifier(TabBarHidden())
+                case .DrinkDetailWithUsedTo(let drink, let usedTo):
+                    DrinkDetailView(drink: drink, usedTo: usedTo)
+                        .modifier(TabBarHidden())
+                //
+                case .PostDetail(let postUserType,
+                                 let post,
+                                 let usedTo,
+                                 let postPhotosURL):
+                    PostDetailView(postUserType: postUserType,
+                                   post: post,
+                                   usedTo: usedTo,
+                                   postPhotosURL: postPhotosURL)
+                    .modifier(TabBarHidden())
+
+                default:
+                    ErrorPageView()
+                        .modifier(TabBarHidden())
+                }
+            }
             .onChange(of: selectedSegmentIndex) { newValue in
                 Task {
                     // 술 -> 술상
@@ -80,6 +120,7 @@ struct LikedView: View {
                 appViewModel.tabBarState = .visible
             }
         }
+        .environmentObject(navigationRouter)
         .toolbar(appViewModel.tabBarState, for: .tabBar)
     }
 }
