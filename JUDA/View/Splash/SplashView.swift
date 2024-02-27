@@ -106,7 +106,7 @@ struct SplashView: View {
                             let weatherData = try await weatherViewModel.fetchWeather(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
                             weatherViewModel.weather = weatherData
                             // Request
-                            aiViewModel.respond = try await aiViewModel.request(prompt: "Please recommend snacks and drinks that go well with this weather. Please refer to the below list behind you for the sake of snacks. Please recommend one each for snacks and drinks. When printing snacks and drinks \(String(describing: weatherViewModel.weather?.main)) ---dish List: \(aiViewModel.snacks) ---drink List:\(aiViewModel.drinkNames)")
+                            aiViewModel.respond = try await aiViewModel.request(prompt: "\(String(describing: weatherViewModel.weather?.main)) Please recommend some snacks and alcoholic beverages that go well with this weather. Please refer to the list that already exists and recommend them in it. I have additional notes on the list. You can recommend one that goes well with the weather from each list. snackslist: \(aiViewModel.snacks), drink List:\(aiViewModel.drinkNames)")
                             weatherViewModel.lastAPICallTimestamp = Date()
                         } catch {
                             print("Error: \(error)")
@@ -120,3 +120,6 @@ struct SplashView: View {
         .preferredColorScheme(colorScheme.selectedColor == .light ? .light : colorScheme.selectedColor == .dark ? .dark : nil)
     }
 }
+
+
+//
