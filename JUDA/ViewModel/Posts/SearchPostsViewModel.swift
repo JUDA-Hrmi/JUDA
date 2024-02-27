@@ -42,6 +42,7 @@ class SearchPostsViewModel: ObservableObject {
 	@Published var postSearchText = ""
 	//
 	@Published var searchTagType: SearchTagType = .userName
+	@Published var foodTag: String?
 	// 게시글 정렬 타입
 	let postSortType = PostSortType.allCases
 }
@@ -118,7 +119,7 @@ extension SearchPostsViewModel {
 
 		// 인덱스를 제거하고 최종 결과를 추출
 		let posts = results.map { $1 }
-		self.posts.append(contentsOf: posts)
+		self.posts = posts
 		
 		self.isLoading = false
 	}

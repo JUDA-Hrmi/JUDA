@@ -53,6 +53,7 @@ struct LikedPostGridContent: View {
                     NavigationLink {
                         PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
                                        post: post,
+									   usedTo: .liked,
 									   postPhotosURL: post.postField.imagesURL)
                     } label: {
 						PostCell(usedTo: .liked, post: post)

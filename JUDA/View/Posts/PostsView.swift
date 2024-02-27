@@ -116,12 +116,14 @@ struct PostsView: View {
 					.tabViewStyle(.page(indexDisplayMode: .never))
 				}
 			}
+			// 키보드 내리기
+			.onTapGesture {
+				isFocused = false
+			}
 			.task {
 				if postsViewModel.posts.isEmpty {
 					await postFirstFetch()
 				}
-			}
-			.task {
 				// TODO: search용도 posts 배열에 게시글 패치
 				if searchPostsViewModel.posts.isEmpty {
 					await searchPostsViewModel.fetchPosts()

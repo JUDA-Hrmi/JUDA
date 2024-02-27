@@ -35,6 +35,7 @@ struct PostTopView: View {
                 NavigationLink {
                     PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
                                    post: post,
+								   usedTo: .drinkDetail,
 								   postPhotosURL: post.postField.imagesURL)
                 } label: {
                     PostListCell(post: post,

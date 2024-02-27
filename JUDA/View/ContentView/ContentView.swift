@@ -101,6 +101,7 @@ struct ContentView: View {
                 MypageView(selectedTabIndex: $selectedTabIndex)
                     .environmentObject(notificationViewModel)
                     .environmentObject(recordViewModel)
+					.environmentObject(searchPostsViewModel)
             } else {
                 unauthenticatedMypageView(selectedTabIndex: $selectedTabIndex)
             }

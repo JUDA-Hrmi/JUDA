@@ -14,10 +14,12 @@ enum PostUserType {
 // MARK: - 술상 디테일 화면
 struct PostDetailView: View {
 	@EnvironmentObject private var postsViewModel: PostsViewModel
+	@EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
 	@Environment(\.dismiss) var dismiss
 	
 	let postUserType: PostUserType
 	let post: Post
+	let usedTo: WhereUsedPostGridContent
 	let postPhotosURL: [URL]
 	
 	@State private var isReportPresented = false
@@ -29,16 +31,16 @@ struct PostDetailView: View {
             // MARK: iOS 16.4 이상
             if #available(iOS 16.4, *) {
                 ScrollView {
-					PostDetailContent(post: post, postPhotosURL: postPhotosURL)
+					PostDetailContent(post: post, usedTo: usedTo, postPhotosURL: postPhotosURL)
                 }
                 .scrollBounceBehavior(.basedOnSize, axes: .vertical)
                 // MARK: iOS 16.4 미만
             } else {
                 ViewThatFits(in: .vertical) {
-					PostDetailContent(post: post, postPhotosURL: postPhotosURL)
+					PostDetailContent(post: post, usedTo: usedTo, postPhotosURL: postPhotosURL)
                         .frame(maxHeight: .infinity, alignment: .top)
                     ScrollView {
-						PostDetailContent(post: post, postPhotosURL: postPhotosURL)
+						PostDetailContent(post: post, usedTo: usedTo, postPhotosURL: postPhotosURL)
                     }
                 }
             }
@@ -139,6 +141,7 @@ struct PostDetailView: View {
 			return
 		}
 		await postsViewModel.postDelete(userID: userID, postID: postID)
+		await searchPostsViewModel.fetchPosts()
 	}
 	
 	private func postReFetch() async {
@@ -156,12 +159,13 @@ struct PostDetailView: View {
 struct PostDetailContent: View {
 	@EnvironmentObject private var postsViewModel: PostsViewModel
 	let post: Post
+	let usedTo: WhereUsedPostGridContent
 	let postPhotosURL: [URL]
 	
     var body: some View {
         VStack {
             // Bar 형태로 된 게시글 정보를 보여주는 뷰
-			PostInfo(post: post)
+			PostInfo(post: post, usedTo: usedTo)
 			// 게시글의 사진을 페이징 스크롤 형식으로 보여주는 뷰
 			PostPhotoScroll(postPhotosURL: postPhotosURL)
 			// 술 평가 + 글 + 음식 태그

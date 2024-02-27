@@ -87,6 +87,8 @@ struct PostCell: View {
 									postLikeButtonAction()
 								case .postSearch:
 									postSearchLikeButtonAction()
+								case .postFoodTag:
+									postSearchLikeButtonAction()
 								case .drinkDetail:
 									return
 								case .liked:
@@ -119,6 +121,7 @@ struct PostCell: View {
 			if authService.signInStatus {
 				self.isLike = authService.likedPosts.contains(where: { $0 == post.postField.postID })
 			}
+			print(post.postField.likedCount)
 			self.likeCount = post.postField.likedCount
 		}
 	}
@@ -139,8 +142,11 @@ struct PostCell: View {
 			if let index = postsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
 				postsViewModel.posts[index].postField.likedCount -= 1
 			}
+			if let index = searchPostsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
+				searchPostsViewModel.posts[index].postField.likedCount -= 1
+			}
 			Task {
-				await postsViewModel.postLikedUpdate(likeType: .minus, postID: postID)
+				await postsViewModel.postLikedUpdate(likeType: .minus, postID: postID, userID: post.userField.userID ?? "")
 			}
 		} else {
 			likeCount += 1
@@ -150,8 +156,11 @@ struct PostCell: View {
 			if let index = postsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
 				postsViewModel.posts[index].postField.likedCount += 1
 			}
+			if let index = searchPostsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
+				searchPostsViewModel.posts[index].postField.likedCount += 1
+			}
 			Task {
-				await postsViewModel.postLikedUpdate(likeType: .plus, postID: postID)
+				await postsViewModel.postLikedUpdate(likeType: .plus, postID: postID, userID: post.userField.userID ?? "")
 			}
 		}
 		isLike.toggle()
@@ -164,29 +173,93 @@ struct PostCell: View {
 			print("PostCell :: likeButtonAction() error -> dot't get postID")
 			return
 		}
-		if isLike {
-			likeCount -= 1
-			authService.likedPosts.removeAll(where: { $0 == postID })
-			authService.userLikedPostsUpdate()
-			
-			if let index = searchPostsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
-				searchPostsViewModel.posts[index].postField.likedCount -= 1
+		Task {
+			if isLike {
+				likeCount -= 1
+				authService.likedPosts.removeAll(where: { $0 == postID })
+				authService.userLikedPostsUpdate()
+				
+				if let index = searchPostsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
+					searchPostsViewModel.posts[index].postField.likedCount -= 1
+				}
+				
+				await withTaskGroup(of: Void.self) { group in
+					group.addTask {
+						if let index = await searchPostsViewModel.searchPostsByUserName.firstIndex(where: { $0.postField.postID == postID }) {
+							await searchPostslikedUpdateWithTag(searchTagType: .userName, likedType: .minus, index: index)
+						}
+					}
+					group.addTask {
+						if let index = await searchPostsViewModel.searchPostsByDrinkTag.firstIndex(where: { $0.postField.postID == postID }) {
+							await searchPostslikedUpdateWithTag(searchTagType: .drinkTag, likedType: .minus, index: index)
+						}
+					}
+					group.addTask {
+						if let index = await searchPostsViewModel.searchPostsByFoodTag.firstIndex(where: { $0.postField.postID == postID }) {
+							await searchPostslikedUpdateWithTag(searchTagType: .foodTag, likedType: .minus, index: index)
+						}
+					}
+				}
+				
+				if let index = postsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
+					postsViewModel.posts[index].postField.likedCount -= 1
+				}
+				
+				await postsViewModel.postLikedUpdate(likeType: .minus, postID: postID, userID: post.userField.userID ?? "")
+			} else {
+				likeCount += 1
+				authService.likedPosts.append(postID)
+				authService.userLikedPostsUpdate()
+				
+				if let index = searchPostsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
+					searchPostsViewModel.posts[index].postField.likedCount += 1
+				}
+				await withTaskGroup(of: Void.self) { group in
+					group.addTask {
+						if let index = await searchPostsViewModel.searchPostsByUserName.firstIndex(where: { $0.postField.postID == postID }) {
+							await searchPostslikedUpdateWithTag(searchTagType: .userName, likedType: .plus, index: index)
+						}
+					}
+					group.addTask {
+						if let index = await searchPostsViewModel.searchPostsByDrinkTag.firstIndex(where: { $0.postField.postID == postID }) {
+							await searchPostslikedUpdateWithTag(searchTagType: .drinkTag, likedType: .plus, index: index)
+						}
+					}
+					group.addTask {
+						if let index = await searchPostsViewModel.searchPostsByFoodTag.firstIndex(where: { $0.postField.postID == postID }) {
+							await searchPostslikedUpdateWithTag(searchTagType: .foodTag, likedType: .plus, index: index)
+						}
+					}
+				}
+				if let index = postsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
+					postsViewModel.posts[index].postField.likedCount += 1
+				}
+				await postsViewModel.postLikedUpdate(likeType: .plus, postID: postID, userID: post.userField.userID ?? "")
 			}
-			Task {
-				await postsViewModel.postLikedUpdate(likeType: .minus, postID: postID)
+			isLike.toggle()
+		}
+	}
+	
+	private func searchPostslikedUpdateWithTag(searchTagType: SearchTagType, likedType: LikedActionType, index: Int) {
+		switch searchTagType {
+		case .userName:
+			if likedType == .minus {
+				searchPostsViewModel.searchPostsByUserName[index].postField.likedCount -= 1
+			} else {
+				searchPostsViewModel.searchPostsByUserName[index].postField.likedCount += 1
 			}
-		} else {
-			likeCount += 1
-			authService.likedPosts.append(postID)
-			authService.userLikedPostsUpdate()
-			
-			if let index = searchPostsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
-				searchPostsViewModel.posts[index].postField.likedCount += 1
+		case .drinkTag:
+			if likedType == .minus {
+				searchPostsViewModel.searchPostsByDrinkTag[index].postField.likedCount -= 1
+			} else {
+				searchPostsViewModel.searchPostsByDrinkTag[index].postField.likedCount += 1
 			}
-			Task {
-				await postsViewModel.postLikedUpdate(likeType: .plus, postID: postID)
+		case .foodTag:
+			if likedType == .minus {
+				searchPostsViewModel.searchPostsByFoodTag[index].postField.likedCount -= 1
+			} else {
+				searchPostsViewModel.searchPostsByFoodTag[index].postField.likedCount += 1
 			}
 		}
-		isLike.toggle()
 	}
 }

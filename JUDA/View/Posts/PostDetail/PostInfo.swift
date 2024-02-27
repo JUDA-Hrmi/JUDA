@@ -12,9 +12,11 @@ struct PostInfo: View {
     @Environment(\.dismiss) private var dismiss
 	@EnvironmentObject private var authService: AuthService
 	@EnvironmentObject private var postsViewModel: PostsViewModel
+	@EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
 	@State private var isLike: Bool = false
 	@State private var likeCount: Int = 0
 	let post: Post
+	let usedTo: WhereUsedPostGridContent
 	private let debouncer = Debouncer(delay: 0.5)
 
     var body: some View {
@@ -67,7 +69,21 @@ struct PostInfo: View {
             .font(.regular16)
             .onTapGesture {
 				debouncer.call {
-					likeButtonAction()
+//					postLikeButtonAction()
+					switch usedTo {
+					case .post:
+						postLikeButtonAction()
+					case .postSearch:
+						postSearchLikeButtonAction()
+					case .postFoodTag:
+						postSearchLikeButtonAction() 
+					case .drinkDetail:
+						return
+					case .liked:
+						return
+					case .myPage:
+						return
+					}
 				}
             }
         }
@@ -80,7 +96,7 @@ struct PostInfo: View {
     }
     
     // 좋아요 버튼 액션 메서드
-    private func likeButtonAction() {
+    private func postLikeButtonAction() {
         // 좋아요 등록 -> 좋아요 수에 + 1
         // 좋아요 해제 -> 좋아요 수에 - 1
 		guard let postID = post.postField.postID else {
@@ -95,8 +111,11 @@ struct PostInfo: View {
 			if let index = postsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
 				postsViewModel.posts[index].postField.likedCount -= 1
 			}
+			if let index = searchPostsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
+				searchPostsViewModel.posts[index].postField.likedCount -= 1
+			}
 			Task {
-				await postsViewModel.postLikedUpdate(likeType: .minus, postID: postID)
+				await postsViewModel.postLikedUpdate(likeType: .minus, postID: postID, userID: post.userField.userID ?? "")
 			}
         } else {
             likeCount += 1
@@ -106,12 +125,112 @@ struct PostInfo: View {
 			if let index = postsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
 				postsViewModel.posts[index].postField.likedCount += 1
 			}
+			if let index = searchPostsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
+				searchPostsViewModel.posts[index].postField.likedCount += 1
+			}
 			Task {
-				await postsViewModel.postLikedUpdate(likeType: .plus, postID: postID)
+				await postsViewModel.postLikedUpdate(likeType: .plus, postID: postID, userID: post.userField.userID ?? "")
 			}
         }
         isLike.toggle()
     }
+	
+	private func postSearchLikeButtonAction() {
+		// 좋아요 등록 -> 좋아요 수에 + 1
+		// 좋아요 해제 -> 좋아요 수에 - 1
+		guard let postID = post.postField.postID else {
+			print("PostCell :: likeButtonAction() error -> dot't get postID")
+			return
+		}
+		Task {
+			if isLike {
+				likeCount -= 1
+				authService.likedPosts.removeAll(where: { $0 == postID })
+				authService.userLikedPostsUpdate()
+				
+				if let index = searchPostsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
+					searchPostsViewModel.posts[index].postField.likedCount -= 1
+				}
+				
+				await withTaskGroup(of: Void.self) { group in
+					group.addTask {
+						if let index = await searchPostsViewModel.searchPostsByUserName.firstIndex(where: { $0.postField.postID == postID }) {
+							await searchPostslikedUpdateWithTag(searchTagType: .userName, likedType: .minus, index: index)
+						}
+					}
+					group.addTask {
+						if let index = await searchPostsViewModel.searchPostsByDrinkTag.firstIndex(where: { $0.postField.postID == postID }) {
+							await searchPostslikedUpdateWithTag(searchTagType: .drinkTag, likedType: .minus, index: index)
+						}
+					}
+					group.addTask {
+						if let index = await searchPostsViewModel.searchPostsByFoodTag.firstIndex(where: { $0.postField.postID == postID }) {
+							await searchPostslikedUpdateWithTag(searchTagType: .foodTag, likedType: .minus, index: index)
+						}
+					}
+				}
+				
+				if let index = postsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
+					postsViewModel.posts[index].postField.likedCount -= 1
+				}
+				
+				await postsViewModel.postLikedUpdate(likeType: .minus, postID: postID, userID: post.userField.userID ?? "")
+			} else {
+				likeCount += 1
+				authService.likedPosts.append(postID)
+				authService.userLikedPostsUpdate()
+				
+				if let index = searchPostsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
+					searchPostsViewModel.posts[index].postField.likedCount += 1
+				}
+				await withTaskGroup(of: Void.self) { group in
+					group.addTask {
+						if let index = await searchPostsViewModel.searchPostsByUserName.firstIndex(where: { $0.postField.postID == postID }) {
+							await searchPostslikedUpdateWithTag(searchTagType: .userName, likedType: .plus, index: index)
+						}
+					}
+					group.addTask {
+						if let index = await searchPostsViewModel.searchPostsByDrinkTag.firstIndex(where: { $0.postField.postID == postID }) {
+							await searchPostslikedUpdateWithTag(searchTagType: .drinkTag, likedType: .plus, index: index)
+						}
+					}
+					group.addTask {
+						if let index = await searchPostsViewModel.searchPostsByFoodTag.firstIndex(where: { $0.postField.postID == postID }) {
+							await searchPostslikedUpdateWithTag(searchTagType: .foodTag, likedType: .plus, index: index)
+						}
+					}
+				}
+				if let index = postsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
+					postsViewModel.posts[index].postField.likedCount += 1
+				}
+				await postsViewModel.postLikedUpdate(likeType: .plus, postID: postID, userID: post.userField.userID ?? "")
+			}
+			isLike.toggle()
+		}
+	}
+	
+	private func searchPostslikedUpdateWithTag(searchTagType: SearchTagType, likedType: LikedActionType, index: Int) {
+		switch searchTagType {
+		case .userName:
+			if likedType == .minus {
+				searchPostsViewModel.searchPostsByUserName[index].postField.likedCount -= 1
+			} else {
+				searchPostsViewModel.searchPostsByUserName[index].postField.likedCount += 1
+			}
+		case .drinkTag:
+			if likedType == .minus {
+				searchPostsViewModel.searchPostsByDrinkTag[index].postField.likedCount -= 1
+			} else {
+				searchPostsViewModel.searchPostsByDrinkTag[index].postField.likedCount += 1
+			}
+		case .foodTag:
+			if likedType == .minus {
+				searchPostsViewModel.searchPostsByFoodTag[index].postField.likedCount -= 1
+			} else {
+				searchPostsViewModel.searchPostsByFoodTag[index].postField.likedCount += 1
+			}
+		}
+	}
 	
 	private func dateToString(date: Date) -> String {
 		let myFormatter = DateFormatter()

@@ -11,6 +11,7 @@ import SwiftUI
 enum WhereUsedPostGridContent {
     case post
     case postSearch
+	case postFoodTag
     case drinkDetail
     case liked
     case myPage
@@ -19,6 +20,7 @@ enum WhereUsedPostGridContent {
 // MARK: - 스크롤 뷰 or 뷰 로 보여질 post grid
 struct PostGrid: View {
 	@EnvironmentObject private var postsViewModel: PostsViewModel
+	@EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
     
     @State private var scrollAxis: Axis.Set = .vertical
     @State private var vHeight = 0.0
@@ -52,6 +54,7 @@ struct PostGrid: View {
                 .scrollDismissesKeyboard(.immediately)
                 .refreshable {
 					await postsRefreshable()
+					await searchPostsViewModel.fetchPosts()
                 }
             }
         }
@@ -85,6 +88,7 @@ struct PostGridContent: View {
 						NavigationLink {
 							PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
 										   post: post,
+										   usedTo: usedTo,
 										   postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])
 							.modifier(TabBarHidden())
 						} label: {
@@ -115,13 +119,11 @@ struct PostGridContent: View {
 							NavigationLink {
 								PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
 											   post: post,
+											   usedTo: usedTo,
 											   postPhotosURL: searchPostsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])
 								.modifier(TabBarHidden())
 							} label: {
 								PostCell(usedTo: .postSearch, post: post)
-									.onAppear {
-										print("PostCell onAppear()")
-									}
 							}
 							.buttonStyle(EmptyActionStyle())
 							// TODO: 비로그인 상태인 경우 눌렀을 때 로그인뷰로 이동
@@ -132,6 +134,7 @@ struct PostGridContent: View {
 							NavigationLink {
 								PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
 											   post: post,
+											   usedTo: usedTo,
 											   postPhotosURL: searchPostsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])
 								.modifier(TabBarHidden())
 							} label: {
@@ -146,6 +149,7 @@ struct PostGridContent: View {
 							NavigationLink {
 								PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
 											   post: post,
+											   usedTo: usedTo,
 											   postPhotosURL: searchPostsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])
 								.modifier(TabBarHidden())
 							} label: {
@@ -157,13 +161,29 @@ struct PostGridContent: View {
 						}
 					}
 				}
+			} else if usedTo == .postFoodTag {
+				ForEach(searchPostsViewModel.searchPostsByFoodTag, id: \.postField.postID) { post in
+					NavigationLink {
+						PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+									   post: post,
+									   usedTo: usedTo,
+									   postPhotosURL: searchPostsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])
+						.modifier(TabBarHidden())
+					} label: {
+						PostCell(usedTo: .postSearch, post: post)
+					}
+					.buttonStyle(EmptyActionStyle())
+					// TODO: 비로그인 상태인 경우 눌렀을 때 로그인뷰로 이동
+					.disabled(!authService.signInStatus)
+				}
 			} else if usedTo == .drinkDetail {
                 if !postsViewModel.isLoading {
                     ForEach(postsViewModel.drinkTaggedPosts, id: \.postField.postID) { post in
                         NavigationLink {
                             PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
                                            post: post,
-                                           postPhotosURL: post.postField.imagesURL)
+										   usedTo: usedTo,
+										   postPhotosURL: post.postField.imagesURL)
                             .modifier(TabBarHidden())
                         } label: {
 							PostCell(usedTo: usedTo, post: post)
@@ -178,7 +198,8 @@ struct PostGridContent: View {
                 ForEach(myPageViewModel.userPosts, id: \.postField.postID) { post in
                     NavigationLink {
                         PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
-                                       post: post,
+									   post: post,
+									   usedTo: usedTo,
 									   postPhotosURL: post.postField.imagesURL)
                         .modifier(TabBarHidden())
                     } label: {
@@ -187,12 +208,6 @@ struct PostGridContent: View {
                 }
             }
         }
-		.onAppear {
-			print("PostGridContent onAppear")
-			print(usedTo)
-			print(searchPostsViewModel.searchTagType)
-			print(searchPostsViewModel.searchPostsByFoodTag)
-		}
         .padding(.horizontal, 20)
     }
 }
