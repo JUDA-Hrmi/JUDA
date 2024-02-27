@@ -18,17 +18,18 @@ struct NavigationPostsView: View {
 
     // drink detail 에서 올때 받아야 할 정보
     var taggedPostID: [String]?
+	var selectedFoodTag: String?
     
     var body: some View {
         VStack {
             // 세그먼트 (인기 / 최신)
-            CustomTextSegment(segments: searchPostsViewModel.postSortType.map { $0.rawValue },
+			CustomTextSegment(segments: searchPostsViewModel.postSortType.map { $0.rawValue },
                               selectedSegmentIndex: $selectedSegmentIndex)
                 .padding(.vertical, 14)
                 .padding(.horizontal, 20)
                 .frame(maxWidth: .infinity, alignment: .leading)
             // 인기 or 최신 탭뷰
-            TabView(selection: $searchPostsViewModel.selectedSegmentIndex) {
+            TabView(selection: $selectedSegmentIndex) {
                 ForEach(0..<PostSortType.allCases.count, id: \.self) { index in
                     ScrollViewReader { value in
                         Group {
@@ -57,9 +58,13 @@ struct NavigationPostsView: View {
                 await postsViewModel.getTaggedPosts(taggedPostID: taggedPostID, sortType: .popularity)
                 postsViewModel.isLoading = false
             }
+			if usedTo == .postFoodTag, let selectedFoodTag = selectedFoodTag, let searchTagType = searchTagType {
+				await searchPostsViewModel.postSearch(selectedFoodTag)
+				await searchPostsViewModel.postSortBySearchTagType(searchTagType: searchTagType, postSortType: .popularity)
+			}
         }
         // 데이터 변경
-        .onChange(of: postsViewModel.selectedSegmentIndex) { newValue in
+        .onChange(of: selectedSegmentIndex) { newValue in
             Task {
                 // 최신 -> 인기
                 if newValue == 0 {
@@ -77,19 +82,22 @@ struct NavigationPostsView: View {
             }
         }
 		.onChange(of: selectedSegmentIndex) { _ in
+			print("onChange() -> selectedSegmentIndex \(selectedSegmentIndex)")
 			if let searchTagType = searchTagType {
 				print("dpdpdpdppdpdpdpd")
 				Task {
-					await searchPostsViewModel.postSortBySearchTagType(searchTagType: searchTagType,
-																	   postSortType: searchPostsViewModel.postSortType[selectedSegmentIndex])
+					await searchPostsViewModel
+						.postSortBySearchTagType(searchTagType: searchTagType,
+												 postSortType: searchPostsViewModel.postSortType[selectedSegmentIndex])
 				}
 			}
 			print("NavigationPostsView onChange(of: selectedSegmentIndex)")
 		}
 		.task {
 			if let searchTagType = searchTagType {
-				await searchPostsViewModel.postSortBySearchTagType(searchTagType: searchTagType,
-																   postSortType: searchPostsViewModel.postSortType[selectedSegmentIndex])
+				await searchPostsViewModel
+					.postSortBySearchTagType(searchTagType: searchTagType,
+											 postSortType: searchPostsViewModel.postSortType[selectedSegmentIndex])
 			}
 			print("NavigationPostsView onAppear()")
 		}

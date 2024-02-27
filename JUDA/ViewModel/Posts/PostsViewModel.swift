@@ -220,15 +220,18 @@ extension PostsViewModel {
 
 // MARK: Update
 extension PostsViewModel {
-	func postLikedUpdate(likeType: LikedActionType, postID: String) async {
+	func postLikedUpdate(likeType: LikedActionType, postID: String, userID: String) async {
 		do {
 			let postDocument = db.collection("posts").document(postID)
 			let postField = try await postDocument.getDocument().data(as: PostField.self)
+			let userPostsDocument = db.collection("users").document(userID).collection("posts").document(postID)
 			switch likeType {
 			case .plus:
 				try await postDocument.updateData(["likedCount": (postField.likedCount + 1)])
+				try await userPostsDocument.updateData(["likedCount": (postField.likedCount + 1)])
 			case .minus:
 				try await postDocument.updateData(["likedCount": (postField.likedCount - 1)])
+				try await userPostsDocument.updateData(["likedCount": (postField.likedCount - 1)])
 			}
 			
 		} catch {

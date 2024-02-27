@@ -28,6 +28,7 @@ struct TaggedTrendingPosts: View {
                     NavigationLink {
                         PostDetailView(postUserType: post.userField.userID == authService.uid ? .writter : .reader,
                                        post: post,
+									   usedTo: .drinkDetail,
 									   postPhotosURL: post.postField.imagesURL)
                     } label: {
                         if !isLoading {
