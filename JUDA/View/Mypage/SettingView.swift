@@ -13,8 +13,9 @@ struct SettingView: View {
     @EnvironmentObject private var navigationRouter: NavigationRouter
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var appViewModel: AppViewModel
-    @EnvironmentObject var colorScheme: SystemColorTheme
-
+	@EnvironmentObject private var myPageViewModel: MyPageViewModel
+    @EnvironmentObject private var colorScheme: SystemColorTheme
+	
 	private let optionNameList = ["라이트 모드", "다크 모드", "시스템 모드"] // 화면 모드 설정 옵션 이름 리스트
 	private let webViewNameList = ["서비스 이용약관", "개인정보 처리방침", "위치정보 처리방침"] // 웹뷰로 보여줘야하는 항목 이름 리스트
 	private let webViewurlList = ["https://bit.ly/HrmiService",
@@ -26,8 +27,6 @@ struct SettingView: View {
 	@State private var isShowingSheet: Bool = false // CustomBottomSheet 올라오기
 	@State private var isLogoutClicked = false // 로그아웃 버튼 클릭 시
 	@State private var isDeletAccount = false // 회원탈퇴 버튼 클릭 시
-    
-    @Binding var selectedTabIndex: Int
 	
     var version: String? {
         guard let dictionary = Bundle.main.infoDictionary,
@@ -175,9 +174,11 @@ struct SettingView: View {
                     rightButtonAction: {
                         // 로그아웃 - AppStorage 에서 변경
                         authService.signOut()
+						
                         isLogoutClicked.toggle()
+						navigationRouter.back()
                         // MainView 로 보내기
-                        selectedTabIndex = 0
+						appViewModel.selectedTabIndex = 0
                     })
                 )
             }
@@ -197,15 +198,19 @@ struct SettingView: View {
                             authService.isLoading = true
                             if await authService.deleteAccount() {
                                 authService.isLoading = false
+								myPageViewModel.myPageUserDataClear()
                                 isDeletAccount.toggle()
                                 navigationRouter.back()
                                 // 메인 화면으로 이동
-                                selectedTabIndex = 0
+								appViewModel.selectedTabIndex = 0
                             }
                         }
                     })
                 )
             }
+		}
+		.onAppear {
+			print("onAppear()")
 		}
 //        .onDisappear {
 //            navigationRouter.back()

@@ -50,7 +50,6 @@ struct LikedDrinkListContent: View {
                         .DrinkDetailWithUsedTo(drink: drink,
                                                usedTo: .liked)) {
                         DrinkListCell(drink: drink,
-                                      isLiked: authService.likedDrinks.contains{ $0 == drink.drinkID },
                                       usedTo: .liked)
                     }
                     .buttonStyle(EmptyActionStyle())

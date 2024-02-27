@@ -10,16 +10,14 @@ import SwiftUI
 struct MyPageView: View {
     @StateObject private var navigationRouter = NavigationRouter()
     @EnvironmentObject private var authService: AuthService
-    
-    @Binding var selectedTabIndex: Int
 
     var body: some View {
         NavigationStack(path: $navigationRouter.path) {
             VStack {
                 if authService.signInStatus {
-                    AuthenticatedMypageView(selectedTabIndex: $selectedTabIndex)
+                    AuthenticatedMypageView()
                 } else {
-                    UnauthenticatedMypageView(selectedTabIndex: $selectedTabIndex)
+                    UnauthenticatedMypageView()
                 }
             }
             .navigationDestination(for: Route.self) { value in
@@ -34,7 +32,7 @@ struct MyPageView: View {
                     AlarmStoreView()
                         .modifier(TabBarHidden())
                 case .Setting:
-                    SettingView(selectedTabIndex: $selectedTabIndex)
+                    SettingView()
                         .modifier(TabBarHidden())
                 case .Login:
                     LogInView()
@@ -72,6 +70,9 @@ struct MyPageView: View {
                 }
             }
         }
+		.onAppear {
+			print(authService.uid)
+		}
         .environmentObject(navigationRouter)
     }
 }

@@ -11,8 +11,7 @@ struct DrinkTopView: View {
     @EnvironmentObject private var navigationRouter: NavigationRouter
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var mainViewModel: MainViewModel
-    
-    @Binding var selectedTabIndex: Int
+	@EnvironmentObject private var appViewModel: AppViewModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -23,7 +22,7 @@ struct DrinkTopView: View {
                 Spacer()
                 
                 Button {
-                    selectedTabIndex = 1
+					appViewModel.selectedTabIndex = 1
                 } label: {
                     Text("더보기")
                         .foregroundStyle(.gray01)
@@ -37,7 +36,6 @@ struct DrinkTopView: View {
                     .DrinkDetailWithUsedTo(drink: drink,
                                            usedTo: .main)) {
                     DrinkListCell(drink: drink,
-                                  isLiked: authService.likedDrinks.contains{ $0 == drink.drinkID },
                                   usedTo: .main)
                 }
             }

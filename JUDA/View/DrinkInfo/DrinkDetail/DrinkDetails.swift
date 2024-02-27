@@ -23,8 +23,13 @@ struct DrinkDetails: View {
     @EnvironmentObject private var drinkViewModel: DrinkViewModel
     @EnvironmentObject private var postsViewModel: PostsViewModel
     @EnvironmentObject private var likedViewModel: LikedViewModel
-    let drink: FBDrink
-    let usedTo: WhereUsedDrinkDetails
+	@EnvironmentObject private var authService: AuthService
+	@State private var isLiked = false
+
+	let drink: FBDrink
+	let usedTo: WhereUsedDrinkDetails
+	
+	private let debouncer = Debouncer(delay: 0.5)
     
     var body: some View {
         // 술 정보 (이미지, 이름, 용량, 나라, 도수, 가격, 별점, 태그된 게시물)
@@ -49,11 +54,28 @@ struct DrinkDetails: View {
             }
             // 이름, 나라, 도수, 가격, 별점, 태그된 게시물
             VStack(alignment: .leading, spacing: 6) {
-                // 이름 + 용량
-                Text(drink.name + " " + drink.amount)
-                    .font(.semibold18)
-                    .foregroundStyle(.mainBlack)
-                    .lineLimit(2)
+				HStack(alignment: .top) {
+					// 이름 + 용량
+					Text(drink.name + " " + drink.amount)
+						.font(.semibold18)
+						.foregroundStyle(.mainBlack)
+						.lineLimit(2)
+					
+					Spacer()
+					
+					Button {
+						isLiked.toggle()
+						debouncer.call {
+							authService.addOrRemoveToLikedDrinks(isLiked: isLiked, drink.drinkID)
+							authService.userLikedDrinksUpdate()
+						}
+					} label: {
+						Image(systemName: isLiked ? "heart.fill" : "heart")
+							.resizable()
+							.frame(width: 16, height: 16)
+							.foregroundStyle(isLiked ? .mainAccent01 : .gray01)
+					}
+				}
                 // 종류, 도수
                 HStack {
                     // 종류
@@ -100,6 +122,9 @@ struct DrinkDetails: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
+		.task {
+			self.isLiked = authService.likedDrinks.contains(where: { $0 == drink.drinkID })
+		}
     }
 }
 

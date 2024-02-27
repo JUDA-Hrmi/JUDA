@@ -66,7 +66,7 @@ struct ChangeUserNameView: View {
             // 닉네임 변경 완료
             Button {
                 // TODO: update 코드 작성하기
-                authService.updateUserName(uid: Auth.auth().currentUser?.uid ?? "", userName: userChangeNickName)
+				authService.updateUserName(uid: authService.uid, userName: userChangeNickName)
                 navigationRouter.back()
             } label: {
                 Text("변경 완료")

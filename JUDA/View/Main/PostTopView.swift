@@ -11,8 +11,8 @@ struct PostTopView: View {
     @EnvironmentObject private var navigationRouter: NavigationRouter
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var mainViewModel: MainViewModel
+	@EnvironmentObject private var appViewModel: AppViewModel
     
-    @Binding var selectedTabIndex: Int
     var body: some View {
         VStack(spacing: 0) {
             HStack(alignment: .lastTextBaseline) {
@@ -22,7 +22,7 @@ struct PostTopView: View {
                 Spacer()
                 
                 Button {
-                    selectedTabIndex = 2
+					appViewModel.selectedTabIndex = 2
                 } label: {
                     Text("더보기")
                         .foregroundStyle(.gray01)

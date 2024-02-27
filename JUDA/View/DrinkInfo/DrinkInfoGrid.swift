@@ -47,8 +47,7 @@ struct DrinkGridContent: View {
                 ForEach(drinkViewModel.drinks, id: \.drinkID) { drink in
                     NavigationLink(value: Route
                         .DrinkDetail(drink: drink)) {
-                        DrinkGridCell(drink: drink,
-                                      isLiked: authService.likedDrinks.contains{ $0 == drink.drinkID })
+							DrinkGridCell(drink: drink)
                             .task {
                                 if drink.name == drinkViewModel.drinks.last?.name {
                                     await drinkViewModel.loadDrinksNextPage()
