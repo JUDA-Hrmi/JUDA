@@ -16,6 +16,7 @@ struct PostDetailView: View {
     @EnvironmentObject private var navigationRouter: NavigationRouter
     @EnvironmentObject private var postsViewModel: PostsViewModel
 	@EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
+	@EnvironmentObject private var myPageViewModel: MyPageViewModel
 	
 	let postUserType: PostUserType
 	let post: Post
@@ -58,6 +59,7 @@ struct PostDetailView: View {
 						Task {
 							await postDeleteButtonAction()
 							await postReFetch()
+							await myPageViewModel.getUsersPosts(userID: post.userField.userID ?? "", userType: .user)
 						}
                         navigationRouter.back()
                     })

@@ -26,17 +26,11 @@ struct DrinkListCell: View {
     @EnvironmentObject private var searchDrinkViewModel: SearchDrinkViewModel
 
     let drink: FBDrink
-    let usedTo: WhereUsedDrinkListCell
+    var usedTo: WhereUsedDrinkListCell = .drinkInfo
     
-    @State private var isLiked: Bool
+    @State private var isLiked = false
     
     private let debouncer = Debouncer(delay: 0.5)
-    
-    init(drink: FBDrink, isLiked: Bool, usedTo: WhereUsedDrinkListCell = .drinkInfo) {
-        self.drink = drink
-        _isLiked = State(initialValue: isLiked)
-        self.usedTo = usedTo
-    }
     
     var body: some View {
         HStack(alignment: .top) {
@@ -115,6 +109,9 @@ struct DrinkListCell: View {
         .padding(.vertical, 10)
         .padding(.horizontal, 20)
         .frame(height: 130)
+		.task {
+			self.isLiked = authService.likedDrinks.contains(where: { $0 == drink.drinkID })
+		}
     }
 }
 

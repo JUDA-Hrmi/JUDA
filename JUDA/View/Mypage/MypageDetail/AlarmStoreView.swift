@@ -12,6 +12,7 @@ import FirebaseAuth
 struct AlarmStoreView: View {
     @EnvironmentObject private var navigationRouter: NavigationRouter
     @EnvironmentObject private var notificationViewModel: MyPageViewModel
+	@EnvironmentObject private var authService: AuthService
 
     var body: some View {
         VStack(spacing: 0) {
@@ -50,7 +51,7 @@ struct AlarmStoreView: View {
             }
         }
         .task {
-            await notificationViewModel.fetchNotificationList(userId: Auth.auth().currentUser?.uid ?? "")
+			await notificationViewModel.fetchNotificationList(userId: authService.uid)
         }
     }
 }

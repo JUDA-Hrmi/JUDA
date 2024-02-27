@@ -16,10 +16,12 @@ enum RecordType {
 struct RecordView: View {
     // Navigation을 위한 환경 프로퍼티
     @EnvironmentObject private var navigationRouter: NavigationRouter
-    @EnvironmentObject private var auth: AuthService
+    @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var recordViewModel: RecordViewModel
 	@EnvironmentObject private var postsViewModel: PostsViewModel
 	@EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
+	@EnvironmentObject private var myPageViewModel: MyPageViewModel
+	
     // 기록 타입 ( 작성 or 수정 )
     let recordType: RecordType
     // TextEditor focus 상태 프로퍼티
@@ -105,6 +107,8 @@ struct RecordView: View {
 						Task {
 							await postUploadButtonAction()
 							await postReFetch()
+							await myPageViewModel.getUsersPosts(userID: authService.uid, userType: .user)
+							recordViewModel.recordPostDataClear()
                             navigationRouter.clear()
 						}
 					}
@@ -136,7 +140,8 @@ struct RecordView: View {
 			print("Download URLs: \(recordViewModel.imagesURL)")
 			
 			// post 데이터 모델 객체 생성
-			recordViewModel.post = Post(userField: UserField(userID: auth.uid ,name: auth.name, age: auth.age, gender: auth.gender, notificationAllowed: auth.notificationAllowed),
+			recordViewModel.post = Post(userField: UserField(userID: authService.uid ,name: authService.name,
+															 age: authService.age, gender: authService.gender, notificationAllowed: authService.notificationAllowed),
 										drinkTags: recordViewModel.drinkTags,
 										postField: PostField(imagesURL: recordViewModel.imagesURL, content: recordViewModel.content,
 															 likedCount: 0, postedTimeStamp: Date(), foodTags: recordViewModel.foodTags))

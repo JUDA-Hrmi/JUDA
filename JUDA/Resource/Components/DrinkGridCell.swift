@@ -14,14 +14,9 @@ struct DrinkGridCell: View {
     @EnvironmentObject private var authService: AuthService
 
     let drink: FBDrink
-    @State private var isLiked: Bool
+    @State private var isLiked: Bool = false
     
     private let debouncer = Debouncer(delay: 0.5)
-    
-    init(drink: FBDrink, isLiked: Bool) {
-        self.drink = drink
-        _isLiked = State(initialValue: isLiked)
-    }
     
     var body: some View {
         VStack(alignment: .trailing, spacing: 10) {
@@ -86,6 +81,9 @@ struct DrinkGridCell: View {
         }
         .frame(height: 270)
         .padding(10)
+		.task {
+			self.isLiked = authService.likedDrinks.contains(where: { $0 == drink.drinkID })
+		}
     }
     
     @ViewBuilder

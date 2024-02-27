@@ -13,8 +13,6 @@ struct MainView: View {
     @StateObject private var navigationRouter = NavigationRouter()
     @EnvironmentObject private var appViewModel: AppViewModel
     @EnvironmentObject private var authService: AuthService
-    
-	@Binding var selectedTabIndex: Int
 	
     var body: some View {
         NavigationStack(path: $navigationRouter.path) {
@@ -23,9 +21,9 @@ struct MainView: View {
                     // 날씨와 어울리는 술 + 안주
                     WeatherAndFood()
                     // 오늘의 술장 Top3
-                    DrinkTopView(selectedTabIndex: $selectedTabIndex)
+                    DrinkTopView()
                     // 오늘의 술상 Top3
-                    PostTopView(selectedTabIndex: $selectedTabIndex)
+                    PostTopView()
                 }
                 .padding(.bottom, 15)
             }
@@ -84,6 +82,7 @@ struct MainView: View {
                 }
             }
             .onAppear {
+				print("MainView onAppear()")
                 appViewModel.tabBarState = .visible
             }
         }
@@ -92,6 +91,6 @@ struct MainView: View {
     }
 }
 
-#Preview {
-	MainView(selectedTabIndex: .constant(0))
-}
+//#Preview {
+//	MainView(selectedTabIndex: .constant(0))
+//}

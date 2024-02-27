@@ -96,22 +96,7 @@ struct PostCell: View {
 						// TODO: 로그인 안 되어 있을 때, 로그인 페이지 넘어가기
 						if authService.signInStatus {
 							debouncer.call {
-								switch usedTo {
-								case .post:
-									postLikeButtonAction()
-								case .postSearch:
-									postSearchLikeButtonAction()
-								case .postFoodTag:
-									postSearchLikeButtonAction()
-								case .drinkDetail:
-									return
-								case .liked:
-									return
-								case .myPage:
-									return
-                                default:
-                                    return
-								}
+								postLikeButtonAction()
 							}
 						}
 					} label: {
@@ -141,47 +126,7 @@ struct PostCell: View {
 		}
 	}
 	
-	// 좋아요 버튼 액션 메서드
 	private func postLikeButtonAction() {
-		// 좋아요 등록 -> 좋아요 수에 + 1
-		// 좋아요 해제 -> 좋아요 수에 - 1
-		guard let postID = post.postField.postID else {
-			print("PostCell :: likeButtonAction() error -> dot't get postID")
-			return
-		}
-		if isLike {
-			likeCount -= 1
-			authService.likedPosts.removeAll(where: { $0 == postID })
-			authService.userLikedPostsUpdate()
-			
-			if let index = postsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
-				postsViewModel.posts[index].postField.likedCount -= 1
-			}
-			if let index = searchPostsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
-				searchPostsViewModel.posts[index].postField.likedCount -= 1
-			}
-			Task {
-				await postsViewModel.postLikedUpdate(likeType: .minus, postID: postID, userID: post.userField.userID ?? "")
-			}
-		} else {
-			likeCount += 1
-			authService.likedPosts.append(postID)
-			authService.userLikedPostsUpdate()
-			
-			if let index = postsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
-				postsViewModel.posts[index].postField.likedCount += 1
-			}
-            
-			Task {
-                await postsViewModel.postLikedUpdate(likeType: .plus, postID: postID, userID: post.userField.userID ?? "")
-                await myPageViewModel.sendLikeNotification(post.userField.userID ?? "", to:
-                                                            NotificationField(likedUserName: authService.name, likedUserId: authService.uid, postId: postID, thumbnailImageURL: post.postField.imagesURL.first, likedTime: Date()))
-			}
-		}
-		isLike.toggle()
-	}
-	
-	private func postSearchLikeButtonAction() {
 		// 좋아요 등록 -> 좋아요 수에 + 1
 		// 좋아요 해제 -> 좋아요 수에 - 1
 		guard let postID = post.postField.postID else {
@@ -219,6 +164,12 @@ struct PostCell: View {
 				if let index = postsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
 					postsViewModel.posts[index].postField.likedCount -= 1
 				}
+				if let index = myPageViewModel.userPosts.firstIndex(where: { $0.postField.postID == postID }) {
+					myPageViewModel.userPosts[index].postField.likedCount -= 1
+				}
+				if let index = myPageViewModel.otherUserPosts.firstIndex(where: { $0.postField.postID == postID }) {
+					myPageViewModel.otherUserPosts[index].postField.likedCount -= 1
+				}
 				
 				await postsViewModel.postLikedUpdate(likeType: .minus, postID: postID, userID: post.userField.userID ?? "")
 			} else {
@@ -248,6 +199,12 @@ struct PostCell: View {
 				}
 				if let index = postsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
 					postsViewModel.posts[index].postField.likedCount += 1
+				}
+				if let index = myPageViewModel.userPosts.firstIndex(where: { $0.postField.postID == postID }) {
+					myPageViewModel.userPosts[index].postField.likedCount += 1
+				}
+				if let index = myPageViewModel.otherUserPosts.firstIndex(where: { $0.postField.postID == postID }) {
+					myPageViewModel.otherUserPosts[index].postField.likedCount += 1
 				}
 				await postsViewModel.postLikedUpdate(likeType: .plus, postID: postID, userID: post.userField.userID ?? "")
 			}

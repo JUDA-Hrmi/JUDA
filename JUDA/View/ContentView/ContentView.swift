@@ -10,14 +10,12 @@ import SwiftUI
 // MARK: - 앱 전체 스타트 탭 뷰
 struct ContentView: View {
     @EnvironmentObject private var authService: AuthService
-    @EnvironmentObject var colorScheme: SystemColorTheme
+    @EnvironmentObject private var colorScheme: SystemColorTheme
+	@EnvironmentObject private var appViewModel: AppViewModel
     @StateObject private var recordViewModel = RecordViewModel()
     @StateObject private var likedViewModel = LikedViewModel()
     @StateObject private var aiWellMatchViewModel = AiWellMatchViewModel()
     @StateObject private var myPageViewModel = MyPageViewModel()
-    
-    // 현재 선택된 탭의 인덱스. 초기값 0
-    @State private var selectedTabIndex = 0
 
     // Tabbar 불투명하게 설정 (색상 백그라운드)
     init() {
@@ -28,7 +26,7 @@ struct ContentView: View {
     }
     
     var body: some View {
-        TabView(selection: $selectedTabIndex) {
+		TabView(selection: $appViewModel.selectedTabIndex) {
             ForEach(0..<TabItem.tabItems.count, id: \.self) { index in
                 let item = TabItem.tabItems[index]
                 tabItemView(viewType: item.viewType)
@@ -39,11 +37,11 @@ struct ContentView: View {
                         case .customSymbol:
                             Image(item.symbolName)
                             // 탭 선택 시, symbol fill로 변경되게 환경 변수 변경
-                                .environment(\.symbolVariants, selectedTabIndex == index ? .fill : .none)
+								.environment(\.symbolVariants, appViewModel.selectedTabIndex == index ? .fill : .none)
                             // sf symbol 사용할 때, Image(systemName: String) 사용
                         case .sfSymbol:
                             Image(systemName: item.symbolName)
-                                .environment(\.symbolVariants, selectedTabIndex == index ? .fill : .none)
+								.environment(\.symbolVariants, appViewModel.selectedTabIndex == index ? .fill : .none)
                         }
                         Text(item.name)
                             .font(.medium10)
@@ -56,9 +54,9 @@ struct ContentView: View {
             guard let tabID = url.tabIdentifier else { return }
             switch tabID {
             case .drinks:
-                selectedTabIndex = 1
+				appViewModel.selectedTabIndex = 1
             case .posts:
-                selectedTabIndex = 2
+				appViewModel.selectedTabIndex = 2
             }
         }
         .tint(.mainAccent03)
@@ -71,17 +69,20 @@ struct ContentView: View {
     private func tabItemView(viewType: ViewType) -> some View {
         switch viewType {
         case .main:
-            MainView(selectedTabIndex: $selectedTabIndex)
+            MainView()
                 .environmentObject(recordViewModel)
                 .environmentObject(aiWellMatchViewModel)
+				.environmentObject(myPageViewModel)
         case .drinkInfo:
             DrinkInfoView()
                 .environmentObject(aiWellMatchViewModel)
                 .environmentObject(recordViewModel)
+				.environmentObject(myPageViewModel)
         case .posts:
             PostsView()
                 .environmentObject(recordViewModel)
                 .environmentObject(aiWellMatchViewModel)
+				.environmentObject(myPageViewModel)
         case .liked:
             if authService.signInStatus {
                 LikedView()
@@ -92,7 +93,7 @@ struct ContentView: View {
                 EmptyView()
             }
         case .myPage:
-            MyPageView(selectedTabIndex: $selectedTabIndex)
+            MyPageView()
                 .environmentObject(recordViewModel)
                 .environmentObject(myPageViewModel)
                 .environmentObject(aiWellMatchViewModel)

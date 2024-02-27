@@ -238,6 +238,16 @@ extension RecordViewModel {
             print("update error")
         }
     }
+	
+	func recordPostDataClear() {
+		self.post = nil
+		self.selectedDrinkTag = nil
+		self.drinkTags = []
+		self.images = []
+		self.imagesURL = []
+		self.content = ""
+		self.foodTags = []
+	}
 }
 
 // MARK: Post Modify

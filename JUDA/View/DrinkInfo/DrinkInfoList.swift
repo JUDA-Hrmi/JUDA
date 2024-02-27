@@ -48,12 +48,10 @@ struct DrinkListContent: View {
         LazyVStack {
             // DrinkInfo 에서 검색 중일때
             if searchInDrinkInfo {
-                ForEach(searchDrinkViewModel.searchDrinks.indices, id: \.self) { index in
-                    let drink = searchDrinkViewModel.searchDrinks[index]
+				ForEach(searchDrinkViewModel.searchDrinks, id: \.drinkID) { drink in
                     NavigationLink(value: Route
                         .DrinkDetail(drink: drink)) {
-                        DrinkListCell(drink: drink,
-                                      isLiked: authService.likedDrinks.contains{ $0 == drink.drinkID })
+							DrinkListCell(drink: drink)
                     }
                     .buttonStyle(EmptyActionStyle())
                 }
@@ -63,8 +61,7 @@ struct DrinkListContent: View {
                     ForEach(drinkViewModel.drinks, id: \.drinkID) { drink in
                         NavigationLink(value: Route
                             .DrinkDetail(drink: drink)) {
-                            DrinkListCell(drink: drink,
-                                          isLiked: authService.likedDrinks.contains{ $0 == drink.drinkID })
+                            DrinkListCell(drink: drink)
                             .task {
                                 if drink.name == drinkViewModel.drinks.last?.name {
                                     await drinkViewModel.loadDrinksNextPage()

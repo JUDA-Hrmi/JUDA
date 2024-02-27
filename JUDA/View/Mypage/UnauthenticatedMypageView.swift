@@ -12,8 +12,6 @@ struct UnauthenticatedMypageView: View {
     @EnvironmentObject private var appViewModel: AppViewModel
     @EnvironmentObject private var authService: AuthService
 
-    @Binding var selectedTabIndex: Int
-
     var body: some View {
         VStack {
             HStack(spacing: 20) {

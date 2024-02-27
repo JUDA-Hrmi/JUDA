@@ -138,6 +138,11 @@ extension MyPageViewModel {
     }
 }
 
+// MARK: MyPageViewModel의 유저(본인)에 대한 데이터 삭제
 extension MyPageViewModel {
-    
+	func myPageUserDataClear() {
+		self.notifications = []
+		self.postUserImages = [:]
+		self.userPosts = []
+	}
 }
