@@ -11,9 +11,6 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject var colorScheme: SystemColorTheme
-    
-    @StateObject private var locationManager = LocationManager()
-    @StateObject private var aiViewModel = AiViewModel()
     @StateObject private var recordViewModel = RecordViewModel()
 	@StateObject private var searchPostsViewModel = SearchPostsViewModel()
     @StateObject private var likedViewModel = LikedViewModel()
@@ -76,23 +73,27 @@ struct ContentView: View {
         switch viewType {
         case .main:
             MainView(selectedTabIndex: $selectedTabIndex)
-                .environmentObject(locationManager)
-                .environmentObject(aiViewModel)
                 .environmentObject(recordViewModel)
                 .environmentObject(aiWellMatchViewModel)
+                .environmentObject(searchPostsViewModel)
         case .drinkInfo:
             DrinkInfoView()
                 .environmentObject(aiWellMatchViewModel)
                 .environmentObject(recordViewModel)
+                .environmentObject(searchPostsViewModel)
         case .posts:
             PostsView()
                 .environmentObject(recordViewModel)
 				.environmentObject(searchPostsViewModel)
+                .environmentObject(searchPostsViewModel)
+                .environmentObject(aiWellMatchViewModel)
         case .liked:
             if authService.signInStatus {
                 LikedView()
                     .environmentObject(recordViewModel)
                     .environmentObject(likedViewModel)
+                    .environmentObject(searchPostsViewModel)
+                    .environmentObject(aiWellMatchViewModel)
             } else {
                 EmptyView()
             }
@@ -102,6 +103,7 @@ struct ContentView: View {
                     .environmentObject(recordViewModel)
                     .environmentObject(searchPostsViewModel)
                     .environmentObject(myPageViewModel)
+                    .environmentObject(aiWellMatchViewModel)
             } else {
                 unauthenticatedMypageView(selectedTabIndex: $selectedTabIndex)
             }

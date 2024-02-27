@@ -11,7 +11,6 @@ import FirebaseAuth
 // MARK: - 유저 닉네임 수정 화면
 struct ChangeUserNameView: View {
     @EnvironmentObject private var authService: AuthService
-//    @StateObject var user = Users.shared
 	@Environment(\.dismiss) var dismiss
     
 	@FocusState var isFocused: Bool

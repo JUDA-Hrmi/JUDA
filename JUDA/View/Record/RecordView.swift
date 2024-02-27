@@ -19,6 +19,7 @@ struct RecordView: View {
     @EnvironmentObject private var auth: AuthService
     @EnvironmentObject private var recordViewModel: RecordViewModel
 	@EnvironmentObject private var postsViewModel: PostsViewModel
+	@EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
     // 기록 타입 ( 작성 or 수정 )
     let recordType: RecordType
     // TextEditor focus 상태 프로퍼티
@@ -141,6 +142,8 @@ struct RecordView: View {
 															 likedCount: 0, postedTimeStamp: Date(), foodTags: recordViewModel.foodTags))
 			// post upload
 			await recordViewModel.uploadPost()
+			
+			await searchPostsViewModel.fetchPosts()
 			// loadingView 없애기
 			recordViewModel.isPostUploadSuccess = false
 		} catch {

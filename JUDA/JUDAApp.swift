@@ -88,6 +88,8 @@ struct JUDAApp: App {
     @StateObject private var drinkViewModel = DrinkViewModel()
     @StateObject private var postsViewModel = PostsViewModel()
     @StateObject private var colorScheme = SystemColorTheme()
+    @StateObject private var weatherViewModel = WeatherViewModel()
+    @StateObject private var aiViewModel = AiViewModel()
     @State private var isLoading = true
     
     var body: some Scene {
@@ -97,6 +99,9 @@ struct JUDAApp: App {
                     .environmentObject(authService)
                     .environmentObject(colorScheme)
                     .environmentObject(mainViewModel)
+                    .environmentObject(aiViewModel)
+                    .environmentObject(weatherViewModel)
+                    .environmentObject(appViewModel)
             } else {
                 ContentView()
                     .environmentObject(authService)
@@ -106,6 +111,8 @@ struct JUDAApp: App {
                     .environmentObject(myPageViewModel)
                     .environmentObject(postsViewModel)
                     .environmentObject(drinkViewModel)
+                    .environmentObject(aiViewModel)
+                    .environmentObject(weatherViewModel)
             }
         }
     }

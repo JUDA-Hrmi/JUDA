@@ -54,7 +54,7 @@ final class PostsViewModel: ObservableObject {
 	// 전체 포스트의 썸네일 이미지로 사용되는 딕셔너리 [포스트ID: URL]
 	@Published var postThumbnailImagesURL: [String: URL] = [:]
 	// 전체 포스트에 사용되는 작성자의 이미지를 갖는 딕셔너리 [포스트ID: 이미지]
-	@Published var postUserImages: [String: UIImage] = [:]
+	@Published var postUserImages: [String: URL] = [:]
 	// 게시글 정렬용 세그먼트 인덱스
 	@Published var selectedSegmentIndex = 0
 	// 게시글 정렬 타입
@@ -149,7 +149,7 @@ extension PostsViewModel {
 
 				if let userDocument = try await postRef.document(postID).collection("user").getDocuments().documents.first {
 					let userField = try userDocument.data(as: UserField.self)
-					await userFetchImage(imageID: userField.userID ?? "defaultprofileimage")
+					await userFetchImage(userID: userField.userID ?? "defaultprofileimage")
 					return (index, Post(userField: userField, drinkTags: drinkTags, postField: postField))
 				}
 				return nil
@@ -206,13 +206,13 @@ extension PostsViewModel {
 	}
 	
     @MainActor
-    func userFetchImage(imageID: String) async {
-        let storageRef = Storage.storage().reference().child("userImages/\(imageID)")
-        storageRef.getData(maxSize: (1 * 1024 * 1024)) { data, error in
-            if let data = data, let uiImage = UIImage(data: data) {
-                self.postUserImages[imageID] = uiImage
+    func userFetchImage(userID: String) async {
+        let storageRef = Storage.storage().reference().child("userImages/\(userID)")
+        storageRef.downloadURL() { url, error in
+            if let error = error {
+                print("Error - fetchImageUrl: \(error.localizedDescription)")
             } else {
-                print("fetch user image error \(String(describing: error?.localizedDescription))")
+                self.postUserImages[userID] = url
             }
         }
     }
@@ -220,15 +220,18 @@ extension PostsViewModel {
 
 // MARK: Update
 extension PostsViewModel {
-	func postLikedUpdate(likeType: LikedActionType, postID: String) async {
+	func postLikedUpdate(likeType: LikedActionType, postID: String, userID: String) async {
 		do {
 			let postDocument = db.collection("posts").document(postID)
 			let postField = try await postDocument.getDocument().data(as: PostField.self)
+			let userPostsDocument = db.collection("users").document(userID).collection("posts").document(postID)
 			switch likeType {
 			case .plus:
 				try await postDocument.updateData(["likedCount": (postField.likedCount + 1)])
+				try await userPostsDocument.updateData(["likedCount": (postField.likedCount + 1)])
 			case .minus:
 				try await postDocument.updateData(["likedCount": (postField.likedCount - 1)])
+				try await userPostsDocument.updateData(["likedCount": (postField.likedCount - 1)])
 			}
 			
 		} catch {
@@ -370,7 +373,7 @@ extension PostsViewModel {
                 }
                 if let userDocument = try await postRef.document(postID).collection("user").getDocuments().documents.first {
                     let userField = try userDocument.data(as: UserField.self)
-                    await userFetchImage(imageID: userField.userID ?? "")
+                    await userFetchImage(userID: userField.userID ?? "")
                     return (index, Post(userField: userField, drinkTags: drinkTags, postField: postField))
                 }
                 return nil

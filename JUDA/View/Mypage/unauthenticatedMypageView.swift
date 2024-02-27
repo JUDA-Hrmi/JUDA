@@ -13,7 +13,7 @@ struct unauthenticatedMypageView: View {
     @EnvironmentObject private var authService: AuthService
 
     @Binding var selectedTabIndex: Int
-    
+
     var body: some View {
         NavigationStack {
             VStack {

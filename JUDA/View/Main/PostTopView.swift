@@ -35,7 +35,9 @@ struct PostTopView: View {
                 NavigationLink {
                     PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
                                    post: post,
+								   usedTo: .drinkDetail,
 								   postPhotosURL: post.postField.imagesURL)
+                    .modifier(TabBarHidden())
                 } label: {
                     PostListCell(post: post,
                                  isLiked: authService.likedPosts.contains(post.postField.postID ?? ""))
