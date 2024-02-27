@@ -172,11 +172,11 @@ struct PostCell: View {
 			if let index = postsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
 				postsViewModel.posts[index].postField.likedCount += 1
 			}
-			if let index = searchPostsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
-				searchPostsViewModel.posts[index].postField.likedCount += 1
-			}
+            
 			Task {
-				await postsViewModel.postLikedUpdate(likeType: .plus, postID: postID, userID: post.userField.userID ?? "")
+                await postsViewModel.postLikedUpdate(likeType: .plus, postID: postID, userID: post.userField.userID ?? "")
+                await myPageViewModel.sendLikeNotification(post.userField.userID ?? "", to:
+                                                            NotificationField(likedUserName: authService.name, likedUserId: authService.uid, postId: postID, thumbnailImageURL: post.postField.imagesURL.first, likedTime: Date()))
 			}
 		}
 		isLike.toggle()

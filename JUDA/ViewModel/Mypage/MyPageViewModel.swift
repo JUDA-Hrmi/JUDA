@@ -13,6 +13,8 @@ import FirebaseStorage
 // MARK: - MyPageViewModel
 @MainActor
 class MyPageViewModel: ObservableObject {
+    // 해당 유저의 술상 리스트
+    @Published var notifications = [NotificationField]()
     // 해당 유저 (본인의 경우) 의 술상 리스트
     @Published var userPosts = [Post]()
     // 타 유저의 술상 리스트
@@ -21,6 +23,11 @@ class MyPageViewModel: ObservableObject {
     @Published var postUserImages: [String: URL] = [:]
     // 데이터 로딩 중인지 체크
     @Published var isLoading: Bool = false
+    
+    @Published var likedUserID: String = ""
+    @Published var postId: String = ""
+    @Published var likedTime: Date = Date()
+    @Published var userName: String = ""
     
     // Firestore 경로
     private let firestore = Firestore.firestore()
@@ -106,4 +113,33 @@ extension MyPageViewModel {
             }
         }
     }
+}
+
+
+extension MyPageViewModel {
+    func fetchNotificationList(userId: String) async {
+        do {
+            let alarmSnapshot = try await firestore.collection("users").document(userId).collection("notificationList").getDocuments()
+            
+            self.notifications.removeAll()
+            
+            for alarmDocument in alarmSnapshot.documents {
+                if let notification = try? alarmDocument.data(as: NotificationField.self) {
+                    self.notifications.append(notification)
+                    print("notification: ", notification)
+                }
+            }
+            print(notifications)
+        } catch {
+            print("Error fetching posts:", error)
+        }
+    }
+    
+    func sendLikeNotification(_ postUserId: String, to notificationField: NotificationField) async {
+        try? firestore.collection("users").document(postUserId).collection("notificationList").document(UUID().uuidString).setData(from: notificationField)
+    }
+}
+
+extension MyPageViewModel {
+    
 }
