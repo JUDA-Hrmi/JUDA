@@ -12,6 +12,7 @@ struct ContentView: View {
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject var colorScheme: SystemColorTheme
     @StateObject private var recordViewModel = RecordViewModel()
+	@StateObject private var searchPostsViewModel = SearchPostsViewModel()
     @StateObject private var likedViewModel = LikedViewModel()
     @StateObject private var notificationViewModel = AlarmViewModel()
     @StateObject private var aiWellMatchViewModel = AiWellMatchViewModel()
@@ -74,18 +75,25 @@ struct ContentView: View {
             MainView(selectedTabIndex: $selectedTabIndex)
                 .environmentObject(recordViewModel)
                 .environmentObject(aiWellMatchViewModel)
+                .environmentObject(searchPostsViewModel)
         case .drinkInfo:
             DrinkInfoView()
                 .environmentObject(aiWellMatchViewModel)
                 .environmentObject(recordViewModel)
+                .environmentObject(searchPostsViewModel)
         case .posts:
             PostsView()
                 .environmentObject(recordViewModel)
+				.environmentObject(searchPostsViewModel)
+                .environmentObject(searchPostsViewModel)
+                .environmentObject(aiWellMatchViewModel)
         case .liked:
             if authService.signInStatus {
                 LikedView()
                     .environmentObject(recordViewModel)
                     .environmentObject(likedViewModel)
+                    .environmentObject(searchPostsViewModel)
+                    .environmentObject(aiWellMatchViewModel)
             } else {
                 EmptyView()
             }
@@ -94,6 +102,8 @@ struct ContentView: View {
                 MypageView(selectedTabIndex: $selectedTabIndex)
                     .environmentObject(notificationViewModel)
                     .environmentObject(recordViewModel)
+                    .environmentObject(searchPostsViewModel)
+                    .environmentObject(aiWellMatchViewModel)
             } else {
                 unauthenticatedMypageView(selectedTabIndex: $selectedTabIndex)
             }

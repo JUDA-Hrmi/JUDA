@@ -11,7 +11,7 @@ import FirebaseFirestore
 // Firebase posts 컬렉션 데이터 모델
 struct Post {
 	var userField: UserField
-    var drinkTags: [DrinkTag]
+    var drinkTags: [DrinkTag]?
     var postField: PostField
 }
 

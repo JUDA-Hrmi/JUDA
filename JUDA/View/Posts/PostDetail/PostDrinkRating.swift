@@ -18,7 +18,7 @@ struct PostDrinkRating: View {
                 .font(.bold16)
                 .frame(maxWidth: .infinity, alignment: .leading)
             // 각 술 이름 + 평점
-			ForEach(post.drinkTags, id:\.drink.drinkID) { drinkTag in
+			ForEach(post.drinkTags ?? [], id:\.drink.drinkID) { drinkTag in
 				// TODO: NavigationLink - value 로 수정
 				NavigationLink {
 					// TODO: 술 태그 선택 시, 해당 술 디테일 뷰 이동

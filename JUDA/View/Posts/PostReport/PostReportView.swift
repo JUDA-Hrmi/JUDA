@@ -13,8 +13,14 @@ struct ReportContent: Hashable {
 	var check: Bool
 }
 
+
 // MARK: - 술상 신고 화면
 struct PostReportView: View {
+	@EnvironmentObject private var postsViewModel: PostsViewModel
+	@EnvironmentObject private var authService: AuthService
+	
+	let post: Post
+	
     @State private var reportContents: [ReportContent] = [
         ReportContent(content: "욕설 및 비하", check: false),
         ReportContent(content: "장난 및 도배", check: false),
@@ -31,7 +37,7 @@ struct PostReportView: View {
     @Binding var isReportPresented: Bool
 	
 	@FocusState var isFocused: Bool
-	
+		
 	var body: some View {
 		ZStack {
 			VStack {
@@ -65,6 +71,9 @@ struct PostReportView: View {
 				// TextEditor에 내가 원하는 백그라운드 컬러를 주기 위함.
 				UITextView.appearance().backgroundColor = .clear
 			}
+			.onDisappear() {
+				postsViewModel.report = nil
+			}
 			// 신고 다이얼로그
 			if isReportDialogPresented {
                 CustomDialog(type: .twoButton(
@@ -74,6 +83,18 @@ struct PostReportView: View {
                         isReportDialogPresented = false},
                     rightButtonLabel: "신고",
                     rightButtonAction: {
+						// TODO: report upload
+						guard let postID = post.postField.postID else {
+							print("ReportDialog:: rightButtonAction() error -> dot't get postID")
+							return
+						}
+						let contents: [String] = reportContents.filter { $0.check }.map { $0.content }
+						
+						postsViewModel.report = Report(postID: postID, contents: contents,
+													   etcReportText: etcReportText,
+													   reportedUserID: authService.uid, reportedTime: Date())
+						
+						postsViewModel.postReportUpload()
                         isReportDialogPresented = false
                         isReportPresented = false
                     })
@@ -83,6 +104,6 @@ struct PostReportView: View {
 	}
 }
 
-#Preview {
-	PostReportView(isReportPresented: .constant(false))
-}
+//#Preview {
+//	PostReportView(isReportPresented: .constant(false))
+//}
