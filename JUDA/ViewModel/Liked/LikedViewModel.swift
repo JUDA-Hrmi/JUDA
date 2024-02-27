@@ -20,7 +20,7 @@ final class LikedViewModel: ObservableObject {
     // 현재 유저가 좋아요 누른 술상 목록
     @Published var likedPosts = [Post]()
     // 전체 포스트에 사용되는 작성자의 이미지를 갖는 딕셔너리 [포스트ID: 이미지]
-    @Published var postUserImages: [String: UIImage] = [:]
+    @Published var postUserImages: [String: URL] = [:]
     // 데이터 로딩 중인지 체크
     @Published var isLoading: Bool = true
     // Firestore 경로
@@ -109,7 +109,7 @@ extension LikedViewModel {
                 }
                 if let userDocument = try await postReference.document(postID).collection("user").getDocuments().documents.first {
                     let userField = try userDocument.data(as: UserField.self)
-                    await userFetchImage(imageID: userField.userID ?? "")
+                    await userFetchImage(userID: userField.userID ?? "")
                     return (index, Post(userField: userField, drinkTags: drinkTags, postField: postField))
                 }
                 return nil
@@ -134,13 +134,13 @@ extension LikedViewModel {
         isLoading = false
     }
     
-    func userFetchImage(imageID: String) async {
-        let storageRef = Storage.storage().reference().child("userImages/\(imageID)")
-        storageRef.getData(maxSize: (1 * 1024 * 1024)) { data, error in
-            if let data = data, let uiImage = UIImage(data: data) {
-                self.postUserImages[imageID] = uiImage
+    func userFetchImage(userID: String) async {
+        let storageRef = Storage.storage().reference().child("userImages/\(userID)")
+        storageRef.downloadURL() { url, error in
+            if let error = error {
+                print("Error - fetchImageUrl: \(error.localizedDescription)")
             } else {
-                print("fetch user image error \(String(describing: error?.localizedDescription))")
+                self.postUserImages[userID] = url
             }
         }
     }

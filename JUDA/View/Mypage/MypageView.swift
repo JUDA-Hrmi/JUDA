@@ -14,17 +14,16 @@ struct MypageView: View {
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var myPageViewModel: MyPageViewModel
     
-    // MARK: 데이터 구조 정해지면 바꿔야되는 부분
-    @State var isLike: Bool = true
-    @State var likeCount: Int = 303
-    @State var isLoggedIn = false
     @Binding var selectedTabIndex: Int
-    
+
     var body: some View {
         NavigationStack {
             VStack {
                 // 프로필 사진 -- 닉네임 -- 수정
-                UserProfileView(userType: UserType.user)
+                UserProfileView(userType: UserType.user,
+                                userName: authService.name,
+                                userID: authService.uid,
+                                usedTo: .myPage)
                 // 내가 작성한 게시물 -- '새 글 작성하기'
                 HStack {
                     Text("내가 작성한 술상")
@@ -64,7 +63,7 @@ struct MypageView: View {
             // 작성한 술상 데이터 가져오기
             .task {
                 if myPageViewModel.userPosts.isEmpty {
-                    await myPageViewModel.getUsersPosts(userID: authService.uid)
+                    await myPageViewModel.getUsersPosts(userID: authService.uid, userType: .user)
                 }
             }
             .toolbar {

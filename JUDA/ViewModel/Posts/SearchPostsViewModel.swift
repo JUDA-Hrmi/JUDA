@@ -33,7 +33,7 @@ class SearchPostsViewModel: ObservableObject {
 	// 전체 포스트의 썸네일 이미지로 사용되는 딕셔너리 [포스트ID: URL]
 	@Published var postThumbnailImagesURL: [String: URL] = [:]
 	// 전체 포스트에 사용되는 작성자의 이미지를 갖는 딕셔너리 [포스트ID: 이미지]
-	@Published var postUserImages: [String: UIImage] = [:]
+	@Published var postUserImages: [String: URL] = [:]
 	// 게시글 정렬용 세그먼트 인덱스
 	@Published var selectedSegmentIndex = 0
 	// 게시글 불러오기 작업이 진행중인지 나타내는 상태 프로퍼티
@@ -91,7 +91,7 @@ extension SearchPostsViewModel {
 					
 					if let userDocument = try await postRef.document(postID).collection("user").getDocuments().documents.first {
 						let userField = try userDocument.data(as: UserField.self)
-						await userFetchImage(imageID: userField.userID ?? "defaultprofileimage")
+						await userFetchImage(userID: userField.userID ?? "defaultprofileimage")
 						return (index, Post(userField: userField, drinkTags: drinkTags, postField: postField))
 					}
 					return nil
@@ -125,16 +125,16 @@ extension SearchPostsViewModel {
 	}
 	
 	@MainActor
-	func userFetchImage(imageID: String) async {
-		let storageRef = Storage.storage().reference().child("userImages/\(imageID)")
-		storageRef.getData(maxSize: (1 * 1024 * 1024)) { data, error in
-			if let data = data, let uiImage = UIImage(data: data) {
-				self.postUserImages[imageID] = uiImage
-			} else {
-				print("fetch user image error \(String(describing: error?.localizedDescription))")
-			}
-		}
-	}
+    func userFetchImage(userID: String) async {
+        let storageRef = Storage.storage().reference().child("userImages/\(userID)")
+        storageRef.downloadURL() { url, error in
+            if let error = error {
+                print("Error - fetchImageUrl: \(error.localizedDescription)")
+            } else {
+                self.postUserImages[userID] = url
+            }
+        }
+    }
 }
 
 // MARK: fetch data filtering / sorting

@@ -80,19 +80,25 @@ struct ContentView: View {
                 .environmentObject(aiViewModel)
                 .environmentObject(recordViewModel)
                 .environmentObject(aiWellMatchViewModel)
+                .environmentObject(searchPostsViewModel)
         case .drinkInfo:
             DrinkInfoView()
                 .environmentObject(aiWellMatchViewModel)
                 .environmentObject(recordViewModel)
+                .environmentObject(searchPostsViewModel)
         case .posts:
             PostsView()
                 .environmentObject(recordViewModel)
 				.environmentObject(searchPostsViewModel)
+                .environmentObject(searchPostsViewModel)
+                .environmentObject(aiWellMatchViewModel)
         case .liked:
             if authService.signInStatus {
                 LikedView()
                     .environmentObject(recordViewModel)
                     .environmentObject(likedViewModel)
+                    .environmentObject(searchPostsViewModel)
+                    .environmentObject(aiWellMatchViewModel)
             } else {
                 EmptyView()
             }
@@ -101,7 +107,8 @@ struct ContentView: View {
                 MypageView(selectedTabIndex: $selectedTabIndex)
                     .environmentObject(notificationViewModel)
                     .environmentObject(recordViewModel)
-					.environmentObject(searchPostsViewModel)
+                    .environmentObject(searchPostsViewModel)
+                    .environmentObject(aiWellMatchViewModel)
             } else {
                 unauthenticatedMypageView(selectedTabIndex: $selectedTabIndex)
             }
