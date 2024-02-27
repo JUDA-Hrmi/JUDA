@@ -18,8 +18,7 @@ struct AiWellMatchModel: Decodable {
 class AiWellMatchViewModel: ObservableObject {
     var openAI: OpenAI?
     @Published var respond = ""
-    @State private var lastAPICallTimestamp: Date? = nil
-    @State private var isLoading = false
+    @Published var isLoading = false
     
     init() {
         guard let url = Bundle.main.url(forResource: "APIKEYS", withExtension: "plist") else { return }
@@ -56,29 +55,15 @@ class AiWellMatchViewModel: ObservableObject {
     
     @MainActor
     func fetchRecommendationsIfNeeded(prompt: String) {
-           guard fetchTimeInterval() else { return }
            Task {
                do {
                    isLoading = true
                    respond = try await request(prompt: prompt)
-                   lastAPICallTimestamp = Date()
                } catch {
                    print("Error fetching recommendations: \(error)")
                }
                isLoading = false
            }
-       }
-       
-       private func fetchTimeInterval() -> Bool {
-           guard let lastTimestamp = lastAPICallTimestamp else {
-               return true
-           }
-           
-           let currentTime = Date()
-           let timeDifference = currentTime.timeIntervalSince(lastTimestamp)
-           let minimumTimeDifference: TimeInterval = 300
-           
-           return timeDifference >= minimumTimeDifference
        }
 }
 

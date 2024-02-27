@@ -10,7 +10,6 @@ import SwiftUI
 // TODO: - 실제 데이터와 연동 작업 필요 -> merge 이후 수정 필요
 struct WellMatched: View {
     @EnvironmentObject var aiWellMatchViewModel: AiWellMatchViewModel
-    @State private var isLoading = false
     let wellMatched: [String]?
     let windowWidth: CGFloat
     let drinkName: String
@@ -27,7 +26,7 @@ struct WellMatched: View {
                     .foregroundStyle(.mainAccent05)
             }
             
-            if isLoading {
+            if aiWellMatchViewModel.isLoading {
                 HStack {
                     CircularLoaderView(size: 16)
                 }
@@ -54,13 +53,13 @@ struct WellMatched: View {
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
         .onAppear {
-            isLoading = true
+            aiWellMatchViewModel.isLoading = true
             Task {
                 do {
                      aiWellMatchViewModel.fetchRecommendationsIfNeeded(prompt: "Please recommend three foods that go well with drinks. Only food except drinks. List below --- Beverages List: \(drinkName)")
                 }
             }
-            isLoading = false
+            aiWellMatchViewModel.isLoading = false
         }
     }
     
