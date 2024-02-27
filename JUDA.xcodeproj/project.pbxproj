@@ -138,8 +138,6 @@
 		B14958052B86590400870297 /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = B14958042B86590400870297 /* OpenAI */; };
 		B14958072B86593C00870297 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = B14958062B86593C00870297 /* Lottie */; };
 		B158F83F2B657A9000E33C47 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B158F83E2B657A9000E33C47 /* Theme.swift */; };
-		B18F6EC72B8CFEBD00E21840 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B18F6EC52B8CFEBD00E21840 /* GoogleService-Info.plist */; };
-		B18F6EC82B8CFEBD00E21840 /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = B18F6EC62B8CFEBD00E21840 /* APIKEYS.plist */; };
 		B1B8FE812B5EA9DA00921BBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */; };
 		B1B8FE842B5EA9DA00921BBE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1B8FE832B5EA9DA00921BBE /* Preview Assets.xcassets */; };
 		B1B8FE8D2B5EAAAB00921BBE /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1B8FE8C2B5EAAAB00921BBE /* Colors.xcassets */; };
@@ -273,8 +271,6 @@
 		B12BEE4E2B6B7BDA00580D29 /* Handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Handler.swift; sourceTree = "<group>"; };
 		B158F83E2B657A9000E33C47 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoSegment.swift; sourceTree = "<group>"; };
-		B18F6EC52B8CFEBD00E21840 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		B18F6EC62B8CFEBD00E21840 /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = APIKEYS.plist; sourceTree = "<group>"; };
 		B1B8FE7C2B5EA9D900921BBE /* JUDAApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JUDAApp.swift; sourceTree = "<group>"; };
 		B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B1B8FE832B5EA9DA00921BBE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -506,8 +502,6 @@
 				B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */,
 				B1B8FE8C2B5EAAAB00921BBE /* Colors.xcassets */,
 				B121A56F2B5F8DA100667D42 /* Info.plist */,
-				B18F6EC62B8CFEBD00E21840 /* APIKEYS.plist */,
-				B18F6EC52B8CFEBD00E21840 /* GoogleService-Info.plist */,
 				B1B8FE822B5EA9DA00921BBE /* Preview Content */,
 			);
 			path = JUDA;
@@ -843,12 +837,10 @@
 				09BCC1532B7C7E2900FF4D1B /* Snow.json in Resources */,
 				09BCC1542B7C7E2900FF4D1B /* Clouds.json in Resources */,
 				B121A5742B5F910B00667D42 /* Pretendard-Light.otf in Resources */,
-				B18F6EC72B8CFEBD00E21840 /* GoogleService-Info.plist in Resources */,
 				09BCC1522B7C7E2900FF4D1B /* Rain.json in Resources */,
 				B121A5762B5F911700667D42 /* Pretendard-Regular.otf in Resources */,
 				B1B8FE812B5EA9DA00921BBE /* Assets.xcassets in Resources */,
 				B121A5752B5F911500667D42 /* Pretendard-Medium.otf in Resources */,
-				B18F6EC82B8CFEBD00E21840 /* APIKEYS.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
