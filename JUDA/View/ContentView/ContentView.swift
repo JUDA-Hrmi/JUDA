@@ -11,9 +11,6 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject var colorScheme: SystemColorTheme
-    
-    @StateObject private var locationManager = LocationManager()
-    @StateObject private var aiViewModel = AiViewModel()
     @StateObject private var recordViewModel = RecordViewModel()
 	@StateObject private var searchPostsViewModel = SearchPostsViewModel()
     @StateObject private var likedViewModel = LikedViewModel()
@@ -76,8 +73,6 @@ struct ContentView: View {
         switch viewType {
         case .main:
             MainView(selectedTabIndex: $selectedTabIndex)
-                .environmentObject(locationManager)
-                .environmentObject(aiViewModel)
                 .environmentObject(recordViewModel)
                 .environmentObject(aiWellMatchViewModel)
                 .environmentObject(searchPostsViewModel)
