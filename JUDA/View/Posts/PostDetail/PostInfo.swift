@@ -10,7 +10,7 @@ import Kingfisher
 
 // MARK: - 술상 디테일에서 상단에 유저 + 글 작성 시간 + 좋아요
 struct PostInfo: View {
-    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var navigationRouter: NavigationRouter
 	@EnvironmentObject private var authService: AuthService
 	@EnvironmentObject private var postsViewModel: PostsViewModel
     @EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
@@ -55,14 +55,12 @@ struct PostInfo: View {
 						.clipShape(.circle)
 				}
                 VStack(alignment: .leading) {
-                    NavigationLink {
-                        // TODO: NavigationLink - value 로 수정
-                        NavigationProfileView(postUserName: post.userField.name,
-                                              postUserID: post.userField.userID ?? "",
-                                              usedTo: usedTo)
-                    } label: {
+                    NavigationLink(value: Route
+                        .NavigationProfile(postUserName: post.userField.name,
+                                           postUserID: post.userField.userID ?? "",
+                                           usedTo: usedTo)) {
                         // 사용자의 닉네임
-						Text(post.userField.name)
+                        Text(post.userField.name)
                             .lineLimit(1)
                             .font(.regular18)
                             .foregroundStyle(.mainBlack)
@@ -89,7 +87,6 @@ struct PostInfo: View {
             .font(.regular16)
             .onTapGesture {
 				debouncer.call {
-//					postLikeButtonAction()
 					switch usedTo {
 					case .post:
 						postLikeButtonAction()

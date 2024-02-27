@@ -10,6 +10,7 @@ import PhotosUI
 
 // MARK: - 글 작성 시, 사진 선택 및 술 태그 추가 화면
 struct AddTagView: View {
+    @EnvironmentObject private var navigationRouter: NavigationRouter
     @EnvironmentObject private var auth: AuthService
     @EnvironmentObject private var recordViewModel: RecordViewModel
     // 사진 배열
@@ -20,8 +21,6 @@ struct AddTagView: View {
     @State private var isShowRatingDialog: Bool = false
     // CustomDialog - oneButton 을 띄워주는 상태 프로퍼티
 	@State private var isShowAlertDialog: Bool = false
-	// Navigation을 위한 환경 프로퍼티
-	@Environment(\.dismiss) private var dismiss
     // 숱 태그가 5개를 넘어가는지 확인하는 상태 프로퍼티
     @State private var isTagsCountAboveFive: Bool = false
     // 평점을 담아주는 프로퍼티
@@ -109,7 +108,6 @@ struct AddTagView: View {
                         })
                     )
                 }
-                
             }
             // 술 태그 리스트에 변화가 있을 때, 체크
             .onChange(of: recordViewModel.drinkTags.count) { _ in
@@ -120,17 +118,14 @@ struct AddTagView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
-                        dismiss()
+                        navigationRouter.back()
                     } label: {
                         Image(systemName: "chevron.backward")
                     }
                     .foregroundStyle(.mainBlack)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    // TODO: NavigationLink - value 로 수정
-                    NavigationLink {
-                        RecordView(recordType: RecordType.add)
-                    } label: {
+                    NavigationLink(value: Route.Record(recordType: .add)) {
                         Text("다음")
                             .font(.regular16)
                     }
@@ -151,7 +146,3 @@ struct AddTagView: View {
         self.isTagsCountAboveFive = recordViewModel.drinkTags.count >= 5
     }
 }
-
-//#Preview {
-//	AddTagView()
-//}

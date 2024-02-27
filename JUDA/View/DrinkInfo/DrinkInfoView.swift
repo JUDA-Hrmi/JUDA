@@ -24,6 +24,7 @@ enum DrinkSortType: String, CaseIterable {
 
 // MARK: - 술장 탭
 struct DrinkInfoView: View {
+    @StateObject private var navigationRouter = NavigationRouter()
     @StateObject private var searchDrinkViewModel = SearchDrinkViewModel()
     @EnvironmentObject private var appViewModel: AppViewModel
     @EnvironmentObject private var drinkViewModel: DrinkViewModel
@@ -37,14 +38,13 @@ struct DrinkInfoView: View {
     private let optionNameList = DrinkSortType.allCases.map { $0.rawValue }
     
 	var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationRouter.path) {
             ZStack {
                 VStack(spacing: 0) {
                     // 서치바
                     SearchBar(inputText: $drinkSearchText, isFocused: $isFocused) {
                         Task {
                             await searchDrinkViewModel.fetchSearchDrinks(from: drinkSearchText)
-                            print(searchDrinkViewModel.searchDrinks)
                         }
                     }
                     // 서치바 Text가 없을 때, 술 검색 결과 비워주기
@@ -174,6 +174,60 @@ struct DrinkInfoView: View {
                     }
                 }
             }
+            .navigationDestination(for: Route.self) { value in
+                switch value {
+                case .ChangeUserName:
+                    ChangeUserNameView()
+                case .AddTag:
+                    AddTagView()
+                        .modifier(TabBarHidden())
+                case .Login:
+                    LogInView()
+                        .modifier(TabBarHidden())
+                case .NavigationPosts(let usedTo,
+                                      let searchTagType,
+                                      let taggedPostID,
+                                      let selectedDrinkName,
+                                      let selectedFoodTag):
+                    NavigationPostsView(usedTo: usedTo,
+                                        searchTagType: searchTagType,
+                                        taggedPostID: taggedPostID,
+                                        selectedDrinkName: selectedDrinkName,
+                                        selectedFoodTag: selectedFoodTag)
+                case .NavigationPostsTo(let usedTo,
+                                        let searchTagType):
+                    NavigationPostsView(usedTo: usedTo,
+                                        searchTagType: searchTagType)
+                case .NavigationProfile(let postUserName,
+                                        let postUserID,
+                                        let usedTo):
+                    NavigationProfileView(postUserName: postUserName,
+                                          postUserID: postUserID,
+                                          usedTo: usedTo)
+                case .Record(let recordType):
+                    RecordView(recordType: recordType)
+                //
+                case .DrinkDetail(let drink):
+                    DrinkDetailView(drink: drink)
+                        .modifier(TabBarHidden())
+                case .DrinkDetailWithUsedTo(let drink, let usedTo):
+                    DrinkDetailView(drink: drink, usedTo: usedTo)
+                        .modifier(TabBarHidden())
+                //
+                case .PostDetail(let postUserType,
+                                 let post,
+                                 let usedTo,
+                                 let postPhotosURL):
+                    PostDetailView(postUserType: postUserType,
+                                   post: post,
+                                   usedTo: usedTo,
+                                   postPhotosURL: postPhotosURL)
+                    .modifier(TabBarHidden())
+                default:
+                    ErrorPageView()
+                        .modifier(TabBarHidden())
+                }
+            }
             // 시작할 때, 데이터 받아오기
             .task {
                 if drinkViewModel.drinks.isEmpty {
@@ -184,6 +238,7 @@ struct DrinkInfoView: View {
                 appViewModel.tabBarState = .visible
             }
         }
+        .environmentObject(navigationRouter)
         .toolbar(appViewModel.tabBarState, for: .tabBar)
 	}
 }

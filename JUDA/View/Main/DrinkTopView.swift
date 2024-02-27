@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DrinkTopView: View {
+    @EnvironmentObject private var navigationRouter: NavigationRouter
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var mainViewModel: MainViewModel
     
@@ -32,11 +33,9 @@ struct DrinkTopView: View {
             .padding(20)
             
             ForEach(mainViewModel.drinks, id:\.drinkID) { drink in
-                // TODO: NavigationLink - value 로 수정
-                NavigationLink {
-                    DrinkDetailView(drink: drink, usedTo: .main)
-                        .modifier(TabBarHidden())
-                } label: {
+                NavigationLink(value: Route
+                    .DrinkDetailWithUsedTo(drink: drink,
+                                           usedTo: .main)) {
                     DrinkListCell(drink: drink,
                                   isLiked: authService.likedDrinks.contains{ $0 == drink.drinkID },
                                   usedTo: .main)

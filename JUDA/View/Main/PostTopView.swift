@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PostTopView: View {
+    @EnvironmentObject private var navigationRouter: NavigationRouter
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var mainViewModel: MainViewModel
     
@@ -31,14 +32,11 @@ struct PostTopView: View {
             .padding(20)
 
             ForEach(mainViewModel.posts, id: \.postField.postID) { post in
-                // TODO: NavigationLink - value 로 수정
-                NavigationLink {
-                    PostDetailView(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
-                                   post: post,
-								   usedTo: .drinkDetail,
-								   postPhotosURL: post.postField.imagesURL)
-                    .modifier(TabBarHidden())
-                } label: {
+                NavigationLink(value: Route
+                    .PostDetail(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                                post: post,
+                                usedTo: .main,
+                                postPhotosURL: post.postField.imagesURL)) {
                     PostListCell(post: post,
                                  isLiked: authService.likedPosts.contains(post.postField.postID ?? ""))
                 }

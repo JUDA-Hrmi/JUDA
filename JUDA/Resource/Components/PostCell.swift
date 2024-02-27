@@ -137,7 +137,6 @@ struct PostCell: View {
 			if authService.signInStatus {
 				self.isLike = authService.likedPosts.contains(where: { $0 == post.postField.postID })
 			}
-			print(post.postField.likedCount)
 			self.likeCount = post.postField.likedCount
 		}
 	}

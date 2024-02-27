@@ -22,15 +22,16 @@ struct PostTags: View {
 									   tagString: "# "), id: \.self) { row in
 				HStack(spacing: 15) {
 					ForEach(row, id: \.self) { tag in
-						NavigationLink {
-                            // TODO: NavigationLink - value 로 수정
-                            // TODO: 태그 값 서치바로 전달해서 검색된 화면으로..!
-							NavigationPostsView(usedTo: .postFoodTag, searchTagType: .foodTag, selectedFoodTag: tag)
-						} label: {
-							Text("# \(tag)")
-								.font(.semibold14)
-								.foregroundStyle(.mainAccent04)
-						}
+                        NavigationLink(value: Route
+                            .NavigationPosts(usedTo: .postFoodTag,
+                                             searchTagType: .foodTag,
+                                             taggedPostID: nil,
+                                             selectedDrinkName: nil,
+                                             selectedFoodTag: tag)) {
+                            Text("# \(tag)")
+                                .font(.semibold14)
+                                .foregroundStyle(.mainAccent04)
+                        }
 					}
 				}
 			}

@@ -29,9 +29,9 @@ enum Gender: String, CaseIterable {
 
 // MARK: - 신규 유저의 경우, 프로필 사진 및 정보 작성 뷰
 struct ProfileSettingView: View {
-    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var authService: AuthService
-    
+    @EnvironmentObject private var navigationRouter: NavigationRouter
+
     @FocusState var focusedField: ProfileSettingFocusField?
 
     @State private var selectedPhotos: [PhotosPickerItem] = []
@@ -220,8 +220,7 @@ struct ProfileSettingView: View {
                         authService.uploadProfileImageToStorage(image: userProfileImage)
                     }
                     authService.isLoading = false
-                    // TODO: NavigationPath 초기화 ( 메인 뷰로 이동 )
-                    dismiss()
+                    navigationRouter.back()
                 } label: {
                     Text("완료")
                         .font(.medium20)

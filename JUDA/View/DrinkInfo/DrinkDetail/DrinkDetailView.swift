@@ -10,8 +10,8 @@ import Kingfisher
 
 // MARK: - 술 디테일 화면
 struct DrinkDetailView: View {
-    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var drinkViewModel: DrinkViewModel
+    @EnvironmentObject private var navigationRouter: NavigationRouter
     
     @State private var windowWidth: CGFloat = 0
     @StateObject var aiWellMatchViewModel = AiWellMatchViewModel() // wellmatch AIModel
@@ -75,7 +75,7 @@ struct DrinkDetailView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    dismiss()
+                    navigationRouter.back()
                 } label: {
                     Image(systemName: "chevron.backward")
                 }

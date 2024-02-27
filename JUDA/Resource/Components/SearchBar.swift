@@ -28,7 +28,6 @@ struct SearchBar: View {
                     .autocorrectionDisabled() // 자동 수정 비활성화
                     .submitLabel(.search)
                     .onSubmit {
-                        print("리턴이 눌러졌어요! <\(inputText)> 입력 됨.")
                         closure()
                     }
             }

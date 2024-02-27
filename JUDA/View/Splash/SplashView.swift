@@ -16,6 +16,8 @@ struct SplashView: View {
     @EnvironmentObject var weatherViewModel: WeatherViewModel
     @EnvironmentObject var aiViewModel: AiViewModel
     @EnvironmentObject var appViewModel: AppViewModel
+    @EnvironmentObject var searchPostsViewModel: SearchPostsViewModel
+    
     @Binding var isActive: Bool
     @State private var imageIndex: Int = 0
     
@@ -89,6 +91,8 @@ struct SplashView: View {
                 taskGroup.addTask { await mainViewModel.getHottestDrinks() }
                 // 인기 술상 미리 받아오기
                 taskGroup.addTask { await mainViewModel.getHottestPosts() }
+                //
+                taskGroup.addTask { await searchPostsViewModel.fetchPosts() }
             }
         }
         .onAppear {

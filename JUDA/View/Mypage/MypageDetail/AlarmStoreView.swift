@@ -10,7 +10,7 @@ import FirebaseAuth
 
 // MARK: - 알람 쌓여있는 리스트 화면
 struct AlarmStoreView: View {
-    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var navigationRouter: NavigationRouter
     @EnvironmentObject private var notificationViewModel: MyPageViewModel
 
     var body: some View {
@@ -37,7 +37,7 @@ struct AlarmStoreView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    dismiss()
+                    navigationRouter.back()
                 } label: {
                     Image(systemName: "chevron.backward")
                 }
@@ -64,8 +64,7 @@ struct AlarmListContent: View {
             ForEach(notificationViewModel.notifications.indices, id: \.self) { index in
                 let alarm = notificationViewModel.notifications[index]
                 
-                // TODO: NavigationLink - value 로 수정
-//                NavigationLink(destination: TestView()) {
+//                NavigationLink(value: post) {
 //                    AlarmStoreListCell(alarm: alarm)
 //                }
                 AlarmStoreListCell(alarm: alarm)

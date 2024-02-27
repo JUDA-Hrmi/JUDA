@@ -102,11 +102,7 @@ struct UserProfileView: View {
                     Spacer()
                     // 닉네임 수정
                     if userType == .user {
-                        // TODO: NavigationLink - value 로 수정
-                        NavigationLink {
-                            ChangeUserNameView()
-                                .modifier(TabBarHidden())
-                        } label: {
+                        NavigationLink(value: Route.ChangeUserName) {
                             Text("닉네임 수정")
                                 .font(.regular14)
                                 .foregroundStyle(.gray01)

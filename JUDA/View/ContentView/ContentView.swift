@@ -12,7 +12,6 @@ struct ContentView: View {
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject var colorScheme: SystemColorTheme
     @StateObject private var recordViewModel = RecordViewModel()
-	@StateObject private var searchPostsViewModel = SearchPostsViewModel()
     @StateObject private var likedViewModel = LikedViewModel()
     @StateObject private var aiWellMatchViewModel = AiWellMatchViewModel()
     @StateObject private var myPageViewModel = MyPageViewModel()
@@ -75,38 +74,28 @@ struct ContentView: View {
             MainView(selectedTabIndex: $selectedTabIndex)
                 .environmentObject(recordViewModel)
                 .environmentObject(aiWellMatchViewModel)
-                .environmentObject(searchPostsViewModel)
         case .drinkInfo:
             DrinkInfoView()
                 .environmentObject(aiWellMatchViewModel)
                 .environmentObject(recordViewModel)
-                .environmentObject(searchPostsViewModel)
         case .posts:
             PostsView()
                 .environmentObject(recordViewModel)
-				.environmentObject(searchPostsViewModel)
-                .environmentObject(searchPostsViewModel)
                 .environmentObject(aiWellMatchViewModel)
         case .liked:
             if authService.signInStatus {
                 LikedView()
                     .environmentObject(recordViewModel)
                     .environmentObject(likedViewModel)
-                    .environmentObject(searchPostsViewModel)
                     .environmentObject(aiWellMatchViewModel)
             } else {
                 EmptyView()
             }
         case .myPage:
-            if authService.signInStatus {
-                MypageView(selectedTabIndex: $selectedTabIndex)
-                    .environmentObject(recordViewModel)
-                    .environmentObject(searchPostsViewModel)
-                    .environmentObject(myPageViewModel)
-                    .environmentObject(aiWellMatchViewModel)
-            } else {
-                unauthenticatedMypageView(selectedTabIndex: $selectedTabIndex)
-            }
+            MyPageView(selectedTabIndex: $selectedTabIndex)
+                .environmentObject(recordViewModel)
+                .environmentObject(myPageViewModel)
+                .environmentObject(aiWellMatchViewModel)
         }
     }
 }

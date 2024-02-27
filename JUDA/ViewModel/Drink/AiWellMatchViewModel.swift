@@ -27,7 +27,6 @@ class AiWellMatchViewModel: ObservableObject {
             let keys = try PropertyListDecoder().decode(AiWellMatchModel.self, from: data)
             openAI = OpenAI(apiToken: keys.openai)
         } catch {
-            //"Decoding error: \(error)".debug()
             print("Decoding error")
         }
     }

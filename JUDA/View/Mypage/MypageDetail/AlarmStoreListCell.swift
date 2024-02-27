@@ -17,7 +17,6 @@ struct AlarmStoreListCell: View {
         HStack(alignment: .center) {
             VStack(alignment: .leading, spacing: 2) {
                 // 게사물 좋아요 알람 내용
-                // TODO: 해당 ID 값에 따른 유저 닉네임으로 바꾸기
                 Group {
                     Text(alarm.likedUserName)
                         .font(.medium14)
@@ -28,16 +27,12 @@ struct AlarmStoreListCell: View {
                 .multilineTextAlignment(.leading)
                 .foregroundStyle(.mainBlack)
                 .overlay(alignment: .topLeading) {
-                    // TODO: NavigationLink - value 로 수정
-                    NavigationLink {
-//                        NavigationProfileView(likeCount: 44, userType: .otheruser, userName: alarm.likedUserId)
-//                            .modifier(TabBarHidden())
-                    } label: {
+//                    NavigationLink(value: Route.NavigationProfile) {
                         Text(alarm.likedUserName)
                             .font(.medium14)
                             .foregroundStyle(.mainBlack)
-                    }
-                    .buttonStyle(EmptyActionStyle())
+//                    }
+//                    .buttonStyle(EmptyActionStyle())
                 }
                 // 알람 왔던 시기
                 Text(Formatter.formattedDateBeforeStyle(pastDate: alarm.likedTime))
@@ -69,9 +64,12 @@ struct AlarmStoreListCell: View {
                     .clipShape(.rect(cornerRadius: 5))
             }
         }
+//        .navigationDestination(for: Route.self) { _ in
+            // NavigationProfile
+//            EmptyView()
+//        }
         .padding(.horizontal, 10)
         .frame(maxWidth: .infinity, maxHeight: 80, alignment: .leading)
         .padding(.horizontal, 20)
     }
 }
-

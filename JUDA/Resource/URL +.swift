@@ -30,8 +30,6 @@ extension URL {
     var detailPage: PageIdentifier? {
         guard let tabID = tabIdentifier,
               pathComponents.count > 1 else { return nil }
-        print(tabID)
-        print(pathComponents)
         let idString = pathComponents[1]
         switch tabID {
         case .posts:

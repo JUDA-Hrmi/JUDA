@@ -15,7 +15,7 @@ enum RecordType {
 // MARK: - 술상 기록 화면
 struct RecordView: View {
     // Navigation을 위한 환경 프로퍼티
-    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var navigationRouter: NavigationRouter
     @EnvironmentObject private var auth: AuthService
     @EnvironmentObject private var recordViewModel: RecordViewModel
 	@EnvironmentObject private var postsViewModel: PostsViewModel
@@ -87,7 +87,7 @@ struct RecordView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    dismiss()
+                    navigationRouter.back()
                 } label: {
                     Image(systemName: "chevron.left")
                 }
@@ -101,11 +101,11 @@ struct RecordView: View {
                     if isFocusedTextField {
                         isFocusedTextField = false
                     }
-                    // TODO: 술상 저장 후, 작성 or 수정 하기 전에 있었던 화면으로 이동 (path 조절)
 					DispatchQueue.main.async {
 						Task {
 							await postUploadButtonAction()
 							await postReFetch()
+                            navigationRouter.clear()
 						}
 					}
                 } label: {

@@ -45,11 +45,8 @@ struct DrinkGridContent: View {
             if (!drinkViewModel.isFirstAccess && !drinkViewModel.isLoading) ||
                (drinkViewModel.isFirstAccess && drinkViewModel.drinkImages.count == drinkViewModel.intendedURLCount) {
                 ForEach(drinkViewModel.drinks, id: \.drinkID) { drink in
-                    // TODO: NavigationLink - value 로 수정
-                    NavigationLink {
-                        DrinkDetailView(drink: drink)
-                            .modifier(TabBarHidden())
-                    } label: {
+                    NavigationLink(value: Route
+                        .DrinkDetail(drink: drink)) {
                         DrinkGridCell(drink: drink,
                                       isLiked: authService.likedDrinks.contains{ $0 == drink.drinkID })
                             .task {

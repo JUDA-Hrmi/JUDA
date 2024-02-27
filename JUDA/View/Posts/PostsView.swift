@@ -9,6 +9,7 @@ import SwiftUI
 
 // MARK: - 술상 탭
 struct PostsView: View {
+    @StateObject private var navigationRouter = NavigationRouter()
 	@EnvironmentObject private var appViewModel: AppViewModel
 	@EnvironmentObject private var authService: AuthService
 	@EnvironmentObject private var postsViewModel: PostsViewModel
@@ -17,7 +18,7 @@ struct PostsView: View {
 	@FocusState private var isFocused: Bool
 	
 	var body: some View {
-		NavigationStack {
+        NavigationStack(path: $navigationRouter.path) {
 			VStack(spacing: 0) {
 				// 상단 서치바
 				SearchBar(inputText: $searchPostsViewModel.postSearchText, isFocused: $isFocused) {
@@ -80,15 +81,11 @@ struct PostsView: View {
 						.padding(.top, 20)
 						//
 						Spacer()
-						// TODO: NavigationLink - value 로 수정
-						NavigationLink {
-							AddTagView()
-								.modifier(TabBarHidden())
-						} label: {
-							Text("술상 올리기")
-								.font(.medium16)
-								.foregroundStyle(.mainBlack)
-						}
+                        NavigationLink(value: Route.AddTag) {
+                            Text("술상 올리기")
+                                .font(.medium16)
+                                .foregroundStyle(.mainBlack)
+                        }
 						// 비로그인 상태일 때 네비게이션링크 비활성화
 						.opacity(authService.signInStatus ? 1.0 : 0.3)
 						.disabled(!authService.signInStatus)
@@ -116,6 +113,62 @@ struct PostsView: View {
 					.tabViewStyle(.page(indexDisplayMode: .never))
 				}
 			}
+            .navigationDestination(for: Route.self) { value in
+                switch value {
+                case .ChangeUserName:
+                    ChangeUserNameView()
+                case .AddTag:
+                    AddTagView()
+                        .modifier(TabBarHidden())
+                case .Login:
+                    LogInView()
+                        .modifier(TabBarHidden())
+                case .NavigationPosts(let usedTo,
+                                      let searchTagType,
+                                      let taggedPostID,
+                                      let selectedDrinkName,
+                                      let selectedFoodTag):
+                    NavigationPostsView(usedTo: usedTo,
+                                        searchTagType: searchTagType,
+                                        taggedPostID: taggedPostID,
+                                        selectedDrinkName: selectedDrinkName,
+                                        selectedFoodTag: selectedFoodTag)
+                case .NavigationPostsTo(let usedTo,
+                                        let searchTagType):
+                    NavigationPostsView(usedTo: usedTo,
+                                        searchTagType: searchTagType)
+                    .modifier(TabBarHidden())
+                case .NavigationProfile(let postUserName,
+                                        let postUserID,
+                                        let usedTo):
+                    NavigationProfileView(postUserName: postUserName,
+                                          postUserID: postUserID,
+                                          usedTo: usedTo)
+                case .Record(let recordType):
+                    RecordView(recordType: recordType)
+                //
+                case .DrinkDetail(let drink):
+                    DrinkDetailView(drink: drink)
+                        .modifier(TabBarHidden())
+                case .DrinkDetailWithUsedTo(let drink, let usedTo):
+                    DrinkDetailView(drink: drink, usedTo: usedTo)
+                        .modifier(TabBarHidden())
+                //
+                case .PostDetail(let postUserType,
+                                 let post,
+                                 let usedTo,
+                                 let postPhotosURL):
+                    PostDetailView(postUserType: postUserType,
+                                   post: post,
+                                   usedTo: usedTo,
+                                   postPhotosURL: postPhotosURL)
+                    .modifier(TabBarHidden())
+                default:
+                    ErrorPageView()
+                        .modifier(TabBarHidden())
+
+                }
+            }
 			// 키보드 내리기
 			.onTapGesture {
 				isFocused = false
@@ -138,7 +191,8 @@ struct PostsView: View {
 				appViewModel.tabBarState = .visible
 			}
 		}
-		.toolbar(appViewModel.tabBarState, for: .tabBar)
+        .environmentObject(navigationRouter)
+        .toolbar(appViewModel.tabBarState, for: .tabBar)
 	}
 	private func postFirstFetch() async {
 		let postSortType = postsViewModel.postSortType[postsViewModel.selectedSegmentIndex]
