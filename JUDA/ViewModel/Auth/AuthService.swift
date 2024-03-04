@@ -11,7 +11,15 @@ import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
 import CryptoKit
+import GoogleSignIn
 import AuthenticationServices
+
+// MARK: 가입 / 로그인 타입
+enum SignInType {
+    case apple
+    case google
+    case none
+}
 
 // MARK: - Auth (로그인, 로그아웃, 회원탈퇴) + 로그인 유저 데이터
 @MainActor
@@ -28,8 +36,8 @@ final class AuthService: ObservableObject {
     @Published var profileImage: UIImage?
     @Published var notificationAllowed: Bool = false
 	@Published var likedPosts = [String]()
-	@Published var likedDrinks = [String]()
-
+    @Published var likedDrinks = [String]()
+    @Published var signInType: SignInType = .none
     // Error
     @Published var showError: Bool = false
     @Published var errorMessage: String = ""
@@ -540,6 +548,7 @@ extension AuthService {
                     await fetchUserData()
                     self.signInStatus = true
                 }
+                signInType = .apple
             }
         case .failure(let failure):
             reset()
@@ -640,5 +649,57 @@ final class SignInWithApple: NSObject, ASAuthorizationControllerDelegate {
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         continuation?.resume(throwing: error)
+    }
+}
+
+// MARK: - Sign in With Google
+extension AuthService {
+    func signInWithGoogle() async {
+        guard let clientID = FirebaseApp.app()?.options.clientID else {
+            fatalError("No Firebase Client ID")
+        }
+        // Create Google Sign In configuration object.
+        let config = GIDConfiguration(clientID: clientID)
+        GIDSignIn.sharedInstance.configuration = config
+        //get rootView
+        let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        guard let rootViewController = scene?.windows.first?.rootViewController else {
+            fatalError("There is no root view controller!")
+        }
+        do {
+            //google sign in authentication response
+            let result = try await GIDSignIn.sharedInstance.signIn(
+                withPresenting: rootViewController
+            )
+            let user = result.user
+            guard let idToken = user.idToken?.tokenString else {
+                print("Unexpected error occurred, please retry")
+                errorMessage = "Unexpected error occurred, please retry"
+                return
+            }
+            //Firebase auth
+            let credential = GoogleAuthProvider.credential(
+                withIDToken: idToken, accessToken: user.accessToken.tokenString
+            )
+            // 로그인 중 -
+            isLoading = true
+            // sign in
+            try await Auth.auth().signIn(with: credential)
+            // 신규 유저 체크
+            isNewUser = await checkNewUser(uid: Auth.auth().currentUser?.uid ?? "")
+            // 신규 유저
+            if isNewUser {
+                self.isNewUser = true
+                print("Fisrt ✨ - Google Sign Up 🤖")
+            } else {
+                print("Google Sign In 🤖")
+                await fetchUserData()
+                self.signInStatus = true
+            }
+            signInType = .google
+        } catch {
+            reset()
+            print("error - \(error.localizedDescription)")
+        }
     }
 }

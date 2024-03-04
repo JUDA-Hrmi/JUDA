@@ -200,12 +200,15 @@ struct ProfileSettingView: View {
                 // "완료" 버튼
                 Button {
                     Task {
-                        // 재로그인
-                        let signWithApple = SignInWithApple()
-                        let appleIDCredential = try await signWithApple()
-                        authService.isLoading = true
-                        await authService.singInApple(appleIDCredential: appleIDCredential)
-                        authService.signInStatus = true
+                        if authService.signInType == .apple {
+                            // 재로그인
+                            let signWithApple = SignInWithApple()
+                            let appleIDCredential = try await signWithApple()
+                            authService.isLoading = true
+                            await authService.singInApple(appleIDCredential: appleIDCredential)
+                            authService.signInStatus = true
+                            authService.signInType = .apple
+                        }
                         // 유저 이름, 생일, 성별, 프로필, 알림 동의 등 forestore 에 저장
                         authService.addUserDataToStore(
                             userData: UserField(

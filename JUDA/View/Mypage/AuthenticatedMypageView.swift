@@ -19,7 +19,7 @@ struct AuthenticatedMypageView: View {
             // 프로필 사진 -- 닉네임 -- 수정
             UserProfileView(userType: UserType.user,
                             userName: authService.name,
-                            userID: authService.uid ?? "",
+                            userID: authService.uid,
                             usedTo: .myPage)
             // 내가 작성한 게시물 -- '새 글 작성하기'
             HStack {

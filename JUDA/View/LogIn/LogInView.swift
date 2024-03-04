@@ -56,10 +56,23 @@ struct LogInView: View {
                     authService.handleSignInWithAppleCompletion(result)
                 }
                 .signInWithAppleButtonStyle(colorScheme.selectedColor == .light ? .black : colorScheme.selectedColor == .dark ? .white : systemColorScheme == .light ? .black : .white)
-                .frame(width: 300, height: 48)
+                .frame(height: 54)
+                // 구글 로그인
+                Button {
+                    Task {
+                        await authService.signInWithGoogle()
+                    }
+                } label: {
+                    Image("googleLight")
+                        .resizable()
+                        .scaledToFit()
+                }
+                .frame(height: 54)
             }
+            .frame(maxWidth: 220)
+            //
             Spacer()
-            
+            //
             Text("2024, 주다 - JUDA all rights reserved.\nPowered by PJ4T7_HrMi")
                 .font(.thin12)
                 .multilineTextAlignment(.center)
