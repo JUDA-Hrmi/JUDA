@@ -47,8 +47,7 @@ final class AuthService: ObservableObject {
     private var currentNonce: String?
 	// Firestore - db 연결
 	private let db = Firestore.firestore()
-    // Firestore - users 컬렉션
-    private let collectionRef = Firestore.firestore().collection("users")
+    private let userCollection = "users"
     // Storage
     private let storage = Storage.storage()
     private let userImages = "userImages"
@@ -77,7 +76,8 @@ final class AuthService: ObservableObject {
 			reset()
         } catch {
             print("Error signing out: ", error.localizedDescription)
-            errorMessage = error.localizedDescription
+            errorMessage = "로그아웃에 문제가 발생했어요.\n다시 시도해주세요."
+            showError = true
         }
     }
     
@@ -115,11 +115,11 @@ final class AuthService: ObservableObject {
             
             try await user.delete()
             reset()
-            errorMessage = ""
             return true
         } catch {
             print("deleteAccount error : \(error.localizedDescription)")
-            errorMessage = error.localizedDescription
+            errorMessage = "회원탈퇴에 문제가 발생했어요.\n다시 시도해주세요."
+            showError = true
             isLoading = false
             return false
         }
@@ -149,10 +149,9 @@ extension AuthService {
 	posts 삭제
 	전체 drinks - taggedPostID 삭제
 	 */
-	
 	func userDataDeleteWithFirestore() async {
 		do {
-			let userPostsRef = self.collectionRef.document(uid).collection("posts")
+            let userPostsRef = self.db.collection(userCollection).document(uid).collection("posts")
 			let drinksRef = db.collection("drinks")
 			let postsRef = db.collection("posts")
 			
@@ -315,7 +314,7 @@ extension AuthService {
 // MARK: - 닉네임 수정 버튼 클릭 -> 닉네임 업데이트
 extension AuthService {
     func updateUserName(uid: String, userName: String) {
-        let docRef = collectionRef.document(uid)
+        let docRef = db.collection(userCollection).document(uid)
 
         docRef.updateData(["name": userName]) { error in
             if let error = error {
@@ -345,10 +344,8 @@ extension AuthService {
     func startListeningForUser() {
 		guard !uid.isEmpty else { return }
         let userRef = Firestore.firestore().collection("users").document(uid)
-
         // 기존에 활성화된 리스너가 있다면 삭제
         listener?.remove()
-
         // 새로운 리스너 등록
         listener = userRef.addSnapshotListener { [weak self] documentSnapshot, error in
             guard let self = self else { return }
@@ -357,7 +354,6 @@ extension AuthService {
                 print("Error fetching user data: \(error)")
                 return
             }
-
             // 사용자 데이터 업데이트 메서드 호출
             if let documentSnapshot = documentSnapshot {
                 self.updateUserFromSnapshot(documentSnapshot)
@@ -371,7 +367,7 @@ extension AuthService {
     // firestore 에 유저 존재 유무 체크
     func checkNewUser(uid: String) async -> Bool {
         do {
-            let document = try await collectionRef.document(uid).getDocument()
+            let document = try await db.collection(userCollection).document(uid).getDocument()
             return !document.exists
         } catch {
             print("Error getting document: \(error)")
@@ -387,7 +383,7 @@ extension AuthService {
             return
         }
         do {
-            let document = try await collectionRef.document(uid).getDocument(source: .cache)
+            let document = try await db.collection(userCollection).document(uid).getDocument(source: .cache)
             if document.exists {
                 let userData = try document.data(as: UserField.self)
                 self.uid = uid
@@ -409,7 +405,7 @@ extension AuthService {
     // firestore 에 유저 저장
     func addUserDataToStore(userData: UserField) {
         do {
-            try collectionRef.document(self.uid).setData(from: userData)
+            try db.collection(userCollection).document(self.uid).setData(from: userData)
             print("Success - 유저 정보 저장")
         } catch {
             print("유저 정보 저장 에러 : \(error.localizedDescription)")
@@ -418,7 +414,7 @@ extension AuthService {
     
     // 유저 정보 업데이트 - post
     func userLikedPostsUpdate() {
-        collectionRef.document(self.uid).updateData(["likedPosts": self.likedPosts]) { error in
+        db.collection(userCollection).document(self.uid).updateData(["likedPosts": self.likedPosts]) { error in
             if let error = error {
                 print("update error \(error.localizedDescription)")
             }
@@ -427,7 +423,7 @@ extension AuthService {
     
     // 유저 정보 업데이트 - drink
     func userLikedDrinksUpdate() {
-        collectionRef.document(self.uid).updateData(["likedDrinks": self.likedDrinks]) { error in
+        db.collection(userCollection).document(self.uid).updateData(["likedDrinks": self.likedDrinks]) { error in
             if let error = error {
                 print("update error \(error.localizedDescription)")
             }
@@ -552,7 +548,8 @@ extension AuthService {
             }
         case .failure(let failure):
             reset()
-            errorMessage = failure.localizedDescription
+            errorMessage = "로그인에 문제가 발생했어요.\n다시 시도해주세요."
+            showError = true
         }
     }
     
@@ -698,8 +695,10 @@ extension AuthService {
             }
             signInType = .google
         } catch {
-            reset()
             print("error - \(error.localizedDescription)")
+            errorMessage = "로그인에 문제가 발생했어요.\n다시 시도해주세요."
+            showError = true
+            reset()
         }
     }
 }

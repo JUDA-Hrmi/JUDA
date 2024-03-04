@@ -208,6 +208,13 @@ struct SettingView: View {
                     })
                 )
             }
+            // 로그아웃 or 회원탈퇴 실패 시,
+            if authService.showError {
+                CustomDialog(type: .oneButton(
+                    message: authService.errorMessage,
+                    buttonLabel: "확인",
+                    action: { authService.showError = false }))
+            }
 		}
 		.onAppear {
 			print("onAppear()")

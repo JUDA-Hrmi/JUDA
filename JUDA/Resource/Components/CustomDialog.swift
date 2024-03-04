@@ -27,7 +27,7 @@ struct CustomDialog: View {
     var body: some View {
         ZStack {
             Color.gray01
-                .opacity(0.4)
+                .opacity(0.2)
                 .ignoresSafeArea()
             VStack(alignment: .center, spacing: 16) {
                 // MARK: - 타입에 따라, ViewBuilder 사용해서 각자 뷰 보여주기
