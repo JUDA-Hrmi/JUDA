@@ -16,8 +16,8 @@ enum ProfileSettingFocusField: Hashable {
 
 // MARK: - 성별 enum
 enum Gender: String, CaseIterable {
-    case male
-    case female
+    case male = "male"
+    case female = "female"
     
     var koreanString: String {
         switch self {

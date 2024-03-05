@@ -10,25 +10,20 @@ import FirebaseFirestore
 
 // Firebase posts 컬렉션 데이터 모델
 struct Post {
-	var userField: UserField
-    var drinkTags: [DrinkTag]?
+	var user: User
+    var drinkTags: [Drink]
+	var likedUsersID: [String]
     var postField: PostField
 }
 
 // Firebase posts 컬렉션 필드 데이터 모델
 struct PostField: Codable {
 	@DocumentID var postID: String?
+	var drinkRatings: [String: Double]
     var imagesURL: [URL]
 	var content: String
-	var likedCount: Int
-    var postedTimeStamp: Date
 	var foodTags: [String]
-}
-
-// Firebase posts/drinkTags 컬렉션 데이터 모델
-struct DrinkTag: Codable {
-    let drink: FBDrink
-	let rating: Double
+	var postedTime: Date
 }
 
 extension Post: Hashable {
