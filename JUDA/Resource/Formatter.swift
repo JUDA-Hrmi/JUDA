@@ -5,7 +5,7 @@
 //  Created by phang on 1/30/24.
 //
 
-import Foundation
+import SwiftUI
 
 // MARK: - 다양한 Formatter 모음
 enum Formatter {
@@ -142,5 +142,42 @@ enum Formatter {
         } else {
             return "방금 전"
         }
+    }
+    
+    // 이미지 용량 줄이는 함수
+    static func compressImage(_ image: UIImage) -> Data? {
+        let maxHeight: CGFloat = 1024.0
+        let maxWidth: CGFloat = 1024.0
+        let compressionQuality: CGFloat = 0.2
+
+        var actualHeight: CGFloat = image.size.height
+        var actualWidth: CGFloat = image.size.width
+        var imgRatio: CGFloat = actualWidth / actualHeight
+        let maxRatio: CGFloat = maxWidth / maxHeight
+
+        if actualHeight > maxHeight || actualWidth > maxWidth {
+            if imgRatio < maxRatio {
+                // 세로 길이를 기준으로 크기 조정
+                imgRatio = maxHeight / actualHeight
+                actualWidth = imgRatio * actualWidth
+                actualHeight = maxHeight
+            } else if imgRatio > maxRatio {
+                // 가로 길이를 기준으로 크기 조정
+                imgRatio = maxWidth / actualWidth
+                actualHeight = imgRatio * actualHeight
+                actualWidth = maxWidth
+            } else {
+                actualHeight = maxHeight
+                actualWidth = maxWidth
+            }
+        }
+
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: actualWidth, height: actualHeight), false, 0.0)
+        image.draw(in: CGRect(x: 0, y: 0, width: actualWidth, height: actualHeight))
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        guard let resizedImageData = resizedImage?.jpegData(compressionQuality: compressionQuality) else { return nil }
+        return resizedImageData
     }
 }

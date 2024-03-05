@@ -42,7 +42,7 @@ struct LikedView: View {
                                         .task {
                                             if likedViewModel.likedDrinks.isEmpty {
                                                 await likedViewModel
-                                                    .getLikedDrinks(likedDrinksIDList: authService.likedDrinks)
+                                                    .getLikedDrinks(likedDrinksIDList: authService.currentUser?.likedDrinks)
                                             }
                                         }
                                 } else {
@@ -51,7 +51,7 @@ struct LikedView: View {
                                         .task {
                                             if likedViewModel.likedPosts.isEmpty {
                                                 await likedViewModel
-                                                    .getLikedPosts(likedPostsIDList: authService.likedPosts)
+                                                    .getLikedPosts(likedPostsIDList: authService.currentUser?.likedPosts)
                                             }
                                         }
                                 }
@@ -108,11 +108,11 @@ struct LikedView: View {
                     // 술 -> 술상
                     if newValue == 1 {
                         await likedViewModel
-                            .getLikedDrinks(likedDrinksIDList: authService.likedDrinks)
+                            .getLikedDrinks(likedDrinksIDList: authService.currentUser?.likedDrinks)
                         // 술상 -> 술
                     } else {
                         await likedViewModel
-                            .getLikedPosts(likedPostsIDList: authService.likedPosts)
+                            .getLikedPosts(likedPostsIDList: authService.currentUser?.likedPosts)
                     }
                 }
             }

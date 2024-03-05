@@ -70,9 +70,6 @@ struct MyPageView: View {
                 }
             }
         }
-		.onAppear {
-			print(authService.uid)
-		}
         .environmentObject(navigationRouter)
     }
 }

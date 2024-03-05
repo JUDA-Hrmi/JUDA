@@ -9,7 +9,7 @@ import Foundation
 import FirebaseFirestore
 
 // Firebase users 컬렉션 데이터 모델
-struct User {
+struct JUDAUser {
     let userField: UserField
     let posts: [Post]
     let userNotification: [String: NotificationField]
@@ -18,12 +18,14 @@ struct User {
 // Firebase users 컬렉션 필드 데이터 모델
 struct UserField: Codable {
 	@DocumentID var userID: String?
-    let name: String
-    let age: Int
-    let gender: String
-    let notificationAllowed: Bool
-    var likedPosts: [String]?
-    var likedDrinks: [String]?
+    var name: String
+    var age: Int
+    var gender: String
+    var notificationAllowed: Bool
+    var likedPosts: [String]
+    var likedDrinks: [String]
+    var profileURL: URL
+//    var authProviders: [AuthProviderOption]
 }
 
 // Firebase users/notificationList 컬렉션 데이터 모델

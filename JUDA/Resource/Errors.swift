@@ -11,3 +11,10 @@ import Foundation
 enum PhotosPickerImageLoadingError: Error {
     case invalidImageData
 }
+
+// MARK: - AuthManager 에서 사용 할 Error
+enum AuthManagerError: Error {
+    case noUser
+    case noUserID
+    case noProviderData
+}

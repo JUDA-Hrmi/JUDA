@@ -51,7 +51,7 @@ struct AlarmStoreView: View {
             }
         }
         .task {
-			await notificationViewModel.fetchNotificationList(userId: authService.uid)
+            await notificationViewModel.fetchNotificationList(userId: authService.currentUser?.userID ?? "")
         }
     }
 }

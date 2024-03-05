@@ -23,6 +23,7 @@ struct UserProfileView: View {
     @EnvironmentObject private var likedViewModel: LikedViewModel
     
     @State private var selectedPhotos: [PhotosPickerItem] = []
+    @State private var selectedImage = UIImage()
     
     let userType: UserType
     let userName: String
@@ -53,12 +54,24 @@ struct UserProfileView: View {
                 HStack(spacing: 20) {
                     HStack(alignment: .bottom, spacing: -15) {
                         // 사용자 프로필 이미지
-                        if userType == .user, let image = authService.profileImage { // 사용자 지정 이미지가 있을 때 (이미지 선택 완료했을 경우)
-                                Image(uiImage: image)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .clipShape(Circle())
-                                    .frame(width: 70, height: 70)  // 원의 크기 조절
+                        if userType == .user,
+                           let user = authService.currentUser { // 사용자 지정 이미지가 있을 때 (이미지 선택 완료했을 경우)
+                            KFImage.url(user.profileURL)
+                                .placeholder {
+                                    Image(uiImage: selectedImage)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .clipShape(Circle())
+                                        .frame(width: 70, height: 70)
+                                }
+                                .loadDiskFileSynchronously(true) // 디스크에서 동기적으로 이미지 가져오기
+                                .cancelOnDisappear(true) // 화면 이동 시, 진행중인 다운로드 중단
+                                .cacheMemoryOnly() // 메모리 캐시만 사용 (디스크 X)
+                                .fade(duration: 0.2) // 이미지 부드럽게 띄우기
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .clipShape(Circle())
+                                .frame(width: 70, height: 70)
                         } else if let profileImageURL = profileImageURL {
                             UserProfileKFImage(url: profileImageURL)
                         } else {
@@ -120,11 +133,10 @@ struct UserProfileView: View {
             return
         }
         do {
-            guard let data = try await selectedPhoto.loadTransferable(type: Data.self) else {
-                throw PhotosPickerImageLoadingError.invalidImageData
-            }
-            authService.profileImage = UIImage(data: data)
-            authService.uploadProfileImageToStorage(image: UIImage(data: data))
+            guard let data = try await selectedPhoto.loadTransferable(type: Data.self) else { return }
+            guard let uiImage = UIImage(data: data) else { return }
+            self.selectedImage = uiImage
+            authService.uploadProfileImageToStorage(image: uiImage)
         } catch {
             throw PhotosPickerImageLoadingError.invalidImageData
         }

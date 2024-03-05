@@ -39,8 +39,8 @@ struct ProfileSettingView: View {
     
     @State private var name: String = ""
     var namePlaceholder: String {
-        guard !authService.name.isEmpty else { return "닉네임"}
-        return authService.name
+        guard let user = authService.currentUser else { return "닉네임" }
+        return user.name
     }
     @State private var birthDate: String = ""
     @State private var selectedGender: Gender?
@@ -54,6 +54,8 @@ struct ProfileSettingView: View {
 
     // 상위 뷰 체인지를 위함
     @Binding var viewType: TermsOrVerification
+    // 알림 동의
+    @Binding var notificationAllowed: Bool
     
     var body: some View {
         ZStack {
@@ -200,24 +202,29 @@ struct ProfileSettingView: View {
                 // "완료" 버튼
                 Button {
                     Task {
-                        // 재로그인
-                        let signWithApple = SignInWithApple()
-                        let appleIDCredential = try await signWithApple()
-                        authService.isLoading = true
-                        await authService.singInApple(appleIDCredential: appleIDCredential)
-                        authService.signInStatus = true
+                        if try authService.getProvider().contains(.apple) {
+                            // 재로그인
+                            let signWithApple = SignInWithAppleHelper()
+                            let appleIDCredential = try await signWithApple()
+                            authService.isLoading = true
+                            await authService.signInApple(appleIDCredential: appleIDCredential)
+                            authService.signInStatus = true
+                        }
+                        // 프로필 이미지 storage 저장
+                        authService.uploadProfileImageToStorage(image: userProfileImage)
+                        // 유저 프로필 받아오기
+                        await authService.fetchProfileImage()
                         // 유저 이름, 생일, 성별, 프로필, 알림 동의 등 forestore 에 저장
                         authService.addUserDataToStore(
                             userData: UserField(
                                 name: name,
                                 age: Formatter.calculateAge(birthdate: birthDate) ?? 20,
                                 gender: selectedGender!.rawValue,
-                                notificationAllowed: authService.notificationAllowed,
-                                likedPosts: [], likedDrinks: []))
+                                notificationAllowed: notificationAllowed,
+                                likedPosts: [], likedDrinks: [],
+                                profileURL: authService.currentUser!.profileURL))
                         // 유저 데이터 받기
-                        await authService.fetchUserData()
-                        // 프로필 이미지 storage 저장
-                        authService.uploadProfileImageToStorage(image: userProfileImage)
+                        await authService.getAuthUser()
                     }
                     authService.isLoading = false
                     navigationRouter.back()
@@ -277,8 +284,4 @@ struct ProfileSettingView: View {
             throw PhotosPickerImageLoadingError.invalidImageData
         }
     }
-}
-
-#Preview {
-    ProfileSettingView(viewType: .constant(.ProfileSetting))
 }

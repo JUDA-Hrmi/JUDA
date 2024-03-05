@@ -92,7 +92,7 @@ struct PostReportView: View {
 						
 						postsViewModel.report = Report(postID: postID, contents: contents,
 													   etcReportText: etcReportText,
-													   reportedUserID: authService.uid, reportedTime: Date())
+                                                       reportedUserID: authService.currentUser?.userID ?? "", reportedTime: Date())
 						
 						postsViewModel.postReportUpload()
                         isReportDialogPresented = false

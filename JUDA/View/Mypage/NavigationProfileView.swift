@@ -17,7 +17,7 @@ struct NavigationProfileView: View {
     let postUserID: String
     let usedTo: WhereUsedPostGridContent
     var userType: UserType {
-        postUserID == authService.uid ? .user : .otheruser
+        postUserID == authService.currentUser?.userID ? .user : .otheruser
     }
     
     var body: some View {
@@ -69,7 +69,7 @@ struct NavigationProfileView: View {
         }
         // 작성한 술상 데이터 가져오기
         .task {
-            await myPageViewModel.getUsersPosts(userID: userType == .user ? authService.uid : postUserID,
+            await myPageViewModel.getUsersPosts(userID: userType == .user ? authService.currentUser?.userID ?? "" : postUserID,
                                                 userType: userType)
         }
         .toolbar {

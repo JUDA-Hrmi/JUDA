@@ -195,18 +195,25 @@ struct SettingView: View {
                     rightButtonLabel: "탈퇴하기",
                     rightButtonAction: {
                         Task {
+                            // TODO: - 구글 탈퇴 추가
                             authService.isLoading = true
-                            if await authService.deleteAccount() {
-                                authService.isLoading = false
-								myPageViewModel.myPageUserDataClear()
+                            if await authService.deleteAppleAccount() {
+                                myPageViewModel.myPageUserDataClear()
                                 isDeletAccount.toggle()
                                 navigationRouter.back()
                                 // 메인 화면으로 이동
-								appViewModel.selectedTabIndex = 0
+                                appViewModel.selectedTabIndex = 0
                             }
                         }
                     })
                 )
+            }
+            // 로그아웃 or 회원탈퇴 실패 시,
+            if authService.showError {
+                CustomDialog(type: .oneButton(
+                    message: authService.errorMessage,
+                    buttonLabel: "확인",
+                    action: { authService.showError = false }))
             }
 		}
 		.onAppear {

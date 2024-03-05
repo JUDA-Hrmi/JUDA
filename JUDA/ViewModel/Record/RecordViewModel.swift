@@ -43,42 +43,6 @@ final class RecordViewModel: ObservableObject {
 
 // MARK: - FirebaseStorage Image Upload
 extension RecordViewModel {
-	func compressImage(_ image: UIImage) -> Data? {
-		let maxHeight: CGFloat = 1024.0
-		let maxWidth: CGFloat = 1024.0
-		let compressionQuality: CGFloat = 0.2
-
-		var actualHeight: CGFloat = image.size.height
-		var actualWidth: CGFloat = image.size.width
-		var imgRatio: CGFloat = actualWidth / actualHeight
-		let maxRatio: CGFloat = maxWidth / maxHeight
-
-		if actualHeight > maxHeight || actualWidth > maxWidth {
-			if imgRatio < maxRatio {
-				// 세로 길이를 기준으로 크기 조정
-				imgRatio = maxHeight / actualHeight
-				actualWidth = imgRatio * actualWidth
-				actualHeight = maxHeight
-			} else if imgRatio > maxRatio {
-				// 가로 길이를 기준으로 크기 조정
-				imgRatio = maxWidth / actualWidth
-				actualHeight = imgRatio * actualHeight
-				actualWidth = maxWidth
-			} else {
-				actualHeight = maxHeight
-				actualWidth = maxWidth
-			}
-		}
-
-		UIGraphicsBeginImageContextWithOptions(CGSize(width: actualWidth, height: actualHeight), false, 0.0)
-		image.draw(in: CGRect(x: 0, y: 0, width: actualWidth, height: actualHeight))
-		let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
-		UIGraphicsEndImageContext()
-
-		guard let resizedImageData = resizedImage?.jpegData(compressionQuality: compressionQuality) else { return nil }
-		return resizedImageData
-	}
-
 	func uploadMultipleImagesToFirebaseStorageAsync(_ imagesData: [Data]) async throws {
 		// 여러 이미지 업로드를 동시에 처리하기 위한 비동기 작업 배열
 		var uploadTasks: [Task<(Int, URL), Error>] = []

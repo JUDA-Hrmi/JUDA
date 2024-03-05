@@ -26,7 +26,7 @@ struct DrinkGridCell: View {
                 // 디바운서 콜
                 debouncer.call {
                     authService.addOrRemoveToLikedDrinks(isLiked: isLiked, drink.drinkID)
-                    authService.userLikedDrinksUpdate()
+                    authService.userLikedListUpdate(type: .drinks)
                 }
             } label: {
                 Image(systemName: isLiked ? "heart.fill" : "heart")
@@ -82,7 +82,9 @@ struct DrinkGridCell: View {
         .frame(height: 270)
         .padding(10)
 		.task {
-			self.isLiked = authService.likedDrinks.contains(where: { $0 == drink.drinkID })
+            if let user = authService.currentUser {
+                self.isLiked = user.likedDrinks.contains { $0 == drink.drinkID }
+            }
 		}
     }
     

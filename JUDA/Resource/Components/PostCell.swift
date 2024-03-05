@@ -119,8 +119,9 @@ struct PostCell: View {
 		}
 		.frame(maxWidth: 170, maxHeight: 200)
 		.task {
-			if authService.signInStatus {
-				self.isLike = authService.likedPosts.contains(where: { $0 == post.postField.postID })
+            if authService.signInStatus,
+               let user = authService.currentUser {
+                self.isLike = user.likedPosts.contains { $0 == post.postField.postID }
 			}
 			self.likeCount = post.postField.likedCount
 		}
@@ -136,8 +137,8 @@ struct PostCell: View {
 		Task {
 			if isLike {
 				likeCount -= 1
-				authService.likedPosts.removeAll(where: { $0 == postID })
-				authService.userLikedPostsUpdate()
+                authService.currentUser?.likedPosts.removeAll { $0 == postID }
+                authService.userLikedListUpdate(type: .posts)
 				
 				if let index = searchPostsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
 					searchPostsViewModel.posts[index].postField.likedCount -= 1
@@ -174,8 +175,8 @@ struct PostCell: View {
 				await postsViewModel.postLikedUpdate(likeType: .minus, postID: postID, userID: post.userField.userID ?? "")
 			} else {
 				likeCount += 1
-				authService.likedPosts.append(postID)
-				authService.userLikedPostsUpdate()
+                authService.currentUser?.likedPosts.append(postID)
+                authService.userLikedListUpdate(type: .posts)
 				
 				if let index = searchPostsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
 					searchPostsViewModel.posts[index].postField.likedCount += 1

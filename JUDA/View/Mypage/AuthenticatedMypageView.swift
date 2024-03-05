@@ -18,8 +18,8 @@ struct AuthenticatedMypageView: View {
         VStack {
             // 프로필 사진 -- 닉네임 -- 수정
             UserProfileView(userType: UserType.user,
-                            userName: authService.name,
-                            userID: authService.uid ?? "",
+                            userName: authService.currentUser?.name ?? "",
+                            userID: authService.currentUser?.userID ?? "",
                             usedTo: .myPage)
             // 내가 작성한 게시물 -- '새 글 작성하기'
             HStack {
@@ -55,7 +55,8 @@ struct AuthenticatedMypageView: View {
         // 작성한 술상 데이터 가져오기
         .task {
             if myPageViewModel.userPosts.isEmpty {
-                await myPageViewModel.getUsersPosts(userID: authService.uid, userType: .user)
+                await myPageViewModel.getUsersPosts(userID: authService.currentUser?.userID ?? "",
+                                                    userType: .user)
             }
         }
         .toolbar {
@@ -79,7 +80,9 @@ struct AuthenticatedMypageView: View {
         .foregroundStyle(.mainBlack)
         .onAppear {
             appViewModel.tabBarState = .visible
-            authService.startListeningForUser()
+            Task {
+                await authService.startListeningForUser()
+            }
         }
         .toolbar(appViewModel.tabBarState, for: .tabBar)
     }

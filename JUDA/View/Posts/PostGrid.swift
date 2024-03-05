@@ -93,7 +93,7 @@ struct PostGridContent: View {
 				if !postsViewModel.isLoading {
 					ForEach(postsViewModel.posts, id: \.postField.postID) { post in
                         NavigationLink(value: Route
-                            .PostDetail(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                            .PostDetail(postUserType: authService.currentUser?.userID == post.userField.userID ? .writter : .reader,
                                         post: post,
                                         usedTo: usedTo,
                                         postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {
@@ -122,7 +122,7 @@ struct PostGridContent: View {
 					case .userName:
 						ForEach(searchPostsViewModel.searchPostsByUserName, id: \.postField.postID) { post in
 							NavigationLink(value: Route
-                                .PostDetail(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                                .PostDetail(postUserType: authService.currentUser?.userID == post.userField.userID ? .writter : .reader,
                                             post: post,
                                             usedTo: usedTo,
                                             postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {
@@ -135,7 +135,7 @@ struct PostGridContent: View {
 					case .drinkTag:
 						ForEach(searchPostsViewModel.searchPostsByDrinkTag, id: \.postField.postID) { post in
 							NavigationLink(value: Route
-                                .PostDetail(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                                .PostDetail(postUserType: authService.currentUser?.userID == post.userField.userID ? .writter : .reader,
                                             post: post,
                                             usedTo: usedTo,
                                             postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {
@@ -148,7 +148,7 @@ struct PostGridContent: View {
 					case .foodTag:
 						ForEach(searchPostsViewModel.searchPostsByFoodTag, id: \.postField.postID) { post in
 							NavigationLink(value: Route
-                                .PostDetail(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                                .PostDetail(postUserType: authService.currentUser?.userID == post.userField.userID ? .writter : .reader,
                                             post: post,
                                             usedTo: usedTo,
                                             postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {
@@ -163,7 +163,7 @@ struct PostGridContent: View {
 			} else if usedTo == .postFoodTag {
 				ForEach(searchPostsViewModel.searchPostsByFoodTag, id: \.postField.postID) { post in
 					NavigationLink(value: Route
-                        .PostDetail(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                        .PostDetail(postUserType: authService.currentUser?.userID == post.userField.userID ? .writter : .reader,
                                     post: post,
                                     usedTo: usedTo,
                                     postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {
@@ -177,7 +177,7 @@ struct PostGridContent: View {
                 if !postsViewModel.isLoading {
                     ForEach(postsViewModel.drinkTaggedPosts, id: \.postField.postID) { post in
                         NavigationLink(value: Route
-                            .PostDetail(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                            .PostDetail(postUserType: authService.currentUser?.userID == post.userField.userID ? .writter : .reader,
                                         post: post,
                                         usedTo: usedTo,
                                         postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {
@@ -194,7 +194,7 @@ struct PostGridContent: View {
                     if userType == .user {
                         ForEach(myPageViewModel.userPosts, id: \.postField.postID) { post in
                             NavigationLink(value: Route
-                                .PostDetail(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                                .PostDetail(postUserType: authService.currentUser?.userID == post.userField.userID ? .writter : .reader,
                                             post: post,
                                             usedTo: usedTo,
                                             postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {
@@ -204,7 +204,7 @@ struct PostGridContent: View {
                     } else {
                         ForEach(myPageViewModel.otherUserPosts, id: \.postField.postID) { post in
                             NavigationLink(value: Route
-                                .PostDetail(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                                .PostDetail(postUserType: authService.currentUser?.userID == post.userField.userID ? .writter : .reader,
                                             post: post,
                                             usedTo: usedTo,
                                             postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {

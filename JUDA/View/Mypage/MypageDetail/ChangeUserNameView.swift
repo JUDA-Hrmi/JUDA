@@ -25,7 +25,8 @@ struct ChangeUserNameView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             // 유저 닉네임 수정 텍스트 필드
             HStack {
-                TextField(authService.name, text: $userChangeNickName)
+                TextField(authService.currentUser?.name ?? "",
+                          text: $userChangeNickName)
                     .font(.medium16)
                     .foregroundStyle(.mainBlack)
                     .focused($isFocused)
@@ -66,8 +67,10 @@ struct ChangeUserNameView: View {
             // 닉네임 변경 완료
             Button {
                 // TODO: update 코드 작성하기
-				authService.updateUserName(uid: authService.uid, userName: userChangeNickName)
-                navigationRouter.back()
+                Task {
+                    await authService.updateUserName(userName: userChangeNickName)
+                    navigationRouter.back()
+                }
             } label: {
                 Text("변경 완료")
                     .font(.medium20)
@@ -75,8 +78,8 @@ struct ChangeUserNameView: View {
                     .padding(.vertical, 5)
                 
             }
-            .disabled(userChangeNickName.isEmpty || authService.name == userChangeNickName)
-            .foregroundColor(userChangeNickName.isEmpty || authService.name == userChangeNickName ? .gray01 : .white)
+            .disabled(userChangeNickName.isEmpty || authService.currentUser?.name == userChangeNickName)
+            .foregroundColor(userChangeNickName.isEmpty || authService.currentUser?.name == userChangeNickName ? .gray01 : .white)
             .buttonStyle(.borderedProminent)
             .tint(.mainAccent03)
         }

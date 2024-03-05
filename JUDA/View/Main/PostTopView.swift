@@ -33,12 +33,17 @@ struct PostTopView: View {
 
             ForEach(mainViewModel.posts, id: \.postField.postID) { post in
                 NavigationLink(value: Route
-                    .PostDetail(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                    .PostDetail(postUserType: authService.currentUser?.userID == post.userField.userID ? .writter : .reader,
                                 post: post,
                                 usedTo: .main,
                                 postPhotosURL: post.postField.imagesURL)) {
-                    PostListCell(post: post,
-                                 isLiked: authService.likedPosts.contains(post.postField.postID ?? ""))
+                    if let user = authService.currentUser {
+                        PostListCell(post: post,
+                                     isLiked: user.likedPosts.contains(post.postField.postID ?? ""))
+                    } else {
+                        PostListCell(post: post,
+                                     isLiked: false)
+                    }
                 }
             }
         }

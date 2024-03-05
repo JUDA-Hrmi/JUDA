@@ -13,4 +13,15 @@ extension View {
     func loadingView(_ isLoading: Binding<Bool>) -> some View {
         return self.modifier(CustomLoadingViewModifier(isLoading: isLoading))
     }
+    
+    //
+    func getRootViewController() -> UIViewController {
+        guard let screen = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
+            return .init()
+        }
+        guard let root = screen.windows.first?.rootViewController else {
+            return .init()
+        }
+        return root
+    }
 }

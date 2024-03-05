@@ -14,6 +14,14 @@
 				<string>juda-app</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.246674821039-1p5kq98puu03t0mefug099lgjmeeqnpk</string>
+			</array>
+		</dict>
 	</array>
 	<key>UIAppFonts</key>
 	<array>
