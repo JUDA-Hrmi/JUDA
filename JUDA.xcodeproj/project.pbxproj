@@ -20,7 +20,6 @@
 		093357C62B9547F200A9ACAB /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 093357C52B9547F200A9ACAB /* DrinkLoading.json */; };
 		093357C92B954A8A00A9ACAB /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 093357C82B954A8A00A9ACAB /* GoogleSignIn */; };
 		093357CB2B954A8A00A9ACAB /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 093357CA2B954A8A00A9ACAB /* GoogleSignInSwift */; };
-		093357CD2B954D6900A9ACAB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 093357CC2B954D6900A9ACAB /* GoogleService-Info.plist */; };
 		093357CF2B95505E00A9ACAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093357CE2B95505B00A9ACAB /* AppDelegate.swift */; };
 		0961B7972B6624D300A9F553 /* DrinkInfoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0961B7962B6624D300A9F553 /* DrinkInfoList.swift */; };
 		0961B7992B6624DD00A9F553 /* DrinkInfoGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */; };
@@ -32,7 +31,7 @@
 		0974A15B2B8BD71B00476199 /* ShimmerPostListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A15A2B8BD71B00476199 /* ShimmerPostListCell.swift */; };
 		097BF6A92B958DF700630178 /* SignInWithAppleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097BF6A82B958DF700630178 /* SignInWithAppleHelper.swift */; };
 		097BF6AB2B958ED200630178 /* SignInWithGoogleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097BF6AA2B958ED200630178 /* SignInWithGoogleHelper.swift */; };
-		097BF6AD2B959FCF00630178 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097BF6AC2B959FCF00630178 /* AuthManager.swift */; };
+		097BF6AD2B959FCF00630178 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097BF6AC2B959FCF00630178 /* AuthService.swift */; };
 		097BF6AF2B95A67B00630178 /* FirebaseAuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097BF6AE2B95A67B00630178 /* FirebaseAuthViewModel.swift */; };
 		0999125C2B84654400E72C73 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0999125B2B84654400E72C73 /* FirebaseCrashlytics */; };
 		099912652B85799800E72C73 /* CircularLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099912642B85799800E72C73 /* CircularLoaderView.swift */; };
@@ -46,7 +45,6 @@
 		09A6AD7E2B72A53C00606585 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD7D2B72A53C00606585 /* Errors.swift */; };
 		09B4A0452B6E5DAE0082B235 /* PresentationDetent +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B4A0442B6E5DAE0082B235 /* PresentationDetent +.swift */; };
 		09BCC0B32B7A2BE600FF4D1B /* KoreanTastingNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BCC0B22B7A2BE600FF4D1B /* KoreanTastingNotes.swift */; };
-		09BCC1392B7B99D600FF4D1B /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BCC1382B7B99D600FF4D1B /* AuthService.swift */; };
 		09BCC13C2B7B99FF00FF4D1B /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 09BCC13B2B7B99FF00FF4D1B /* FirebaseAuth */; };
 		09BCC14F2B7C7E2900FF4D1B /* Loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 09BCC1492B7C7E2900FF4D1B /* Loading.json */; };
 		09BCC1502B7C7E2900FF4D1B /* Thunder.json in Resources */ = {isa = PBXBuildFile; fileRef = 09BCC14A2B7C7E2900FF4D1B /* Thunder.json */; };
@@ -60,6 +58,7 @@
 		09C7C9A22B8CAA0B00F62617 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C7C9A12B8CAA0B00F62617 /* MyPageViewModel.swift */; };
 		09C7C9AF2B8DB57E00F62617 /* NavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C7C9AE2B8DB57E00F62617 /* NavigationRouter.swift */; };
 		09E34BC72B96134E0037C561 /* FirestorageAuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E34BC62B96134E0037C561 /* FirestorageAuthViewModel.swift */; };
+		09E34BC92B96FBE20037C561 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09E34BC82B96FBE20037C561 /* GoogleService-Info.plist */; };
 		09F869932B68E36800A56A4C /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869922B68E36800A56A4C /* Formatter.swift */; };
 		09F869962B68E46500A56A4C /* DrinkDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869952B68E46500A56A4C /* DrinkDetailView.swift */; };
 		09F869982B68E48400A56A4C /* DrinkDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869972B68E48400A56A4C /* DrinkDetails.swift */; };
@@ -185,7 +184,6 @@
 		093357B92B8E120200A9ACAB /* ErrorPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPageView.swift; sourceTree = "<group>"; };
 		093357C12B9547D700A9ACAB /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = APIKEYS.plist; sourceTree = "<group>"; };
 		093357C52B9547F200A9ACAB /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = DrinkLoading.json; path = "../../../../흐르미/Lottie/DrinkLoading.json"; sourceTree = "<group>"; };
-		093357CC2B954D6900A9ACAB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		093357CE2B95505B00A9ACAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0961B7962B6624D300A9F553 /* DrinkInfoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoList.swift; sourceTree = "<group>"; };
 		0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoGrid.swift; sourceTree = "<group>"; };
@@ -197,7 +195,7 @@
 		0974A15A2B8BD71B00476199 /* ShimmerPostListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerPostListCell.swift; sourceTree = "<group>"; };
 		097BF6A82B958DF700630178 /* SignInWithAppleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleHelper.swift; sourceTree = "<group>"; };
 		097BF6AA2B958ED200630178 /* SignInWithGoogleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithGoogleHelper.swift; sourceTree = "<group>"; };
-		097BF6AC2B959FCF00630178 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		097BF6AC2B959FCF00630178 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		097BF6AE2B95A67B00630178 /* FirebaseAuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthViewModel.swift; sourceTree = "<group>"; };
 		099912642B85799800E72C73 /* CircularLoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularLoaderView.swift; sourceTree = "<group>"; };
 		099D9AAD2B88749E002261F7 /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
@@ -211,7 +209,6 @@
 		09B4A0442B6E5DAE0082B235 /* PresentationDetent +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PresentationDetent +.swift"; sourceTree = "<group>"; };
 		09BCC0B22B7A2BE600FF4D1B /* KoreanTastingNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KoreanTastingNotes.swift; sourceTree = "<group>"; };
 		09BCC1352B7B956A00FF4D1B /* JUDA.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JUDA.entitlements; sourceTree = "<group>"; };
-		09BCC1382B7B99D600FF4D1B /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		09BCC1492B7C7E2900FF4D1B /* Loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Loading.json; sourceTree = "<group>"; };
 		09BCC14A2B7C7E2900FF4D1B /* Thunder.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Thunder.json; sourceTree = "<group>"; };
 		09BCC14B2B7C7E2900FF4D1B /* Sun.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Sun.json; sourceTree = "<group>"; };
@@ -224,6 +221,7 @@
 		09C7C9A12B8CAA0B00F62617 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		09C7C9AE2B8DB57E00F62617 /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
 		09E34BC62B96134E0037C561 /* FirestorageAuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestorageAuthViewModel.swift; sourceTree = "<group>"; };
+		09E34BC82B96FBE20037C561 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		09F869922B68E36800A56A4C /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		09F869952B68E46500A56A4C /* DrinkDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailView.swift; sourceTree = "<group>"; };
 		09F869972B68E48400A56A4C /* DrinkDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetails.swift; sourceTree = "<group>"; };
@@ -298,7 +296,7 @@
 		B12BEE4E2B6B7BDA00580D29 /* Handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Handler.swift; sourceTree = "<group>"; };
 		B158F83E2B657A9000E33C47 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoSegment.swift; sourceTree = "<group>"; };
-		B180B9522B8D856400E15B45 /* JUDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JUDA.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B180B9522B8D856400E15B45 /* JUDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = JUDA.app; path = "/Users/phang/Desktop/juda/build/Debug-iphoneos/JUDA.app"; sourceTree = "<absolute>"; };
 		B1B8FE7C2B5EA9D900921BBE /* JUDAApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JUDAApp.swift; sourceTree = "<group>"; };
 		B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B1B8FE832B5EA9DA00921BBE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -393,8 +391,7 @@
 		09BCC1372B7B99C500FF4D1B /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				097BF6AC2B959FCF00630178 /* AuthManager.swift */,
-				09BCC1382B7B99D600FF4D1B /* AuthService.swift */,
+				097BF6AC2B959FCF00630178 /* AuthService.swift */,
 				097BF6A82B958DF700630178 /* SignInWithAppleHelper.swift */,
 				097BF6AA2B958ED200630178 /* SignInWithGoogleHelper.swift */,
 				097BF6AE2B95A67B00630178 /* FirebaseAuthViewModel.swift */,
@@ -523,7 +520,6 @@
 			isa = PBXGroup;
 			children = (
 				B1B8FE7B2B5EA9D900921BBE /* JUDA */,
-				B180B9522B8D856400E15B45 /* JUDA.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -541,7 +537,7 @@
 				B1B8FE8C2B5EAAAB00921BBE /* Colors.xcassets */,
 				B121A56F2B5F8DA100667D42 /* Info.plist */,
 				093357C12B9547D700A9ACAB /* APIKEYS.plist */,
-				093357CC2B954D6900A9ACAB /* GoogleService-Info.plist */,
+				09E34BC82B96FBE20037C561 /* GoogleService-Info.plist */,
 				B1B8FE822B5EA9DA00921BBE /* Preview Content */,
 			);
 			path = JUDA;
@@ -873,7 +869,7 @@
 				B121A5772B5F911900667D42 /* Pretendard-SemiBold.otf in Resources */,
 				09BCC1532B7C7E2900FF4D1B /* Snow.json in Resources */,
 				09BCC1542B7C7E2900FF4D1B /* Clouds.json in Resources */,
-				093357CD2B954D6900A9ACAB /* GoogleService-Info.plist in Resources */,
+				09E34BC92B96FBE20037C561 /* GoogleService-Info.plist in Resources */,
 				093357C32B9547D700A9ACAB /* APIKEYS.plist in Resources */,
 				B121A5742B5F910B00667D42 /* Pretendard-Light.otf in Resources */,
 				09BCC1522B7C7E2900FF4D1B /* Rain.json in Resources */,
@@ -942,7 +938,7 @@
 				7B904C682B6184560052384A /* CustomTextSegment.swift in Sources */,
 				2C2AD4FD2B68891C00C681F4 /* SearchTagView.swift in Sources */,
 				09B4A0452B6E5DAE0082B235 /* PresentationDetent +.swift in Sources */,
-				097BF6AD2B959FCF00630178 /* AuthManager.swift in Sources */,
+				097BF6AD2B959FCF00630178 /* AuthService.swift in Sources */,
 				09BCC0B32B7A2BE600FF4D1B /* KoreanTastingNotes.swift in Sources */,
 				09C7C9AF2B8DB57E00F62617 /* NavigationRouter.swift in Sources */,
 				093357B82B8DCA5500A9ACAB /* MyPageView.swift in Sources */,
@@ -1005,7 +1001,6 @@
 				09A6AD7E2B72A53C00606585 /* Errors.swift in Sources */,
 				099F161B2B75347100D8BEDA /* CheckBox.swift in Sources */,
 				7B904C662B6168C60052384A /* PostCell.swift in Sources */,
-				09BCC1392B7B99D600FF4D1B /* AuthService.swift in Sources */,
 				AC110B572B69658C005390BB /* ChangeUserNameView.swift in Sources */,
 				09F8699A2B68E4B600A56A4C /* TastingNotes.swift in Sources */,
 				AC98D1CF2B7357DA006F6EC9 /* Lottie.swift in Sources */,
@@ -1146,10 +1141,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = JUDA/JUDA.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"JUDA/Preview Content\"";
-				DEVELOPMENT_TEAM = CT6J74BCFP;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = CT6J74BCFP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = JUDA/Info.plist;
@@ -1171,6 +1168,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hrmi.juda;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = dev_JUDA;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
