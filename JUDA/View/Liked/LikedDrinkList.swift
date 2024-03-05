@@ -12,7 +12,8 @@ struct LikedDrinkList: View {
     @EnvironmentObject private var authService: AuthService
 
     var body: some View {
-        if !authService.likedDrinks.isEmpty {
+        if let user = authService.currentUser,
+           !user.likedDrinks.isEmpty {
             // MARK: iOS 16.4 이상
             if #available(iOS 16.4, *) {
                 ScrollView() {

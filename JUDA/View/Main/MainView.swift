@@ -82,7 +82,6 @@ struct MainView: View {
                 }
             }
             .onAppear {
-				print("MainView onAppear()")
                 appViewModel.tabBarState = .visible
             }
         }

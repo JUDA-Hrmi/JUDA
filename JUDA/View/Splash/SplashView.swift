@@ -75,9 +75,9 @@ struct SplashView: View {
         }
         .task {
             // 로그인이 되어있다면, 유저 정보 받아오기
-            if authService.signInStatus == true {
-                await authService.fetchUserData()
-            }
+//            if authService.signInStatus == true {
+//                await authService.fetchUserData()
+//            }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.75) {
                 withAnimation {
                     self.isActive = false

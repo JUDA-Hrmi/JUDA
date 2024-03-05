@@ -12,7 +12,8 @@ struct LikedPostGrid: View {
     @EnvironmentObject private var authService: AuthService
 
     var body: some View {
-        if !authService.likedPosts.isEmpty {
+        if let user = authService.currentUser,
+           !user.likedPosts.isEmpty {
             // MARK: iOS 16.4 이상
             if #available(iOS 16.4, *) {
                 ScrollView() {
@@ -50,7 +51,7 @@ struct LikedPostGridContent: View {
             if !likedViewModel.isLoading {
                 ForEach(likedViewModel.likedPosts, id: \.postField.postID) { post in
                     NavigationLink(value: Route
-                        .PostDetail(postUserType: authService.uid == post.userField.userID ? .writter : .reader,
+                        .PostDetail(postUserType: authService.currentUser?.userID == post.userField.userID ? .writter : .reader,
                                     post: post,
                                     usedTo: .liked,
                                     postPhotosURL: post.postField.imagesURL)) {

@@ -26,13 +26,18 @@ struct TaggedTrendingPosts: View {
             VStack(spacing: 0) {
                 ForEach(posts, id: \.postField.postID) { post in
                     NavigationLink(value: Route
-                        .PostDetail(postUserType: post.userField.userID == authService.uid ? .writter : .reader,
+                        .PostDetail(postUserType: post.userField.userID == authService.currentUser?.userID ? .writter : .reader,
                                     post: post,
                                     usedTo: .drinkDetail,
                                     postPhotosURL: post.postField.imagesURL)) {
                         if !isLoading {
-                            PostListCell(post: post,
-                                         isLiked: authService.likedPosts.contains(post.postField.postID ?? ""))
+                            if let user = authService.currentUser {
+                                PostListCell(post: post,
+                                             isLiked: user.likedPosts.contains(post.postField.postID ?? ""))
+                            } else {
+                                PostListCell(post: post,
+                                             isLiked: false)
+                            }
                         } else {
                             ShimmerPostListCell()
                         }

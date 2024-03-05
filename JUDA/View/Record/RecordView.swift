@@ -107,7 +107,8 @@ struct RecordView: View {
 						Task {
 							await postUploadButtonAction()
 							await postReFetch()
-							await myPageViewModel.getUsersPosts(userID: authService.uid, userType: .user)
+                            await myPageViewModel.getUsersPosts(userID: authService.currentUser?.userID ?? "",
+                                                                userType: .user)
 							recordViewModel.recordPostDataClear()
                             navigationRouter.clear()
 						}
@@ -132,7 +133,7 @@ struct RecordView: View {
 			// loadingView 띄우기
 			recordViewModel.isPostUploadSuccess = true
 			// FirevaseStorage multiple image upload
-			let imagesData = recordViewModel.images.compactMap { recordViewModel.compressImage($0) }  // 압축된 이미지 데이터 배열
+            let imagesData = recordViewModel.images.compactMap { Formatter.compressImage($0) }  // 압축된 이미지 데이터 배열
 			
 			// 여러 이미지 업로드
 			try await recordViewModel.uploadMultipleImagesToFirebaseStorageAsync(imagesData)
@@ -140,11 +141,14 @@ struct RecordView: View {
 			print("Download URLs: \(recordViewModel.imagesURL)")
 			
 			// post 데이터 모델 객체 생성
-			recordViewModel.post = Post(userField: UserField(userID: authService.uid ,name: authService.name,
-															 age: authService.age, gender: authService.gender, notificationAllowed: authService.notificationAllowed),
-										drinkTags: recordViewModel.drinkTags,
-										postField: PostField(imagesURL: recordViewModel.imagesURL, content: recordViewModel.content,
-															 likedCount: 0, postedTimeStamp: Date(), foodTags: recordViewModel.foodTags))
+			recordViewModel.post = Post(userField: authService.currentUser!,
+                                        drinkTags: recordViewModel.drinkTags,
+                                        postField: PostField(
+                                            imagesURL: recordViewModel.imagesURL,
+                                            content: recordViewModel.content,
+                                            likedCount: 0,
+                                            postedTimeStamp: Date(),
+                                            foodTags: recordViewModel.foodTags))
 			// post upload
 			await recordViewModel.uploadPost()
 			

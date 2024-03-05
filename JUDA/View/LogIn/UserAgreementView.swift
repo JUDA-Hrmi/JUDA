@@ -35,6 +35,8 @@ struct UserAgreementView: View {
     @State private var allChecked: Bool = false
     // 상위 뷰 체인지를 위함
     @Binding var viewType: TermsOrVerification
+    // 알림 동의
+    @Binding var notificationAllowed: Bool
     
     var body: some View {
         VStack(alignment: .leading, spacing: 25) {
@@ -109,7 +111,7 @@ struct UserAgreementView: View {
             Button {
                 // '알림 수신 동의' 동의 시, user data 수정
                 if termsOfServiceContents.last?.check == true {
-                    authService.notificationAllowed = true
+                    self.notificationAllowed = true
                 }
                 // 뷰 교체
                 viewType = .ProfileSetting
@@ -132,8 +134,4 @@ struct UserAgreementView: View {
         }
         .padding(.horizontal, 20)
     }
-}
-
-#Preview {
-    UserAgreementView(viewType: .constant(TermsOrVerification.TermsOfService))
 }

@@ -67,7 +67,7 @@ struct DrinkDetails: View {
 						isLiked.toggle()
 						debouncer.call {
 							authService.addOrRemoveToLikedDrinks(isLiked: isLiked, drink.drinkID)
-							authService.userLikedDrinksUpdate()
+                            authService.userLikedListUpdate(type: .drinks)
 						}
 					} label: {
 						Image(systemName: isLiked ? "heart.fill" : "heart")
@@ -123,7 +123,9 @@ struct DrinkDetails: View {
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
 		.task {
-			self.isLiked = authService.likedDrinks.contains(where: { $0 == drink.drinkID })
+            if let user = authService.currentUser {
+                self.isLiked = user.likedDrinks.contains { $0 == drink.drinkID }
+            }
 		}
     }
 }
