@@ -24,25 +24,17 @@ final class FirestorageAuthViewModel {
 // 유저 가입 시, 프로필 이미지 생성 & 받아오기
 extension FirestorageAuthViewModel {
     // storage 에 유저 프로필 이미지 올리기
-    func uploadProfileImageToStorage(image: UIImage, uid: String) {
+    func uploadProfileImageToStorage(image: UIImage, uid: String) async throws {
         let storageRef = storage.reference().child("\(userImages)/\(uid)")
         let data = Formatter.compressImage(image)
         let metaData = StorageMetadata()
         metaData.contentType = userImageType
-        if let data = data {
-            storageRef.putData(data, metadata: metaData) { (metaData, error) in
-                guard let _ = metaData, error == nil else {
-                    print("Error Profile Image Upload -> \(String(describing: error?.localizedDescription))")
-                    return
-                }
-            }
-        } else {
-            print("error - uploadProfileImageToStorage : data X")
-        }
+        guard let data = data else { return }
+        let _ = try await storageRef.putDataAsync(data, metadata: metaData)
     }
     
-    // 유저 프로필 받아오기
-    func fetchProfileImage(uid: String) async throws -> URL {
+    // 유저 프로필 URL 받아오기
+    func fetchProfileImageURL(uid: String) async throws -> URL {
         let storageRef = storage.reference().child("\(userImages)/\(uid)")
         let url = try await storageRef.downloadURL()
         return url

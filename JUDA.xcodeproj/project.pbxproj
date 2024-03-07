@@ -20,6 +20,7 @@
 		093357C92B954A8A00A9ACAB /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 093357C82B954A8A00A9ACAB /* GoogleSignIn */; };
 		093357CB2B954A8A00A9ACAB /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 093357CA2B954A8A00A9ACAB /* GoogleSignInSwift */; };
 		093357CF2B95505E00A9ACAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093357CE2B95505B00A9ACAB /* AppDelegate.swift */; };
+		095D708D2B98200B00F76C11 /* FirebaseUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095D708C2B98200B00F76C11 /* FirebaseUserViewModel.swift */; };
 		0961B7972B6624D300A9F553 /* DrinkInfoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0961B7962B6624D300A9F553 /* DrinkInfoList.swift */; };
 		0961B7992B6624DD00A9F553 /* DrinkInfoGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */; };
 		096E63182B616886009246CE /* DrinkListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096E63172B616886009246CE /* DrinkListCell.swift */; };
@@ -93,8 +94,6 @@
 		7B6D76B32B67D3B700601B55 /* PostDrinkRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76B22B67D3B700601B55 /* PostDrinkRating.swift */; };
 		7B6D76B52B67D5F900601B55 /* PostTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76B42B67D5F900601B55 /* PostTags.swift */; };
 		7B6D76B92B68D9C900601B55 /* PostReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76B82B68D9C900601B55 /* PostReportView.swift */; };
-		7B881CA02B97340600571352 /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7B881C9E2B97340600571352 /* APIKEYS.plist */; };
-		7B881CA12B97340600571352 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7B881C9F2B97340600571352 /* GoogleService-Info.plist */; };
 		7B881CA32B97464200571352 /* FirestorePostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B881CA22B97464200571352 /* FirestorePostViewModel.swift */; };
 		7B881CA52B97545700571352 /* FirestoreDrinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B881CA42B97545700571352 /* FirestoreDrinkViewModel.swift */; };
 		7B904C662B6168C60052384A /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B904C652B6168C60052384A /* PostCell.swift */; };
@@ -186,6 +185,8 @@
 		093357B92B8E120200A9ACAB /* ErrorPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPageView.swift; sourceTree = "<group>"; };
 		093357C52B9547F200A9ACAB /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = DrinkLoading.json; path = "../../../../흐르미/Lottie/DrinkLoading.json"; sourceTree = "<group>"; };
 		093357CE2B95505B00A9ACAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		095D708A2B981F4E00F76C11 /* JUDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = JUDA.app; path = "/Users/phang/Desktop/juda/build/Debug-iphoneos/JUDA.app"; sourceTree = "<absolute>"; };
+		095D708C2B98200B00F76C11 /* FirebaseUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserViewModel.swift; sourceTree = "<group>"; };
 		0961B7962B6624D300A9F553 /* DrinkInfoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoList.swift; sourceTree = "<group>"; };
 		0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoGrid.swift; sourceTree = "<group>"; };
 		096E63172B616886009246CE /* DrinkListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkListCell.swift; sourceTree = "<group>"; };
@@ -260,9 +261,6 @@
 		7B6D76B42B67D5F900601B55 /* PostTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTags.swift; sourceTree = "<group>"; };
 		7B6D76B62B68972000601B55 /* PostGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostGrid.swift; sourceTree = "<group>"; };
 		7B6D76B82B68D9C900601B55 /* PostReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportView.swift; sourceTree = "<group>"; };
-		7B881C992B97020300571352 /* JUDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = JUDA.app; path = "/Users/minjaekim/Desktop/Dev/iOS/Technical-Project/Team-Projects/JUDA/build/Debug-iphoneos/JUDA.app"; sourceTree = "<absolute>"; };
-		7B881C9E2B97340600571352 /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = APIKEYS.plist; path = ../../../../../JUDA_file/APIKEYS.plist; sourceTree = "<group>"; };
-		7B881C9F2B97340600571352 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../JUDA_file/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7B881CA22B97464200571352 /* FirestorePostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestorePostViewModel.swift; sourceTree = "<group>"; };
 		7B881CA42B97545700571352 /* FirestoreDrinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreDrinkViewModel.swift; sourceTree = "<group>"; };
 		7B904C652B6168C60052384A /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
@@ -372,6 +370,14 @@
 				090FF1C62B80A0C600AF22B5 /* SplashView.swift */,
 			);
 			path = Splash;
+			sourceTree = "<group>";
+		};
+		095D708B2B981FC400F76C11 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				095D708C2B98200B00F76C11 /* FirebaseUserViewModel.swift */,
+			);
+			path = User;
 			sourceTree = "<group>";
 		};
 		099912662B85C43E00E72C73 /* JsonUploadFiles */ = {
@@ -540,8 +546,6 @@
 				B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */,
 				B1B8FE8C2B5EAAAB00921BBE /* Colors.xcassets */,
 				B121A56F2B5F8DA100667D42 /* Info.plist */,
-				7B881C9E2B97340600571352 /* APIKEYS.plist */,
-				7B881C9F2B97340600571352 /* GoogleService-Info.plist */,
 				B1B8FE822B5EA9DA00921BBE /* Preview Content */,
 			);
 			path = JUDA;
@@ -569,6 +573,7 @@
 		B1EE246E2B614289007F68B0 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				095D708B2B981FC400F76C11 /* User */,
 				099912662B85C43E00E72C73 /* JsonUploadFiles */,
 				09BCC1362B7B99BD00FF4D1B /* App */,
 				09BCC1372B7B99C500FF4D1B /* Auth */,
@@ -815,7 +820,7 @@
 				093357CA2B954A8A00A9ACAB /* GoogleSignInSwift */,
 			);
 			productName = FinalHrmiProjects;
-			productReference = 7B881C992B97020300571352 /* JUDA.app */;
+			productReference = 095D708A2B981F4E00F76C11 /* JUDA.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -879,9 +884,7 @@
 				09BCC1522B7C7E2900FF4D1B /* Rain.json in Resources */,
 				B121A5762B5F911700667D42 /* Pretendard-Regular.otf in Resources */,
 				B1B8FE812B5EA9DA00921BBE /* Assets.xcassets in Resources */,
-				7B881CA12B97340600571352 /* GoogleService-Info.plist in Resources */,
 				B121A5752B5F911500667D42 /* Pretendard-Medium.otf in Resources */,
-				7B881CA02B97340600571352 /* APIKEYS.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -894,6 +897,7 @@
 			files = (
 				0974A1542B8B84E900476199 /* ShimmerDrinkListCell.swift in Sources */,
 				0902EB492B7E3372003D555E /* ProfileSettingView.swift in Sources */,
+				095D708D2B98200B00F76C11 /* FirebaseUserViewModel.swift in Sources */,
 				7BBDFF722B6B912C0036FB8B /* TabItem.swift in Sources */,
 				7BBDFF732B6B912C0036FB8B /* DrinkInfoSegment.swift in Sources */,
 				7BBDFF6E2B6B90EB0036FB8B /* JUDAApp.swift in Sources */,

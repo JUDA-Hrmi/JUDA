@@ -25,7 +25,7 @@ enum UserLikedListType: String {
     case drinks = "likedDrinks"
 }
 
-// MARK: - Auth
+// MARK: - Auth ( 로그인 / 로그아웃 / 탈퇴 관련 로직 )
 @MainActor
 final class AuthService: ObservableObject {
     // 로그인 유무
@@ -33,7 +33,7 @@ final class AuthService: ObservableObject {
     // 신규 유저 or 기존 유저
     @Published var isNewUser: Bool = false
     // 현재 유저
-    @Published var currentUser: UserField?
+    @Published var currentUser: User?
     // 로딩 중
     @Published var isLoading: Bool = false
     // Error
@@ -45,17 +45,19 @@ final class AuthService: ObservableObject {
     private let firebaseAuthViewModel = FirebaseAuthViewModel()
     // Firestorage Auth ViewModel
     private let firestorageAuthViewModel = FirestorageAuthViewModel()
+    // Firebase User ViewModel
+    private let firebaseUserViewModel = FirebaseUserViewModel()
     
     init() {
         Task {
-            if signInStatus { await getAuthUser() }
+            if signInStatus { await getCurrentUser() }
         }
     }
     
     // 현재 유저 있는지 확인, uid 받기
     private func checkCurrentUserID() throws -> String {
         guard let uid = Auth.auth().currentUser?.uid else {
-            print("currentUser 없음")
+            print("error :: currentUser 없음")
             defer {
                 signOut()
             }
@@ -64,32 +66,78 @@ final class AuthService: ObservableObject {
         return uid
     }
     
-    // provider 확인
-    func getProvider() throws -> [AuthProviderOption] {
+    // provider 받아오기 ( AuthProviderOption - rawValue )
+    func getProviderOptionString() throws -> String {
         guard let providerData = Auth.auth().currentUser?.providerData else {
             throw AuthManagerError.noProviderData
         }
-        var providers: [AuthProviderOption] = []
+        var providers: [String] = []
         for provider in providerData {
-            if let option = AuthProviderOption(rawValue: provider.providerID) {
-                providers.append(option)
-            } else {
-                assertionFailure("Provider Option Not Found \(provider.providerID)")
-            }
+            providers.append(provider.providerID)
         }
-        return providers
+        guard let authProviderOptionString = providers.first else {
+            throw AuthManagerError.noProviderData
+        }
+        return authProviderOptionString
     }
     
-    // 현재 유저 받아오기
-    func getAuthUser() async {
+    // 현재 CurrentUser : User 가져오기
+    func getCurrentUser() async {
+        await withTaskGroup(of: Void.self) { taskGroup in
+            // 현재 유저 UserField 받아오기
+            taskGroup.addTask { await self.getCurrentUserField() }
+            // 현재 유저 Posts 받아오기
+            taskGroup.addTask { await self.getCurrentUserPosts() }
+            // 현재 유저 LikedPosts 받아오기
+            taskGroup.addTask { await self.getCurrentUserLikedPosts() }
+            // 현재 유저 LikedDrinks 받아오기
+            taskGroup.addTask { await self.getCurrentUserLikedDrinks() }
+            // 현재 유저 Notifications 받아오기
+            taskGroup.addTask { await self.getCurrentUserNotifications() }
+        }
+    }
+    
+    // 현재 유저 UserField 받아오기
+    private func getCurrentUserField() async {
         do {
             let uid = try checkCurrentUserID()
-            currentUser = try await firebaseAuthViewModel.fetchUserData(uid: uid)
-            await fetchProfileImage()
+            currentUser?.userField = try await firebaseAuthViewModel.fetchUserFieldData(uid: uid)
         } catch {
             showError = true
             errorMessage = error.localizedDescription
+            print(errorMessage)
         }
+    }
+    
+    // 현재 유저 Posts 받아오기
+    private func getCurrentUserPosts() async {
+        // TODO: -
+        do {
+            let uid = try checkCurrentUserID()
+            currentUser?.posts = try await firebaseUserViewModel.fetchUserWrittenPosts(uid: uid)
+        } catch {
+            showError = true
+            errorMessage = error.localizedDescription
+            print(errorMessage)
+        }
+    }
+    
+    // 현재 유저 LikedPosts 받아오기
+    private func getCurrentUserLikedPosts() {
+        // TODO: -
+//        currentUser?.likedPosts =
+    }
+    
+    // 현재 유저 LikedDrinks 받아오기
+    private func getCurrentUserLikedDrinks() {
+        // TODO: -
+//        currentUser?.likedDrinks =
+    }
+    
+    // 현재 유저 Notifications 받아오기
+    private func getCurrentUserNotifications() {
+        // TODO: -
+//        currentUser?.notifications =
     }
     
     // 로그아웃
@@ -114,15 +162,16 @@ final class AuthService: ObservableObject {
     // 유저가 좋아하는 술 리스트에 추가 or 삭제
     func addOrRemoveToLikedDrinks(isLiked: Bool, _ drinkID: String?) {
         guard let drinkID = drinkID else {
-            print("addOrRemoveToLikedDrinks - 술 ID 없음")
+            print("error :: addOrRemoveToLikedDrinks - 술 ID 없음")
             return
         }
         if !isLiked { // 좋아요 X -> O
-            currentUser?.likedDrinks.removeAll { $0 == drinkID }
+            currentUser?.likedDrinks.removeAll { $0.drinkField.drinkID == drinkID }
         } else { // 좋아요 O -> X
             if let user = currentUser,
-               !user.likedDrinks.contains(drinkID) {
-                currentUser?.likedDrinks.append(drinkID)
+               !user.likedDrinks.contains(where: { $0.drinkField.drinkID == drinkID }) {
+                // TODO: - 해당 drinkID 에 맞는 Drink 를 넣어줘야 함
+//                currentUser?.likedDrinks.append(drinkID)
             }
         }
     }
@@ -139,16 +188,16 @@ final class AuthService: ObservableObject {
     }
     
     // 실시간 업데이트 리스너 등록
-    func startListeningForUser() async {
+    func startListeningForUserField() async {
         do {
             let uid = try checkCurrentUserID()
             firebaseAuthViewModel.startListeningForUser(uid: uid) { user in
                 if let user = user {
-                    self.currentUser = user
+                    self.currentUser?.userField = user
                 }
             }
         } catch {
-            print("startListeningForUser :", error.localizedDescription)
+            print("error :: startListeningForUserField :", error.localizedDescription)
         }
     }
     
@@ -158,50 +207,43 @@ final class AuthService: ObservableObject {
             let uid = try checkCurrentUserID()
             firebaseAuthViewModel.addUserDataToStore(userData: userData, uid: uid)
         } catch {
-            print("addUserDataToStore :", error.localizedDescription)
+            print("error :: addUserDataToStore :", error.localizedDescription)
         }
     }
     
-    // 유저 정보 업데이트 - posts / drinks
+    // 유저 정보 업데이트 - LikedPosts / LikedDrinks
     func userLikedListUpdate(type: UserLikedListType) {
         do {
             let uid = try checkCurrentUserID()
-            var list = [String]()
+            var list = [Any]()
             switch type {
             case .posts:
-                list = currentUser?.likedPosts ?? []
+                list = currentUser?.likedPosts ?? [] as [Post]
             case .drinks:
-                list = currentUser?.likedDrinks ?? []
+                list = currentUser?.likedDrinks ?? [] as [Drink]
             }
             firebaseAuthViewModel.userLikedListUpdate(uid: uid,
                                                       documentName: type.rawValue,
                                                       list: list)
         } catch {
-            print("userLiked\(type)Update :", error.localizedDescription)
+            print("error :: userLiked\(type)Update :", error.localizedDescription)
         }
     }
     
-    // 유저 가입 시, 프로필 이미지 올리기
-    func uploadProfileImageToStorage(image: UIImage?) {
+    // 유저 가입 시, 프로필 이미지 올리기 + 이미지 URL 저장
+    func uploadProfileImageToStorage(image: UIImage?) async {
         do {
             let uid = try checkCurrentUserID()
             guard let image = image else {
-                print("error - uploadProfileImageToStorage : image X")
+                print("error :: uploadProfileImageToStorage : image X")
                 return
             }
-            firestorageAuthViewModel.uploadProfileImageToStorage(image: image, uid: uid)
+            try await firestorageAuthViewModel.uploadProfileImageToStorage(image: image, uid: uid)
+            // 유저 프로필 받아오기
+            let url = try await firestorageAuthViewModel.fetchProfileImageURL(uid: uid)
+            currentUser?.userField.profileImageURL = url
         } catch {
-            print("uploadProfileImageToStorage :", error.localizedDescription)
-        }
-    }
-    
-    // 유저 프로필 받아오기
-    func fetchProfileImage() async {
-        do {
-            let uid = try checkCurrentUserID()
-            currentUser?.profileURL = try await firestorageAuthViewModel.fetchProfileImage(uid: uid)
-        } catch {
-            print("fetchProfileImage :", error.localizedDescription)
+            print("error :: uploadProfileImageToStorage :", error.localizedDescription)
         }
     }
 }
@@ -222,11 +264,11 @@ extension AuthService {
         switch result {
         case .success(let authorization):
             guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {
-                print("error: appleIDCredential")
+                print("error :: appleIDCredential")
                 return
             }
             let fullName = appleIDCredential.fullName
-            currentUser?.name = (fullName?.familyName ?? "") + (fullName?.givenName ?? "")
+            currentUser?.userField.name = (fullName?.familyName ?? "") + (fullName?.givenName ?? "")
             Task {
                 // 로그인 중 -
                 isLoading = true
@@ -243,7 +285,7 @@ extension AuthService {
                     print("Fisrt ✨ - Apple Sign Up 🍎")
                 } else {
                     print("Apple Sign In 🍎")
-                    await getAuthUser()
+                    await getCurrentUserField()
                     self.signInStatus = true
                 }
             }
@@ -276,13 +318,13 @@ extension AuthService {
     // 회원탈퇴 - Apple
     func deleteAppleAccount() async -> Bool {
         do {
-            guard try getProvider().contains(.apple) == true else { return false }
+            guard try getProviderOptionString() == AuthProviderOption.apple.rawValue else { return false }
             try await firebaseAuthViewModel.deleteAccountWithApple()
             resetData()
             isLoading = false
             return true
         } catch {
-            print("deleteAccount error : \(error.localizedDescription)")
+            print("error :: \(error.localizedDescription)")
             errorMessage = "회원탈퇴에 문제가 발생했어요.\n다시 시도해주세요."
             showError = true
             isLoading = false
@@ -317,11 +359,11 @@ extension AuthService {
                 print("Fisrt ✨ - Google Sign Up 🤖")
             } else {
                 print("Google Sign In 🤖")
-                await getAuthUser()
+                await getCurrentUserField()
                 self.signInStatus = true
             }
         } catch {
-            print("error - \(error.localizedDescription)")
+            print("error :: \(error.localizedDescription)")
             errorMessage = "로그인에 문제가 발생했어요.\n다시 시도해주세요."
             showError = true
             resetData()

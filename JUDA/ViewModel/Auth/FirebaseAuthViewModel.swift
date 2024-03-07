@@ -20,20 +20,11 @@ final class FirebaseAuthViewModel {
     // 실시간 반영을 위한 리스너
     private var listener: ListenerRegistration?
     
-    // firestore 에서 유저 정보 가져오기
-    func fetchUserData(uid: String) async throws -> UserField? {
-        do {
-            let document = try await db.collection(userCollection).document(uid).getDocument(source: .cache)
-            if document.exists {
-                let userData = try document.data(as: UserField.self)
-                return userData
-            } else {
-                print("Document does not exist")
-            }
-        } catch {
-            print("Error getting document: \(error)")
-        }
-        return nil
+    // firestore 에서 UserField 정보 가져오기
+    func fetchUserFieldData(uid: String) async throws -> UserField {
+        let document = try await db.collection(userCollection).document(uid).getDocument(source: .cache)
+        let userData = try document.data(as: UserField.self)
+        return userData
     }
     
     // firestore 에 유저 존재 유무 체크
@@ -63,8 +54,8 @@ final class FirebaseAuthViewModel {
         }
     }
     
-    // 유저 정보 업데이트 - posts / drinks
-    func userLikedListUpdate(uid: String, documentName: String, list: [String]) {
+    // 유저 정보 업데이트 - LikedPosts / LikedDrinks
+    func userLikedListUpdate(uid: String, documentName: String, list: [Any]) {
         db.collection(userCollection).document(uid).updateData([documentName: list]) { error in
             if let error = error {
                 print("update error \(error.localizedDescription)")

@@ -10,11 +10,11 @@ import FirebaseFirestore
 
 // Firebase users 컬렉션 데이터 모델
 struct User {
-    let userField: UserField
-    let posts: [Post]
-	let likedPosts: [Post]
-	let likedDrinks: [Drink]
-	let notifications: [UserNotification]
+    var userField: UserField
+    var posts: [Post]
+    var likedPosts: [Post]
+    var likedDrinks: [Drink]
+    var notifications: [UserNotification]
 }
 
 // Firebase users 컬렉션 필드 데이터 모델
@@ -22,22 +22,22 @@ struct UserField: Codable {
 	@DocumentID var userID: String?
     var name: String
     var age: Int
-    let gender: String
+    var gender: String
     var notificationAllowed: Bool
     var profileImageURL: URL
-//    var authProviders: [AuthProviderOption]
+    var authProviders: String // AuthProviderOption - rawValue
 }
 
 struct UserNotification {
-	let notificationField: NotificationField
-	let likedUser: User
-	let likedPost: Post
+    var notificationField: NotificationField
+    var likedUser: User
+    var likedPost: Post
 }
 
 // Firebase users/notificationList 컬렉션 데이터 모델
 struct NotificationField: Codable, Hashable {
-	let isChecked: Bool
-	let likedTime: Date
-	let thumbnailImageURL: URL?
+    var isChecked: Bool
+    var likedTime: Date
+    var thumbnailImageURL: URL?
 }
 
