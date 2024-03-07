@@ -13,24 +13,19 @@ struct SplashView: View {
     @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var mainViewModel: MainViewModel
     @EnvironmentObject var colorScheme: SystemColorTheme
-    @EnvironmentObject var weatherViewModel: WeatherViewModel
-    @EnvironmentObject var aiViewModel: AiViewModel
     @EnvironmentObject var appViewModel: AppViewModel
     @EnvironmentObject var searchPostsViewModel: SearchPostsViewModel
     
     @Binding var isActive: Bool
     @State private var imageIndex: Int = 0
     
-    private let weatherImagesLight = ["cloud_light", "cloudySun_light", "snow_light", "rain_light"]
-    private let weatherImagesDark = ["cloud_dark", "cloudySun_dark", "snow_dark", "rain_dark"]
-
-    private func switchWeatherImage(list: [String]) {
-        let timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-            imageIndex = (imageIndex + 1) % list.count
-        }
-        // .common -> 뷰 소멸 시 타이머 멈춤
-        RunLoop.current.add(timer, forMode: .common)
-    }
+    private let weatherImagesLight = [
+        "cloud_light", "cloudySun_light", "snow_light", "rain_light"
+    ]
+    private let weatherImagesDark = [
+        "cloud_dark", "cloudySun_dark", "snow_dark", "rain_dark"
+    ]
+    
     var body: some View {
         VStack() {
             Spacer()
@@ -95,31 +90,21 @@ struct SplashView: View {
                 taskGroup.addTask { await searchPostsViewModel.fetchPosts() }
             }
         }
-        .onAppear {
-            if weatherViewModel.shouldFetchWeather() && authService.signInStatus {
-                
-                if let location = appViewModel.locationManager.location {
-                    weatherViewModel.isLoading = true
-                    Task {
-                        do {
-                            // Fetch weather data
-                            let weatherData = try await weatherViewModel.fetchWeather(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-                            weatherViewModel.weather = weatherData
-                            // Request
-                            aiViewModel.respond = try await aiViewModel.request(prompt: "\(String(describing: weatherViewModel.weather?.main)) Please recommend some snacks and alcoholic beverages that go well with this weather. Please refer to the list that already exists and recommend them in it. I have additional notes on the list. You can recommend one that goes well with the weather from each list. snackslist: \(aiViewModel.snacks), drink List:\(aiViewModel.drinkNames)")
-                            weatherViewModel.lastAPICallTimestamp = Date()
-                        } catch {
-                            print("Error: \(error)")
-                        }
-                        weatherViewModel.isLoading = false
-                    }
-                }
+        .task {
+            if authService.signInStatus,
+               let location = appViewModel.locationManager.location {
+//                await mainService.getWeatherResponse(location: location)
             }
         }
         // SettingView - 화면 모드 -> 선택한 옵션에 따라 배경색 변환
         .preferredColorScheme(colorScheme.selectedColor == .light ? .light : colorScheme.selectedColor == .dark ? .dark : nil)
     }
+    
+    private func switchWeatherImage(list: [String]) {
+        let timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+            imageIndex = (imageIndex + 1) % list.count
+        }
+        // .common -> 뷰 소멸 시 타이머 멈춤
+        RunLoop.current.add(timer, forMode: .common)
+    }
 }
-
-
-//

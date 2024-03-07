@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WellMatched: View {
-    @EnvironmentObject var aiWellMatchViewModel: AiWellMatchViewModel
+    @EnvironmentObject var aiWellMatchViewModel: AIWellMatchViewModel
     let wellMatched: [String]?
     let windowWidth: CGFloat
     let drinkName: String
@@ -51,14 +51,8 @@ struct WellMatched: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
-        .onAppear {
-            aiWellMatchViewModel.isLoading = true
-            Task {
-                do {
-                     aiWellMatchViewModel.fetchRecommendationsIfNeeded(prompt: "Please recommend three foods that go well with drinks. Only food except drinks. List below --- Beverages List: \(drinkName)")
-                }
-            }
-            aiWellMatchViewModel.isLoading = false
+        .task {
+            await aiWellMatchViewModel.fetchRecommendationsIfNeeded(drinkName: drinkName)
         }
     }
     
