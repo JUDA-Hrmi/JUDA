@@ -18,3 +18,12 @@ enum AuthManagerError: Error {
     case noUserID
     case noProviderData
 }
+
+// MARK: - User Fetch
+enum FetchUserError: Error {
+    case userField
+    case writtenPosts
+    case likedPosts
+    case likedDrinks
+    case notifications
+}

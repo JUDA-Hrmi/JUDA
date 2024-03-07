@@ -25,7 +25,7 @@ enum UserLikedListType: String {
     case drinks = "likedDrinks"
 }
 
-// MARK: - Auth ( 로그인 / 로그아웃 / 탈퇴 관련 로직 )
+// MARK: - Auth ( 로그인 / 로그아웃 / 탈퇴 / 본인 계정 )
 @MainActor
 final class AuthService: ObservableObject {
     // 로그인 유무
@@ -53,6 +53,7 @@ final class AuthService: ObservableObject {
             if signInStatus { await getCurrentUser() }
         }
     }
+    
     
     // 현재 유저 있는지 확인, uid 받기
     private func checkCurrentUserID() throws -> String {
@@ -83,61 +84,76 @@ final class AuthService: ObservableObject {
     
     // 현재 CurrentUser : User 가져오기
     func getCurrentUser() async {
-        await withTaskGroup(of: Void.self) { taskGroup in
-            // 현재 유저 UserField 받아오기
-            taskGroup.addTask { await self.getCurrentUserField() }
-            // 현재 유저 Posts 받아오기
-            taskGroup.addTask { await self.getCurrentUserPosts() }
-            // 현재 유저 LikedPosts 받아오기
-            taskGroup.addTask { await self.getCurrentUserLikedPosts() }
-            // 현재 유저 LikedDrinks 받아오기
-            taskGroup.addTask { await self.getCurrentUserLikedDrinks() }
-            // 현재 유저 Notifications 받아오기
-            taskGroup.addTask { await self.getCurrentUserNotifications() }
+        do {
+            let uid = try checkCurrentUserID()
+            
+            await withTaskGroup(of: Void.self) { taskGroup in
+                // 현재 유저 UserField 받아오기
+                taskGroup.addTask { await self.getCurrentUserField(uid: uid) }
+                // 현재 유저 Posts 받아오기
+                taskGroup.addTask { await self.getCurrentUserPosts(uid: uid) }
+                // 현재 유저 LikedPosts 받아오기
+                taskGroup.addTask { await self.getCurrentUserLikedPosts(uid: uid) }
+                // 현재 유저 LikedDrinks 받아오기
+                taskGroup.addTask { await self.getCurrentUserLikedDrinks(uid: uid) }
+                // 현재 유저 Notifications 받아오기
+                taskGroup.addTask { await self.getCurrentUserNotifications(uid: uid) }
+            }
+        } catch {
+            showError = true
+            errorMessage = error.localizedDescription
+            print(errorMessage)
         }
     }
     
     // 현재 유저 UserField 받아오기
-    private func getCurrentUserField() async {
+    private func getCurrentUserField(uid: String) async {
         do {
-            let uid = try checkCurrentUserID()
-            currentUser?.userField = try await firebaseAuthViewModel.fetchUserFieldData(uid: uid)
+            currentUser?.userField = try await firebaseUserViewModel.fetchUserFieldData(uid: uid)
         } catch {
-            showError = true
             errorMessage = error.localizedDescription
             print(errorMessage)
         }
     }
     
     // 현재 유저 Posts 받아오기
-    private func getCurrentUserPosts() async {
-        // TODO: -
+    private func getCurrentUserPosts(uid: String) async {
         do {
-            let uid = try checkCurrentUserID()
             currentUser?.posts = try await firebaseUserViewModel.fetchUserWrittenPosts(uid: uid)
         } catch {
-            showError = true
             errorMessage = error.localizedDescription
             print(errorMessage)
         }
     }
     
     // 현재 유저 LikedPosts 받아오기
-    private func getCurrentUserLikedPosts() {
-        // TODO: -
-//        currentUser?.likedPosts =
+    private func getCurrentUserLikedPosts(uid: String) async {
+        do {
+            currentUser?.likedPosts = try await firebaseUserViewModel.fetchUserLikedPosts(uid: uid)
+        } catch {
+            errorMessage = error.localizedDescription
+            print(errorMessage)
+        }
     }
     
     // 현재 유저 LikedDrinks 받아오기
-    private func getCurrentUserLikedDrinks() {
-        // TODO: -
-//        currentUser?.likedDrinks =
+    private func getCurrentUserLikedDrinks(uid: String) async {
+        do {
+            currentUser?.likedDrinks = try await firebaseUserViewModel.fetchUserLikedDrink(uid: uid)
+        } catch {
+            errorMessage = error.localizedDescription
+            print(errorMessage)
+        }
     }
     
     // 현재 유저 Notifications 받아오기
-    private func getCurrentUserNotifications() {
-        // TODO: -
-//        currentUser?.notifications =
+    private func getCurrentUserNotifications(uid: String) async {
+        do {
+            currentUser?.notifications = try await firebaseUserViewModel.fetchUserNotifications(uid: uid)
+        } catch {
+            errorMessage = error.localizedDescription
+            print(errorMessage)
+        }
     }
     
     // 로그아웃
@@ -160,18 +176,13 @@ final class AuthService: ObservableObject {
     }
     
     // 유저가 좋아하는 술 리스트에 추가 or 삭제
-    func addOrRemoveToLikedDrinks(isLiked: Bool, _ drinkID: String?) {
-        guard let drinkID = drinkID else {
-            print("error :: addOrRemoveToLikedDrinks - 술 ID 없음")
-            return
-        }
+    func addOrRemoveToLikedDrinks(isLiked: Bool, sellectedDrink: Drink) {
         if !isLiked { // 좋아요 X -> O
-            currentUser?.likedDrinks.removeAll { $0.drinkField.drinkID == drinkID }
+            currentUser?.likedDrinks.removeAll { $0.drinkField.drinkID == sellectedDrink.drinkField.drinkID }
         } else { // 좋아요 O -> X
             if let user = currentUser,
-               !user.likedDrinks.contains(where: { $0.drinkField.drinkID == drinkID }) {
-                // TODO: - 해당 drinkID 에 맞는 Drink 를 넣어줘야 함
-//                currentUser?.likedDrinks.append(drinkID)
+               !user.likedDrinks.contains(where: { $0.drinkField.drinkID == sellectedDrink.drinkField.drinkID }) {
+                currentUser?.likedDrinks.append(sellectedDrink)
             }
         }
     }
@@ -180,7 +191,7 @@ final class AuthService: ObservableObject {
     func updateUserName(userName: String) async {
         do {
             let uid = try checkCurrentUserID()
-            try await firebaseAuthViewModel.updateUserName(uid: uid, userName: userName)
+            await firebaseAuthViewModel.updateUserName(uid: uid, userName: userName)
         } catch {
             showError = true
             errorMessage = "닉네임 변경에 문제가 발생했어요.\n다시 시도해주세요."
@@ -212,7 +223,7 @@ final class AuthService: ObservableObject {
     }
     
     // 유저 정보 업데이트 - LikedPosts / LikedDrinks
-    func userLikedListUpdate(type: UserLikedListType) {
+    func userLikedListUpdate(type: UserLikedListType) async {
         do {
             let uid = try checkCurrentUserID()
             var list = [Any]()
@@ -222,7 +233,7 @@ final class AuthService: ObservableObject {
             case .drinks:
                 list = currentUser?.likedDrinks ?? [] as [Drink]
             }
-            firebaseAuthViewModel.userLikedListUpdate(uid: uid,
+            await firebaseAuthViewModel.userLikedListUpdate(uid: uid,
                                                       documentName: type.rawValue,
                                                       list: list)
         } catch {
@@ -285,7 +296,7 @@ extension AuthService {
                     print("Fisrt ✨ - Apple Sign Up 🍎")
                 } else {
                     print("Apple Sign In 🍎")
-                    await getCurrentUserField()
+                    await getCurrentUserField(uid: uid)
                     self.signInStatus = true
                 }
             }
@@ -359,7 +370,7 @@ extension AuthService {
                 print("Fisrt ✨ - Google Sign Up 🤖")
             } else {
                 print("Google Sign In 🤖")
-                await getCurrentUserField()
+                await getCurrentUserField(uid: uid)
                 self.signInStatus = true
             }
         } catch {

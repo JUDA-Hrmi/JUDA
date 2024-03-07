@@ -16,46 +16,64 @@ final class FirebaseUserViewModel {
     private let db = Firestore.firestore()
     private let userCollection = "users"
     private let postCollection = "posts"
+    private let likedPostCollection = "likedPosts"
+    private let likedDrinkCollection = "likedDrinks"
+    private let notificationCollection = "notifications"
+    // Firebase Post ViewModel
+    private let firestorePostViewModel = FirestorePostViewModel()
+    // Firebase Drink ViewModel
+    private let firestoreDrinkViewModel = FirestorePostViewModel()
     
-
-    // 해당 유저가 작성한 posts 받아오기
+    
+    // firestore 에서 UserField 정보 가져오기
+    func fetchUserFieldData(uid: String) async throws -> UserField {
+        do {
+            let document = try await db.collection(userCollection).document(uid).getDocument(source: .cache)
+            let userData = try document.data(as: UserField.self)
+            return userData
+        } catch {
+            throw FetchUserError.userField
+        }
+    }
+    
+    // 해당 유저가 작성한 post 리스트 받아오기
     func fetchUserWrittenPosts(uid: String) async throws -> [Post] {
         let userWrittenPostRef = db.collection(userCollection).document(uid).collection(postCollection)
-        var result = [Post]()
-        let postDocuments = try await userWrittenPostRef.getDocuments()
-        for postDocument in postDocuments.documents {
-            let postFieldData = try postDocument.data(as: PostField.self)
-            let postID = postFieldData.postID
-        }
-        // TODO: -
-        return result
+        // TODO: - Post 가져오는 코드
+        //        firestorePostViewModel.
+        return []
     }
-    /*
-     
-     문제
-     - User 에서 필요한 데이터 Post 를 가지려고 한다.
-     - Post 를 기자려고 했더니, Post 는 User 가 필요하다.
-     -> collection 의 순환 참조 발생
-     
-     해결 방안 ( User 가 Post 를 가질 것 인가 / Post 가 user 를 가질 것 인가 )
-     
-     1. User 가 Post 를 가질 때
-     - Post 는 User 가 아닌 
-        userID, profileURL, userName ( cell 에서 보여주는 최소한의 데이터 ) 를 갖게 됨
-     - PostDetail 에서, MyPage( 유저 페이지 ) 로 이동 할 때, User 의 정보를 불러와야 함.
-     
-     2. Post 가 User 를 가질 때
-     - User 는 Post 가 아닌
-        postField + ( drinkTags, likedUsersID ) 를 갖게 됨.
-     - MyPage( 유저 페이지 )에서 PostDetail 로 이동했을 때, Post 의 정보를 불러와야 함.
-     
-     그 외에도 Post 와 Drink 의 관계 / User 와 Drink 의 관계 등 정리를 해야하지 않을까 싶다.
-     
-     -> Phang's 생각
-     User 가 Post 를 소유
-     Post 가 Drink 를 소유
-     이게 좀 뭔가 흐름에 맞지 않을까...?
-     
-     */
     
+    // 해당 유저가 좋아요 누른 post 리스트 받아오기
+    func fetchUserLikedPosts(uid: String) async throws -> [Post] {
+        let userLikedPostRef = db.collection(userCollection).document(uid).collection(likedPostCollection)
+        // TODO: - Post 가져오는 코드
+//        firestorePostViewModel.
+        return []
+    }
+    
+    // 해당 유저가 좋아요 누른 drink 리스트 받아오기
+    func fetchUserLikedDrink(uid: String) async throws -> [Drink] {
+        let userLikedDrinkRef = db.collection(userCollection).document(uid).collection(likedDrinkCollection)
+        // TODO: - Drink 가져오는 코드
+//        firestoreDrinkViewModel.
+        return []
+    }
+    
+    // 해당 유저의 notification 리스트 받아오기
+    func fetchUserNotifications(uid: String) async throws -> [UserNotification] {
+        do {
+            let userNotificationRef = db.collection(userCollection).document(uid).collection(notificationCollection)
+            let userNotificationSnapshot = try await userNotificationRef.getDocuments()
+            for notificationDocument in userNotificationSnapshot.documents {
+                let notificationFieldData = try notificationDocument.data(as: NotificationField.self)
+                let notificationID = notificationDocument.documentID
+                let notificationPostRef = userNotificationRef.document(notificationID).collection(likedPostCollection)
+                // TODO: - notification 해당 post 가져오는 코드
+            }
+            return []
+        } catch let error {
+            throw error
+        }
+    }
 }
