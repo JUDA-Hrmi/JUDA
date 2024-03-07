@@ -43,10 +43,10 @@ final class AuthService: ObservableObject {
     private var currentNonce: String?
     // Firebase Auth ViewModel
     private let firebaseAuthViewModel = FirebaseAuthViewModel()
-    // Firestorage Auth ViewModel
-    private let firestorageAuthViewModel = FirestorageAuthViewModel()
     // Firebase User ViewModel
     private let firebaseUserViewModel = FirebaseUserViewModel()
+    // FireStorage ViewModel
+    private let fireStorageViewModel = FireStorageViewModel()
     
     init() {
         Task {
@@ -249,9 +249,9 @@ final class AuthService: ObservableObject {
                 print("error :: uploadProfileImageToStorage : image X")
                 return
             }
-            try await firestorageAuthViewModel.uploadProfileImageToStorage(image: image, uid: uid)
+            try await fireStorageViewModel.uploadImageToStorage(folder: .user, image: image, fileName: uid)
             // 유저 프로필 받아오기
-            let url = try await firestorageAuthViewModel.fetchProfileImageURL(uid: uid)
+            let url = try await fireStorageViewModel.fetchImageURL(folder: .user, fileName: uid)
             currentUser?.userField.profileImageURL = url
         } catch {
             print("error :: uploadProfileImageToStorage :", error.localizedDescription)
