@@ -25,6 +25,7 @@ extension FirestorePostViewModel {
 			let postField = try await fetchPostField(document: document)
 			let likedUsersIDRef = document.collection("likedUsersID")
 			let likedUsersID: [String] = await fetchPostLikedUsersID(ref: likedUsersIDRef)
+			
 			return Post(postField: postField, likedUsersID: likedUsersID)
 		} catch PostFetchError.postField {
 			print("error :: fetchPostField() -> fetch post field data failure")
@@ -50,6 +51,7 @@ extension FirestorePostViewModel {
 	// fetch 에러를 던질 시, 해당 값을 배열에 추가되지 않음
 	func fetchPostLikedUsersID(ref: CollectionReference) async -> [String] {
 		var likedUsersID = [String]()
+		
 		do {
 			let snapshot = try await ref.getDocuments()
 			for document in snapshot.documents {
@@ -69,6 +71,7 @@ extension FirestorePostViewModel {
 	// posts collection에서 삭제하고싶은 post에 해당하는 document 삭제 메서드
 	func deletePostDocument(postID: String) async -> Bool {
 		let postRef = Firestore.firestore().collection("posts")
+		
 		do {
 			try await postRef.document(postID).delete()
 			return true

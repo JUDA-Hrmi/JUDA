@@ -61,6 +61,7 @@ extension FirestoreDrinkViewModel {
 	// 불러오지 못 할 경우 배열에 추가 x
 	func fetchTaggedPosts(ref: CollectionReference) async -> [Post] {
 		var taggedPosts = [Post]()
+		
 		do {
 			let snapshot = try await ref.getDocuments()
 			for document in snapshot.documents {
