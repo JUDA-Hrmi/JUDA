@@ -21,6 +21,7 @@
 		093357CB2B954A8A00A9ACAB /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 093357CA2B954A8A00A9ACAB /* GoogleSignInSwift */; };
 		093357CF2B95505E00A9ACAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093357CE2B95505B00A9ACAB /* AppDelegate.swift */; };
 		095D708D2B98200B00F76C11 /* FirebaseUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095D708C2B98200B00F76C11 /* FirebaseUserViewModel.swift */; };
+		095D70912B99BD1400F76C11 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095D70902B99BD1400F76C11 /* UserService.swift */; };
 		0961B7972B6624D300A9F553 /* DrinkInfoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0961B7962B6624D300A9F553 /* DrinkInfoList.swift */; };
 		0961B7992B6624DD00A9F553 /* DrinkInfoGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */; };
 		096E63182B616886009246CE /* DrinkListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096E63172B616886009246CE /* DrinkListCell.swift */; };
@@ -55,7 +56,6 @@
 		09BCC1582B7C805400FF4D1B /* UserAgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BCC1572B7C805400FF4D1B /* UserAgreementView.swift */; };
 		09BCC15A2B7C8CD300FF4D1B /* IdentityVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BCC1592B7C8CD300FF4D1B /* IdentityVerificationView.swift */; };
 		09BCC15F2B7CFC7E00FF4D1B /* TermsAndVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BCC15E2B7CFC7E00FF4D1B /* TermsAndVerificationView.swift */; };
-		09C7C9A22B8CAA0B00F62617 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C7C9A12B8CAA0B00F62617 /* MyPageViewModel.swift */; };
 		09C7C9AF2B8DB57E00F62617 /* NavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C7C9AE2B8DB57E00F62617 /* NavigationRouter.swift */; };
 		09E34BC72B96134E0037C561 /* FirestorageAuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E34BC62B96134E0037C561 /* FirestorageAuthViewModel.swift */; };
 		09F869932B68E36800A56A4C /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869922B68E36800A56A4C /* Formatter.swift */; };
@@ -185,8 +185,9 @@
 		093357B92B8E120200A9ACAB /* ErrorPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPageView.swift; sourceTree = "<group>"; };
 		093357C52B9547F200A9ACAB /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = DrinkLoading.json; path = "../../../../흐르미/Lottie/DrinkLoading.json"; sourceTree = "<group>"; };
 		093357CE2B95505B00A9ACAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		095D708A2B981F4E00F76C11 /* JUDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = JUDA.app; path = "/Users/phang/Desktop/juda/build/Debug-iphoneos/JUDA.app"; sourceTree = "<absolute>"; };
 		095D708C2B98200B00F76C11 /* FirebaseUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserViewModel.swift; sourceTree = "<group>"; };
+		095D708F2B9997B200F76C11 /* JUDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = JUDA.app; path = "/Users/phang/Desktop/juda/build/Debug-iphoneos/JUDA.app"; sourceTree = "<absolute>"; };
+		095D70902B99BD1400F76C11 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		0961B7962B6624D300A9F553 /* DrinkInfoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoList.swift; sourceTree = "<group>"; };
 		0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoGrid.swift; sourceTree = "<group>"; };
 		096E63172B616886009246CE /* DrinkListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkListCell.swift; sourceTree = "<group>"; };
@@ -220,7 +221,6 @@
 		09BCC1572B7C805400FF4D1B /* UserAgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgreementView.swift; sourceTree = "<group>"; };
 		09BCC1592B7C8CD300FF4D1B /* IdentityVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityVerificationView.swift; sourceTree = "<group>"; };
 		09BCC15E2B7CFC7E00FF4D1B /* TermsAndVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndVerificationView.swift; sourceTree = "<group>"; };
-		09C7C9A12B8CAA0B00F62617 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		09C7C9AE2B8DB57E00F62617 /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
 		09E34BC62B96134E0037C561 /* FirestorageAuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestorageAuthViewModel.swift; sourceTree = "<group>"; };
 		09F869922B68E36800A56A4C /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
@@ -375,6 +375,7 @@
 		095D708B2B981FC400F76C11 /* User */ = {
 			isa = PBXGroup;
 			children = (
+				095D70902B99BD1400F76C11 /* UserService.swift */,
 				095D708C2B98200B00F76C11 /* FirebaseUserViewModel.swift */,
 			);
 			path = User;
@@ -577,7 +578,6 @@
 				099912662B85C43E00E72C73 /* JsonUploadFiles */,
 				09BCC1362B7B99BD00FF4D1B /* App */,
 				09BCC1372B7B99C500FF4D1B /* Auth */,
-				B1EE24802B6143C7007F68B0 /* Mypage */,
 				B1EE24812B6143CD007F68B0 /* Liked */,
 				B1EE24822B6143D2007F68B0 /* Record */,
 				B1EE24832B6143DC007F68B0 /* Posts */,
@@ -688,14 +688,6 @@
 				AC5778E42B6FC20C00F7B04B /* NavigationProfileView.swift */,
 				B123304A2B6A99C200DE2A93 /* MypageDetail */,
 				B12BEE452B6A9DF100580D29 /* SettingDetail */,
-			);
-			path = Mypage;
-			sourceTree = "<group>";
-		};
-		B1EE24802B6143C7007F68B0 /* Mypage */ = {
-			isa = PBXGroup;
-			children = (
-				09C7C9A12B8CAA0B00F62617 /* MyPageViewModel.swift */,
 			);
 			path = Mypage;
 			sourceTree = "<group>";
@@ -820,7 +812,7 @@
 				093357CA2B954A8A00A9ACAB /* GoogleSignInSwift */,
 			);
 			productName = FinalHrmiProjects;
-			productReference = 095D708A2B981F4E00F76C11 /* JUDA.app */;
+			productReference = 095D708F2B9997B200F76C11 /* JUDA.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -939,7 +931,6 @@
 				B1EE249E2B6144DD007F68B0 /* DrinkViewModel.swift in Sources */,
 				AC98D1D82B7359CC006F6EC9 /* WeatherViewModel.swift in Sources */,
 				0974A15B2B8BD71B00476199 /* ShimmerPostListCell.swift in Sources */,
-				09C7C9A22B8CAA0B00F62617 /* MyPageViewModel.swift in Sources */,
 				09E34BC72B96134E0037C561 /* FirestorageAuthViewModel.swift in Sources */,
 				09F8699C2B68E4CA00A56A4C /* WellMatched.swift in Sources */,
 				096E631A2B616F31009246CE /* DrinkGridCell.swift in Sources */,
@@ -975,6 +966,7 @@
 				2C2044E82B63B9D600773266 /* ContentView.swift in Sources */,
 				B12BEE4F2B6B7BDA00580D29 /* Handler.swift in Sources */,
 				09F869932B68E36800A56A4C /* Formatter.swift in Sources */,
+				095D70912B99BD1400F76C11 /* UserService.swift in Sources */,
 				09A6AD7A2B71F6D800606585 /* LibraryPhotosPicker.swift in Sources */,
 				B123304E2B6A9A0300DE2A93 /* UserProfileView.swift in Sources */,
 				0961B7972B6624D300A9F553 /* DrinkInfoList.swift in Sources */,
