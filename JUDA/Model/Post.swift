@@ -10,8 +10,8 @@ import FirebaseFirestore
 
 // Firebase posts 컬렉션 데이터 모델
 struct Post {
-	var likedUsersID: [String]
-    var postField: PostField
+	var postField: PostField
+	var likedUsersID: [String] // collection
 }
 
 // Firebase posts 컬렉션 필드 데이터 모델
