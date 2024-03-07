@@ -16,8 +16,8 @@ enum ProfileSettingFocusField: Hashable {
 
 // MARK: - 성별 enum
 enum Gender: String, CaseIterable {
-    case male
-    case female
+    case male = "male"
+    case female = "female"
     
     var koreanString: String {
         switch self {
@@ -40,7 +40,7 @@ struct ProfileSettingView: View {
     @State private var name: String = ""
     var namePlaceholder: String {
         guard let user = authService.currentUser else { return "닉네임" }
-        return user.name
+        return user.userField.name
     }
     @State private var birthDate: String = ""
     @State private var selectedGender: Gender?
@@ -202,7 +202,7 @@ struct ProfileSettingView: View {
                 // "완료" 버튼
                 Button {
                     Task {
-                        if try authService.getProvider().contains(.apple) {
+                        if try authService.getProviderOptionString() == AuthProviderOption.apple.rawValue {
                             // 재로그인
                             let signWithApple = SignInWithAppleHelper()
                             let appleIDCredential = try await signWithApple()
@@ -211,9 +211,7 @@ struct ProfileSettingView: View {
                             authService.signInStatus = true
                         }
                         // 프로필 이미지 storage 저장
-                        authService.uploadProfileImageToStorage(image: userProfileImage)
-                        // 유저 프로필 받아오기
-                        await authService.fetchProfileImage()
+                        await authService.uploadProfileImageToStorage(image: userProfileImage)
                         // 유저 이름, 생일, 성별, 프로필, 알림 동의 등 forestore 에 저장
                         authService.addUserDataToStore(
                             userData: UserField(
@@ -221,10 +219,10 @@ struct ProfileSettingView: View {
                                 age: Formatter.calculateAge(birthdate: birthDate) ?? 20,
                                 gender: selectedGender!.rawValue,
                                 notificationAllowed: notificationAllowed,
-                                likedPosts: [], likedDrinks: [],
-                                profileURL: authService.currentUser!.profileURL))
+                                profileImageURL: authService.currentUser!.userField.profileImageURL,
+                                authProviders: try authService.getProviderOptionString()))
                         // 유저 데이터 받기
-                        await authService.getAuthUser()
+                        await authService.getCurrentUserField()
                     }
                     authService.isLoading = false
                     navigationRouter.back()

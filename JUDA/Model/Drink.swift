@@ -17,8 +17,16 @@ enum DrinkType: String {
     case whiskey = "위스키"
 }
 
+struct Drink {
+	let drinkField: DrinkField
+	let taggedPosts: [Post]
+	let agePrefence: AgePreference
+	let GenderPreference: GenderPreference
+	let likedCount: Int // Firestore likedUsersUID Collection에 해당하는 Document 갯수
+}
+
 // MARK: - Firebase에서 사용하는 Drink Model
-struct FBDrink: Codable, Hashable {
+struct DrinkField: Codable, Hashable {
 	@DocumentID var drinkID: String?
 	let category: String
 	let type: String
@@ -39,17 +47,18 @@ struct FBDrink: Codable, Hashable {
     let material: [String]?  // traditional
 	let wellMatched: [String]
 	let rating: Double
-    let taggedPostID: [String]
-	let agePreference: [String: Int]
-	let genderPreference: [String: Int]
+}
 
-    static let dummyData = FBDrink(
-        category: "와인", type: "레드", name: "맥매니스, 캘리포니아 피노 누아",
-        amount: "750ml", price: 65000, alcohol: 13.5,
-        country: "미국", province: "캘리포니아",
-        aroma: ["딸기잼", "체리"], taste: ["바닐라", "크림", "블루베리"], finish: ["깔끔한"],
-        sweet: nil, sour: nil, refresh: nil, body: nil, carbonated: nil, material: nil,
-        wellMatched: ["치즈", "오리고기"], rating: 4.1,
-        taggedPostID: ["z", "s"], agePreference: ["20": 42, "30": 72, "40": 40, "50": 19],
-        genderPreference: ["female": 68, "male": 40 ])
+// MARK: - Firestore AgePreferenceUID Collection에 해당하는 Document 갯수
+struct AgePreference {
+	var twenty: Int
+	var thirty: Int
+	var fourty: Int
+	var fifty: Int
+}
+
+// MARK: - Firestore GenderPreferenceUID Collection에 해당하는 Document 갯수
+struct GenderPreference {
+	var male: Int
+	var female: Int
 }

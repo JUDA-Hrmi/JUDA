@@ -9,10 +9,12 @@ import Foundation
 import FirebaseFirestore
 
 // Firebase users 컬렉션 데이터 모델
-struct JUDAUser {
-    let userField: UserField
-    let posts: [Post]
-    let userNotification: [String: NotificationField]
+struct User {
+    var userField: UserField
+    var posts: [Post]
+    var likedPosts: [Post]
+    var likedDrinks: [Drink]
+    var notifications: [UserNotification]
 }
 
 // Firebase users 컬렉션 필드 데이터 모델
@@ -22,18 +24,20 @@ struct UserField: Codable {
     var age: Int
     var gender: String
     var notificationAllowed: Bool
-    var likedPosts: [String]
-    var likedDrinks: [String]
-    var profileURL: URL
-//    var authProviders: [AuthProviderOption]
+    var profileImageURL: URL
+    var authProviders: String // AuthProviderOption - rawValue
+}
+
+struct UserNotification {
+    var notificationField: NotificationField
+    var likedUser: User
+    var likedPost: Post
 }
 
 // Firebase users/notificationList 컬렉션 데이터 모델
 struct NotificationField: Codable, Hashable {
-    let likedUserName: String
-    let likedUserId: String
-    let postId: String
-    let thumbnailImageURL: URL?
-    let likedTime: Date
+    var isChecked: Bool
+    var likedTime: Date
+    var thumbnailImageURL: URL?
 }
 

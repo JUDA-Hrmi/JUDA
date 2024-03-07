@@ -16,11 +16,11 @@
 		09254CA72B637C9900569D94 /* CustomDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09254CA62B637C9900569D94 /* CustomDivider.swift */; };
 		093357B82B8DCA5500A9ACAB /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093357B72B8DCA5500A9ACAB /* MyPageView.swift */; };
 		093357BA2B8E120200A9ACAB /* ErrorPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093357B92B8E120200A9ACAB /* ErrorPageView.swift */; };
-		093357C32B9547D700A9ACAB /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = 093357C12B9547D700A9ACAB /* APIKEYS.plist */; };
 		093357C62B9547F200A9ACAB /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 093357C52B9547F200A9ACAB /* DrinkLoading.json */; };
 		093357C92B954A8A00A9ACAB /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 093357C82B954A8A00A9ACAB /* GoogleSignIn */; };
 		093357CB2B954A8A00A9ACAB /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 093357CA2B954A8A00A9ACAB /* GoogleSignInSwift */; };
 		093357CF2B95505E00A9ACAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093357CE2B95505B00A9ACAB /* AppDelegate.swift */; };
+		095D708D2B98200B00F76C11 /* FirebaseUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095D708C2B98200B00F76C11 /* FirebaseUserViewModel.swift */; };
 		0961B7972B6624D300A9F553 /* DrinkInfoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0961B7962B6624D300A9F553 /* DrinkInfoList.swift */; };
 		0961B7992B6624DD00A9F553 /* DrinkInfoGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */; };
 		096E63182B616886009246CE /* DrinkListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096E63172B616886009246CE /* DrinkListCell.swift */; };
@@ -58,7 +58,6 @@
 		09C7C9A22B8CAA0B00F62617 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C7C9A12B8CAA0B00F62617 /* MyPageViewModel.swift */; };
 		09C7C9AF2B8DB57E00F62617 /* NavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C7C9AE2B8DB57E00F62617 /* NavigationRouter.swift */; };
 		09E34BC72B96134E0037C561 /* FirestorageAuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E34BC62B96134E0037C561 /* FirestorageAuthViewModel.swift */; };
-		09E34BC92B96FBE20037C561 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09E34BC82B96FBE20037C561 /* GoogleService-Info.plist */; };
 		09F869932B68E36800A56A4C /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869922B68E36800A56A4C /* Formatter.swift */; };
 		09F869962B68E46500A56A4C /* DrinkDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869952B68E46500A56A4C /* DrinkDetailView.swift */; };
 		09F869982B68E48400A56A4C /* DrinkDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869972B68E48400A56A4C /* DrinkDetails.swift */; };
@@ -95,6 +94,8 @@
 		7B6D76B32B67D3B700601B55 /* PostDrinkRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76B22B67D3B700601B55 /* PostDrinkRating.swift */; };
 		7B6D76B52B67D5F900601B55 /* PostTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76B42B67D5F900601B55 /* PostTags.swift */; };
 		7B6D76B92B68D9C900601B55 /* PostReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76B82B68D9C900601B55 /* PostReportView.swift */; };
+		7B881CA32B97464200571352 /* FirestorePostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B881CA22B97464200571352 /* FirestorePostViewModel.swift */; };
+		7B881CA52B97545700571352 /* FirestoreDrinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B881CA42B97545700571352 /* FirestoreDrinkViewModel.swift */; };
 		7B904C662B6168C60052384A /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B904C652B6168C60052384A /* PostCell.swift */; };
 		7B904C682B6184560052384A /* CustomTextSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B904C672B6184560052384A /* CustomTextSegment.swift */; };
 		7B92656B2B692E7200840095 /* PostReportTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B92656A2B692E7200840095 /* PostReportTitle.swift */; };
@@ -182,9 +183,10 @@
 		09254CA62B637C9900569D94 /* CustomDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDivider.swift; sourceTree = "<group>"; };
 		093357B72B8DCA5500A9ACAB /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		093357B92B8E120200A9ACAB /* ErrorPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPageView.swift; sourceTree = "<group>"; };
-		093357C12B9547D700A9ACAB /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = APIKEYS.plist; sourceTree = "<group>"; };
 		093357C52B9547F200A9ACAB /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = DrinkLoading.json; path = "../../../../흐르미/Lottie/DrinkLoading.json"; sourceTree = "<group>"; };
 		093357CE2B95505B00A9ACAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		095D708A2B981F4E00F76C11 /* JUDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = JUDA.app; path = "/Users/phang/Desktop/juda/build/Debug-iphoneos/JUDA.app"; sourceTree = "<absolute>"; };
+		095D708C2B98200B00F76C11 /* FirebaseUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserViewModel.swift; sourceTree = "<group>"; };
 		0961B7962B6624D300A9F553 /* DrinkInfoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoList.swift; sourceTree = "<group>"; };
 		0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoGrid.swift; sourceTree = "<group>"; };
 		096E63172B616886009246CE /* DrinkListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkListCell.swift; sourceTree = "<group>"; };
@@ -221,7 +223,6 @@
 		09C7C9A12B8CAA0B00F62617 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		09C7C9AE2B8DB57E00F62617 /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
 		09E34BC62B96134E0037C561 /* FirestorageAuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestorageAuthViewModel.swift; sourceTree = "<group>"; };
-		09E34BC82B96FBE20037C561 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		09F869922B68E36800A56A4C /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		09F869952B68E46500A56A4C /* DrinkDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailView.swift; sourceTree = "<group>"; };
 		09F869972B68E48400A56A4C /* DrinkDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetails.swift; sourceTree = "<group>"; };
@@ -260,6 +261,8 @@
 		7B6D76B42B67D5F900601B55 /* PostTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTags.swift; sourceTree = "<group>"; };
 		7B6D76B62B68972000601B55 /* PostGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostGrid.swift; sourceTree = "<group>"; };
 		7B6D76B82B68D9C900601B55 /* PostReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportView.swift; sourceTree = "<group>"; };
+		7B881CA22B97464200571352 /* FirestorePostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestorePostViewModel.swift; sourceTree = "<group>"; };
+		7B881CA42B97545700571352 /* FirestoreDrinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreDrinkViewModel.swift; sourceTree = "<group>"; };
 		7B904C652B6168C60052384A /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		7B904C672B6184560052384A /* CustomTextSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextSegment.swift; sourceTree = "<group>"; };
 		7B92656A2B692E7200840095 /* PostReportTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportTitle.swift; sourceTree = "<group>"; };
@@ -296,7 +299,6 @@
 		B12BEE4E2B6B7BDA00580D29 /* Handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Handler.swift; sourceTree = "<group>"; };
 		B158F83E2B657A9000E33C47 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoSegment.swift; sourceTree = "<group>"; };
-		B180B9522B8D856400E15B45 /* JUDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = JUDA.app; path = "/Users/phang/Desktop/juda/build/Debug-iphoneos/JUDA.app"; sourceTree = "<absolute>"; };
 		B1B8FE7C2B5EA9D900921BBE /* JUDAApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JUDAApp.swift; sourceTree = "<group>"; };
 		B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B1B8FE832B5EA9DA00921BBE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -368,6 +370,14 @@
 				090FF1C62B80A0C600AF22B5 /* SplashView.swift */,
 			);
 			path = Splash;
+			sourceTree = "<group>";
+		};
+		095D708B2B981FC400F76C11 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				095D708C2B98200B00F76C11 /* FirebaseUserViewModel.swift */,
+			);
+			path = User;
 			sourceTree = "<group>";
 		};
 		099912662B85C43E00E72C73 /* JsonUploadFiles */ = {
@@ -536,8 +546,6 @@
 				B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */,
 				B1B8FE8C2B5EAAAB00921BBE /* Colors.xcassets */,
 				B121A56F2B5F8DA100667D42 /* Info.plist */,
-				093357C12B9547D700A9ACAB /* APIKEYS.plist */,
-				09E34BC82B96FBE20037C561 /* GoogleService-Info.plist */,
 				B1B8FE822B5EA9DA00921BBE /* Preview Content */,
 			);
 			path = JUDA;
@@ -565,6 +573,7 @@
 		B1EE246E2B614289007F68B0 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				095D708B2B981FC400F76C11 /* User */,
 				099912662B85C43E00E72C73 /* JsonUploadFiles */,
 				09BCC1362B7B99BD00FF4D1B /* App */,
 				09BCC1372B7B99C500FF4D1B /* Auth */,
@@ -712,6 +721,8 @@
 			children = (
 				B1EE249B2B6144CD007F68B0 /* PostsViewModel.swift */,
 				7B0A8BC82B8C88F300740E61 /* SearchPostsViewModel.swift */,
+				7B881CA22B97464200571352 /* FirestorePostViewModel.swift */,
+				7B881CA42B97545700571352 /* FirestoreDrinkViewModel.swift */,
 			);
 			path = Posts;
 			sourceTree = "<group>";
@@ -809,7 +820,7 @@
 				093357CA2B954A8A00A9ACAB /* GoogleSignInSwift */,
 			);
 			productName = FinalHrmiProjects;
-			productReference = B180B9522B8D856400E15B45 /* JUDA.app */;
+			productReference = 095D708A2B981F4E00F76C11 /* JUDA.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -869,8 +880,6 @@
 				B121A5772B5F911900667D42 /* Pretendard-SemiBold.otf in Resources */,
 				09BCC1532B7C7E2900FF4D1B /* Snow.json in Resources */,
 				09BCC1542B7C7E2900FF4D1B /* Clouds.json in Resources */,
-				09E34BC92B96FBE20037C561 /* GoogleService-Info.plist in Resources */,
-				093357C32B9547D700A9ACAB /* APIKEYS.plist in Resources */,
 				B121A5742B5F910B00667D42 /* Pretendard-Light.otf in Resources */,
 				09BCC1522B7C7E2900FF4D1B /* Rain.json in Resources */,
 				B121A5762B5F911700667D42 /* Pretendard-Regular.otf in Resources */,
@@ -888,12 +897,14 @@
 			files = (
 				0974A1542B8B84E900476199 /* ShimmerDrinkListCell.swift in Sources */,
 				0902EB492B7E3372003D555E /* ProfileSettingView.swift in Sources */,
+				095D708D2B98200B00F76C11 /* FirebaseUserViewModel.swift in Sources */,
 				7BBDFF722B6B912C0036FB8B /* TabItem.swift in Sources */,
 				7BBDFF732B6B912C0036FB8B /* DrinkInfoSegment.swift in Sources */,
 				7BBDFF6E2B6B90EB0036FB8B /* JUDAApp.swift in Sources */,
 				7BBDFF6F2B6B90EB0036FB8B /* AddTagView.swift in Sources */,
 				09A320162B8B30D100DE4646 /* SearchDrinkViewModel.swift in Sources */,
 				7BBDFF702B6B90EB0036FB8B /* PostGrid.swift in Sources */,
+				7B881CA52B97545700571352 /* FirestoreDrinkViewModel.swift in Sources */,
 				090FF1CE2B83413100AF22B5 /* CustomLoadingView.swift in Sources */,
 				7BBDFF712B6B90EB0036FB8B /* MainViewModel.swift in Sources */,
 				2C5B0F422B6B10CF005F1A99 /* CustomDialog.swift in Sources */,
@@ -914,6 +925,7 @@
 				09A6AD722B70B46E00606585 /* AppViewModel.swift in Sources */,
 				7B6D76B32B67D3B700601B55 /* PostDrinkRating.swift in Sources */,
 				7B6D76B12B67D1E100601B55 /* PostPhotoScroll.swift in Sources */,
+				7B881CA32B97464200571352 /* FirestorePostViewModel.swift in Sources */,
 				0974A1502B8B7B6C00476199 /* ShimmerPostCell.swift in Sources */,
 				09F869B52B6A47B700A56A4C /* AlarmStoreListCell.swift in Sources */,
 				B1EE249A2B6144C5007F68B0 /* RecordViewModel.swift in Sources */,

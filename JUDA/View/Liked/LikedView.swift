@@ -124,7 +124,3 @@ struct LikedView: View {
         .toolbar(appViewModel.tabBarState, for: .tabBar)
     }
 }
-
-#Preview {
-    LikedView()
-}
