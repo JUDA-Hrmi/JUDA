@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B1B8FE782B5EA9D900921BBE"
-               BuildableName = "JUDA.app"
+               BuildableName = "JUDA"
                BlueprintName = "JUDA"
                ReferencedContainer = "container:JUDA.xcodeproj">
             </BuildableReference>
@@ -44,7 +44,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B1B8FE782B5EA9D900921BBE"
-            BuildableName = "JUDA.app"
+            BuildableName = "JUDA"
             BlueprintName = "JUDA"
             ReferencedContainer = "container:JUDA.xcodeproj">
          </BuildableReference>
@@ -61,7 +61,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B1B8FE782B5EA9D900921BBE"
-            BuildableName = "JUDA.app"
+            BuildableName = "JUDA"
             BlueprintName = "JUDA"
             ReferencedContainer = "container:JUDA.xcodeproj">
          </BuildableReference>
