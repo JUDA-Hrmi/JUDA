@@ -16,7 +16,6 @@
 		09254CA72B637C9900569D94 /* CustomDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09254CA62B637C9900569D94 /* CustomDivider.swift */; };
 		093357B82B8DCA5500A9ACAB /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093357B72B8DCA5500A9ACAB /* MyPageView.swift */; };
 		093357BA2B8E120200A9ACAB /* ErrorPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093357B92B8E120200A9ACAB /* ErrorPageView.swift */; };
-		093357C62B9547F200A9ACAB /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 093357C52B9547F200A9ACAB /* DrinkLoading.json */; };
 		093357C92B954A8A00A9ACAB /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 093357C82B954A8A00A9ACAB /* GoogleSignIn */; };
 		093357CB2B954A8A00A9ACAB /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 093357CA2B954A8A00A9ACAB /* GoogleSignInSwift */; };
 		093357CF2B95505E00A9ACAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093357CE2B95505B00A9ACAB /* AppDelegate.swift */; };
@@ -86,6 +85,9 @@
 		7B0A8BC92B8C88F300740E61 /* SearchPostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0A8BC82B8C88F300740E61 /* SearchPostsViewModel.swift */; };
 		7B0A8BCD2B8CA7E900740E61 /* PostSearchList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0A8BCC2B8CA7E900740E61 /* PostSearchList.swift */; };
 		7B0A8BCF2B8CA8C300740E61 /* PostSearchListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0A8BCE2B8CA8C300740E61 /* PostSearchListCell.swift */; };
+		7B189B7E2B9959830047A031 /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B189B7D2B9959830047A031 /* DrinkLoading.json */; };
+		7B189B812B9959940047A031 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7B189B7F2B9959940047A031 /* GoogleService-Info.plist */; };
+		7B189B822B9959940047A031 /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7B189B802B9959940047A031 /* APIKEYS.plist */; };
 		7B5174922B69EAB300915793 /* NavigationPostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5174912B69EAB300915793 /* NavigationPostsView.swift */; };
 		7B6D76A72B677A8F00601B55 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76A62B677A8F00601B55 /* Button.swift */; };
 		7B6D76AB2B67CE3D00601B55 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76AA2B67CE3D00601B55 /* PostDetailView.swift */; };
@@ -183,9 +185,7 @@
 		09254CA62B637C9900569D94 /* CustomDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDivider.swift; sourceTree = "<group>"; };
 		093357B72B8DCA5500A9ACAB /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		093357B92B8E120200A9ACAB /* ErrorPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPageView.swift; sourceTree = "<group>"; };
-		093357C52B9547F200A9ACAB /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = DrinkLoading.json; path = "../../../../흐르미/Lottie/DrinkLoading.json"; sourceTree = "<group>"; };
 		093357CE2B95505B00A9ACAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		095D708A2B981F4E00F76C11 /* JUDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = JUDA.app; path = "/Users/phang/Desktop/juda/build/Debug-iphoneos/JUDA.app"; sourceTree = "<absolute>"; };
 		095D708C2B98200B00F76C11 /* FirebaseUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserViewModel.swift; sourceTree = "<group>"; };
 		0961B7962B6624D300A9F553 /* DrinkInfoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoList.swift; sourceTree = "<group>"; };
 		0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoGrid.swift; sourceTree = "<group>"; };
@@ -252,6 +252,9 @@
 		7B0A8BC82B8C88F300740E61 /* SearchPostsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPostsViewModel.swift; sourceTree = "<group>"; };
 		7B0A8BCC2B8CA7E900740E61 /* PostSearchList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostSearchList.swift; sourceTree = "<group>"; };
 		7B0A8BCE2B8CA8C300740E61 /* PostSearchListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostSearchListCell.swift; sourceTree = "<group>"; };
+		7B189B7D2B9959830047A031 /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = DrinkLoading.json; path = ../../../../../../../JUDA_file/Lottie/DrinkLoading.json; sourceTree = "<group>"; };
+		7B189B7F2B9959940047A031 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../JUDA_file/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7B189B802B9959940047A031 /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = APIKEYS.plist; path = ../../../../../JUDA_file/APIKEYS.plist; sourceTree = "<group>"; };
 		7B5174912B69EAB300915793 /* NavigationPostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationPostsView.swift; sourceTree = "<group>"; };
 		7B6D76A62B677A8F00601B55 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		7B6D76AA2B67CE3D00601B55 /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
@@ -261,6 +264,7 @@
 		7B6D76B42B67D5F900601B55 /* PostTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTags.swift; sourceTree = "<group>"; };
 		7B6D76B62B68972000601B55 /* PostGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostGrid.swift; sourceTree = "<group>"; };
 		7B6D76B82B68D9C900601B55 /* PostReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportView.swift; sourceTree = "<group>"; };
+		7B74FA562B997A0B00BAC2AC /* JUDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = JUDA.app; path = "/Users/minjaekim/Desktop/Dev/iOS/Technical-Project/Team-Projects/JUDA/build/Debug-iphoneos/JUDA.app"; sourceTree = "<absolute>"; };
 		7B881CA22B97464200571352 /* FirestorePostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestorePostViewModel.swift; sourceTree = "<group>"; };
 		7B881CA42B97545700571352 /* FirestoreDrinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreDrinkViewModel.swift; sourceTree = "<group>"; };
 		7B904C652B6168C60052384A /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
@@ -417,7 +421,7 @@
 				09BCC1492B7C7E2900FF4D1B /* Loading.json */,
 				09BCC14C2B7C7E2900FF4D1B /* Rain.json */,
 				09BCC14D2B7C7E2900FF4D1B /* Snow.json */,
-				093357C52B9547F200A9ACAB /* DrinkLoading.json */,
+				7B189B7D2B9959830047A031 /* DrinkLoading.json */,
 				09BCC14B2B7C7E2900FF4D1B /* Sun.json */,
 				09BCC14A2B7C7E2900FF4D1B /* Thunder.json */,
 			);
@@ -546,6 +550,8 @@
 				B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */,
 				B1B8FE8C2B5EAAAB00921BBE /* Colors.xcassets */,
 				B121A56F2B5F8DA100667D42 /* Info.plist */,
+				7B189B802B9959940047A031 /* APIKEYS.plist */,
+				7B189B7F2B9959940047A031 /* GoogleService-Info.plist */,
 				B1B8FE822B5EA9DA00921BBE /* Preview Content */,
 			);
 			path = JUDA;
@@ -820,7 +826,7 @@
 				093357CA2B954A8A00A9ACAB /* GoogleSignInSwift */,
 			);
 			productName = FinalHrmiProjects;
-			productReference = 095D708A2B981F4E00F76C11 /* JUDA.app */;
+			productReference = 7B74FA562B997A0B00BAC2AC /* JUDA.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -870,10 +876,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				09BCC1512B7C7E2900FF4D1B /* Sun.json in Resources */,
-				093357C62B9547F200A9ACAB /* DrinkLoading.json in Resources */,
 				09BCC1502B7C7E2900FF4D1B /* Thunder.json in Resources */,
 				B1B8FE8D2B5EAAAB00921BBE /* Colors.xcassets in Resources */,
 				B121A5732B5F910900667D42 /* Pretendard-Bold.otf in Resources */,
+				7B189B7E2B9959830047A031 /* DrinkLoading.json in Resources */,
 				09BCC14F2B7C7E2900FF4D1B /* Loading.json in Resources */,
 				B1B8FE842B5EA9DA00921BBE /* Preview Assets.xcassets in Resources */,
 				B121A5782B5F911A00667D42 /* Pretendard-Thin.otf in Resources */,
@@ -881,10 +887,12 @@
 				09BCC1532B7C7E2900FF4D1B /* Snow.json in Resources */,
 				09BCC1542B7C7E2900FF4D1B /* Clouds.json in Resources */,
 				B121A5742B5F910B00667D42 /* Pretendard-Light.otf in Resources */,
+				7B189B812B9959940047A031 /* GoogleService-Info.plist in Resources */,
 				09BCC1522B7C7E2900FF4D1B /* Rain.json in Resources */,
 				B121A5762B5F911700667D42 /* Pretendard-Regular.otf in Resources */,
 				B1B8FE812B5EA9DA00921BBE /* Assets.xcassets in Resources */,
 				B121A5752B5F911500667D42 /* Pretendard-Medium.otf in Resources */,
+				7B189B822B9959940047A031 /* APIKEYS.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
