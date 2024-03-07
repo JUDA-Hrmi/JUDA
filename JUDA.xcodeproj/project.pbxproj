@@ -188,7 +188,6 @@
 		093357B92B8E120200A9ACAB /* ErrorPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPageView.swift; sourceTree = "<group>"; };
 		093357CE2B95505B00A9ACAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		095D708C2B98200B00F76C11 /* FirebaseUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserViewModel.swift; sourceTree = "<group>"; };
-		095D708F2B9997B200F76C11 /* JUDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = JUDA.app; path = "/Users/phang/Desktop/juda/build/Debug-iphoneos/JUDA.app"; sourceTree = "<absolute>"; };
 		095D70902B99BD1400F76C11 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		0961B7962B6624D300A9F553 /* DrinkInfoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoList.swift; sourceTree = "<group>"; };
 		0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoGrid.swift; sourceTree = "<group>"; };
@@ -250,7 +249,6 @@
 		2C63DD642B67DFA400770E3A /* DrinkTagScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkTagScroll.swift; sourceTree = "<group>"; };
 		2C63DD662B67EB1B00770E3A /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		2C7FD5512B848EEF00169512 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
-		2CACB53A2B99BAA200DD6DCE /* JUDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JUDA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CACB53B2B99BAC500DD6DCE /* FireStorageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireStorageViewModel.swift; sourceTree = "<group>"; };
 		7B0A8BC42B8C163E00740E61 /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
 		7B0A8BC82B8C88F300740E61 /* SearchPostsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPostsViewModel.swift; sourceTree = "<group>"; };
@@ -268,7 +266,6 @@
 		7B6D76B42B67D5F900601B55 /* PostTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTags.swift; sourceTree = "<group>"; };
 		7B6D76B62B68972000601B55 /* PostGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostGrid.swift; sourceTree = "<group>"; };
 		7B6D76B82B68D9C900601B55 /* PostReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportView.swift; sourceTree = "<group>"; };
-		7B74FA562B997A0B00BAC2AC /* JUDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = JUDA.app; path = "/Users/minjaekim/Desktop/Dev/iOS/Technical-Project/Team-Projects/JUDA/build/Debug-iphoneos/JUDA.app"; sourceTree = "<absolute>"; };
 		7B881CA22B97464200571352 /* FirestorePostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestorePostViewModel.swift; sourceTree = "<group>"; };
 		7B881CA42B97545700571352 /* FirestoreDrinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreDrinkViewModel.swift; sourceTree = "<group>"; };
 		7B904C652B6168C60052384A /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
@@ -540,7 +537,6 @@
 			isa = PBXGroup;
 			children = (
 				B1B8FE7B2B5EA9D900921BBE /* JUDA */,
-				2CACB53A2B99BAA200DD6DCE /* JUDA.app */,
 			);
 			sourceTree = "<group>";
 		};

@@ -35,7 +35,7 @@ extension FireStorageViewModel {
     }
     
     // URL 받아오기
-    func fetchProfileImageURL(folder: FireStorageFolderType, fileName: String) async throws -> URL {
+    func fetchImageURL(folder: FireStorageFolderType, fileName: String) async throws -> URL {
         let storageRoute = storageRef.child("\(folder.rawValue)/\(fileName)")
         let url = try await storageRoute.downloadURL()
         return url
