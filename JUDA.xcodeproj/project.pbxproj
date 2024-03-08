@@ -21,6 +21,9 @@
 		093357CF2B95505E00A9ACAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093357CE2B95505B00A9ACAB /* AppDelegate.swift */; };
 		095D708D2B98200B00F76C11 /* FirebaseUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095D708C2B98200B00F76C11 /* FirebaseUserViewModel.swift */; };
 		095D70912B99BD1400F76C11 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095D70902B99BD1400F76C11 /* UserService.swift */; };
+		095D70932B99EAA500F76C11 /* MainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095D70922B99EAA500F76C11 /* MainService.swift */; };
+		095D70952B99F35600F76C11 /* OpenAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095D70942B99F35600F76C11 /* OpenAI.swift */; };
+		095D70972B99F35D00F76C11 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095D70962B99F35D00F76C11 /* Weather.swift */; };
 		0961B7972B6624D300A9F553 /* DrinkInfoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0961B7962B6624D300A9F553 /* DrinkInfoList.swift */; };
 		0961B7992B6624DD00A9F553 /* DrinkInfoGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */; };
 		096E63182B616886009246CE /* DrinkListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096E63172B616886009246CE /* DrinkListCell.swift */; };
@@ -105,7 +108,6 @@
 		7BBDFF6E2B6B90EB0036FB8B /* JUDAApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8FE7C2B5EA9D900921BBE /* JUDAApp.swift */; };
 		7BBDFF6F2B6B90EB0036FB8B /* AddTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE248B2B61446A007F68B0 /* AddTagView.swift */; };
 		7BBDFF702B6B90EB0036FB8B /* PostGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76B62B68972000601B55 /* PostGrid.swift */; };
-		7BBDFF712B6B90EB0036FB8B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE249F2B6144E3007F68B0 /* MainViewModel.swift */; };
 		7BBDFF722B6B912C0036FB8B /* TabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63DD512B676E1000770E3A /* TabItem.swift */; };
 		7BBDFF732B6B912C0036FB8B /* DrinkInfoSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16EB85B2B63859800E920A3 /* DrinkInfoSegment.swift */; };
 		7BE14B952B84733900C1F6C3 /* Drink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE14B942B84733900C1F6C3 /* Drink.swift */; };
@@ -115,7 +117,7 @@
 		AC2A053C2B88EC32003F23F7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = AC2A053B2B88EC32003F23F7 /* Kingfisher */; };
 		AC5778E52B6FC20C00F7B04B /* NavigationProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5778E42B6FC20C00F7B04B /* NavigationProfileView.swift */; };
 		AC588E842B8C55F70063AAB0 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = AC588E832B8C55F70063AAB0 /* FirebaseFirestore */; };
-		AC588E862B8CC8F10063AAB0 /* AiWellMatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC588E852B8CC8F10063AAB0 /* AiWellMatchViewModel.swift */; };
+		AC588E862B8CC8F10063AAB0 /* AIWellMatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC588E852B8CC8F10063AAB0 /* AIWellMatchViewModel.swift */; };
 		AC6D128A2B6A8ED100169B23 /* WeatherAndFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6D12892B6A8ED100169B23 /* WeatherAndFood.swift */; };
 		AC797BDA2B8B8BEB0018D227 /* DrinkTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC797BD92B8B8BEB0018D227 /* DrinkTopView.swift */; };
 		AC7EA1D92B8D77EE00E3E5EC /* Bundle +.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7EA1D82B8D77EE00E3E5EC /* Bundle +.swift */; };
@@ -123,7 +125,7 @@
 		AC98D1CD2B735765006F6EC9 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = AC98D1CC2B735765006F6EC9 /* Lottie */; };
 		AC98D1CF2B7357DA006F6EC9 /* Lottie.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98D1CE2B7357DA006F6EC9 /* Lottie.swift */; };
 		AC98D1D22B73586F006F6EC9 /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = AC98D1D12B73586F006F6EC9 /* OpenAI */; };
-		AC98D1D42B7358AE006F6EC9 /* AiViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98D1D32B7358AE006F6EC9 /* AiViewModel.swift */; };
+		AC98D1D42B7358AE006F6EC9 /* AIViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98D1D32B7358AE006F6EC9 /* AIViewModel.swift */; };
 		AC98D1D82B7359CC006F6EC9 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98D1D72B7359CC006F6EC9 /* WeatherViewModel.swift */; };
 		B10307292B8A367800CEAD98 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = B10307282B8A367800CEAD98 /* FirebaseMessaging */; };
 		B1198FA02B84EAF3002BE0DE /* UnauthenticatedMypageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1198F9F2B84EAF3002BE0DE /* UnauthenticatedMypageView.swift */; };
@@ -186,6 +188,9 @@
 		093357CE2B95505B00A9ACAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		095D708C2B98200B00F76C11 /* FirebaseUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserViewModel.swift; sourceTree = "<group>"; };
 		095D70902B99BD1400F76C11 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		095D70922B99EAA500F76C11 /* MainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainService.swift; sourceTree = "<group>"; };
+		095D70942B99F35600F76C11 /* OpenAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAI.swift; sourceTree = "<group>"; };
+		095D70962B99F35D00F76C11 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		0961B7962B6624D300A9F553 /* DrinkInfoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoList.swift; sourceTree = "<group>"; };
 		0961B7982B6624DD00A9F553 /* DrinkInfoGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoGrid.swift; sourceTree = "<group>"; };
 		096E63172B616886009246CE /* DrinkListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkListCell.swift; sourceTree = "<group>"; };
@@ -273,13 +278,13 @@
 		AC110B562B69658C005390BB /* ChangeUserNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeUserNameView.swift; sourceTree = "<group>"; };
 		AC1BE8E52B8B99EC0015381D /* PostTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTopView.swift; sourceTree = "<group>"; };
 		AC5778E42B6FC20C00F7B04B /* NavigationProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationProfileView.swift; sourceTree = "<group>"; };
-		AC588E852B8CC8F10063AAB0 /* AiWellMatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AiWellMatchViewModel.swift; sourceTree = "<group>"; };
+		AC588E852B8CC8F10063AAB0 /* AIWellMatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIWellMatchViewModel.swift; sourceTree = "<group>"; };
 		AC6D12892B6A8ED100169B23 /* WeatherAndFood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAndFood.swift; sourceTree = "<group>"; };
 		AC797BD92B8B8BEB0018D227 /* DrinkTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkTopView.swift; sourceTree = "<group>"; };
 		AC7EA1D82B8D77EE00E3E5EC /* Bundle +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle +.swift"; sourceTree = "<group>"; };
 		AC7EA1DA2B8D7D5000E3E5EC /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		AC98D1CE2B7357DA006F6EC9 /* Lottie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lottie.swift; sourceTree = "<group>"; };
-		AC98D1D32B7358AE006F6EC9 /* AiViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AiViewModel.swift; sourceTree = "<group>"; };
+		AC98D1D32B7358AE006F6EC9 /* AIViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIViewModel.swift; sourceTree = "<group>"; };
 		AC98D1D72B7359CC006F6EC9 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
 		B1198F9F2B84EAF3002BE0DE /* UnauthenticatedMypageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnauthenticatedMypageView.swift; sourceTree = "<group>"; };
 		B121A5692B5F8D5D00667D42 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
@@ -313,7 +318,6 @@
 		B1EE24992B6144C5007F68B0 /* RecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
 		B1EE249B2B6144CD007F68B0 /* PostsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsViewModel.swift; sourceTree = "<group>"; };
 		B1EE249D2B6144DD007F68B0 /* DrinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkViewModel.swift; sourceTree = "<group>"; };
-		B1EE249F2B6144E3007F68B0 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		B1EE24A42B614872007F68B0 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -378,6 +382,16 @@
 				095D708C2B98200B00F76C11 /* FirebaseUserViewModel.swift */,
 			);
 			path = User;
+			sourceTree = "<group>";
+		};
+		095D70982B9A09FB00F76C11 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				AC98D1D32B7358AE006F6EC9 /* AIViewModel.swift */,
+				AC98D1D72B7359CC006F6EC9 /* WeatherViewModel.swift */,
+				AC588E852B8CC8F10063AAB0 /* AIWellMatchViewModel.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		099912662B85C43E00E72C73 /* JsonUploadFiles */ = {
@@ -541,6 +555,7 @@
 				093357CE2B95505B00A9ACAB /* AppDelegate.swift */,
 				B1EE246F2B614293007F68B0 /* View */,
 				B1EE246E2B614289007F68B0 /* ViewModel */,
+				095D70982B9A09FB00F76C11 /* API */,
 				B1EE246D2B614280007F68B0 /* Model */,
 				B121A5652B5F8D2000667D42 /* Resource */,
 				B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */,
@@ -566,6 +581,8 @@
 				7BE14B942B84733900C1F6C3 /* Drink.swift */,
 				2C7FD5512B848EEF00169512 /* Post.swift */,
 				7B0A8BC42B8C163E00740E61 /* Report.swift */,
+				095D70942B99F35600F76C11 /* OpenAI.swift */,
+				095D70962B99F35D00F76C11 /* Weather.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -723,7 +740,6 @@
 			children = (
 				B1EE249D2B6144DD007F68B0 /* DrinkViewModel.swift */,
 				09A320152B8B30D100DE4646 /* SearchDrinkViewModel.swift */,
-				AC588E852B8CC8F10063AAB0 /* AiWellMatchViewModel.swift */,
 			);
 			path = Drink;
 			sourceTree = "<group>";
@@ -731,9 +747,7 @@
 		B1EE24852B6143EA007F68B0 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				B1EE249F2B6144E3007F68B0 /* MainViewModel.swift */,
-				AC98D1D32B7358AE006F6EC9 /* AiViewModel.swift */,
-				AC98D1D72B7359CC006F6EC9 /* WeatherViewModel.swift */,
+				095D70922B99EAA500F76C11 /* MainService.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -896,15 +910,15 @@
 				7BBDFF702B6B90EB0036FB8B /* PostGrid.swift in Sources */,
 				7B881CA52B97545700571352 /* FirestoreDrinkViewModel.swift in Sources */,
 				090FF1CE2B83413100AF22B5 /* CustomLoadingView.swift in Sources */,
-				7BBDFF712B6B90EB0036FB8B /* MainViewModel.swift in Sources */,
 				2C5B0F422B6B10CF005F1A99 /* CustomDialog.swift in Sources */,
-				AC588E862B8CC8F10063AAB0 /* AiWellMatchViewModel.swift in Sources */,
+				AC588E862B8CC8F10063AAB0 /* AIWellMatchViewModel.swift in Sources */,
 				09BCC15F2B7CFC7E00FF4D1B /* TermsAndVerificationView.swift in Sources */,
 				09BCC15A2B7C8CD300FF4D1B /* IdentityVerificationView.swift in Sources */,
 				B12BEE4B2B6A9E3B00580D29 /* NoticeView.swift in Sources */,
 				09F869BD2B6A4AAE00A56A4C /* LikedPostGrid.swift in Sources */,
 				099F16192B750E7E00D8BEDA /* UINavigationController +.swift in Sources */,
 				097BF6AB2B958ED200630178 /* SignInWithGoogleHelper.swift in Sources */,
+				095D70952B99F35600F76C11 /* OpenAI.swift in Sources */,
 				2C2FF2982B63916700B2301A /* StarRating.swift in Sources */,
 				2C63DD612B67D5EB00770E3A /* PhotoSelectPagingTab.swift in Sources */,
 				7B6D76B92B68D9C900601B55 /* PostReportView.swift in Sources */,
@@ -954,10 +968,12 @@
 				AC5778E52B6FC20C00F7B04B /* NavigationProfileView.swift in Sources */,
 				B1EE24982B6144BD007F68B0 /* LikedViewModel.swift in Sources */,
 				B1EE24922B61447F007F68B0 /* MainView.swift in Sources */,
+				095D70932B99EAA500F76C11 /* MainService.swift in Sources */,
 				093357BA2B8E120200A9ACAB /* ErrorPageView.swift in Sources */,
 				7B92656B2B692E7200840095 /* PostReportTitle.swift in Sources */,
 				090FF1C72B80A0C600AF22B5 /* SplashView.swift in Sources */,
 				AC7EA1DB2B8D7D5000E3E5EC /* LocationManager.swift in Sources */,
+				095D70972B99F35D00F76C11 /* Weather.swift in Sources */,
 				093357CF2B95505E00A9ACAB /* AppDelegate.swift in Sources */,
 				AC6D128A2B6A8ED100169B23 /* WeatherAndFood.swift in Sources */,
 				2C2044E82B63B9D600773266 /* ContentView.swift in Sources */,
@@ -994,7 +1010,7 @@
 				09F869A22B68E51600A56A4C /* PostListCell.swift in Sources */,
 				B1EE24882B61445E007F68B0 /* AuthenticatedMypageView.swift in Sources */,
 				09F869A02B68E50000A56A4C /* TaggedTrendingPosts.swift in Sources */,
-				AC98D1D42B7358AE006F6EC9 /* AiViewModel.swift in Sources */,
+				AC98D1D42B7358AE006F6EC9 /* AIViewModel.swift in Sources */,
 				09A320142B8929CC00DE4646 /* URL +.swift in Sources */,
 				7B0A8BC92B8C88F300740E61 /* SearchPostsViewModel.swift in Sources */,
 				7B6D76B52B67D5F900601B55 /* PostTags.swift in Sources */,
