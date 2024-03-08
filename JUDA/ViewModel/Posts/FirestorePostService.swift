@@ -9,15 +9,15 @@ import Foundation
 import FirebaseCore
 import FirebaseFirestore
 
-enum PostFetchError: Error {
-	case postField, postDocument
+enum PostError: Error {
+	case fieldFetch, documentFetch, upload, update, delete
 }
 
 @MainActor
-final class FirestorePostViewModel {}
+final class FirestorePostService {}
 
 // MARK: Firestore Fetch Data
-extension FirestorePostViewModel {
+extension FirestorePostService {
 	// posts collection의 post document data 불러오는 메서드
 	// 불러오지 못 할 수 경우 error throw
 	func fetchPostDocument(document: DocumentReference) async throws -> Post {
@@ -27,12 +27,12 @@ extension FirestorePostViewModel {
 			let likedUsersID: [String] = await fetchPostLikedUsersID(ref: likedUsersIDRef)
 			
 			return Post(postField: postField, likedUsersID: likedUsersID)
-		} catch PostFetchError.postField {
-			print("error :: fetchPostField() -> fetch post field data failure")
-			throw PostFetchError.postField
+		} catch PostError.fieldFetch {
+//			print("error :: fetchPostField() -> fetch post field data failure")
+			throw PostError.fieldFetch
 		} catch {
-			print("error :: fetchPostDocument() -> fetch post document data failure")
-			throw PostFetchError.postDocument
+//			print("error :: fetchPostDocument() -> fetch post document data failure")
+			throw PostError.documentFetch
 		}
 	}
 	
@@ -43,7 +43,7 @@ extension FirestorePostViewModel {
 			return try await document.getDocument(as: PostField.self)
 		} catch {
 			print(error.localizedDescription)
-			throw PostFetchError.postField
+			throw PostError.fieldFetch
 		}
 	}
 	
@@ -66,34 +66,58 @@ extension FirestorePostViewModel {
 	}
 }
 
-// MARK: Firestore post document delete
-extension FirestorePostViewModel {
-	// posts collection에서 삭제하고싶은 post에 해당하는 document 삭제 메서드
-	func deletePostDocument(postID: String) async -> Bool {
-		let postRef = Firestore.firestore().collection("posts")
+//MARK: Firestore post document upload
+extension FirestorePostService {
+	func uploadPostDocument(post: Post) async throws {
+		let postID = UUID().uuidString
+		let postDocumentRef = Firestore.firestore().collection("posts").document(postID)
+		let likedUsersIDCollectionRef = postDocumentRef.collection("likedUsersID")
 		
 		do {
-			try await postRef.document(postID).delete()
-			return true
+			try postDocumentRef.setData(from: post.postField, merge: true)
+			for userID in post.likedUsersID {
+				do {
+					try await likedUsersIDCollectionRef.document(userID).setData([:])
+				} catch {
+					print("error :: uploadPostDocument() -> upload post likedUsersID collection data failure")
+					print(error.localizedDescription)
+//					continue
+				}
+			}
 		} catch {
-			print("error :: postDelete() -> delete post document data failure")
+			print("error :: uploadPostDocument() -> upload post document data failure")
 			print(error.localizedDescription)
-			return false
+			throw PostError.upload
+		}
+	}
+}
+
+// MARK: Firestore post document delete
+extension FirestorePostService {
+	// posts collection에서 삭제하고싶은 post에 해당하는 document 삭제 메서드
+	func deletePostDocument(postID: String) async throws {
+		let postsRef = Firestore.firestore().collection("posts")
+		
+		do {
+			try await postsRef.document(postID).delete()
+		} catch {
+			print("error :: deletePostDocument() -> delete post document data failure")
+			print(error.localizedDescription)
+			throw PostError.delete
 		}
 	}
 }
 
 // MARK: Firestore post field data update
-extension FirestorePostViewModel {
+extension FirestorePostService {
 	// posts collection에서 수정하고싶은 post에 해당하는 field data 업데이트 메서드
-	func updatePostField(ref: CollectionReference, postID: String, data: [String: Any]) async -> Bool {
+	func updatePostField(ref: CollectionReference, postID: String, data: [String: Any]) async throws {
 		do {
 			try await ref.document(postID).updateData(data)
-			return true
 		} catch {
-			print("error :: postFieldUpdate() -> update post field data failure")
+			print("error :: updatePostField() -> update post field data failure")
 			print(error.localizedDescription)
-			return false
+			throw PostError.update
 		}
 	}
 }

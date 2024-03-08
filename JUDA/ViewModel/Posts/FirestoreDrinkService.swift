@@ -21,22 +21,22 @@ enum DrinkFetchError: Error {
 }
 
 @MainActor
-final class FirestoreDrinkViewModel {
-	private let firestorePostViewModel = FirestorePostViewModel()
+final class FirestoreDrinkService {
+	private let firestorePostService = FirestorePostService()
 }
 
 // MARK: Firestore Fetch Data
-extension FirestoreDrinkViewModel {
+extension FirestoreDrinkService {
 	// drinks collection의 document data 불러오는 메서드
 	// 불러오지 못 할 경우 error를 throw
-	func fetchDrinkDocument(ref: CollectionReference, drinkID: String) async throws -> Drink {
+	func fetchDrinkDocument(document: DocumentReference) async throws -> Drink {
 		do {
-			let taggedPostsRef = ref.document(drinkID).collection("taggedPosts")
-			let agePreferenceUIDRef = ref.document(drinkID).collection("agePreferenceUID")
-			let genderPreferenceUIDRef = ref.document(drinkID).collection("genderPreferenceUID")
-			let likedUsersIDRef = ref.document(drinkID).collection("likedUsersID")
+			let taggedPostsRef = document.collection("taggedPosts")
+			let agePreferenceUIDRef = document.collection("agePreferenceUID")
+			let genderPreferenceUIDRef = document.collection("genderPreferenceUID")
+			let likedUsersIDRef = document.collection("likedUsersID")
 			
-			let drikField = try await fetchDrinkField(ref: ref, drinkID: drinkID)
+			let drikField = try await fetchDrinkField(document: document)
 			let taggedPosts = await fetchTaggedPosts(ref: taggedPostsRef)
 			let agePreference = await fetchAgePreferenceUID(ref: agePreferenceUIDRef)
 			let genderPreference = await fetchGenderPreferenceUID(ref: genderPreferenceUIDRef)
@@ -66,7 +66,7 @@ extension FirestoreDrinkViewModel {
 			let snapshot = try await ref.getDocuments()
 			for document in snapshot.documents {
 				let documentRef = document.reference
-				let taggedPost = try await firestorePostViewModel.fetchPostDocument(document: documentRef)
+				let taggedPost = try await firestorePostService.fetchPostDocument(document: documentRef)
 				
 				taggedPosts.append(taggedPost)
 			}
@@ -79,9 +79,9 @@ extension FirestoreDrinkViewModel {
 	
 	// drinks collection의 Field data 불러오는 메서드
 	// 불러오지 못 할 경우 error를 throw
-	func fetchDrinkField(ref: CollectionReference, drinkID: String) async throws -> DrinkField {
+	func fetchDrinkField(document: DocumentReference) async throws -> DrinkField {
 		do {
-			return try await ref.document(drinkID).getDocument(as: DrinkField.self)
+			return try await document.getDocument(as: DrinkField.self)
 		} catch {
 			print(error.localizedDescription)
 			throw DrinkFetchError.drinkField
@@ -154,7 +154,7 @@ extension FirestoreDrinkViewModel {
 }
 
 // MARK: Firestore drink field data update
-extension FirestoreDrinkViewModel {
+extension FirestoreDrinkService {
 	// drinks collection field data update 메서드
 	func updateDrinkField(ref: CollectionReference, drinkID: String, data: [String: Any]) async -> Bool {
 		do {
