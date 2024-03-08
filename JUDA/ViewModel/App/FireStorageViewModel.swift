@@ -8,41 +8,53 @@
 import SwiftUI
 import FirebaseStorage
 
+// MARK: - Fire Storage 의 폴더 타입 / 폴더 명
 enum FireStorageFolderType: String {
     case user = "userImages"
     case post = "postImages"
     case drink = "drinkImages"
 }
 
+// MARK: - Fire Storage 관련 Error
 enum FireStorageError: Error {
     case getFileName
+    case uploadImage
+    case fetchImageURL
 }
 
+// MARK: - Fire Storage 에 접근하는 함수를 갖는 ViewModel
+@MainActor
 final class FireStorageViewModel {
     private let storageRef = Storage.storage().reference()
     private let imageType = "image/jpg"
-}
 
-extension FireStorageViewModel {
     // FireStorage 에 이미지 올리기
     func uploadImageToStorage(folder: FireStorageFolderType, image: UIImage, fileName: String) async throws {
-        let storageRoute = storageRef.child("\(folder.rawValue)/\(fileName)")
-        let data = Formatter.compressImage(image)
-        let metaData = StorageMetadata()
-        metaData.contentType = imageType
-        guard let data = data else { return }
-        let _ = try await storageRoute.putDataAsync(data, metadata: metaData)
+        do {
+            let storageRoute = storageRef.child("\(folder.rawValue)/\(fileName)")
+            let data = Formatter.compressImage(image)
+            let metaData = StorageMetadata()
+            metaData.contentType = imageType
+            guard let data = data else { return }
+            let _ = try await storageRoute.putDataAsync(data, metadata: metaData)
+        } catch {
+            throw FireStorageError.uploadImage
+        }
     }
     
     // URL 받아오기
-    func fetchProfileImageURL(folder: FireStorageFolderType, fileName: String) async throws -> URL {
-        let storageRoute = storageRef.child("\(folder.rawValue)/\(fileName)")
-        let url = try await storageRoute.downloadURL()
-        return url
+    func fetchImageURL(folder: FireStorageFolderType, fileName: String) async throws -> URL {
+        do {
+            let storageRoute = storageRef.child("\(folder.rawValue)/\(fileName)")
+            let url = try await storageRoute.downloadURL()
+            return url
+        } catch {
+            throw FireStorageError.fetchImageURL
+        }
     }
 }
 
-// MARK: - 회원탈퇴 시, 파이어스토리지에 관련 데이터 삭제 로직
+// MARK: - 파이어스토리지에 관련 이미지 데이터 삭제 로직
 extension FireStorageViewModel {
     // firestorage에서 이미지 삭제
     func deleteFireStorageImage(folder: FireStorageFolderType, imageURL: URL) async {
@@ -60,7 +72,7 @@ extension FireStorageViewModel {
     }
     
     // fileName 추출
-    func getImageFileName(imageURL: URL) throws -> String {
+    private func getImageFileName(imageURL: URL) throws -> String {
         let path = imageURL.path
         // '%' 인코딩된 문자 디코딩
         // 디코딩 실패 시, error throw
