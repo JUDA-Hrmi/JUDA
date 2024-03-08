@@ -7,7 +7,6 @@
 
 import SwiftUI
 import FirebaseCore
-import FirebaseAuth
 
 // MARK: - User ( 타 유저 데이터 받기 )
 @MainActor

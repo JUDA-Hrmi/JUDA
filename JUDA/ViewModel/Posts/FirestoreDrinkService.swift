@@ -24,6 +24,7 @@ enum DrinkFetchError: Error {
 
 @MainActor
 final class FirestoreDrinkService {
+    // Firestore Post Service
 	private let firestorePostService = FirestorePostService()
 }
 

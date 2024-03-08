@@ -40,7 +40,7 @@ enum PostSortType: String, CaseIterable {
 	case mostRecent = "최신"
 }
 
-final class PostsViewModel: ObservableObject {
+final class ExPostsViewModel: ObservableObject {
 	// 파이어베이스 연결
 	private let db = Firestore.firestore()
 	// 게시글 객체 배열 생성
@@ -68,7 +68,7 @@ final class PostsViewModel: ObservableObject {
 }
 
 // MARK: Fetch
-extension PostsViewModel {
+extension ExPostsViewModel {
 	@MainActor
 	func getMiddleIndex() -> Int {
 		return 0
@@ -215,7 +215,7 @@ extension PostsViewModel {
 }
 
 // MARK: Update
-extension PostsViewModel {
+extension ExPostsViewModel {
 	func postLikedUpdate(likeType: LikedActionType, postID: String, userID: String) async {
 		do {
 			let postDocument = db.collection("posts").document(postID)
@@ -237,7 +237,7 @@ extension PostsViewModel {
 }
 
 // MARK: Delete
-extension PostsViewModel {
+extension ExPostsViewModel {
 	// post delete 과정에서 연관된 데이터 삭제
 	func postDelete(userID: String, postID: String) async {
 		let postRef = db.collection("posts")
@@ -346,7 +346,7 @@ extension PostsViewModel {
 }
 
 // MARK: - 태그 된 인기 게시물 / 태그 된 게시물 Fetch ( Drink Detail View )
-extension PostsViewModel {
+extension ExPostsViewModel {
     // Drink Detail View 에서 사용 : PostField 를 받아서 Post 로 반환
     @MainActor
     private func fetchTaggedPosts(postFields: [PostField]) async -> [Post] {
@@ -438,7 +438,7 @@ extension PostsViewModel {
 }
 
 // MARK: Post Report
-extension PostsViewModel {
+extension ExPostsViewModel {
 	func postReportUpload() {
 		guard let report = report else { return }
 		do {
