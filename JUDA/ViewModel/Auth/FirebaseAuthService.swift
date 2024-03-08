@@ -1,5 +1,5 @@
 //
-//  FirebaseAuthViewModel.swift
+//  FirebaseAuthService.swift
 //  JUDA
 //
 //  Created by phang on 3/4/24.
@@ -13,7 +13,7 @@ import AuthenticationServices
 
 // MARK: - Firebase : Auth
 @MainActor
-final class FirebaseAuthViewModel {
+final class FirebaseAuthService {
     // Firestore - db 연결
     private let db = Firestore.firestore()
     private let userCollection = "users"
@@ -61,7 +61,7 @@ final class FirebaseAuthViewModel {
 }
 
 // MARK: - 데이터 실시간 업데이트
-extension FirebaseAuthViewModel {
+extension FirebaseAuthService {
     //
     func startListeningForUser(uid: String, 
                                completion: @escaping (UserField?) -> Void) {
@@ -229,7 +229,7 @@ extension FirebaseAuthViewModel {
 
 
 // MARK: - Apple
-extension FirebaseAuthViewModel {
+extension FirebaseAuthService {
     // 로그인
     func signInApple(appleIDCredential: ASAuthorizationAppleIDCredential,
                      currentNonce: String?) async {
@@ -272,7 +272,7 @@ extension FirebaseAuthViewModel {
         }
         
         // TODO: 파이어스토어 데이터 삭제 로직 구현
-        await userDataDeleteWithFirestore(uid: user.uid)
+//        await userDataDeleteWithFirestore(uid: user.uid)
         
         let nonce = signInWithAppleHelper.randomNonceString()
         let credential = OAuthProvider.credential(withProviderID: "apple.com",
@@ -289,4 +289,4 @@ extension FirebaseAuthViewModel {
 }
 
 // MARK: - Google
-extension FirebaseAuthViewModel { }
+extension FirebaseAuthService { }

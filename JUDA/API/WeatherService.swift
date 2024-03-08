@@ -1,5 +1,5 @@
 //
-//  WeatherViewModel.swift
+//  WeatherService.swift
 //  FinalHrmiProjects
 //
 //  Created by 백대홍 on 2/7/24.
@@ -8,9 +8,9 @@
 import SwiftUI
 import CoreLocation
 
-// MARK: - Weather View Model
+// MARK: - Weather Service
 @MainActor
-final class WeatherViewModel {
+final class WeatherService {
     // 날씨
     private let baseURL = "https://api.openweathermap.org/data/2.5/weather"
     private let apiKey = Bundle.main.apiKey  // OpenWeatherMap에서 발급받은 API

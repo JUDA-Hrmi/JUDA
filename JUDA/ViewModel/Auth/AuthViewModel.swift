@@ -1,5 +1,5 @@
 //
-//  AuthService.swift
+//  AuthViewModel.swift
 //  JUDA
 //
 //  Created by phang on 3/4/24.
@@ -27,7 +27,7 @@ enum UserLikedListType: String {
 
 // MARK: - Auth ( 로그인 / 로그아웃 / 탈퇴 / 본인 계정 )
 @MainActor
-final class AuthService: ObservableObject {
+final class AuthViewModel: ObservableObject {
     // 로그인 유무
     @AppStorage("signInStatus") var signInStatus: Bool = false
     // 신규 유저 or 기존 유저
@@ -41,12 +41,12 @@ final class AuthService: ObservableObject {
     @Published var errorMessage: String = ""
     // Nonce : 암호와된 임의의 난수
     private var currentNonce: String?
-    // Firebase Auth ViewModel
-    private let firebaseAuthViewModel = FirebaseAuthViewModel()
-    // Firebase User ViewModel
-    private let firebaseUserViewModel = FirebaseUserViewModel()
-    // FireStorage ViewModel
-    private let fireStorageViewModel = FireStorageViewModel()
+    // Firebase Auth Service
+    private let firebaseAuthService = FirebaseAuthService()
+    // Firebase User Service
+    private let firebaseUserService = FirebaseUserService()
+    // FireStorage Service
+    private let fireStorageService = FireStorageService()
     
     init() {
         Task {
@@ -109,7 +109,7 @@ final class AuthService: ObservableObject {
     // 현재 유저 UserField 받아오기
     private func getCurrentUserField(uid: String) async {
         do {
-            currentUser?.userField = try await firebaseUserViewModel.fetchUserFieldData(uid: uid)
+            currentUser?.userField = try await firebaseUserService.fetchUserFieldData(uid: uid)
         } catch {
             errorMessage = error.localizedDescription
             print(errorMessage)
@@ -119,7 +119,7 @@ final class AuthService: ObservableObject {
     // 현재 유저 Posts 받아오기
     private func getCurrentUserPosts(uid: String) async {
         do {
-            currentUser?.posts = try await firebaseUserViewModel.fetchUserWrittenPosts(uid: uid)
+            currentUser?.posts = try await firebaseUserService.fetchUserWrittenPosts(uid: uid)
         } catch {
             errorMessage = error.localizedDescription
             print(errorMessage)
@@ -129,7 +129,7 @@ final class AuthService: ObservableObject {
     // 현재 유저 LikedPosts 받아오기
     private func getCurrentUserLikedPosts(uid: String) async {
         do {
-            currentUser?.likedPosts = try await firebaseUserViewModel.fetchUserLikedPosts(uid: uid)
+            currentUser?.likedPosts = try await firebaseUserService.fetchUserLikedPosts(uid: uid)
         } catch {
             errorMessage = error.localizedDescription
             print(errorMessage)
@@ -139,7 +139,7 @@ final class AuthService: ObservableObject {
     // 현재 유저 LikedDrinks 받아오기
     private func getCurrentUserLikedDrinks(uid: String) async {
         do {
-            currentUser?.likedDrinks = try await firebaseUserViewModel.fetchUserLikedDrink(uid: uid)
+            currentUser?.likedDrinks = try await firebaseUserService.fetchUserLikedDrink(uid: uid)
         } catch {
             errorMessage = error.localizedDescription
             print(errorMessage)
@@ -149,7 +149,7 @@ final class AuthService: ObservableObject {
     // 현재 유저 Notifications 받아오기
     private func getCurrentUserNotifications(uid: String) async {
         do {
-            currentUser?.notifications = try await firebaseUserViewModel.fetchUserNotifications(uid: uid)
+            currentUser?.notifications = try await firebaseUserService.fetchUserNotifications(uid: uid)
         } catch {
             errorMessage = error.localizedDescription
             print(errorMessage)
@@ -191,7 +191,7 @@ final class AuthService: ObservableObject {
     func updateUserName(userName: String) async {
         do {
             let uid = try checkCurrentUserID()
-            await firebaseAuthViewModel.updateUserName(uid: uid, userName: userName)
+            await firebaseAuthService.updateUserName(uid: uid, userName: userName)
         } catch {
             showError = true
             errorMessage = "닉네임 변경에 문제가 발생했어요.\n다시 시도해주세요."
@@ -202,7 +202,7 @@ final class AuthService: ObservableObject {
     func startListeningForUserField() async {
         do {
             let uid = try checkCurrentUserID()
-            firebaseAuthViewModel.startListeningForUser(uid: uid) { user in
+            firebaseAuthService.startListeningForUser(uid: uid) { user in
                 if let user = user {
                     self.currentUser?.userField = user
                 }
@@ -216,7 +216,7 @@ final class AuthService: ObservableObject {
     func addUserDataToStore(userData: UserField) {
         do {
             let uid = try checkCurrentUserID()
-            firebaseAuthViewModel.addUserDataToStore(userData: userData, uid: uid)
+            firebaseAuthService.addUserDataToStore(userData: userData, uid: uid)
         } catch {
             print("error :: addUserDataToStore :", error.localizedDescription)
         }
@@ -233,7 +233,7 @@ final class AuthService: ObservableObject {
             case .drinks:
                 list = currentUser?.likedDrinks ?? [] as [Drink]
             }
-            await firebaseAuthViewModel.userLikedListUpdate(uid: uid,
+            await firebaseAuthService.userLikedListUpdate(uid: uid,
                                                       documentName: type.rawValue,
                                                       list: list)
         } catch {
@@ -251,7 +251,7 @@ final class AuthService: ObservableObject {
             }
             try await fireStorageViewModel.uploadImageToStorage(folder: .user, image: image, fileName: uid)
             // 유저 프로필 받아오기
-            let url = try await fireStorageViewModel.fetchImageURL(folder: .user, fileName: uid)
+            let url = try await fireStorageService.fetchImageURL(folder: .user, fileName: uid)
             currentUser?.userField.profileImageURL = url
         } catch {
             print("error :: uploadProfileImageToStorage :", error.localizedDescription)
@@ -260,7 +260,7 @@ final class AuthService: ObservableObject {
 }
 
 // MARK: - Apple
-extension AuthService {
+extension AuthViewModel {
     // 로그인 request
     func handleSignInWithAppleRequest(_ request: ASAuthorizationAppleIDRequest) {
         let signInWithAppleHelper = SignInWithAppleHelper()
@@ -288,7 +288,7 @@ extension AuthService {
                 //
                 let uid = try checkCurrentUserID()
                 // 신규 유저 체크
-                isNewUser = await firebaseAuthViewModel.isNewUser(uid: uid)
+                isNewUser = await firebaseAuthService.isNewUser(uid: uid)
                 // 신규 유저
                 if isNewUser {
                     signOut()
@@ -309,7 +309,7 @@ extension AuthService {
     
     // 로그인
     func signInApple(appleIDCredential: ASAuthorizationAppleIDCredential) async {
-        await firebaseAuthViewModel.signInApple(appleIDCredential: appleIDCredential,
+        await firebaseAuthService.signInApple(appleIDCredential: appleIDCredential,
                                                 currentNonce: currentNonce)
     }
     
@@ -330,7 +330,7 @@ extension AuthService {
     func deleteAppleAccount() async -> Bool {
         do {
             guard try getProviderOptionString() == AuthProviderOption.apple.rawValue else { return false }
-            try await firebaseAuthViewModel.deleteAccountWithApple()
+            try await firebaseAuthService.deleteAccountWithApple()
             resetData()
             isLoading = false
             return true
@@ -345,7 +345,7 @@ extension AuthService {
 }
 
 // MARK: - Google
-extension AuthService {
+extension AuthViewModel{
     // 로그인
     func signInWithGoogle() async {
         do {
@@ -363,7 +363,7 @@ extension AuthService {
             //
             let uid = try checkCurrentUserID()
             // 신규 유저 체크
-            isNewUser = await firebaseAuthViewModel.isNewUser(uid: uid)
+            isNewUser = await firebaseAuthService.isNewUser(uid: uid)
             // 신규 유저
             if isNewUser {
                 self.isNewUser = true

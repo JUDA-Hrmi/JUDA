@@ -21,8 +21,27 @@ enum PostError: Error {
 @MainActor
 final class FirestorePostService {}
 
-// MARK: Firestore Fetch Data
 extension FirestorePostService {
+    // Post 리스트를 가져오는 함수
+    // Post 를 단일로 가져오는 firestorePostViewModel 의 fetchPostDocument 을 사용.
+    func fetchPostCollection(collection: CollectionReference) async throws -> [Post] {
+        do {
+            var result = [Post]()
+            // Post 가져오는 코드 - FirestorePostViewModel
+            let snapshot = try await collection.getDocuments()
+            for document in snapshot.documents {
+                let id = document.documentID
+                let documentRef = collection.document(id)
+                let postData = try await fetchPostDocument(document: documentRef)
+                result.append(postData)
+            }
+            return result
+        } catch let error {
+            print("error :: fetchPostCollection", error.localizedDescription)
+            throw PostError.collectionFetch
+        }
+    }
+    
 	// posts collection의 post document data 불러오는 메서드
 	// 불러오지 못 할 수 경우 error throw
 	func fetchPostDocument(document: DocumentReference) async throws -> Post {
@@ -33,10 +52,10 @@ extension FirestorePostService {
 			
 			return Post(postField: postField, likedUsersID: likedUsersID)
 		} catch PostError.fieldFetch {
-//			print("error :: fetchPostField() -> fetch post field data failure")
+			print("error :: fetchPostField() -> fetch post field data failure")
 			throw PostError.fieldFetch
 		} catch {
-//			print("error :: fetchPostDocument() -> fetch post document data failure")
+			print("error :: fetchPostDocument() -> fetch post document data failure")
 			throw PostError.documentFetch
 		}
 	}
@@ -86,7 +105,6 @@ extension FirestorePostService {
 				} catch {
 					print("error :: uploadPostDocument() -> upload post likedUsersID collection data failure")
 					print(error.localizedDescription)
-//					continue
 				}
 			}
 		} catch {

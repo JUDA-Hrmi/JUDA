@@ -1,5 +1,5 @@
 //
-//  AIViewModel.swift
+//  AIService.swift
 //  FinalHrmiProjects
 //
 //  Created by 백대홍 on 2/7/24.
@@ -8,9 +8,9 @@
 import SwiftUI
 import OpenAI
 
-// MARK: - AIViewModel
+// MARK: - AI Service
 @MainActor
-final class AIViewModel {
+final class AIService {
     private var openAI: OpenAI?
     
     init() {

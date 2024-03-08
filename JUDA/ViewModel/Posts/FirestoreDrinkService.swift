@@ -29,6 +29,26 @@ final class FirestoreDrinkService {
 
 // MARK: Firestore Fetch Data
 extension FirestoreDrinkService {
+    // Drink 리스트를 가져오는 함수
+    // Drink 를 단일로 가져오는 firestoreDrinkViewModel 의 fetchDrinkDocument 을 사용.
+    func fetchDrinkCollection(collection: CollectionReference) async throws -> [Drink] {
+        do {
+            var result = [Drink]()
+            // Drink 가져오는 코드 - FirestoreDrinkViewModel
+            let snapshot = try await collection.getDocuments()
+            for document in snapshot.documents {
+                let id = document.documentID
+                let documentRef = collection.document(id)
+                let drinkData = try await fetchDrinkDocument(document: documentRef)
+                result.append(drinkData)
+            }
+            return result
+        } catch let error {
+            print("error :: fetchDrinkCollection", error.localizedDescription)
+            throw DrinkFetchError.drinkCollection
+        }
+    }
+    
 	// drinks collection의 document data 불러오는 메서드
 	// 불러오지 못 할 경우 error를 throw
 	func fetchDrinkDocument(document: DocumentReference) async throws -> Drink {
