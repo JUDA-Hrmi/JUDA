@@ -1,5 +1,5 @@
 //
-//  UserService.swift
+//  UserViewModel.swift
 //  JUDA
 //
 //  Created by phang on 3/7/24.
@@ -11,11 +11,11 @@ import FirebaseAuth
 
 // MARK: - User ( 타 유저 데이터 받기 )
 @MainActor
-final class UserService: ObservableObject {
+final class UserViewModel: ObservableObject {
     // 유저
     @Published var user: User?
-    // Firebase User ViewModel
-    private let firebaseUserViewModel = FirebaseUserViewModel()
+    // Firebase User Service
+    private let firebaseUserService = FirebaseUserService()
     
     // 유저 데이터 받아오기 ( 본인 X / 타 유저 )
     func getUser(uid: String) async {
@@ -37,7 +37,7 @@ final class UserService: ObservableObject {
     // UserField 받아오기
     private func getUserField(uid: String) async {
         do {
-            user?.userField = try await firebaseUserViewModel.fetchUserFieldData(uid: uid)
+            user?.userField = try await firebaseUserService.fetchUserFieldData(uid: uid)
         } catch {
             print(error.localizedDescription)
         }
@@ -46,7 +46,7 @@ final class UserService: ObservableObject {
     // Posts 받아오기
     private func getUserPosts(uid: String) async {
         do {
-            user?.posts = try await firebaseUserViewModel.fetchUserWrittenPosts(uid: uid)
+            user?.posts = try await firebaseUserService.fetchUserWrittenPosts(uid: uid)
         } catch {
             print(error.localizedDescription)
         }
@@ -55,7 +55,7 @@ final class UserService: ObservableObject {
     // LikedPosts 받아오기
     private func getUserLikedPosts(uid: String) async {
         do {
-            user?.likedPosts = try await firebaseUserViewModel.fetchUserLikedPosts(uid: uid)
+            user?.likedPosts = try await firebaseUserService.fetchUserLikedPosts(uid: uid)
         } catch {
             print(error.localizedDescription)
         }
@@ -64,7 +64,7 @@ final class UserService: ObservableObject {
     // LikedDrinks 받아오기
     private func getUserLikedDrinks(uid: String) async {
         do {
-            user?.likedDrinks = try await firebaseUserViewModel.fetchUserLikedDrink(uid: uid)
+            user?.likedDrinks = try await firebaseUserService.fetchUserLikedDrink(uid: uid)
         } catch {
             print(error.localizedDescription)
         }
@@ -73,7 +73,7 @@ final class UserService: ObservableObject {
     // Notifications 받아오기
     private func getUserNotifications(uid: String) async {
         do {
-            user?.notifications = try await firebaseUserViewModel.fetchUserNotifications(uid: uid)
+            user?.notifications = try await firebaseUserService.fetchUserNotifications(uid: uid)
         } catch {
             print(error.localizedDescription)
         }

@@ -1,5 +1,5 @@
 //
-//  FireStorageViewModel.swift
+//  FireStorageService.swift
 //  JUDA
 //
 //  Created by 정인선 on 3/7/24.
@@ -15,16 +15,9 @@ enum FireStorageFolderType: String {
     case drink = "drinkImages"
 }
 
-// MARK: - Fire Storage 관련 Error
-enum FireStorageError: Error {
-    case getFileName
-    case uploadImage
-    case fetchImageURL
-}
-
-// MARK: - Fire Storage 에 접근하는 함수를 갖는 ViewModel
+// MARK: - Fire Storage 에 접근하는 함수를 갖는 Service
 @MainActor
-final class FireStorageViewModel {
+final class FireStorageService {
     private let storageRef = Storage.storage().reference()
     private let imageType = "image/jpg"
 
@@ -55,7 +48,7 @@ final class FireStorageViewModel {
 }
 
 // MARK: - 파이어스토리지에 관련 이미지 데이터 삭제 로직
-extension FireStorageViewModel {
+extension FireStorageService {
     // firestorage에서 이미지 삭제
     func deleteFireStorageImage(folder: FireStorageFolderType, imageURL: URL) async {
         do {

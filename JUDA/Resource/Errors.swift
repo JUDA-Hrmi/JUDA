@@ -33,3 +33,10 @@ enum WeatherFetchError: Error {
     case fetchWeather
     case shouldFetch
 }
+
+// MARK: - Fire Storage 관련 Error
+enum FireStorageError: Error {
+    case getFileName
+    case uploadImage
+    case fetchImageURL
+}
