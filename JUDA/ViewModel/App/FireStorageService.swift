@@ -15,7 +15,7 @@ enum FireStorageFolderType: String {
     case drink = "drinkImages"
 }
 
-// MARK: - Fire Storage 에 접근하는 함수를 갖는 ViewModel
+// MARK: - Fire Storage 에 접근하는 함수를 갖는 Service
 @MainActor
 final class FireStorageService {
     private let storageRef = Storage.storage().reference()

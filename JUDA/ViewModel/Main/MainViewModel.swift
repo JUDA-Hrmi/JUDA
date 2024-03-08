@@ -29,9 +29,9 @@ final class MainViewModel: ObservableObject {
     private let firestore = Firestore.firestore()
     private let drinkCollection = "drinks"
     private let postCollection = "posts"
-    // Weather View Model
+    // Weather Service
     private let weatherService = WeatherService()
-    // openAI View Model
+    // openAI Service
     private let aiService = AIService()
     // Firebase Post Service
     private let firestorePostService = FirestorePostService()

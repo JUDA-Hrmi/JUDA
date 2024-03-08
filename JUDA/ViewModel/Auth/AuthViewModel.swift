@@ -249,7 +249,7 @@ final class AuthViewModel: ObservableObject {
                 print("error :: uploadProfileImageToStorage : image X")
                 return
             }
-            try await fireStorageViewModel.uploadImageToStorage(folder: .user, image: image, fileName: uid)
+            try await fireStorageService.uploadImageToStorage(folder: .user, image: image, fileName: uid)
             // 유저 프로필 받아오기
             let url = try await fireStorageService.fetchImageURL(folder: .user, fileName: uid)
             currentUser?.userField.profileImageURL = url

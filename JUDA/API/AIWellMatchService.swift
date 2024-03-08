@@ -1,5 +1,5 @@
 //
-//  AIWellMatchViewModel.swift
+//  AIWellMatchService.swift
 //  JUDA
 //
 //  Created by 백대홍 on 2/14/24.
@@ -10,9 +10,9 @@ import OpenAI
 import Firebase
 import FirebaseFirestore
 
-// MARK: - Drink Detail 에서 사용하는 AI Well Match View Model
+// MARK: - Drink Detail 에서 사용하는 AI Well Match Service
 @MainActor
-final class AIWellMatchViewModel: ObservableObject {
+final class AIWellMatchService: ObservableObject {
     @Published var respond = ""
     @Published var isLoading = false
     private var openAI: OpenAI?
