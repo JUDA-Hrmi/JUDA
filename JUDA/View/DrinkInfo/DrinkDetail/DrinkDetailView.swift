@@ -14,7 +14,7 @@ struct DrinkDetailView: View {
     @EnvironmentObject private var navigationRouter: NavigationRouter
     
     @State private var windowWidth: CGFloat = 0
-    @StateObject var aiWellMatchViewModel = AiWellMatchViewModel() // wellmatch AIModel
+    @StateObject var aiWellMatchViewModel = AIWellMatchViewModel() // wellmatch AIModel
     @State private var shareImage: Image = Image("AppIcon") // shareLink 용 이미지
 
     let drink: FBDrink

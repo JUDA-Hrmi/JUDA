@@ -19,20 +19,18 @@ final class UserService: ObservableObject {
     
     // 유저 데이터 받아오기 ( 본인 X / 타 유저 )
     func getUser(uid: String) async {
-        if user == nil || user?.userField.userID != uid {
-            user = nil
-            await withTaskGroup(of: Void.self) { taskGroup in
-                // UserField 받아오기
-                taskGroup.addTask { await self.getUserField(uid: uid) }
-                // Posts 받아오기
-                taskGroup.addTask { await self.getUserPosts(uid: uid) }
-                // LikedPosts 받아오기
-                taskGroup.addTask { await self.getUserLikedPosts(uid: uid) }
-                // LikedDrinks 받아오기
-                taskGroup.addTask { await self.getUserLikedDrinks(uid: uid) }
-                // Notifications 받아오기
-                taskGroup.addTask { await self.getUserNotifications(uid: uid) }
-            }
+        user = nil
+        await withTaskGroup(of: Void.self) { taskGroup in
+            // UserField 받아오기
+            taskGroup.addTask { await self.getUserField(uid: uid) }
+            // Posts 받아오기
+            taskGroup.addTask { await self.getUserPosts(uid: uid) }
+            // LikedPosts 받아오기
+            taskGroup.addTask { await self.getUserLikedPosts(uid: uid) }
+            // LikedDrinks 받아오기
+            taskGroup.addTask { await self.getUserLikedDrinks(uid: uid) }
+            // Notifications 받아오기
+            taskGroup.addTask { await self.getUserNotifications(uid: uid) }
         }
     }
     

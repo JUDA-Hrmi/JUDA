@@ -10,8 +10,6 @@ import SwiftUI
 // MARK: - 날씨 & 술 + 음식 추천 뷰
 struct WeatherAndFood: View {
     @EnvironmentObject private var authService: AuthService
-    @EnvironmentObject var weatherViewModel: WeatherViewModel
-    @EnvironmentObject var aiViewModel: AiViewModel
    
     var body: some View {
         VStack(alignment: authService.signInStatus ? .leading : .center, spacing: 10) {

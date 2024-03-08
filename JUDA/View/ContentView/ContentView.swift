@@ -14,7 +14,7 @@ struct ContentView: View {
 	@EnvironmentObject private var appViewModel: AppViewModel
     @StateObject private var recordViewModel = RecordViewModel()
     @StateObject private var likedViewModel = LikedViewModel()
-    @StateObject private var aiWellMatchViewModel = AiWellMatchViewModel()
+    @StateObject private var aiWellMatchViewModel = AIWellMatchViewModel()
     @StateObject private var myPageViewModel = MyPageViewModel()
 
     // Tabbar 불투명하게 설정 (색상 백그라운드)

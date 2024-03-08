@@ -27,3 +27,9 @@ enum FetchUserError: Error {
     case likedDrinks
     case notifications
 }
+
+// MARK: - Weather Fetch Error
+enum WeatherFetchError: Error {
+    case fetchWeather
+    case shouldFetch
+}
