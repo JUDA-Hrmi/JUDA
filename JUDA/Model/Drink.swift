@@ -20,7 +20,7 @@ enum DrinkType: String {
 struct Drink {
 	let drinkField: DrinkField
 	let taggedPosts: [Post]
-	let agePrefence: AgePreference
+	let agePreference: AgePreference
 	let GenderPreference: GenderPreference
 	let likedCount: Int // Firestore likedUsersUID Collection에 해당하는 Document 갯수
 }
