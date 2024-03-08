@@ -15,7 +15,7 @@ final class AppViewModel: ObservableObject {
     @Published var locationManager = LocationManager()
 }
 
-// MARK: - 탭 바 숨기는 Modifier
+// MARK: - 앱 전체에서 사용되는 탭 바 숨기는 View Modifier
 struct TabBarHidden: ViewModifier {
     @EnvironmentObject private var appViewModel: AppViewModel
 

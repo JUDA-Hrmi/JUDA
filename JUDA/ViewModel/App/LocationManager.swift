@@ -8,6 +8,7 @@
 import Foundation
 import CoreLocation
 
+// MARK: - 날씨 API 받기 위해, 현 위치 받기 위한 Manager
 final class LocationManager: NSObject {
     private let locationManager = CLLocationManager()
     var location: CLLocation?

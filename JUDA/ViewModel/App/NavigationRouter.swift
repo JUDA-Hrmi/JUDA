@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-enum Route: Hashable{
+// MARK: - 전체 Navigation 조정을 위한 Route
+enum Route: Hashable {
     case Login
     case AddTag
     case AlarmStore

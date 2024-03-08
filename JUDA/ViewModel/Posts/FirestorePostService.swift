@@ -10,7 +10,12 @@ import FirebaseCore
 import FirebaseFirestore
 
 enum PostError: Error {
-	case fieldFetch, documentFetch, upload, update, delete
+    case fieldFetch
+    case documentFetch
+    case collectionFetch
+    case upload
+    case update
+    case delete
 }
 
 @MainActor

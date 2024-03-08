@@ -15,13 +15,6 @@ enum FireStorageFolderType: String {
     case drink = "drinkImages"
 }
 
-// MARK: - Fire Storage 관련 Error
-enum FireStorageError: Error {
-    case getFileName
-    case uploadImage
-    case fetchImageURL
-}
-
 // MARK: - Fire Storage 에 접근하는 함수를 갖는 ViewModel
 @MainActor
 final class FireStorageViewModel {

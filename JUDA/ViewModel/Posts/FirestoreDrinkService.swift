@@ -17,7 +17,9 @@ enum Age: String, CaseIterable {
 }
 
 enum DrinkFetchError: Error {
-	case drinkField, drinkDocument
+	case drinkField
+    case drinkDocument
+    case drinkCollection
 }
 
 @MainActor
