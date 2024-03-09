@@ -29,6 +29,7 @@
 		096E63182B616886009246CE /* DrinkListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096E63172B616886009246CE /* DrinkListCell.swift */; };
 		096E631A2B616F31009246CE /* DrinkGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096E63192B616F31009246CE /* DrinkGridCell.swift */; };
 		096F2D5B2B9B044400DFC5A3 /* DrinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096F2D5A2B9B044400DFC5A3 /* DrinkViewModel.swift */; };
+		096F2D5D2B9C583E00DFC5A3 /* FirestoreReportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096F2D5C2B9C583E00DFC5A3 /* FirestoreReportService.swift */; };
 		0974A1502B8B7B6C00476199 /* ShimmerPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A14F2B8B7B6C00476199 /* ShimmerPostCell.swift */; };
 		0974A1522B8B84B600476199 /* ShimmerDrinkGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A1512B8B84B600476199 /* ShimmerDrinkGridCell.swift */; };
 		0974A1542B8B84E900476199 /* ShimmerDrinkListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0974A1532B8B84E900476199 /* ShimmerDrinkListCell.swift */; };
@@ -86,7 +87,7 @@
 		2C7FD5522B848EEF00169512 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7FD5512B848EEF00169512 /* Post.swift */; };
 		2CACB53C2B99BAC500DD6DCE /* FireStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CACB53B2B99BAC500DD6DCE /* FireStorageService.swift */; };
 		7B0A8BC52B8C163E00740E61 /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0A8BC42B8C163E00740E61 /* Report.swift */; };
-		7B0A8BC92B8C88F300740E61 /* SearchPostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0A8BC82B8C88F300740E61 /* SearchPostsViewModel.swift */; };
+		7B0A8BC92B8C88F300740E61 /* ExSearchPostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0A8BC82B8C88F300740E61 /* ExSearchPostsViewModel.swift */; };
 		7B0A8BCD2B8CA7E900740E61 /* PostSearchList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0A8BCC2B8CA7E900740E61 /* PostSearchList.swift */; };
 		7B0A8BCF2B8CA8C300740E61 /* PostSearchListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0A8BCE2B8CA8C300740E61 /* PostSearchListCell.swift */; };
 		7B189B7E2B9959830047A031 /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B189B7D2B9959830047A031 /* DrinkLoading.json */; };
@@ -199,6 +200,7 @@
 		096E63172B616886009246CE /* DrinkListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkListCell.swift; sourceTree = "<group>"; };
 		096E63192B616F31009246CE /* DrinkGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkGridCell.swift; sourceTree = "<group>"; };
 		096F2D5A2B9B044400DFC5A3 /* DrinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkViewModel.swift; sourceTree = "<group>"; };
+		096F2D5C2B9C583E00DFC5A3 /* FirestoreReportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreReportService.swift; sourceTree = "<group>"; };
 		0974A14F2B8B7B6C00476199 /* ShimmerPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerPostCell.swift; sourceTree = "<group>"; };
 		0974A1512B8B84B600476199 /* ShimmerDrinkGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerDrinkGridCell.swift; sourceTree = "<group>"; };
 		0974A1532B8B84E900476199 /* ShimmerDrinkListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerDrinkListCell.swift; sourceTree = "<group>"; };
@@ -256,7 +258,7 @@
 		2C7FD5512B848EEF00169512 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		2CACB53B2B99BAC500DD6DCE /* FireStorageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireStorageService.swift; sourceTree = "<group>"; };
 		7B0A8BC42B8C163E00740E61 /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
-		7B0A8BC82B8C88F300740E61 /* SearchPostsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPostsViewModel.swift; sourceTree = "<group>"; };
+		7B0A8BC82B8C88F300740E61 /* ExSearchPostsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExSearchPostsViewModel.swift; sourceTree = "<group>"; };
 		7B0A8BCC2B8CA7E900740E61 /* PostSearchList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostSearchList.swift; sourceTree = "<group>"; };
 		7B0A8BCE2B8CA8C300740E61 /* PostSearchListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostSearchListCell.swift; sourceTree = "<group>"; };
 		7B189B7D2B9959830047A031 /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = DrinkLoading.json; path = ../../../../../../../JUDA_file/Lottie/DrinkLoading.json; sourceTree = "<group>"; };
@@ -734,9 +736,10 @@
 			isa = PBXGroup;
 			children = (
 				B1EE249B2B6144CD007F68B0 /* ExPostsViewModel.swift */,
-				7B0A8BC82B8C88F300740E61 /* SearchPostsViewModel.swift */,
+				7B0A8BC82B8C88F300740E61 /* ExSearchPostsViewModel.swift */,
 				7B881CA22B97464200571352 /* FirestorePostService.swift */,
 				7B74FA5A2B9A9EE800BAC2AC /* PostViewModel.swift */,
+				096F2D5C2B9C583E00DFC5A3 /* FirestoreReportService.swift */,
 				7B74FA5C2B9ABF7600BAC2AC /* RecordViewModel.swift */,
 			);
 			path = Posts;
@@ -1024,9 +1027,10 @@
 				09F869A02B68E50000A56A4C /* TaggedTrendingPosts.swift in Sources */,
 				AC98D1D42B7358AE006F6EC9 /* AIService.swift in Sources */,
 				09A320142B8929CC00DE4646 /* URL +.swift in Sources */,
-				7B0A8BC92B8C88F300740E61 /* SearchPostsViewModel.swift in Sources */,
+				7B0A8BC92B8C88F300740E61 /* ExSearchPostsViewModel.swift in Sources */,
 				7B6D76B52B67D5F900601B55 /* PostTags.swift in Sources */,
 				7BE14B952B84733900C1F6C3 /* Drink.swift in Sources */,
+				096F2D5D2B9C583E00DFC5A3 /* FirestoreReportService.swift in Sources */,
 				09A6AD7E2B72A53C00606585 /* Errors.swift in Sources */,
 				099F161B2B75347100D8BEDA /* CheckBox.swift in Sources */,
 				7B904C662B6168C60052384A /* PostCell.swift in Sources */,

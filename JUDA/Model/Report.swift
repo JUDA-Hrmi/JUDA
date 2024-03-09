@@ -7,14 +7,10 @@
 
 import Foundation
 
-struct Report {
-	let reportedPost: Post
-	let reportedUser: User
-	let reportField: ReportField
-}
-
-struct ReportField: Codable {
-	let reportedContents: [String]
-	let reportedEtcContent: String
-	let reportedTime: Date
+struct Report: Codable {
+	let reportedPostID: String
+	let reportedUserID: String
+    let reportedContents: [String]
+    let reportedEtcContent: String
+    let reportedTime: Date
 }

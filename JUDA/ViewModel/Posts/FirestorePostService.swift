@@ -21,6 +21,7 @@ enum PostError: Error {
 @MainActor
 final class FirestorePostService {}
 
+// MARK: - Firestore post fetch
 extension FirestorePostService {
     // Post 리스트를 가져오는 함수
     // Post 를 단일로 가져오는 firestorePostViewModel 의 fetchPostDocument 을 사용.

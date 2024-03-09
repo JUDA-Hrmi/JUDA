@@ -1,5 +1,5 @@
 //
-//  SearchPostViewModel.swift
+//  ExSearchPostViewModel.swift
 //  JUDA
 //
 //  Created by Minjae Kim on 2/26/24.
@@ -9,14 +9,8 @@ import Foundation
 import FirebaseFirestore
 import FirebaseStorage
 
-enum SearchTagType: String, CaseIterable {
-	case userName = "작성자"
-	case drinkTag = "술 태그"
-	case foodTag = "음식 태그"
-}
-
 @MainActor
-class SearchPostsViewModel: ObservableObject {
+class ExSearchPostsViewModel: ObservableObject {
 	// 파이어베이스 연결
 	private let db = Firestore.firestore()
 	// 게시글 신고 객체
@@ -46,7 +40,7 @@ class SearchPostsViewModel: ObservableObject {
 }
 
 // MARK: post data fetch
-extension SearchPostsViewModel {
+extension ExSearchPostsViewModel {
 	// 전체 게시글 패치
 	@MainActor
 	func fetchPosts() async {
@@ -136,7 +130,7 @@ extension SearchPostsViewModel {
 }
 
 // MARK: fetch data filtering / sorting
-extension SearchPostsViewModel {
+extension ExSearchPostsViewModel {
 	func postSearch(_ keyword: String) async {
 		// 작업을 병렬로 처리
 		// 배열 안의 값에 키워드가 포함되어 있는 경우 fliter 고차함수를 사용하여 각각의 검색 타입(이름, 술 태그, 음식 태그)에 맞게 필터링

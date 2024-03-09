@@ -77,7 +77,8 @@ final class DrinkViewModel: ObservableObject {
     }
 }
 
-// MARK: - 술 데이터 불러오기 / 페이지네이션 ( FirestoreDrinkService )
+// MARK: - Fetch
+// 술 데이터 불러오기 / 페이지네이션 ( FirestoreDrinkService )
 extension DrinkViewModel {
     // 첫 데이터 20개 가져오기
     func loadDrinksFirstPage() async {
@@ -127,17 +128,26 @@ extension DrinkViewModel {
     }
 }
 
-// MARK: - DrinkDetail 의 '잘 어울리는 음식' 추천에서 openAI 에게 추천 받아오기
+// MARK: - Fetch in Drink Detail View
 extension DrinkViewModel {
-    // openAI 에서 답변 받아오기
+    // DrinkDetail 의 '잘 어울리는 음식' 추천에서 openAI 에게 추천 받아오기
     func getFoodRecommendationsToOpenAI(drinkName: String) async -> String {
         let result = await aiWellMatchService.fetchRecommendationsIfNeeded(drinkName: drinkName)
         guard let result = result else { return "-" }
         return result
     }
+    
+    // '태그된 게시물' 인기순으로 최대 3개만 받아오기
+    func getTopTrendingPosts(drink: Drink) -> [Post] {
+        let posts = drink.taggedPosts
+        let sortedPosts = posts.sorted {
+            $0.likedUsersID.count > $1.likedUsersID.count
+        }.prefix(3)
+        return Array(sortedPosts)
+    }
 }
 
-// MARK: - 술 검색에 사용
+// MARK: - Search
 extension DrinkViewModel {
     // 술 검색해서 데이터 받아오기
     // TODO: - result ( 검색된 술 데이터는 사용처에서 @State 로 사용할 예정 )
@@ -149,7 +159,7 @@ extension DrinkViewModel {
             let drinksSnapshot = try await collectionRef.getDocuments()
             for drinkDocument in drinksSnapshot.documents {
                 let drinkFieldData = try drinkDocument.data(as: DrinkField.self)
-                if drinkFieldData.name.localizedCaseInsensitiveContains(keyword) {
+                if isKeywordInName(drinkFieldData: drinkFieldData, keyword: keyword) {
                     let drinkID = drinkDocument.documentID
                     let documentRef = collectionRef.document(drinkID)
                     let drinkData = try await firestoreDrinkService.fetchDrinkDocument(document: documentRef)
@@ -161,5 +171,10 @@ extension DrinkViewModel {
         }
         self.isLoading = false
         return result
+    }
+    
+    // keyword 가 술 이름에 포함 되어있는지
+    private func isKeywordInName(drinkFieldData: DrinkField, keyword: String) -> Bool {
+        return drinkFieldData.name.localizedCaseInsensitiveContains(keyword)
     }
 }

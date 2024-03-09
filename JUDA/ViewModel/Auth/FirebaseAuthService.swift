@@ -30,7 +30,22 @@ final class FirebaseAuthService {
             return true
         }
     }
+}
+
+// MARK: - Upload / 저장
+extension FirebaseAuthService {
+    // firestore 에 유저 저장
+    func addUserDataToStore(userData: UserField, uid: String) {
+        do {
+            try db.collection(userCollection).document(uid).setData(from: userData)
+        } catch {
+            print("error :: addUserDataToStore", error.localizedDescription)
+        }
+    }
+}
     
+// MARK: - Update
+extension FirebaseAuthService {
     // firestore 에서 유저 이름 변경
     func updateUserName(uid: String, userName: String) async {
         do {
@@ -41,17 +56,8 @@ final class FirebaseAuthService {
         }
     }
     
-    // firestore 에 유저 저장
-    func addUserDataToStore(userData: UserField, uid: String) {
-        do {
-            try db.collection(userCollection).document(uid).setData(from: userData)
-        } catch {
-            print("error :: addUserDataToStore", error.localizedDescription)
-        }
-    }
-    
     // 유저 정보 업데이트 - LikedPosts / LikedDrinks
-    func userLikedListUpdate(uid: String, documentName: String, list: [Any]) async {
+    func updateUserLikedList(uid: String, documentName: String, list: [Any]) async {
         do {
             try await db.collection(userCollection).document(uid).updateData([documentName: list])
         } catch {
@@ -86,7 +92,7 @@ extension FirebaseAuthService {
     }
 }
 
-// MARK: - Apple
+// MARK: - 로그인 / 회원 탈퇴 ( Apple )
 extension FirebaseAuthService {
     // 로그인
     func signInApple(appleIDCredential: ASAuthorizationAppleIDCredential,
@@ -142,5 +148,5 @@ extension FirebaseAuthService {
     }
 }
 
-// MARK: - Google
+// MARK: - 회원 탈퇴 ( Google )
 extension FirebaseAuthService { }

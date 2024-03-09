@@ -54,7 +54,6 @@ final class AuthViewModel: ObservableObject {
         }
     }
     
-    
     // 현재 유저 있는지 확인, uid 받기
     private func checkCurrentUserID() throws -> String {
         guard let uid = Auth.auth().currentUser?.uid else {
@@ -68,7 +67,7 @@ final class AuthViewModel: ObservableObject {
     }
     
     // provider 받아오기 ( AuthProviderOption - rawValue )
-    func getProviderOptionString() throws -> String {
+    private func getProviderOptionString() throws -> String {
         guard let providerData = Auth.auth().currentUser?.providerData else {
             throw AuthManagerError.noProviderData
         }
@@ -82,6 +81,31 @@ final class AuthViewModel: ObservableObject {
         return authProviderOptionString
     }
     
+    // 데이터 초기화
+    func resetData() {
+        signInStatus = false
+        currentUser = nil
+        isLoading = false
+        isNewUser = false
+    }
+    
+    // 실시간 업데이트 리스너 등록
+    func startListeningForUserField() async {
+        do {
+            let uid = try checkCurrentUserID()
+            firebaseAuthService.startListeningForUser(uid: uid) { user in
+                if let user = user {
+                    self.currentUser?.userField = user
+                }
+            }
+        } catch {
+            print("error :: startListeningForUserField :", error.localizedDescription)
+        }
+    }
+}
+
+// MARK: - User Fetch
+extension AuthViewModel {
     // 현재 CurrentUser : User 가져오기
     func getCurrentUser() async {
         do {
@@ -155,28 +179,12 @@ final class AuthViewModel: ObservableObject {
             print(errorMessage)
         }
     }
-    
-    // 로그아웃
-    func signOut() {
-        do {
-            try Auth.auth().signOut()
-            resetData()
-        } catch {
-            errorMessage = "로그아웃에 문제가 발생했어요.\n다시 시도해주세요."
-            showError = true
-        }
-    }
-    
-    // 데이터 초기화
-    func resetData() {
-        signInStatus = false
-        currentUser = nil
-        isLoading = false
-        isNewUser = false
-    }
-    
+}
+
+// MARK: - User Update
+extension AuthViewModel {
     // 유저가 좋아하는 술 리스트에 추가 or 삭제
-    func addOrRemoveToLikedDrinks(isLiked: Bool, sellectedDrink: Drink) {
+    func updateLikedDrinks(isLiked: Bool, sellectedDrink: Drink) async {
         if !isLiked { // 좋아요 X -> O
             currentUser?.likedDrinks.removeAll { $0.drinkField.drinkID == sellectedDrink.drinkField.drinkID }
         } else { // 좋아요 O -> X
@@ -184,6 +192,39 @@ final class AuthViewModel: ObservableObject {
                !user.likedDrinks.contains(where: { $0.drinkField.drinkID == sellectedDrink.drinkField.drinkID }) {
                 currentUser?.likedDrinks.append(sellectedDrink)
             }
+        }
+        await updateUserLikedList(type: .drinks)
+    }
+    
+    // 유저가 좋아하는 게시글 (술상) 리스트에 추가 or 삭제
+    func updateLikedPosts(isLiked: Bool, sellectedPost: Post) async {
+        if !isLiked { // 좋아요 X -> O
+            currentUser?.likedPosts.removeAll { $0.postField.postID == sellectedPost.postField.postID }
+        } else { // 좋아요 O -> X
+            if let user = currentUser,
+               !user.likedPosts.contains(where: { $0.postField.postID == sellectedPost.postField.postID }) {
+                currentUser?.likedPosts.append(sellectedPost)
+            }
+        }
+        await updateUserLikedList(type: .posts)
+    }
+
+    // 유저 정보 업데이트 - LikedPosts / LikedDrinks
+    private func updateUserLikedList(type: UserLikedListType) async {
+        do {
+            let uid = try checkCurrentUserID()
+            var list = [Any]()
+            switch type {
+            case .posts:
+                list = currentUser?.likedPosts ?? [] as [Post]
+            case .drinks:
+                list = currentUser?.likedDrinks ?? [] as [Drink]
+            }
+            await firebaseAuthService.updateUserLikedList(uid: uid,
+                                                      documentName: type.rawValue,
+                                                      list: list)
+        } catch {
+            print("error :: userLiked\(type)Update :", error.localizedDescription)
         }
     }
     
@@ -197,21 +238,10 @@ final class AuthViewModel: ObservableObject {
             errorMessage = "닉네임 변경에 문제가 발생했어요.\n다시 시도해주세요."
         }
     }
-    
-    // 실시간 업데이트 리스너 등록
-    func startListeningForUserField() async {
-        do {
-            let uid = try checkCurrentUserID()
-            firebaseAuthService.startListeningForUser(uid: uid) { user in
-                if let user = user {
-                    self.currentUser?.userField = user
-                }
-            }
-        } catch {
-            print("error :: startListeningForUserField :", error.localizedDescription)
-        }
-    }
-    
+}
+
+// MARK: - Upload / 데이터 저장
+extension AuthViewModel {
     // 유저 정보 저장
     func addUserDataToStore(userData: UserField) {
         do {
@@ -219,25 +249,6 @@ final class AuthViewModel: ObservableObject {
             firebaseAuthService.addUserDataToStore(userData: userData, uid: uid)
         } catch {
             print("error :: addUserDataToStore :", error.localizedDescription)
-        }
-    }
-    
-    // 유저 정보 업데이트 - LikedPosts / LikedDrinks
-    func userLikedListUpdate(type: UserLikedListType) async {
-        do {
-            let uid = try checkCurrentUserID()
-            var list = [Any]()
-            switch type {
-            case .posts:
-                list = currentUser?.likedPosts ?? [] as [Post]
-            case .drinks:
-                list = currentUser?.likedDrinks ?? [] as [Drink]
-            }
-            await firebaseAuthService.userLikedListUpdate(uid: uid,
-                                                      documentName: type.rawValue,
-                                                      list: list)
-        } catch {
-            print("error :: userLiked\(type)Update :", error.localizedDescription)
         }
     }
     
@@ -259,7 +270,21 @@ final class AuthViewModel: ObservableObject {
     }
 }
 
-// MARK: - Apple
+// MARK: - 로그아웃 ( Apple & Google 공통 )
+extension AuthViewModel {
+    // 로그아웃
+    func signOut() {
+        do {
+            try Auth.auth().signOut()
+            resetData()
+        } catch {
+            errorMessage = "로그아웃에 문제가 발생했어요.\n다시 시도해주세요."
+            showError = true
+        }
+    }
+}
+
+// MARK: - 로그인 / 회원 탈퇴 ( Apple )
 extension AuthViewModel {
     // 로그인 request
     func handleSignInWithAppleRequest(_ request: ASAuthorizationAppleIDRequest) {
@@ -344,8 +369,8 @@ extension AuthViewModel {
     }
 }
 
-// MARK: - Google
-extension AuthViewModel{
+// MARK: - 로그인 / 회원 탈퇴 ( Google )
+extension AuthViewModel {
     // 로그인
     func signInWithGoogle() async {
         do {
