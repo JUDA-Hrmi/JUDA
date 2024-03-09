@@ -138,3 +138,30 @@ extension DrinkViewModel {
         return result
     }
 }
+
+// MARK: - 술 검색에 사용
+extension DrinkViewModel {
+    // 술 검색해서 데이터 받아오기
+    // TODO: - result ( 검색된 술 데이터는 사용처에서 @State 로 사용할 예정 )
+    func getSearchedDrinks(from keyword: String) async -> [Drink] {
+        self.isLoading = true
+        var result = [Drink]()
+        do {
+            let collectionRef = db.collection(drinkCollection)
+            let drinksSnapshot = try await collectionRef.getDocuments()
+            for drinkDocument in drinksSnapshot.documents {
+                let drinkFieldData = try drinkDocument.data(as: DrinkField.self)
+                if drinkFieldData.name.localizedCaseInsensitiveContains(keyword) {
+                    let drinkID = drinkDocument.documentID
+                    let documentRef = collectionRef.document(drinkID)
+                    let drinkData = try await firestoreDrinkService.fetchDrinkDocument(document: documentRef)
+                    result.append(drinkData)
+                }
+            }
+        } catch {
+            print("error :: getSearchedDrinks", error.localizedDescription)
+        }
+        self.isLoading = false
+        return result
+    }
+}
