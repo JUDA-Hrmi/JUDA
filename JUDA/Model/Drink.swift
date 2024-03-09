@@ -15,6 +15,8 @@ enum DrinkType: String, CaseIterable {
     case beer = "맥주"
     case wine = "와인"
     case whiskey = "위스키"
+    // 리스트
+    static let list: [DrinkType] = DrinkType.allCases
 }
 
 struct Drink {

@@ -43,7 +43,7 @@
 		099F16192B750E7E00D8BEDA /* UINavigationController +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099F16182B750E7E00D8BEDA /* UINavigationController +.swift */; };
 		099F161B2B75347100D8BEDA /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099F161A2B75347100D8BEDA /* CheckBox.swift */; };
 		09A320142B8929CC00DE4646 /* URL +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A320132B8929CC00DE4646 /* URL +.swift */; };
-		09A320162B8B30D100DE4646 /* SearchDrinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A320152B8B30D100DE4646 /* SearchDrinkViewModel.swift */; };
+		09A320162B8B30D100DE4646 /* ExSearchDrinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A320152B8B30D100DE4646 /* ExSearchDrinkViewModel.swift */; };
 		09A6AD722B70B46E00606585 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD712B70B46E00606585 /* AppViewModel.swift */; };
 		09A6AD7A2B71F6D800606585 /* LibraryPhotosPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD792B71F6D800606585 /* LibraryPhotosPicker.swift */; };
 		09A6AD7E2B72A53C00606585 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6AD7D2B72A53C00606585 /* Errors.swift */; };
@@ -172,7 +172,7 @@
 		B1EE24902B614477007F68B0 /* DrinkInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE248F2B614477007F68B0 /* DrinkInfoView.swift */; };
 		B1EE24922B61447F007F68B0 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24912B61447F007F68B0 /* MainView.swift */; };
 		B1EE24942B614485007F68B0 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24932B614485007F68B0 /* LogInView.swift */; };
-		B1EE24982B6144BD007F68B0 /* LikedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24972B6144BD007F68B0 /* LikedViewModel.swift */; };
+		B1EE24982B6144BD007F68B0 /* ExLikedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24972B6144BD007F68B0 /* ExLikedViewModel.swift */; };
 		B1EE249A2B6144C5007F68B0 /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE24992B6144C5007F68B0 /* RecordViewModel.swift */; };
 		B1EE249C2B6144CD007F68B0 /* ExPostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE249B2B6144CD007F68B0 /* ExPostsViewModel.swift */; };
 		B1EE249E2B6144DD007F68B0 /* ExDrinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE249D2B6144DD007F68B0 /* ExDrinkViewModel.swift */; };
@@ -212,7 +212,7 @@
 		099F16182B750E7E00D8BEDA /* UINavigationController +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController +.swift"; sourceTree = "<group>"; };
 		099F161A2B75347100D8BEDA /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		09A320132B8929CC00DE4646 /* URL +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL +.swift"; sourceTree = "<group>"; };
-		09A320152B8B30D100DE4646 /* SearchDrinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDrinkViewModel.swift; sourceTree = "<group>"; };
+		09A320152B8B30D100DE4646 /* ExSearchDrinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExSearchDrinkViewModel.swift; sourceTree = "<group>"; };
 		09A6AD712B70B46E00606585 /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		09A6AD792B71F6D800606585 /* LibraryPhotosPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryPhotosPicker.swift; sourceTree = "<group>"; };
 		09A6AD7D2B72A53C00606585 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -320,7 +320,7 @@
 		B1EE248F2B614477007F68B0 /* DrinkInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkInfoView.swift; sourceTree = "<group>"; };
 		B1EE24912B61447F007F68B0 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		B1EE24932B614485007F68B0 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
-		B1EE24972B6144BD007F68B0 /* LikedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedViewModel.swift; sourceTree = "<group>"; };
+		B1EE24972B6144BD007F68B0 /* ExLikedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExLikedViewModel.swift; sourceTree = "<group>"; };
 		B1EE24992B6144C5007F68B0 /* RecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
 		B1EE249B2B6144CD007F68B0 /* ExPostsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExPostsViewModel.swift; sourceTree = "<group>"; };
 		B1EE249D2B6144DD007F68B0 /* ExDrinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExDrinkViewModel.swift; sourceTree = "<group>"; };
@@ -717,7 +717,7 @@
 		B1EE24812B6143CD007F68B0 /* Liked */ = {
 			isa = PBXGroup;
 			children = (
-				B1EE24972B6144BD007F68B0 /* LikedViewModel.swift */,
+				B1EE24972B6144BD007F68B0 /* ExLikedViewModel.swift */,
 			);
 			path = Liked;
 			sourceTree = "<group>";
@@ -736,7 +736,6 @@
 				B1EE249B2B6144CD007F68B0 /* ExPostsViewModel.swift */,
 				7B0A8BC82B8C88F300740E61 /* SearchPostsViewModel.swift */,
 				7B881CA22B97464200571352 /* FirestorePostService.swift */,
-				7B881CA42B97545700571352 /* FirestoreDrinkService.swift */,
 				7B74FA5A2B9A9EE800BAC2AC /* PostViewModel.swift */,
 				7B74FA5C2B9ABF7600BAC2AC /* RecordViewModel.swift */,
 			);
@@ -747,8 +746,9 @@
 			isa = PBXGroup;
 			children = (
 				096F2D5A2B9B044400DFC5A3 /* DrinkViewModel.swift */,
+				7B881CA42B97545700571352 /* FirestoreDrinkService.swift */,
 				B1EE249D2B6144DD007F68B0 /* ExDrinkViewModel.swift */,
-				09A320152B8B30D100DE4646 /* SearchDrinkViewModel.swift */,
+				09A320152B8B30D100DE4646 /* ExSearchDrinkViewModel.swift */,
 			);
 			path = Drink;
 			sourceTree = "<group>";
@@ -916,7 +916,7 @@
 				7BBDFF732B6B912C0036FB8B /* DrinkInfoSegment.swift in Sources */,
 				7BBDFF6E2B6B90EB0036FB8B /* JUDAApp.swift in Sources */,
 				7BBDFF6F2B6B90EB0036FB8B /* AddTagView.swift in Sources */,
-				09A320162B8B30D100DE4646 /* SearchDrinkViewModel.swift in Sources */,
+				09A320162B8B30D100DE4646 /* ExSearchDrinkViewModel.swift in Sources */,
 				7BBDFF702B6B90EB0036FB8B /* PostGrid.swift in Sources */,
 				7B74FA5D2B9ABF7600BAC2AC /* RecordViewModel.swift in Sources */,
 				7B881CA52B97545700571352 /* FirestoreDrinkService.swift in Sources */,
@@ -977,7 +977,7 @@
 				7B92656F2B69303F00840095 /* PostReportButton.swift in Sources */,
 				7B92656D2B692F0700840095 /* PostReportContent.swift in Sources */,
 				AC5778E52B6FC20C00F7B04B /* NavigationProfileView.swift in Sources */,
-				B1EE24982B6144BD007F68B0 /* LikedViewModel.swift in Sources */,
+				B1EE24982B6144BD007F68B0 /* ExLikedViewModel.swift in Sources */,
 				B1EE24922B61447F007F68B0 /* MainView.swift in Sources */,
 				095D70932B99EAA500F76C11 /* MainViewModel.swift in Sources */,
 				093357BA2B8E120200A9ACAB /* ErrorPageView.swift in Sources */,

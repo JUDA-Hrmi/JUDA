@@ -25,6 +25,8 @@ enum Gender: String, CaseIterable {
         case .female: "여성"
         }
     }
+    // 리스트
+    static let list: [Gender] = Gender.allCases
 }
 
 // MARK: - 신규 유저의 경우, 프로필 사진 및 정보 작성 뷰
@@ -172,7 +174,7 @@ struct ProfileSettingView: View {
                         }
                         // 성별
                         HStack(alignment: .center, spacing: 10) {
-                            ForEach(Gender.allCases, id: \.self) { gender in
+                            ForEach(Gender.list, id: \.self) { gender in
                                 ZStack {
                                     Rectangle()
                                         .fill(.background)

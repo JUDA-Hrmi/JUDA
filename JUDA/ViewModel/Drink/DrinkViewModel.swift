@@ -22,8 +22,6 @@ final class DrinkViewModel: ObservableObject {
     @Published var selectedSortedTypeString: String = DrinkSortType.popularity.rawValue
     // 로딩 중 - Shimmer Drink List / Grid Cell
     @Published var isLoading: Bool = true
-    // 술 종류
-    let typesOfDrink: [DrinkType] = DrinkType.allCases
     // pagination 을 위한, 이전 load의 마지막 체크
     private var lastSnapshot: QueryDocumentSnapshot?
     // pagination 할 documet 개수
@@ -86,7 +84,7 @@ extension DrinkViewModel {
         self.isLoading = true
         let collectionRef = getReference(
             sortType: DrinkSortType(rawValue: selectedSortedTypeString),
-            query: getReference(category: typesOfDrink[selectedDrinkTypeIndex]))
+            query: getReference(category: DrinkType.list[selectedDrinkTypeIndex]))
             .limit(to: paginationCount)
         do {
             let drinksSnapshot = try await collectionRef.getDocuments()
@@ -112,7 +110,7 @@ extension DrinkViewModel {
         }
         let collectionRef = getReference(
             sortType: DrinkSortType(rawValue: selectedSortedTypeString),
-            query: getReference(category: typesOfDrink[selectedDrinkTypeIndex]))
+            query: getReference(category: DrinkType.list[selectedDrinkTypeIndex]))
             .limit(to: paginationCount)
         do {
             let drinksSnapshot = try await collectionRef.getDocuments()

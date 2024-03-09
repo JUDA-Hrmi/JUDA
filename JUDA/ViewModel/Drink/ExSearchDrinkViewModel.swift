@@ -1,5 +1,5 @@
 //
-//  SearchDrinkViewModel.swift
+//  ExSearchDrinkViewModel.swift
 //  JUDA
 //
 //  Created by phang on 2/25/24.
@@ -10,7 +10,7 @@ import FirebaseFirestore
 import FirebaseStorage
 
 //@MainActor
-//class SearchDrinkViewModel: ObservableObject {
+//class ExSearchDrinkViewModel: ObservableObject {
 //    // 검색된 술
 //    @Published var searchDrinks: [FBDrink] = []
 //    // 검색된 술 [id: 이미지 url]

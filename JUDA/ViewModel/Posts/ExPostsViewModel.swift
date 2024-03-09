@@ -38,6 +38,8 @@ enum FireStorageImageFolderType: CaseIterable {
 enum PostSortType: String, CaseIterable {
 	case popularity = "인기"
 	case mostRecent = "최신"
+    // 리스트
+    static let list: [PostSortType] = PostSortType.allCases
 }
 
 final class ExPostsViewModel: ObservableObject {
@@ -57,8 +59,6 @@ final class ExPostsViewModel: ObservableObject {
 	@Published var postUserImages: [String: URL] = [:]
 	// 게시글 정렬용 세그먼트 인덱스
 	@Published var selectedSegmentIndex = 0
-	// 게시글 정렬 타입
-	@Published var postSortType = PostSortType.allCases
 	// 게시글 불러오기/업로드/삭제/수정 작업이 진행중인지 나타내는 상태 프로퍼티
 	@Published var isLoading = false
 	// 게시글이 수정이 되었는지 유무 판단하는 상태 프로퍼티

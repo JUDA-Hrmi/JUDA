@@ -43,8 +43,6 @@ class SearchPostsViewModel: ObservableObject {
 	//
 	@Published var searchTagType: SearchTagType = .userName
 	@Published var foodTag: String?
-	// 게시글 정렬 타입
-	let postSortType = PostSortType.allCases
 }
 
 // MARK: post data fetch

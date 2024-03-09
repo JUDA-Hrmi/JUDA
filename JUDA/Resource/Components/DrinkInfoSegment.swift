@@ -30,13 +30,11 @@ struct DrinkInfoSegment: View {
 // MARK: - 리스트 / 그리드 아이콘 세그먼트
 struct CustomChangeStyleSegment: View {
     @EnvironmentObject private var drinkViewModel: DrinkViewModel
-    
-    private let cellStyleSymbolList = DrinkInfoLayoutOption.allCases
-    
+        
     var body: some View {
         HStack {
             HStack(spacing: 16) {
-                ForEach(cellStyleSymbolList, id: \.self) { symbol in
+                ForEach(DrinkInfoLayoutOption.list, id: \.self) { symbol in
                     Image(symbol.rawValue)
                         .font(.medium18)
                         .foregroundStyle(symbol == drinkViewModel.selectedViewType ? .mainBlack : .gray01)

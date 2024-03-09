@@ -93,7 +93,7 @@ struct PostsView: View {
 					.padding(.horizontal, 20)
 					// 인기 or 최신 탭뷰
 					TabView(selection: $postsViewModel.selectedSegmentIndex) {
-						ForEach(0..<PostSortType.allCases.count, id: \.self) { index in
+                        ForEach(0..<PostSortType.list.count, id: \.self) { index in
 							ScrollViewReader { value in
 								Group {
 									if postsViewModel.postSortType[index] == .popularity {
