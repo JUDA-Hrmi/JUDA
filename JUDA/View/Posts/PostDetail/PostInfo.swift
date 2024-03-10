@@ -208,13 +208,6 @@ struct PostInfo: View {
 			}
 		}
 	}
-	
-	private func dateToString(date: Date) -> String {
-		let myFormatter = DateFormatter()
-		myFormatter.dateFormat = "yyyy.MM.dd"  // 변환할 형식
-		let dateString = myFormatter.string(from: date)
-		return dateString
-	}
 }
 
 // MARK: - PostInfo 의 이미지 프로필에서 사용하는 KFImage
