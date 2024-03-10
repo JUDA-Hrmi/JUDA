@@ -45,7 +45,7 @@ final class MainViewModel: ObservableObject {
             let hottestDrinksRef = firestore.collection(drinkCollection)
                 .order(by: "rating", descending: true).limit(to: 3)
             // Drink 가져오는 함수 사용 - FirestoreDrinkService
-            let hottestDrinks = try await firestoreDrinkService.fetchDrinkCollection(collection: hottestDrinksRef)
+            let hottestDrinks = try await firestoreDrinkService.fetchDrinkCollection(collection: hottestDrinksRef as! CollectionReference)
             drinks = hottestDrinks
         } catch {
             print("error :: getHottestDrinks", error.localizedDescription)
@@ -58,7 +58,7 @@ final class MainViewModel: ObservableObject {
             let hottestPostsRef = firestore.collection(postCollection)
                 .order(by: "likedCount", descending: true).limit(to: 3)
             //  Post 가져오는 함수 사용 - FirestorePostService
-            let hottestPosts = try await firestoreDrinkService.fetchDrinkCollection(collection: hottestPostsRef)
+            let hottestPosts = try await firestorePostService.fetchPostCollection(collection: hottestPostsRef as! CollectionReference)
             posts = hottestPosts
         } catch {
             print("error :: getHottestPosts", error.localizedDescription)

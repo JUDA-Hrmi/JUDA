@@ -30,17 +30,10 @@ final class FirebaseAuthService {
             return true
         }
     }
-    
-    // firestore 에서 유저 이름 변경
-    func updateUserName(uid: String, userName: String) async {
-        do {
-            let docRef = db.collection(userCollection).document(uid)
-            try await docRef.updateData(["name": userName])
-        } catch {
-            print("error :: updateUserName", error.localizedDescription)
-        }
-    }
-    
+}
+
+// MARK: - Upload / 저장
+extension FirebaseAuthService {
     // firestore 에 유저 저장
     func addUserDataToStore(userData: UserField, uid: String) {
         do {
@@ -49,13 +42,17 @@ final class FirebaseAuthService {
             print("error :: addUserDataToStore", error.localizedDescription)
         }
     }
+}
     
-    // 유저 정보 업데이트 - LikedPosts / LikedDrinks
-    func userLikedListUpdate(uid: String, documentName: String, list: [Any]) async {
+// MARK: - Update
+extension FirebaseAuthService {
+    // firestore 에서 유저 이름 변경
+    func updateUserName(uid: String, userName: String) async {
         do {
-            try await db.collection(userCollection).document(uid).updateData([documentName: list])
+            let docRef = db.collection(userCollection).document(uid)
+            try await docRef.updateData(["name": userName])
         } catch {
-            print("error :: userLikedListUpdate", error.localizedDescription)
+            print("error :: updateUserName", error.localizedDescription)
         }
     }
 }
@@ -86,149 +83,7 @@ extension FirebaseAuthService {
     }
 }
 
-// MARK: - 회원탈퇴 시, 파이어스토어에 관련 데이터 삭제 로직 ( Cloud Function 예정 )
-//extension FirebaseAuthViewModel {
-//    /*
-//    users - posts -postID를 얻고
-//    post 관련 이미지 파이어스토리지에서 삭제
-//    posts 삭제
-//    전체 drinks - taggedPostID 삭제
-//     */
-//    func userDataDeleteWithFirestore(uid: String) async {
-//        do {
-//            let userPostsRef = self.db.collection(userCollection).document(uid).collection("posts")
-//            let drinksRef = db.collection("drinks")
-//            let postsRef = db.collection("posts")
-//            
-//            let userPostsDocuments = try await userPostsRef.getDocuments()
-//            
-//            // 비동기 작업을 위한 태스크 배열
-//            var tasks: [Task<Void, Error>] = []
-//            
-//            for postDocument in userPostsDocuments.documents {
-//                tasks.append(Task {
-//                    try await handlePostDeletion(postDocument: postDocument, userPostsRef: userPostsRef, postsRef: postsRef, drinksRef: drinksRef)
-//                })
-//            }
-//            // 모든 태스크 완료 대기
-//            for task in tasks {
-//                try await task.value
-//            }
-//        } catch {
-//            print(error.localizedDescription)
-//        }
-//    }
-//
-//    // 포스트 삭제를 처리하는 함수
-//    func handlePostDeletion(postDocument: DocumentSnapshot, userPostsRef: CollectionReference, postsRef: CollectionReference, drinksRef: CollectionReference) async throws {
-//        let firestoreAuthViewModel = FirestorageAuthViewModel()
-//        let postID = postDocument.documentID
-//        if let postImagesURL = postDocument.data()?["imagesURL"] as? [URL] {
-//            await firestoreAuthViewModel.postImagesURLDelete(postRef: postsRef, imagesURL: postImagesURL, postID: postID)
-//        }
-//        
-//        var drinkTagsID: [String] = []
-//        let userPostTagDrinksDocuments = try await userPostsRef.document(postID).collection("drinkTags").getDocuments()
-//        for userPostTagDrinkDocument in userPostTagDrinksDocuments.documents {
-//            drinkTagsID.append(userPostTagDrinkDocument.documentID)
-//        }
-//        
-//        await postsCollectionPostDelete(postRef: userPostsRef, postID: postID)
-//        await postsCollectionPostDelete(postRef: postsRef, postID: postID)
-//        await postTaggedDrinkRootCollectionUpdate(drinkRef: drinksRef, drinkTagsID: drinkTagsID, postID: postID)
-//        await allPostsSubCollectionDrinkUpdate(postRef: postsRef, postID: postID)
-//    }
-//
-////    func userDataDeleteWithFirestore() async {
-////        do {
-////            let userPostsRef = self.collectionRef.document(uid).collection("posts")
-////            let drinksRef = db.collection("drinks")
-////            let postsRef = db.collection("posts")
-////
-////            let userPostsDocuments = try await userPostsRef.getDocuments()
-////            for postDocument in userPostsDocuments.documents {
-////                // postID 얻기
-////                let postID = postDocument.documentID
-////                // 해당 게시글의 사진 URL들 받아오기
-////                let postImagesURL = postDocument.data()["imagesURL"] as! [URL]
-////                // 게시글 사진들 firestorage 에서 삭제
-////                await postImagesURLDelete(postRef: postsRef, imagesURL: postImagesURL, postID: postID)
-////
-////
-////                var drinkTagsID = [String]()
-////                let userPostTagDrinksDocuments = try await userPostsRef.document(postID).collection("drinkTags").getDocuments()
-////                for userPostTagDrinkDocument in userPostTagDrinksDocuments.documents {
-////                    drinkTagsID.append(userPostTagDrinkDocument.documentID)
-////                }
-////                // 유저 컬렉션의 포스트 문서 삭제
-////                await postsCollectionPostDelete(postRef: userPostsRef, postID: postID)
-////                // 포스트 컬렉션 문서 삭제
-////                await postsCollectionPostDelete(postRef: postsRef, postID: postID)
-////                // post의 tagDrinks인 root drinks collection taggedPost에서 postID 있으면 제거 후 업데이트
-////                await postTaggedDrinkRootCollectionUpdate(drinkRef: drinksRef, drinkTagsID: drinkTagsID, postID: postID)
-////                // 전체 posts collection sub collection인 drink 업데이트
-////                await allPostsSubCollectionDrinkUpdate(postRef: postsRef, postID: postID)
-////            }
-////        } catch {
-////            print(error.localizedDescription)
-////        }
-////    }
-//    
-//    func postsCollectionPostDelete(postRef: CollectionReference, postID: String) async {
-//        do {
-//            try await postRef.document(postID).delete()
-//        } catch {
-//            print("postsCollectionPostDelete error \(error.localizedDescription)")
-//        }
-//    }
-//    
-//    // post의 tagDrinks인 root drinks collection taggedPost에서 postID 있으면 제거 후 업데이트
-//    func postTaggedDrinkRootCollectionUpdate(drinkRef: CollectionReference, drinkTagsID: [String], postID: String) async {
-//        do {
-//            for drinkID in drinkTagsID {
-//                var taggedPostsID = try await drinkRef.document(drinkID).getDocument().data()?["taggedPostID"] as! [String]
-//                taggedPostsID.removeAll(where: { $0 == postID })
-//                try await drinkRef.document(drinkID).updateData(["taggedPostID": taggedPostsID])
-//            }
-//        } catch {
-//            print("postTaggedDataUpdate error \(error.localizedDescription)")
-//        }
-//    }
-//    
-//    // 전체 posts collection sub collection인 drink 업데이트
-//    func allPostsSubCollectionDrinkUpdate(postRef: CollectionReference, postID: String) async {
-//        do {
-//            let postsDocument = try await postRef.getDocuments()
-//            for postDocument in postsDocument.documents {
-//                let postDocumentID = postDocument.documentID
-//                let drinkTagsDocument = try await postDocument.reference.collection("drinkTags").getDocuments()
-//                
-//                for drinkTagDocument in drinkTagsDocument.documents {
-//                    let drinkTagID = drinkTagDocument.documentID
-//                    var taggedPostsID = try await drinkTagDocument
-//                        .reference.collection("drink")
-//                        .document(drinkTagID)
-//                        .getDocument()
-//                        .data()?["taggedPostID"] as! [String]
-//                    
-//                    taggedPostsID.removeAll(where: { $0 == postID })
-//                    
-//                    try await postRef.document(postDocumentID)
-//                        .collection("drinkTags")
-//                        .document(drinkTagID)
-//                        .collection("drink")
-//                        .document(drinkTagID)
-//                        .updateData(["taggedPostID": taggedPostsID])
-//                }
-//            }
-//        } catch {
-//            print("allPostsSubCollectionDrinkUpdate error \(error.localizedDescription)")
-//        }
-//    }
-//}
-
-
-// MARK: - Apple
+// MARK: - 로그인 / 회원 탈퇴 ( Apple )
 extension FirebaseAuthService {
     // 로그인
     func signInApple(appleIDCredential: ASAuthorizationAppleIDCredential,
@@ -270,10 +125,6 @@ extension FirebaseAuthService {
             print("데이터 -> 토큰 문자열 에러 : \(appleIDToken.debugDescription)")
             return
         }
-        
-        // TODO: 파이어스토어 데이터 삭제 로직 구현
-//        await userDataDeleteWithFirestore(uid: user.uid)
-        
         let nonce = signInWithAppleHelper.randomNonceString()
         let credential = OAuthProvider.credential(withProviderID: "apple.com",
                                                   idToken: idTokenString,
@@ -288,5 +139,5 @@ extension FirebaseAuthService {
     }
 }
 
-// MARK: - Google
+// MARK: - 회원 탈퇴 ( Google )
 extension FirebaseAuthService { }

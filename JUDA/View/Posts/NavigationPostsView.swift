@@ -45,7 +45,7 @@ struct NavigationPostsView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             // 인기 or 최신 탭뷰
             TabView(selection: $selectedSegmentIndex) {
-                ForEach(0..<PostSortType.allCases.count, id: \.self) { index in
+                ForEach(0..<PostSortType.list.count, id: \.self) { index in
                     ScrollViewReader { value in
                         Group {
                             if searchPostsViewModel.postSortType[index] == .popularity {

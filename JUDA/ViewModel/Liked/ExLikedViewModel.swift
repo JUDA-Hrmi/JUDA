@@ -1,5 +1,5 @@
 //
-//  LikedViewModel.swift
+//  ExLikedViewModel.swift
 //  JUDA
 //
 //  Created by 홍세희 on 2024/01/24.
@@ -12,7 +12,7 @@ import FirebaseStorage
 
 // MARK: - Liked View Model
 @MainActor
-final class LikedViewModel: ObservableObject {
+final class ExLikedViewModel: ObservableObject {
     // 현재 유저가 좋아요 누른 술 목록
     @Published var likedDrinks = [FBDrink]()
     // 술 이미지 딕셔너리 *[drinkID: imageURL]
@@ -35,7 +35,7 @@ final class LikedViewModel: ObservableObject {
 }
 
 // MARK: - FireStore 에서 데이터 받아오기
-extension LikedViewModel {
+extension ExLikedViewModel {
     // 좋아요 누른 술 목록 가져오기
     func getLikedDrinks(likedDrinksIDList: [String]?) async {
         isLoading = true
@@ -147,7 +147,7 @@ extension LikedViewModel {
 }
 
 // MARK: - FireStorage 에서 술 카테고리에 맞는 이미지 가져오기
-extension LikedViewModel {
+extension ExLikedViewModel {
     // 이미지 storage 에서 받아오기
     func fetchImage(category: DrinkType, detailedCategory: String, drinkID: String) {
         guard let imageName = Formatter.getImageName(category: category,

@@ -11,6 +11,8 @@ import SwiftUI
 enum DrinkInfoLayoutOption: String, CaseIterable {
     case grid = "grid.style"
     case list = "list.style"
+    // 리스트
+    static let list: [DrinkInfoLayoutOption] = DrinkInfoLayoutOption.allCases
 }
 
 // MARK: - 술 정렬 Option enum
@@ -20,6 +22,8 @@ enum DrinkSortType: String, CaseIterable {
     case lowAlcoholContent = "도수 낮은 순"
     case highPrice = "가격 높은 순"
     case lowPrice = "가격 낮은 순"
+    // 리스트
+    static let list: [DrinkSortType] = DrinkSortType.allCases
 }
 
 // MARK: - 술장 탭
@@ -35,7 +39,7 @@ struct DrinkInfoView: View {
     @FocusState private var isFocused: Bool
 
     // 정렬옵션 이름이 담겨진 리스트
-    private let optionNameList = DrinkSortType.allCases.map { $0.rawValue }
+    private let optionNameList = DrinkSortType.list.map { $0.rawValue }
     
 	var body: some View {
         NavigationStack(path: $navigationRouter.path) {

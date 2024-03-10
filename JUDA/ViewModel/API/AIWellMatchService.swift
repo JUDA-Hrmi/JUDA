@@ -12,9 +12,9 @@ import FirebaseFirestore
 
 // MARK: - Drink Detail 에서 사용하는 AI Well Match Service
 @MainActor
-final class AIWellMatchService: ObservableObject {
-    @Published var respond = ""
-    @Published var isLoading = false
+final class AIWellMatchService {
+    // TODO: - isLoading 은 사용처에서 @State 로 사용 예정
+//    @Published var isLoading = false
     private var openAI: OpenAI?
     
     init() {
@@ -28,18 +28,9 @@ final class AIWellMatchService: ObservableObject {
         }
     }
     
-    func fetchRecommendationsIfNeeded(drinkName: String) async {
+    func fetchRecommendationsIfNeeded(drinkName: String) async -> String? {
+//        isLoading = true
         let prompt = "Please recommend three foods that go well with drinks. Only food except drinks. List below --- Beverages List: \(drinkName)"
-        isLoading = true
-        do {
-            respond = try await request(prompt: prompt)
-        } catch {
-            print("error :: fetchRecommendationsIfNeeded", error.localizedDescription)
-        }
-        isLoading = false
-    }
-    
-    private func request(prompt: String) async throws -> String {
         let query = ChatQuery(
             model: .gpt3_5Turbo_16k,
             messages: [
@@ -51,12 +42,13 @@ final class AIWellMatchService: ObservableObject {
         )
         do {
             let result = try await openAI?.chats(query: query)
-            respond = result?.choices.first?.message.content ?? ""
+            let respond = result?.choices.first?.message.content ?? ""
             return respond
         } catch {
             print("error :: AIWellMatchViewModel request", error.localizedDescription)
-            throw error
+            return nil
         }
+//        isLoading = false
     }
 }
 

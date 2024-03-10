@@ -9,12 +9,14 @@ import Foundation
 import FirebaseFirestore
 
 // MARK: - 술의 카테고리
-enum DrinkType: String {
+enum DrinkType: String, CaseIterable {
     case all = "전체"
     case traditional = "우리술"
     case beer = "맥주"
     case wine = "와인"
     case whiskey = "위스키"
+    // 리스트
+    static let list: [DrinkType] = DrinkType.allCases
 }
 
 struct Drink {
@@ -22,12 +24,13 @@ struct Drink {
 	let taggedPosts: [Post]
 	let agePreference: AgePreference
 	let GenderPreference: GenderPreference
-	let likedCount: Int // Firestore likedUsersUID Collection에 해당하는 Document 갯수
+	let likedUsersID: [String]
 }
 
 // MARK: - Firebase에서 사용하는 Drink Model
 struct DrinkField: Codable, Hashable {
 	@DocumentID var drinkID: String?
+    let drinkImageURL: URL
 	let category: String
 	let type: String
 	let name: String

@@ -11,6 +11,8 @@ import SwiftUI
 enum LikedType: String, CaseIterable {
     case drink = "술찜 리스트"
     case post = "술상 리스트"
+    // 리스트
+    static let list: [LikedType] = LikedType.allCases
 }
 
 // MARK: - 하트 누른 술 + 술상 볼 수 있는 탭
@@ -21,22 +23,21 @@ struct LikedView: View {
     @EnvironmentObject private var likedViewModel: LikedViewModel
 
     @State private var selectedSegmentIndex = 0
-    private let likedType = LikedType.allCases
     
     var body: some View {
         NavigationStack(path: $navigationRouter.path) {
             VStack(spacing: 0) {
                 // 세그먼트 (술찜 리스트 / 술상 리스트)
-                CustomTextSegment(segments: likedType.map { $0.rawValue }, selectedSegmentIndex: $selectedSegmentIndex)
+                CustomTextSegment(segments: LikedType.list.map { $0.rawValue }, selectedSegmentIndex: $selectedSegmentIndex)
                     .padding(.bottom, 14)
                     .padding([.top, .horizontal], 20)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 // 술찜 or 술상 탭 뷰
                 TabView(selection: $selectedSegmentIndex) {
-                    ForEach(0..<likedType.count, id: \.self) { index in
+                    ForEach(0..<LikedType.list.count, id: \.self) { index in
                         ScrollViewReader { value in
                             Group {
-                                if likedType[index] == .drink {
+                                if LikedType.list[index] == .drink {
                                     // 술찜 리스트
                                     LikedDrinkList()
                                         .task {
