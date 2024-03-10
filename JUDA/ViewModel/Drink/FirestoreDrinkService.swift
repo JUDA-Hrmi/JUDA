@@ -16,10 +16,11 @@ enum Age: String, CaseIterable {
 	case fifty = "50"
 }
 
-enum DrinkFetchError: Error {
-	case drinkField
-    case drinkDocument
-    case drinkCollection
+enum DrinkError: Error {
+	case fetchDrinkField
+    case fetchDrinkDocument
+    case fetchDrinkCollection
+    case delete
 }
 
 @MainActor
@@ -46,7 +47,7 @@ extension FirestoreDrinkService {
             return result
         } catch let error {
             print("error :: fetchDrinkCollection", error.localizedDescription)
-            throw DrinkFetchError.drinkCollection
+            throw DrinkError.fetchDrinkCollection
         }
     }
     
@@ -63,20 +64,20 @@ extension FirestoreDrinkService {
 			let taggedPosts = await fetchTaggedPosts(ref: taggedPostsRef)
 			let agePreference = await fetchAgePreferenceUID(ref: agePreferenceUIDRef)
 			let genderPreference = await fetchGenderPreferenceUID(ref: genderPreferenceUIDRef)
-			let likedCount = await fetchLikedCount(ref: likedUsersIDRef)
+			let likedUsersID = await fetchDrinkLikedUsersID(ref: likedUsersIDRef)
 			
 			return Drink(drinkField: drikField, 
 						 taggedPosts: taggedPosts,
 						 agePreference: agePreference,
 						 GenderPreference: genderPreference, 
-						 likedCount: likedCount)
-		} catch DrinkFetchError.drinkField {
+						 likedUsersID: likedUsersID)
+		} catch DrinkError.fetchDrinkField {
 			print("error :: fetchDrinkField() -> fetch drink field data failure")
-			throw DrinkFetchError.drinkField
+			throw DrinkError.fetchDrinkField
 		} catch {
 			print("error :: fetchDrinkField() -> fetch drink field data failure")
 			print(error.localizedDescription)
-			throw DrinkFetchError.drinkDocument
+			throw DrinkError.fetchDrinkDocument
 		}
 	}
 	
@@ -107,7 +108,7 @@ extension FirestoreDrinkService {
 			return try await document.getDocument(as: DrinkField.self)
 		} catch {
 			print(error.localizedDescription)
-			throw DrinkFetchError.drinkField
+			throw DrinkError.fetchDrinkField
 		}
 	}
 	
@@ -164,15 +165,19 @@ extension FirestoreDrinkService {
 	}
 	
 	// drinks/likedUsersID collection
-	// 위 collection에 해당하는 ducument의 갯수를 count
-	func fetchLikedCount(ref: CollectionReference) async -> Int {
-		do {
-			return try await ref.getDocuments().count
-		} catch {
-			print("error :: fetchLikedCount() -> fetch likedUsersID collection data failure")
-			print(error.localizedDescription)
-			return 0
-		}
+	func fetchDrinkLikedUsersID(ref: CollectionReference) async -> [String] {
+        var likedUsersID = [String]()
+        do {
+            let snapshot = try await ref.getDocuments()
+            for document in snapshot.documents {
+                let userID = document.documentID
+                likedUsersID.append(userID)
+            }
+        } catch {
+            print("error :: fetchDrinkLikedUsersID() -> fetch Drink likedUsersID collection data failure")
+            print(error.localizedDescription)
+        }
+        return likedUsersID
 	}
 }
 
@@ -189,4 +194,31 @@ extension FirestoreDrinkService {
 			return false
 		}
 	}
+}
+
+// MARK: Firestore drink document delete
+extension FirestoreDrinkService {
+    // drinks collection에서 삭제하고싶은 drink에 해당하는 document 삭제 메서드
+    func deleteDrinkDocument(document: DocumentReference) async throws {
+        do {
+            try await document.delete()
+        } catch {
+            print("error :: deleteDrinkDocument() -> delete drink document data failure")
+            print(error.localizedDescription)
+            throw DrinkError.delete
+        }
+    }
+}
+
+// MARK: Firestore drink document upload
+extension FirestoreDrinkService {
+    // likedUsersID 하위 컬렉션에 업로드
+    func uploadDrinkLikedUsersID(collection: CollectionReference, uid: String) async {
+        do {
+            try await collection.document(uid).setData([:])
+        } catch {
+            print("error :: uploadDrinkLikedUsersID() -> upload drink liked users id data failure")
+            print(error.localizedDescription)
+        }
+    }
 }

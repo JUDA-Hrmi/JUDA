@@ -55,15 +55,6 @@ extension FirebaseAuthService {
             print("error :: updateUserName", error.localizedDescription)
         }
     }
-    
-    // 유저 정보 업데이트 - LikedPosts / LikedDrinks
-    func updateUserLikedList(uid: String, documentName: String, list: [Any]) async {
-        do {
-            try await db.collection(userCollection).document(uid).updateData([documentName: list])
-        } catch {
-            print("error :: userLikedListUpdate", error.localizedDescription)
-        }
-    }
 }
 
 // MARK: - 데이터 실시간 업데이트

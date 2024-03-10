@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseCore
+import FirebaseFirestore
 import FirebaseAuth
 import GoogleSignIn
 import CryptoKit
@@ -45,8 +46,16 @@ final class AuthViewModel: ObservableObject {
     private let firebaseAuthService = FirebaseAuthService()
     // Firebase User Service
     private let firebaseUserService = FirebaseUserService()
+    // Firebase Post Service
+    private let firestorePostService = FirestorePostService()
+    // Firebase Drink Service
+    private let firestoreDrinkService = FirestoreDrinkService()
     // FireStorage Service
     private let fireStorageService = FireStorageService()
+    // Firestore - db 연결
+    private let db = Firestore.firestore()
+    private let postCollection = "posts"
+    private let drinkCollection = "drinks"
     
     init() {
         Task {
@@ -187,44 +196,69 @@ extension AuthViewModel {
     func updateLikedDrinks(isLiked: Bool, sellectedDrink: Drink) async {
         if !isLiked { // 좋아요 X -> O
             currentUser?.likedDrinks.removeAll { $0.drinkField.drinkID == sellectedDrink.drinkField.drinkID }
+            await deleteUserLikedList(type: .drinks, id: sellectedDrink.drinkField.drinkID)
         } else { // 좋아요 O -> X
             if let user = currentUser,
                !user.likedDrinks.contains(where: { $0.drinkField.drinkID == sellectedDrink.drinkField.drinkID }) {
                 currentUser?.likedDrinks.append(sellectedDrink)
+                await addUserLikedList(type: .drinks, id: sellectedDrink.drinkField.drinkID)
             }
         }
-        await updateUserLikedList(type: .drinks)
     }
     
     // 유저가 좋아하는 게시글 (술상) 리스트에 추가 or 삭제
     func updateLikedPosts(isLiked: Bool, sellectedPost: Post) async {
         if !isLiked { // 좋아요 X -> O
             currentUser?.likedPosts.removeAll { $0.postField.postID == sellectedPost.postField.postID }
+            await deleteUserLikedList(type: .posts, id: sellectedPost.postField.postID)
         } else { // 좋아요 O -> X
             if let user = currentUser,
                !user.likedPosts.contains(where: { $0.postField.postID == sellectedPost.postField.postID }) {
                 currentUser?.likedPosts.append(sellectedPost)
+                await addUserLikedList(type: .posts, id: sellectedPost.postField.postID)
             }
         }
-        await updateUserLikedList(type: .posts)
     }
-
-    // 유저 정보 업데이트 - LikedPosts / LikedDrinks
-    private func updateUserLikedList(type: UserLikedListType) async {
+    
+    // 유저 정보 업데이트 - [ LikedPosts / LikedDrinks ] in [ Posts / Drinks ]
+    private func deleteUserLikedList(type: UserLikedListType, id: String?) async {
         do {
+            guard let id = id else { return }
             let uid = try checkCurrentUserID()
-            var list = [Any]()
+            let likedUsersIDCollection = "likedUsersID"
             switch type {
             case .posts:
-                list = currentUser?.likedPosts ?? [] as [Post]
+                let documentRef = db.collection(postCollection).document(id)
+                    .collection(likedUsersIDCollection).document(uid)
+                try await firestorePostService.deletePostDocument(document: documentRef)
             case .drinks:
-                list = currentUser?.likedDrinks ?? [] as [Drink]
+                let documentRef = db.collection(drinkCollection).document(id)
+                    .collection(likedUsersIDCollection).document(uid)
+                try await firestoreDrinkService.deleteDrinkDocument(document: documentRef)
             }
-            await firebaseAuthService.updateUserLikedList(uid: uid,
-                                                      documentName: type.rawValue,
-                                                      list: list)
         } catch {
-            print("error :: userLiked\(type)Update :", error.localizedDescription)
+            print("error :: deleteUserLikedList / \(type) :", error.localizedDescription)
+        }
+    }
+
+    // 유저 정보 업데이트 - [ LikedPosts / LikedDrinks ] in [ Posts / Drinks ]
+    private func addUserLikedList(type: UserLikedListType, id: String?) async {
+        do {
+            guard let id = id else { return }
+            let uid = try checkCurrentUserID()
+            let likedUsersIDCollection = "likedUsersID"
+            switch type {
+            case .posts:
+                let collectionRef = db.collection(postCollection).document(id)
+                    .collection(likedUsersIDCollection)
+                await firestorePostService.uploadPostLikedUsersID(collection: collectionRef, uid: uid)
+            case .drinks:
+                let collectionRef = db.collection(drinkCollection).document(id)
+                    .collection(likedUsersIDCollection)
+                await firestoreDrinkService.uploadDrinkLikedUsersID(collection: collectionRef, uid: uid)
+            }
+        } catch {
+            print("error :: addUserLikedList / \(type) :", error.localizedDescription)
         }
     }
     

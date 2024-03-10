@@ -114,16 +114,24 @@ extension FirestorePostService {
 			throw PostError.upload
 		}
 	}
+    
+    // likedUsersID 하위 컬렉션에 업로드
+    func uploadPostLikedUsersID(collection: CollectionReference, uid: String) async {
+        do {
+            try await collection.document(uid).setData([:])
+        } catch {
+            print("error :: uploadPostLikedUsersID() -> upload post liked users id data failure")
+            print(error.localizedDescription)
+        }
+    }
 }
 
 // MARK: Firestore post document delete
 extension FirestorePostService {
 	// posts collection에서 삭제하고싶은 post에 해당하는 document 삭제 메서드
-	func deletePostDocument(postID: String) async throws {
-		let postsRef = Firestore.firestore().collection("posts")
-		
+    func deletePostDocument(document: DocumentReference) async throws {
 		do {
-			try await postsRef.document(postID).delete()
+			try await document.delete()
 		} catch {
 			print("error :: deletePostDocument() -> delete post document data failure")
 			print(error.localizedDescription)

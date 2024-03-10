@@ -137,7 +137,8 @@ extension PostViewModel {
     // post 삭제
     func deletePost(postID: String) async {
         do {
-            try await firestorePostService.deletePostDocument(postID: postID)
+            let documentRef = db.collection(postCollection).document(postID)
+            try await firestorePostService.deletePostDocument(document: documentRef)
         } catch {
             print("error :: deletePost", error.localizedDescription)
         }

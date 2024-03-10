@@ -24,7 +24,7 @@ struct Drink {
 	let taggedPosts: [Post]
 	let agePreference: AgePreference
 	let GenderPreference: GenderPreference
-	let likedCount: Int // Firestore likedUsersUID Collection에 해당하는 Document 갯수
+	let likedUsersID: [String]
 }
 
 // MARK: - Firebase에서 사용하는 Drink Model
