@@ -31,8 +31,8 @@ enum Gender: String, CaseIterable {
 
 // MARK: - 신규 유저의 경우, 프로필 사진 및 정보 작성 뷰
 struct ProfileSettingView: View {
-    @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var navigationRouter: NavigationRouter
+    @EnvironmentObject private var authViewModel: AuthViewModel
 
     @FocusState var focusedField: ProfileSettingFocusField?
 
@@ -41,7 +41,7 @@ struct ProfileSettingView: View {
     
     @State private var name: String = ""
     var namePlaceholder: String {
-        guard let user = authService.currentUser else { return "닉네임" }
+        guard let user = authViewModel.currentUser else { return "닉네임" }
         return user.userField.name
     }
     @State private var birthDate: String = ""
@@ -204,29 +204,28 @@ struct ProfileSettingView: View {
                 // "완료" 버튼
                 Button {
                     Task {
-                        if try authService.getProviderOptionString() == AuthProviderOption.apple.rawValue {
+                        // 애플의 경우 로그아웃이 된 상태라, 애플인지 아닌지 체크를 google 이 아닌 경우로 체크
+                        if authViewModel.currentUser?.userField.authProviders != AuthProviderOption.google.rawValue {
                             // 재로그인
                             let signWithApple = SignInWithAppleHelper()
                             let appleIDCredential = try await signWithApple()
-                            authService.isLoading = true
-                            await authService.signInApple(appleIDCredential: appleIDCredential)
-                            authService.signInStatus = true
+                            authViewModel.isLoading = true
+                            await authViewModel.signInApple(appleIDCredential: appleIDCredential)
+                            authViewModel.signInStatus = true
                         }
                         // 프로필 이미지 storage 저장
-                        await authService.uploadProfileImageToStorage(image: userProfileImage)
+                        await authViewModel.uploadProfileImageToStorage(image: userProfileImage)
                         // 유저 이름, 생일, 성별, 프로필, 알림 동의 등 forestore 에 저장
-                        authService.addUserDataToStore(
-                            userData: UserField(
-                                name: name,
-                                age: Formatter.calculateAge(birthdate: birthDate) ?? 20,
-                                gender: selectedGender!.rawValue,
-                                notificationAllowed: notificationAllowed,
-                                profileImageURL: authService.currentUser!.userField.profileImageURL,
-                                authProviders: try authService.getProviderOptionString()))
+                        authViewModel.addUserDataToStore(
+                            name: name,
+                            age: Formatter.calculateAge(birthdate: birthDate) ?? 20,
+                            gender: selectedGender!.rawValue,
+                            notification: notificationAllowed
+                            )
                         // 유저 데이터 받기
-                        await authService.getCurrentUserField()
+                        await authViewModel.getCurrentUser()
                     }
-                    authService.isLoading = false
+                    authViewModel.isLoading = false
                     navigationRouter.back()
                 } label: {
                     Text("완료")
@@ -268,7 +267,7 @@ struct ProfileSettingView: View {
             }
         }
         // 회원 가입 시, 로딩 뷰
-        .loadingView($authService.isLoading)
+        .loadingView($authViewModel.isLoading)
     }
     
     private func updateImage() async throws {

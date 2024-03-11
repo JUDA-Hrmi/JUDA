@@ -278,10 +278,17 @@ extension AuthViewModel {
 // MARK: - Upload / 데이터 저장
 extension AuthViewModel {
     // 유저 정보 저장
-    func addUserDataToStore(userData: UserField) {
+    func addUserDataToStore(name: String, age: Int,
+                            gender: String, notification: Bool) {
         do {
             let uid = try checkCurrentUserID()
-            firebaseAuthService.addUserDataToStore(userData: userData, uid: uid)
+            firebaseAuthService.addUserDataToStore(
+                userData: UserField(
+                    name: name, age: age, gender: gender,
+                    notificationAllowed: notification,
+                    profileImageURL: (currentUser?.userField.profileImageURL)!,
+                    authProviders: try getProviderOptionString()),
+                uid: uid)
         } catch {
             print("error :: addUserDataToStore :", error.localizedDescription)
         }
@@ -356,7 +363,7 @@ extension AuthViewModel {
                     print("Fisrt ✨ - Apple Sign Up 🍎")
                 } else {
                     print("Apple Sign In 🍎")
-                    await getCurrentUserField(uid: uid)
+                    await getCurrentUser()
                     self.signInStatus = true
                 }
             }
@@ -430,7 +437,7 @@ extension AuthViewModel {
                 print("Fisrt ✨ - Google Sign Up 🤖")
             } else {
                 print("Google Sign In 🤖")
-                await getCurrentUserField(uid: uid)
+                await getCurrentUser()
                 self.signInStatus = true
             }
         } catch {

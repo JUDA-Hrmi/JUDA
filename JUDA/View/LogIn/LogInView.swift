@@ -12,10 +12,9 @@ import AuthenticationServices
 // MARK: - 로그인 화면
 struct LogInView: View {
     @Environment (\.colorScheme) var systemColorScheme
-    @EnvironmentObject private var authService: AuthService
-    @EnvironmentObject private var appViewModel: AppViewModel
-    @EnvironmentObject private var colorScheme: SystemColorTheme
     @EnvironmentObject private var navigationRouter: NavigationRouter
+    @EnvironmentObject private var authViewModel: AuthViewModel
+    @EnvironmentObject private var colorScheme: SystemColorTheme
     
     @State private var nextView: Bool = false
     
@@ -52,16 +51,16 @@ struct LogInView: View {
                 VStack(spacing: 30) {
                     // 애플 로그인
                     SignInWithAppleButton(.signIn) { request in
-                        authService.handleSignInWithAppleRequest(request)
+                        authViewModel.handleSignInWithAppleRequest(request)
                     } onCompletion: { result in
-                        authService.handleSignInWithAppleCompletion(result)
+                        authViewModel.handleSignInWithAppleCompletion(result)
                     }
                     .signInWithAppleButtonStyle(colorScheme.selectedColor == .light ? .black : colorScheme.selectedColor == .dark ? .white : systemColorScheme == .light ? .black : .white)
                     .frame(height: 54)
                     // 구글 로그인
                     Button {
                         Task {
-                            await authService.signInWithGoogle()
+                            await authViewModel.signInWithGoogle()
                         }
                     } label: {
                         Image("googleLight")
@@ -79,7 +78,7 @@ struct LogInView: View {
                     .multilineTextAlignment(.center)
             }
             // 로그인 도중에 생기는 로딩
-            .loadingView($authService.isLoading)
+            .loadingView($authViewModel.isLoading)
             .navigationBarBackButtonHidden()
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -91,29 +90,29 @@ struct LogInView: View {
                     .foregroundStyle(.mainBlack)
                 }
             }
-            // 로그인 완료 시 화면 이동
-            .onChange(of: authService.signInStatus) { newValue in
-                authService.isLoading = false
+            // 로그인 완료 시, 화면 이동
+            .onChange(of: authViewModel.signInStatus) { newValue in
+                authViewModel.isLoading = false
                 if newValue == true {
                     // 기존 유저의 경우, 뒤로 가기 ( 메인 뷰로 이동 )
                     navigationRouter.back()
                 }
             }
-            .onChange(of: authService.isNewUser) { _ in
-                authService.isLoading = false
-                // 신규 유저의 경우, 이용약관 뷰 이동
-                if authService.isNewUser == true {
+            // 신규 유저의 경우, 이용약관 뷰 이동
+            .onChange(of: authViewModel.isNewUser) { _ in
+                authViewModel.isLoading = false
+                if authViewModel.isNewUser == true {
                     nextView = true
                 }
             }
             .fullScreenCover(isPresented: $nextView) {
                 TermsAndVerificationView()
             }
-            if authService.showError {
+            if authViewModel.showError {
                 CustomDialog(type: .oneButton(
-                    message: authService.errorMessage,
+                    message: authViewModel.errorMessage,
                     buttonLabel: "확인",
-                    action: { authService.showError = false }))
+                    action: { authViewModel.showError = false }))
             }
         }
     }
