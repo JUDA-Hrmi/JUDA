@@ -35,7 +35,6 @@ struct LottieView: UIViewRepresentable {
         // 백그라운드에서 재생이 멈추는 오류를 잡습니다
         animationView.backgroundBehavior = .pauseAndRestore
   
-  
       animationView.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(animationView)

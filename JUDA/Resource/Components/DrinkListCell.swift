@@ -25,7 +25,7 @@ struct DrinkListCell: View {
     @EnvironmentObject private var likedViewModel: LikedViewModel
     @EnvironmentObject private var searchDrinkViewModel: SearchDrinkViewModel
 
-    let drink: FBDrink
+    let drink: Drink
     var usedTo: WhereUsedDrinkListCell = .drinkInfo
     
     @State private var isLiked = false

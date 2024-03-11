@@ -9,13 +9,9 @@ import SwiftUI
 
 // MARK: - 앱 전체 스타트 탭 뷰
 struct ContentView: View {
-    @EnvironmentObject private var authService: AuthService
-    @EnvironmentObject private var colorScheme: SystemColorTheme
+    @EnvironmentObject private var authViewModel: AuthViewModel
 	@EnvironmentObject private var appViewModel: AppViewModel
-    @StateObject private var recordViewModel = RecordViewModel()
-    @StateObject private var likedViewModel = LikedViewModel()
-    @StateObject private var aiWellMatchViewModel = AIWellMatchViewModel()
-    @StateObject private var myPageViewModel = MyPageViewModel()
+    @EnvironmentObject private var colorScheme: SystemColorTheme
 
     // Tabbar 불투명하게 설정 (색상 백그라운드)
     init() {
@@ -70,33 +66,18 @@ struct ContentView: View {
         switch viewType {
         case .main:
             MainView()
-                .environmentObject(recordViewModel)
-                .environmentObject(aiWellMatchViewModel)
-				.environmentObject(myPageViewModel)
         case .drinkInfo:
             DrinkInfoView()
-                .environmentObject(aiWellMatchViewModel)
-                .environmentObject(recordViewModel)
-				.environmentObject(myPageViewModel)
         case .posts:
             PostsView()
-                .environmentObject(recordViewModel)
-                .environmentObject(aiWellMatchViewModel)
-				.environmentObject(myPageViewModel)
         case .liked:
-            if authService.signInStatus {
+            if authViewModel.signInStatus {
                 LikedView()
-                    .environmentObject(recordViewModel)
-                    .environmentObject(likedViewModel)
-                    .environmentObject(aiWellMatchViewModel)
             } else {
                 EmptyView()
             }
         case .myPage:
             MyPageView()
-                .environmentObject(recordViewModel)
-                .environmentObject(myPageViewModel)
-                .environmentObject(aiWellMatchViewModel)
         }
     }
 }

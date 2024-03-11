@@ -12,7 +12,7 @@ import Lottie
 struct MainView: View {
     @StateObject private var navigationRouter = NavigationRouter()
     @EnvironmentObject private var appViewModel: AppViewModel
-    @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var authViewModel: AuthViewModel
 	
     var body: some View {
         NavigationStack(path: $navigationRouter.path) {
@@ -89,7 +89,3 @@ struct MainView: View {
         .toolbar(appViewModel.tabBarState, for: .tabBar)
     }
 }
-
-//#Preview {
-//	MainView(selectedTabIndex: .constant(0))
-//}

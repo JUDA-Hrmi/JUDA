@@ -15,6 +15,8 @@ struct JUDAApp: App {
     @StateObject private var mainViewModel = MainViewModel()
     @StateObject private var drinkViewModel = DrinkViewModel()
     @StateObject private var postViewModel = PostViewModel()
+    @StateObject private var recordViewModel = RecordViewModel()
+    @StateObject private var userViewModel = UserViewModel()
     @StateObject private var colorScheme = SystemColorTheme()
     @State private var isLoading = true
     
@@ -34,6 +36,8 @@ struct JUDAApp: App {
                     .environmentObject(mainViewModel)
                     .environmentObject(postViewModel)
                     .environmentObject(drinkViewModel)
+                    .environmentObject(recordViewModel)
+                    .environmentObject(userViewModel)
             }
         }
     }

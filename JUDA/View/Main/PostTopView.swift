@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct PostTopView: View {
-    @EnvironmentObject private var navigationRouter: NavigationRouter
-    @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var appViewModel: AppViewModel
+    @EnvironmentObject private var authViewModel: AuthViewModel
     @EnvironmentObject private var mainViewModel: MainViewModel
-	@EnvironmentObject private var appViewModel: AppViewModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -33,13 +32,13 @@ struct PostTopView: View {
 
             ForEach(mainViewModel.posts, id: \.postField.postID) { post in
                 NavigationLink(value: Route
-                    .PostDetail(postUserType: authService.currentUser?.userID == post.userField.userID ? .writter : .reader,
+                    .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writter : .reader,
                                 post: post,
                                 usedTo: .main,
                                 postPhotosURL: post.postField.imagesURL)) {
-                    if let user = authService.currentUser {
+                    if let user = authViewModel.currentUser {
                         PostListCell(post: post,
-                                     isLiked: user.likedPosts.contains(post.postField.postID ?? ""))
+                                     isLiked: post.likedUsersID.contains(user.userField.userID ?? ""))
                     } else {
                         PostListCell(post: post,
                                      isLiked: false)

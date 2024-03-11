@@ -653,8 +653,8 @@
 		B1EE24752B61432B007F68B0 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				AC98D1CE2B7357DA006F6EC9 /* Lottie.swift */,
 				B1EE24912B61447F007F68B0 /* MainView.swift */,
+				AC98D1CE2B7357DA006F6EC9 /* Lottie.swift */,
 				AC6D12892B6A8ED100169B23 /* WeatherAndFood.swift */,
 				AC797BD92B8B8BEB0018D227 /* DrinkTopView.swift */,
 				AC1BE8E52B8B99EC0015381D /* PostTopView.swift */,

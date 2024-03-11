@@ -8,10 +8,8 @@
 import SwiftUI
 
 struct DrinkTopView: View {
-    @EnvironmentObject private var navigationRouter: NavigationRouter
-    @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var appViewModel: AppViewModel
     @EnvironmentObject private var mainViewModel: MainViewModel
-	@EnvironmentObject private var appViewModel: AppViewModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -31,7 +29,7 @@ struct DrinkTopView: View {
             }
             .padding(20)
             
-            ForEach(mainViewModel.drinks, id:\.drinkID) { drink in
+            ForEach(mainViewModel.drinks, id:\.drinkField.drinkID) { drink in
                 NavigationLink(value: Route
                     .DrinkDetailWithUsedTo(drink: drink,
                                            usedTo: .main)) {
