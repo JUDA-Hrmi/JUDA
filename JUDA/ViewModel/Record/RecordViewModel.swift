@@ -105,15 +105,24 @@ final class RecordViewModel {
                 // post 내 술 평가가 4점 이상일 때 agePreference, genderPreference update
                 if drinkTag.drinkRating >= 4 {
                     let userID = user.userID
-                    let userAge = (user.userAge / 10) * 10
-                    // 20 이하인 경우 20으로, 50 이상인 경우 50으로 처리
-                    let stringUserAge = String(userAge < 20 ? 20 : (userAge > 50 ? 50 : userAge))
                     let userGender = user.userGender
+                    var userAge: Age {
+                        switch user.userAge {
+                        case ...29:
+                            return Age.twenty
+                        case 30...39:
+                            return Age.thirty
+                        case 40...49:
+                            return Age.fourty
+                        default:
+                            return Age.fifty
+                        }
+                    }
 
-                    // Drink agePreference/userAge 에 userID 추가
-                    await firestoreDrinkService.updateDrinkAgePreference(ref: drinkRef, drinkID: drinkID, age: stringUserAge, userID: userID)
                     // Drink genderPreference/userGender 에 userID 추가
                     await firestoreDrinkService.updateDrinkGenderPreference(ref: drinkRef, drinkID: drinkID, gender: userGender, userID: userID)
+                    // Drink agePreference/userAge 에 userID 추가
+                    await firestoreDrinkService.updateDrinkAgePreference(ref: drinkRef, drinkID: drinkID, age: userAge, userID: userID)
                 }
                 // rating
                 let prev = drinkData.drinkField.rating
@@ -121,8 +130,8 @@ final class RecordViewModel {
                 let count = drinkData.taggedPosts.count
                 let rating = calcDrinkRating(prev: prev, new: new, count: count)
                 
-                // 이거 왜 return Bool 주는지...?
                 // Drink rating update
+                // TODO: return 값 처리
                 let result = await firestoreDrinkService.updateDrinkField(ref: drinkRef, drinkID: drinkID, data: ["rating": rating])
             }
         } catch DrinkError.fetchDrinkDocument {
@@ -133,13 +142,8 @@ final class RecordViewModel {
     }
     
     // 기존 rating을 받아서 새로 계산
-    func calcDrinkRating(prev: Double, new: Double, count: Int) -> Double {
+    private func calcDrinkRating(prev: Double, new: Double, count: Int) -> Double {
         return (prev * Double(count) + new) / (Double(count) + 1)
-    }
-        
-    // MARK: - postID 생성
-    func createPostID() {
-        postID = UUID().uuidString
     }
     
     // MARK: - post Data 초기화
