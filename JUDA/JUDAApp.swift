@@ -10,33 +10,30 @@ import SwiftUI
 @main
 struct JUDAApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @StateObject private var authService = AuthService()
+    @StateObject private var authViewModel = AuthViewModel()
     @StateObject private var appViewModel = AppViewModel()
     @StateObject private var mainViewModel = MainViewModel()
     @StateObject private var drinkViewModel = DrinkViewModel()
-    @StateObject private var postsViewModel = PostsViewModel()
+    @StateObject private var postViewModel = PostViewModel()
     @StateObject private var colorScheme = SystemColorTheme()
-    @StateObject private var searchPostsViewModel = SearchPostsViewModel()
     @State private var isLoading = true
     
     var body: some Scene {
         WindowGroup {
             if isLoading {
                 SplashView(isActive: $isLoading)
-                    .environmentObject(authService)
+                    .environmentObject(authViewModel)
                     .environmentObject(colorScheme)
                     .environmentObject(mainViewModel)
                     .environmentObject(appViewModel)
-                    .environmentObject(searchPostsViewModel)
             } else {
                 ContentView()
-                    .environmentObject(authService)
+                    .environmentObject(authViewModel)
                     .environmentObject(appViewModel)
                     .environmentObject(colorScheme)
                     .environmentObject(mainViewModel)
-                    .environmentObject(postsViewModel)
+                    .environmentObject(postViewModel)
                     .environmentObject(drinkViewModel)
-                    .environmentObject(searchPostsViewModel)
             }
         }
     }

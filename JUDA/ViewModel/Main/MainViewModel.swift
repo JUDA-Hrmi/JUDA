@@ -37,8 +37,10 @@ final class MainViewModel: ObservableObject {
     private let firestorePostService = FirestorePostService()
     // Firebase Drink Service
     private let firestoreDrinkService = FirestoreDrinkService()
-    
-    
+}
+
+// MARK: - Fetch
+extension MainViewModel {
     // 인기 있는 drink 가져오기
     func getHottestDrinks() async {
         do {

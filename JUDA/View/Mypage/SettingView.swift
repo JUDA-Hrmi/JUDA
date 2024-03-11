@@ -142,7 +142,7 @@ struct SettingView: View {
                     AppServiceInfoView(text: webViewNameList[index], urlString: webViewurlList[index])
                 }
                 // 버전 정보
-                Text("버전 정보 \(version ?? "1.1.4")")
+                Text("버전 정보 \(version).\(build)")
                     .font(.regular16)
                     .foregroundStyle(.gray01)
                     .padding(.horizontal, 20)

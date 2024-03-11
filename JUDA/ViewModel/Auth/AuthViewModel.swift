@@ -59,6 +59,7 @@ final class AuthViewModel: ObservableObject {
     
     init() {
         Task {
+            // 로그인이 되어있다면, 유저 정보 받아오기
             if signInStatus { await getCurrentUser() }
         }
     }
