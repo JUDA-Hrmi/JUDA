@@ -71,11 +71,11 @@ final class RecordViewModel {
                 imagesURL = downloadURLs.sorted(by: { $0.0 < $1.0 }).map { $0.1 }
             }
         } catch FireStorageError.uploadImage {
-            
+            print("error :: uploadImageToStorage() -> upload Image data to FireStorage failure")
         } catch FireStorageError.fetchImageURL {
-            
+            print("error :: fetchImageURL() -> get Image URL from FireStorage failure")
         } catch {
-            
+            print("error :: uploadMultipleImagesToFirebaseStorageAsync() -> upload Multiple Images failure")
         }
     }
     
@@ -85,9 +85,9 @@ final class RecordViewModel {
         do {
             try await firestorePostService.uploadPostDocument(post: post, postID: postID)
         } catch PostError.upload {
-            // TODO: error 처리
+            print("error :: uploadPostDocument() -> upload post to Firestore failure")
         } catch {
-            // TODO: error 처리
+            print("error :: uploadPost() -> upload post failure")
         }
     }
     
@@ -126,9 +126,9 @@ final class RecordViewModel {
                 let result = await firestoreDrinkService.updateDrinkField(ref: drinkRef, drinkID: drinkID, data: ["rating": rating])
             }
         } catch DrinkError.fetchDrinkDocument {
-            // TODO: error 처리
+            print("error :: updateDrinkField() -> update drink data to Firestore failure")
         } catch {
-            // TODO: error 처리
+            print("error :: updateDrink() -> update drink data failure")
         }
     }
     
