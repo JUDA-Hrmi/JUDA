@@ -23,7 +23,7 @@ struct Drink {
 	let drinkField: DrinkField
 	let taggedPosts: [Post]
 	let agePreference: AgePreference
-	let GenderPreference: GenderPreference
+	let genderPreference: GenderPreference
 	let likedUsersID: [String]
 }
 

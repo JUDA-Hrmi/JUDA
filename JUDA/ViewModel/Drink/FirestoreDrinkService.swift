@@ -69,7 +69,7 @@ extension FirestoreDrinkService {
 			return Drink(drinkField: drikField, 
 						 taggedPosts: taggedPosts,
 						 agePreference: agePreference,
-						 GenderPreference: genderPreference, 
+						 genderPreference: genderPreference,
 						 likedUsersID: likedUsersID)
 		} catch DrinkError.fetchDrinkField {
 			print("error :: fetchDrinkField() -> fetch drink field data failure")
@@ -194,6 +194,26 @@ extension FirestoreDrinkService {
 			return false
 		}
 	}
+}
+
+extension FirestoreDrinkService {
+    // drink collection agePreference data update 메서드
+    func updateDrinkAgePreference(ref: CollectionReference, drinkID: String, age: String, userID: String) async {
+        do {
+            try await ref.document(drinkID).collection("agePreference").document(age).collection(age).document(userID).setData([:])
+        } catch {
+            // TODO: error 처리
+        }
+    }
+    
+    // drink collection genderPreference data update 메서드
+    func updateDrinkGenderPreference(ref: CollectionReference, drinkID: String, gender: String, userID: String) async {
+        do {
+            try await ref.document(drinkID).collection("genderPreference").document(gender).collection(gender).document(userID).setData([:])
+        } catch {
+            // TODO: error 처리
+        }
+    }
 }
 
 // MARK: Firestore drink document delete
