@@ -9,6 +9,7 @@ import SwiftUI
 
 // MARK: - 술장 리스트 뷰
 struct DrinkInfoList: View {
+    var searchDrinks = [Drink]()
     // DrinkInfo 에서 검색 중인지
     var searchInDrinkInfo: Bool = false
     
@@ -16,17 +17,20 @@ struct DrinkInfoList: View {
         // MARK: iOS 16.4 이상
         if #available(iOS 16.4, *) {
             ScrollView() {
-                DrinkListContent(searchInDrinkInfo: searchInDrinkInfo)
+                DrinkListContent(searchDrinks: searchDrinks,
+                                 searchInDrinkInfo: searchInDrinkInfo)
             }
             .scrollBounceBehavior(.basedOnSize, axes: .vertical)
             .scrollDismissesKeyboard(.immediately)
         // MARK: iOS 16.4 미만
         } else {
             ViewThatFits(in: .vertical) {
-                DrinkListContent(searchInDrinkInfo: searchInDrinkInfo)
-                    .frame(maxHeight: .infinity, alignment: .top)
+                DrinkListContent(searchDrinks: searchDrinks,
+                                 searchInDrinkInfo: searchInDrinkInfo)
+                .frame(maxHeight: .infinity, alignment: .top)
                 ScrollView {
-                    DrinkListContent(searchInDrinkInfo: searchInDrinkInfo)
+                    DrinkListContent(searchDrinks: searchDrinks,
+                                     searchInDrinkInfo: searchInDrinkInfo)
                 }
                 .scrollDismissesKeyboard(.immediately)
             }
@@ -36,10 +40,9 @@ struct DrinkInfoList: View {
 
 // MARK: - 술장 리스트 뷰 내용
 struct DrinkListContent: View {
-    @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var drinkViewModel: DrinkViewModel
-    @EnvironmentObject private var searchDrinkViewModel: SearchDrinkViewModel
 
+    var searchDrinks = [Drink]()
     // DrinkInfo 에서 검색 중인지
     var searchInDrinkInfo: Bool = false
 
@@ -48,7 +51,7 @@ struct DrinkListContent: View {
         LazyVStack {
             // DrinkInfo 에서 검색 중일때
             if searchInDrinkInfo {
-				ForEach(searchDrinkViewModel.searchDrinks, id: \.drinkID) { drink in
+                ForEach(searchDrinks, id: \.drinkField.drinkID) { drink in
                     NavigationLink(value: Route
                         .DrinkDetail(drink: drink)) {
 							DrinkListCell(drink: drink)
@@ -58,12 +61,12 @@ struct DrinkListContent: View {
             // 검색 안할때, 평상시 View
             } else {
                 if !drinkViewModel.isLoading {
-                    ForEach(drinkViewModel.drinks, id: \.drinkID) { drink in
+                    ForEach(drinkViewModel.drinks, id: \.drinkField.drinkID) { drink in
                         NavigationLink(value: Route
                             .DrinkDetail(drink: drink)) {
                             DrinkListCell(drink: drink)
                             .task {
-                                if drink.name == drinkViewModel.drinks.last?.name {
+                                if drink == drinkViewModel.drinks.last {
                                     await drinkViewModel.loadDrinksNextPage()
                                 }
                             }

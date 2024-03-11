@@ -10,12 +10,12 @@ import SwiftUI
 // MARK: - 태그된 인기 술상
 struct TaggedTrendingPosts: View {
     @EnvironmentObject private var navigationRouter: NavigationRouter
-    @EnvironmentObject private var authService: AuthService
-    @EnvironmentObject private var postsViewModel: PostsViewModel
+    @EnvironmentObject private var authViewModel: AuthViewModel
+    @EnvironmentObject private var drinkViewModel: DrinkViewModel
 
     @State private var posts: [Post] = []
     @State private var isLoading: Bool = true
-    let drink: FBDrink
+    let drink: Drink
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -26,14 +26,14 @@ struct TaggedTrendingPosts: View {
             VStack(spacing: 0) {
                 ForEach(posts, id: \.postField.postID) { post in
                     NavigationLink(value: Route
-                        .PostDetail(postUserType: post.userField.userID == authService.currentUser?.userID ? .writter : .reader,
+                        .PostDetail(postUserType: post.postField.user.userID == authViewModel.currentUser?.userField.userID ? .writter : .reader,
                                     post: post,
                                     usedTo: .drinkDetail,
                                     postPhotosURL: post.postField.imagesURL)) {
                         if !isLoading {
-                            if let user = authService.currentUser {
+                            if let user = authViewModel.currentUser {
                                 PostListCell(post: post,
-                                             isLiked: user.likedPosts.contains(post.postField.postID ?? ""))
+                                             isLiked: user.likedPosts.contains(post))
                             } else {
                                 PostListCell(post: post,
                                              isLiked: false)
@@ -50,7 +50,7 @@ struct TaggedTrendingPosts: View {
             // 태그된 인기 게시물 가져오기
             self.isLoading = true
             if posts.isEmpty {
-                self.posts = await postsViewModel.getTopTrendingPosts(taggedPostID: drink.taggedPostID)
+                self.posts = drinkViewModel.getTopTrendingPosts(drink: drink)
             }
             self.isLoading = false
         }

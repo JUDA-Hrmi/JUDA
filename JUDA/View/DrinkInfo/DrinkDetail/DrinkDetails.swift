@@ -19,14 +19,13 @@ enum WhereUsedDrinkDetails {
 // MARK: - 술 디테일에서 보여주는 상단의 술 정보 부분 (이미지, 이름, 가격 등)
 struct DrinkDetails: View {
     @EnvironmentObject private var navigationRouter: NavigationRouter
+    @EnvironmentObject private var authViewModel: AuthViewModel
     @EnvironmentObject private var mainViewModel: MainViewModel
     @EnvironmentObject private var drinkViewModel: DrinkViewModel
-    @EnvironmentObject private var postsViewModel: PostsViewModel
-    @EnvironmentObject private var likedViewModel: LikedViewModel
-	@EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var postViewModel: PostViewModel
 	@State private var isLiked = false
 
-	let drink: FBDrink
+	let drink: Drink
 	let usedTo: WhereUsedDrinkDetails
 	
 	private let debouncer = Debouncer(delay: 0.5)
@@ -35,14 +34,7 @@ struct DrinkDetails: View {
         // 술 정보 (이미지, 이름, 용량, 나라, 도수, 가격, 별점, 태그된 게시물)
         HStack(alignment: .center, spacing: 30) {
             // 술 이미지
-            if usedTo == .drinkInfo,
-               let url = drinkViewModel.drinkImages[drink.drinkID ?? ""] {
-                DrinkDetailsKFImage(url: url)
-            } else if usedTo == .liked,
-               let url = likedViewModel.drinkImages[drink.drinkID ?? ""] {
-                DrinkDetailsKFImage(url: url)
-            } else if usedTo == .main,
-               let url = mainViewModel.drinkImages[drink.drinkID ?? ""] {
+            if let url = drink.drinkField.drinkImageURL {
                 DrinkDetailsKFImage(url: url)
             } else {
                 Text("No Image")
@@ -56,7 +48,7 @@ struct DrinkDetails: View {
             VStack(alignment: .leading, spacing: 6) {
 				HStack(alignment: .top) {
 					// 이름 + 용량
-					Text(drink.name + " " + drink.amount)
+                    Text(drink.drinkField.name + " " + drink.drinkField.amount)
 						.font(.semibold18)
 						.foregroundStyle(.mainBlack)
 						.lineLimit(2)
@@ -65,10 +57,12 @@ struct DrinkDetails: View {
 					
 					Button {
 						isLiked.toggle()
-						debouncer.call {
-							authService.addOrRemoveToLikedDrinks(isLiked: isLiked, drink.drinkID)
-                            authService.userLikedListUpdate(type: .drinks)
-						}
+                        debouncer.call {
+                            Task {
+                                await authViewModel.updateLikedDrinks(isLiked: isLiked,
+                                                                      selectedDrink: drink)
+                            }
+                        }
 					} label: {
 						Image(systemName: isLiked ? "heart.fill" : "heart")
 							.resizable()
@@ -79,35 +73,35 @@ struct DrinkDetails: View {
                 // 종류, 도수
                 HStack {
                     // 종류
-                    Text(drink.type)
+                    Text(drink.drinkField.type)
                     // 도수
-                    Text(Formatter.formattedABVCount(abv: drink.alcohol))
+                    Text(Formatter.formattedABVCount(abv: drink.drinkField.alcohol))
                 }
                 // 나라, 지방
                 HStack {
                     // 나라
-                    Text(drink.country)
-                    if drink.category == DrinkType.wine.rawValue, 
-                        let province = drink.province {
+                    Text(drink.drinkField.country)
+                    if drink.drinkField.category == DrinkType.wine.rawValue,
+                       let province = drink.drinkField.province {
                         Text(province) // 지방
                     }
                 }
                 .font(.regular16)
                 // 가격
-                Text(Formatter.formattedPriceToString(price: drink.price))
+                Text(Formatter.formattedPriceToString(price: drink.drinkField.price))
                     .font(.regular16)
                 // 별점
-                StarRating(rating: drink.rating, color: .mainAccent05,
+                StarRating(rating: drink.drinkField.rating, color: .mainAccent05,
                            starSize: .regular16, fontSize: .regular16, starRatingType: .withText)
                 // 태그된 게시물
-                if drink.taggedPostID.count > 0 {
+                if drink.taggedPosts.count > 0 {
                     NavigationLink(value: Route
                         .NavigationPosts(usedTo: .drinkDetail,
                                          searchTagType: nil,
-                                         taggedPostID: drink.taggedPostID,
-                                         selectedDrinkName: drink.name,
+                                         taggedPosts: drink.taggedPosts,
+                                         selectedDrinkName: drink.drinkField.name,
                                          selectedFoodTag: nil)) {
-                        Text("\(drink.taggedPostID.count)개의 태그된 게시물")
+                        Text("\(drink.taggedPosts.count)개의 태그된 게시물")
                             .font(.regular16)
                             .foregroundStyle(.gray01)
                             .underline()
@@ -123,8 +117,8 @@ struct DrinkDetails: View {
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
 		.task {
-            if let user = authService.currentUser {
-                self.isLiked = user.likedDrinks.contains { $0 == drink.drinkID }
+            if let user = authViewModel.currentUser {
+                self.isLiked = user.likedDrinks.contains { $0 == drink }
             }
 		}
     }

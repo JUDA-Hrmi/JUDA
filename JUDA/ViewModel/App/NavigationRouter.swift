@@ -21,7 +21,7 @@ enum Route: Hashable {
                            usedTo: WhereUsedPostGridContent)
     case NavigationPosts(usedTo: WhereUsedPostGridContent,
                          searchTagType: SearchTagType?,
-                         taggedPostID: [String]?,
+                         taggedPosts: [Post],
                          selectedDrinkName: String?,
                          selectedFoodTag: String?)
     case NavigationPostsTo(usedTo: WhereUsedPostGridContent,

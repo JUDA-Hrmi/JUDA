@@ -101,7 +101,6 @@
 		7B6D76B52B67D5F900601B55 /* PostTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76B42B67D5F900601B55 /* PostTags.swift */; };
 		7B6D76B92B68D9C900601B55 /* PostReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76B82B68D9C900601B55 /* PostReportView.swift */; };
 		7B74FA5B2B9A9EE800BAC2AC /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B74FA5A2B9A9EE800BAC2AC /* PostViewModel.swift */; };
-		7B74FA5D2B9ABF7600BAC2AC /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B74FA5C2B9ABF7600BAC2AC /* RecordViewModel.swift */; };
 		7B881CA32B97464200571352 /* FirestorePostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B881CA22B97464200571352 /* FirestorePostService.swift */; };
 		7B881CA52B97545700571352 /* FirestoreDrinkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B881CA42B97545700571352 /* FirestoreDrinkService.swift */; };
 		7B904C662B6168C60052384A /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B904C652B6168C60052384A /* PostCell.swift */; };
@@ -274,7 +273,6 @@
 		7B6D76B62B68972000601B55 /* PostGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostGrid.swift; sourceTree = "<group>"; };
 		7B6D76B82B68D9C900601B55 /* PostReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportView.swift; sourceTree = "<group>"; };
 		7B74FA5A2B9A9EE800BAC2AC /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
-		7B74FA5C2B9ABF7600BAC2AC /* RecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
 		7B881CA22B97464200571352 /* FirestorePostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestorePostService.swift; sourceTree = "<group>"; };
 		7B881CA42B97545700571352 /* FirestoreDrinkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreDrinkService.swift; sourceTree = "<group>"; };
 		7B904C652B6168C60052384A /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
@@ -751,7 +749,6 @@
 				7B881CA22B97464200571352 /* FirestorePostService.swift */,
 				7B74FA5A2B9A9EE800BAC2AC /* PostViewModel.swift */,
 				096F2D5C2B9C583E00DFC5A3 /* FirestoreReportService.swift */,
-				7B74FA5C2B9ABF7600BAC2AC /* RecordViewModel.swift */,
 			);
 			path = Posts;
 			sourceTree = "<group>";
@@ -932,7 +929,6 @@
 				7BBDFF6F2B6B90EB0036FB8B /* AddTagView.swift in Sources */,
 				09A320162B8B30D100DE4646 /* ExSearchDrinkViewModel.swift in Sources */,
 				7BBDFF702B6B90EB0036FB8B /* PostGrid.swift in Sources */,
-				7B74FA5D2B9ABF7600BAC2AC /* RecordViewModel.swift in Sources */,
 				7B881CA52B97545700571352 /* FirestoreDrinkService.swift in Sources */,
 				090FF1CE2B83413100AF22B5 /* CustomLoadingView.swift in Sources */,
 				2C5B0F422B6B10CF005F1A99 /* CustomDialog.swift in Sources */,

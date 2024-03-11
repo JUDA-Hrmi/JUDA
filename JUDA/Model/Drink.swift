@@ -23,14 +23,14 @@ struct Drink {
 	let drinkField: DrinkField
 	let taggedPosts: [Post]
 	let agePreference: AgePreference
-	let GenderPreference: GenderPreference
+	let genderPreference: GenderPreference
 	let likedUsersID: [String]
 }
 
 // MARK: - Firebase에서 사용하는 Drink Model
 struct DrinkField: Codable, Hashable {
 	@DocumentID var drinkID: String?
-    let drinkImageURL: URL
+    let drinkImageURL: URL?
 	let category: String
 	let type: String
 	let name: String

@@ -15,13 +15,15 @@ final class DrinkViewModel: ObservableObject {
     // 술 리스트
     @Published var drinks = [Drink]()
     // 그리드 or 리스트
-    @Published var selectedViewType: DrinkInfoLayoutOption = .grid
+    @Published var selectedViewType: DrinkInfoLayoutOption = .gridStyle
     // 술 종류 선택 segment Index
     @Published var selectedDrinkTypeIndex: Int = 0
     // 술 정렬 방식 선택
     @Published var selectedSortedTypeString: String = DrinkSortType.popularity.rawValue
     // 로딩 중 - Shimmer Drink List / Grid Cell
     @Published var isLoading: Bool = true
+    // 검색 중 -
+    @Published var isSearching: Bool = true
     // pagination 을 위한, 이전 load의 마지막 체크
     private var lastSnapshot: QueryDocumentSnapshot?
     // pagination 할 documet 개수
@@ -31,6 +33,8 @@ final class DrinkViewModel: ObservableObject {
     private let drinkCollection = "drinks"
     // Firestore Drink Service
     private let firestoreDrinkService = FirestoreDrinkService()
+    // Fire Storage Service
+    private let fireStorageService = FireStorageService()
     // AI WellMatch Service - DrinkDetail 의 '어울리는 음식 추천'에서 사용
     private let aiWellMatchService = AIWellMatchService()
 
@@ -104,7 +108,7 @@ extension DrinkViewModel {
     }
     
     // 추가적인 데이터 가져오기
-    func lodaDrinksNextPage() async {
+    func loadDrinksNextPage() async {
         guard let lastSnapshot = lastSnapshot else {
             print("error :: loadDrinksNextPage - lastSnapshot X")
             return
@@ -123,7 +127,7 @@ extension DrinkViewModel {
             }
             self.lastSnapshot = drinksSnapshot.documents.last
         } catch {
-            print("error :: lodaDrinksNextPage", error.localizedDescription)
+            print("error :: loadDrinksNextPage", error.localizedDescription)
         }
     }
 }
@@ -145,14 +149,28 @@ extension DrinkViewModel {
         }.prefix(3)
         return Array(sortedPosts)
     }
+    
+    // shareLink 에서 사용 할, Image 단일 받아오기
+    // 이미지 못받는 경우, 앱 로고 사용
+    func getDrinkImage(url: URL?) async -> Image {
+        do {
+            guard let url = url else { return Image("AppIcon") }
+            let uiImage = try await fireStorageService.getUIImageFile(url: url.absoluteString)
+            guard let uiImage = uiImage else { return Image("AppIcon") }
+            return Image(uiImage: uiImage)
+        } catch {
+            print("error :: getDrinkImage", error.localizedDescription)
+            return Image("AppIcon")
+        }
+    }
 }
 
 // MARK: - Search
 extension DrinkViewModel {
     // 술 검색해서 데이터 받아오기
-    // TODO: - result ( 검색된 술 데이터는 사용처에서 @State 로 사용할 예정 )
+    // 검색된 술 데이터는 사용처에서 @State 로 사용
     func getSearchedDrinks(from keyword: String) async -> [Drink] {
-        self.isLoading = true
+        self.isSearching = true
         var result = [Drink]()
         do {
             let collectionRef = db.collection(drinkCollection)
@@ -169,7 +187,7 @@ extension DrinkViewModel {
         } catch {
             print("error :: getSearchedDrinks", error.localizedDescription)
         }
-        self.isLoading = false
+        self.isSearching = false
         return result
     }
     

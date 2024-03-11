@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct WellMatched: View {
-    @EnvironmentObject var aiWellMatchViewModel: AIWellMatchViewModel
-    let wellMatched: [String]?
+    @EnvironmentObject var drinkViewModel: DrinkViewModel
+    @State private var respond: [String] = []
+    @State private var isLoading: Bool = false
     let windowWidth: CGFloat
     let drinkName: String
-    let drinkCategory: String
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -25,7 +25,7 @@ struct WellMatched: View {
                     .foregroundStyle(.mainAccent05)
             }
             
-            if aiWellMatchViewModel.isLoading {
+            if self.isLoading {
                 HStack {
                     CircularLoaderView(size: 16)
                 }
@@ -33,8 +33,7 @@ struct WellMatched: View {
                 .frame(maxWidth: .infinity, alignment: .center)
             } else {
                 // 추천 받은 음식
-                ForEach(TagHandler.getRows(tags: aiWellMatchViewModel.respond
-                    .split(separator: ", ").map { String($0) },
+                ForEach(TagHandler.getRows(tags: self.respond,
                                            spacing: 14,
                                            fontSize: 16,
                                            windowWidth: windowWidth,
@@ -52,7 +51,12 @@ struct WellMatched: View {
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
         .task {
-            await aiWellMatchViewModel.fetchRecommendationsIfNeeded(drinkName: drinkName)
+            self.isLoading = true
+            self.respond = await drinkViewModel
+                .getFoodRecommendationsToOpenAI(drinkName: drinkName)
+                .split(separator: ", ")
+                .map { String($0) }
+            self.isLoading = false
         }
     }
     

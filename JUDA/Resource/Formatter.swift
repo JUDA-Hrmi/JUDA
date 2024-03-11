@@ -195,20 +195,20 @@ extension Formatter {
     }
     
     // 술의 '연령별 선호도' 데이터를 PieModel 형식에 맞게 변환하는 함수
-    func getPieModelData(ageData: [String: Int]) -> [PieModel] {
+    static func getPieModelData(ageData: AgePreference) -> [PieModel] {
         return [
-            .init(type: "20대", count: Double(ageData["20"] ?? 0), color: .mainAccent03),
-            .init(type: "30대", count: Double(ageData["30"] ?? 0), color: .mainAccent03.opacity(0.75)),
-            .init(type: "40대", count: Double(ageData["40"] ?? 0), color: .mainAccent03.opacity(0.5)),
-            .init(type: "50대 이상", count: Double(ageData["50"] ?? 0), color: .mainAccent03.opacity(0.25))
+            .init(type: "20대", count: Double(ageData.twenty), color: .mainAccent03),
+            .init(type: "30대", count: Double(ageData.thirty), color: .mainAccent03.opacity(0.75)),
+            .init(type: "40대", count: Double(ageData.fourty), color: .mainAccent03.opacity(0.5)),
+            .init(type: "50대 이상", count: Double(ageData.fifty), color: .mainAccent03.opacity(0.25))
         ]
     }
     
     // 술의 '성별 선호도' 데이터를 PieModel 형식에 맞춰 반환하는 함수
-    func getPieModelData(genderData: [String: Int]) -> [PieModel] {
+    static func getPieModelData(genderData: GenderPreference) -> [PieModel] {
         return [
-            .init(type: "남성", count: Double(genderData["male"] ?? 0), color: .mainAccent04),
-            .init(type: "여성", count: Double(genderData["female"] ?? 0), color: .mainAccent05.opacity(0.5))
+            .init(type: "남성", count: Double(genderData.male), color: .mainAccent04),
+            .init(type: "여성", count: Double(genderData.female), color: .mainAccent05.opacity(0.5))
         ]
     }
 }
