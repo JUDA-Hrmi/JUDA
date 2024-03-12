@@ -9,24 +9,30 @@ import SwiftUI
 import FirebaseFirestore
 
 @MainActor
-final class RecordViewModel {
+final class RecordViewModel: ObservableObject {
     // post 업로드용 Post 객체
     @Published var post: Post?
     // post 작성자 정보를 갖는 WrittenUser 객체
-    @Published var user: WrittenUser?
+    @Published var writtenUser: WrittenUser?
     // post의 전체 술 평가 정보를 갖는 DrinkTag 배열
     @Published var drinkTags = [DrinkTag]()
+    @Published var selectedDrinkTag: DrinkTag?
     // 라이브러리에서 선택된 모든 사진 Data
-    @Published var images = [UIImage]()
+    @Published var selectedImages = [UIImage]()
+    // 모든 imagesURL을 갖는 배열
+    var imagesURL = [URL]()
     // 글 내용을 담는 프로퍼티
     @Published var content: String = ""
     // 음식 태그를 담는 배열
     @Published var foodTags = [String]()
     
+    // 화면 너비 받아오기
+    var windowWidth: CGFloat {
+        TagHandler.getScreenWidthWithoutPadding(padding: 20)
+    }
+    
     // post 업로드, iamges 업로드를 위한 postID
     private var postID = ""
-    // 모든 imagesURL을 갖는 배열
-    private var imagesURL = [URL]()
 
     // firebase Post Service
     private let firestorePostService = FirestorePostService()
@@ -40,14 +46,16 @@ final class RecordViewModel {
     
     // MARK: - FireStroage post 이미지 업로드 및 이미지 URL 받아오기
     func uploadMultipleImagesToFirebaseStorageAsync() async {
-        guard let user = user else { return }
+        guard let user = writtenUser else { return }
         do {
+            // postID 생성
+            postID = UUID().uuidString
             // 결과를 받을 배열 생성
             var downloadURLs: [(Int, URL)] = []
             
             // 이미지 업로드 병렬처리를 위한 taskGroup
             try await withThrowingTaskGroup(of: (Int, URL).self) { group in
-                for (index, image) in images.enumerated() {
+                for (index, image) in selectedImages.enumerated() {
                     // 각 이미지 데이터에 대해 비동기 업로드 작업 실행 및 배열에 추가
                     group.addTask {
                         // storage 폴더링을 위한 userID
@@ -93,7 +101,7 @@ final class RecordViewModel {
     
     // MARK: - Firestore drink 업로드
     func updateDrink() async {
-        guard let post = post, let user = user else { return }
+        guard let post = post, let user = writtenUser else { return }
         do {
             let drinkRef = db.collection("drinks")
             for drinkTag in drinkTags {
@@ -150,7 +158,7 @@ final class RecordViewModel {
     func recordPostDataClear() {
         post = nil
         drinkTags = []
-        images = []
+        selectedImages = []
         content = ""
         foodTags = []
         postID = ""

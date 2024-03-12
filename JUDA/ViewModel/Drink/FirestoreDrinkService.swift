@@ -230,7 +230,7 @@ extension FirestoreDrinkService {
     }
 }
 
-// MARK: Firestore drink document upload
+// MARK: Firestore drink document upload & delete
 extension FirestoreDrinkService {
     // likedUsersID 하위 컬렉션에 업로드
     func uploadDrinkLikedUsersID(collection: CollectionReference, uid: String) async {
@@ -238,6 +238,16 @@ extension FirestoreDrinkService {
             try await collection.document(uid).setData([:])
         } catch {
             print("error :: uploadDrinkLikedUsersID() -> upload drink liked users id data failure")
+            print(error.localizedDescription)
+        }
+    }
+    
+    // likedUsersID 하위 컬렉션에 document 삭제
+    func deleteDrinkLikedUsersID(collection: CollectionReference, uid: String) async {
+        do {
+            try await collection.document(uid).delete()
+        } catch {
+            print("error :: deleteDrinkLikedUsersID() -> delete drink liked users id data failure")
             print(error.localizedDescription)
         }
     }

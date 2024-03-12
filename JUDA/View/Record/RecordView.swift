@@ -16,11 +16,10 @@ enum RecordType {
 struct RecordView: View {
     // Navigation을 위한 환경 프로퍼티
     @EnvironmentObject private var navigationRouter: NavigationRouter
-    @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var authViewModel: AuthViewModel
     @EnvironmentObject private var recordViewModel: RecordViewModel
-	@EnvironmentObject private var postsViewModel: PostsViewModel
-	@EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
-	@EnvironmentObject private var myPageViewModel: MyPageViewModel
+    @EnvironmentObject private var drinkViewModel: DrinkViewModel
+    @EnvironmentObject private var postViewModel: PostViewModel
 	
     // 기록 타입 ( 작성 or 수정 )
     let recordType: RecordType
@@ -32,6 +31,8 @@ struct RecordView: View {
     @Namespace private var textField
     // 글 작성 or 수정 기준 충족 ( 글 내용 필수 )
     @State private var isPostContent: Bool = false
+    // post 업로드 완료 확인 및 로딩 뷰 출력용 프로퍼티
+    @State private var isPostUploading: Bool = false
     
     var body: some View {
         VStack {
@@ -76,10 +77,11 @@ struct RecordView: View {
             }
         }
         // post upload 여부에 따라 loadingView 표시
-        .loadingView($recordViewModel.isPostUploadSuccess)
+        .loadingView($isPostUploading)
         // 글 내용 유무 체크
         .onAppear {
             isPostContentNotEmpty()
+            // TODO: recordType에 따라 recordView에 값 띄워주기
         }
         // 글 내용 유무 체크
         .onChange(of: recordViewModel.content) { _ in
@@ -105,13 +107,30 @@ struct RecordView: View {
                     }
 					DispatchQueue.main.async {
 						Task {
-							await postUploadButtonAction()
-							await postReFetch()
-                            await myPageViewModel.getUsersPosts(userID: authService.currentUser?.userID ?? "",
-                                                                userType: .user)
-							recordViewModel.recordPostDataClear()
-                            navigationRouter.clear()
-						}
+                            switch recordType {
+                            case .add:
+                                // post images upload, post upload
+                                await postUploadButtonAction()
+                                // TODO: Post ReFetch
+//                                await postReFetch()
+                                // TODO: User posts ReFetch
+    //                            await myPageViewModel.getUsersPosts(userID: authService.currentUser?.userID ?? "", userType: .user)
+                                
+                                // 업로드 후, post 객체 clear
+                                recordViewModel.recordPostDataClear()
+                                navigationRouter.clear()
+
+                            case .edit:
+                                // TODO: post update
+                                // TODO: Post ReFetch
+                                // TODO: User posts ReFetch
+                                
+                                // 업데이트 후, post 객체 clear
+                                recordViewModel.recordPostDataClear()
+                                navigationRouter.clear()
+
+                            }
+                        }
 					}
                 } label: {
                     Text("완료")
@@ -129,46 +148,59 @@ struct RecordView: View {
     }
 	
 	private func postUploadButtonAction() async {
-		do {
-			// loadingView 띄우기
-			recordViewModel.isPostUploadSuccess = true
-			// FirevaseStorage multiple image upload
-            let imagesData = recordViewModel.images.compactMap { Formatter.compressImage($0) }  // 압축된 이미지 데이터 배열
-			
-			// 여러 이미지 업로드
-			try await recordViewModel.uploadMultipleImagesToFirebaseStorageAsync(imagesData)
-			// 다운로드 URL 사용
-			print("Download URLs: \(recordViewModel.imagesURL)")
-			
-			// post 데이터 모델 객체 생성
-			recordViewModel.post = Post(userField: authService.currentUser!,
-                                        drinkTags: recordViewModel.drinkTags,
-                                        postField: PostField(
-                                            imagesURL: recordViewModel.imagesURL,
-                                            content: recordViewModel.content,
-                                            likedCount: 0,
-                                            postedTimeStamp: Date(),
-                                            foodTags: recordViewModel.foodTags))
-			// post upload
-			await recordViewModel.uploadPost()
-			
-			await searchPostsViewModel.fetchPosts()
-			// loadingView 없애기
-			recordViewModel.isPostUploadSuccess = false
-		} catch {
-			print("Error uploading images: \(error)")
-		}
+        // TODO: recordType에 따라 upload, update
+        // loadingView 띄우기
+        isPostUploading = true
+        // writtenUser 모델 객체 생성
+        guard let user = authViewModel.currentUser?.userField, let userID = user.userID else { return }
+        recordViewModel.writtenUser = WrittenUser(userID: userID,
+                                                  userName: user.name,
+                                                  userAge: user.age,
+                                                  userGender: user.gender,
+                                                  userProfileImageURL: user.profileImageURL)
+        
+        // firestroage에 이미지 업로드 후 url 받아오기
+        await recordViewModel.uploadMultipleImagesToFirebaseStorageAsync()
+        
+        // post 데이터 모델 객체 생성
+        if let writtenUser = recordViewModel.writtenUser {
+            recordViewModel.post = Post(postField: PostField(user: writtenUser,
+                                                             drinkTags: recordViewModel.drinkTags,
+                                                             imagesURL: recordViewModel.imagesURL,
+                                                             content: recordViewModel.content,
+                                                             foodTags: recordViewModel.foodTags,
+                                                             postedTime: Date()),
+                                        likedUsersID: [])
+            
+            // post 업로드
+            await recordViewModel.uploadPost()
+        }
+        
+        // MARK: - search를 위한 전체 post fetch 필요한가?
+        //			await searchPostsViewModel.fetchPosts()
+        // loadingView 없애기
+        isPostUploading = false
 	}
-	
-	private func postReFetch() async {
-		postsViewModel.isLoading = true
-		postsViewModel.posts = []
-		postsViewModel.postImagesURL = [:]
-		postsViewModel.postThumbnailImagesURL = [:]
-		let postSortType = postsViewModel.postSortType[postsViewModel.selectedSegmentIndex]
-		let query = postsViewModel.getPostSortType(postSortType: postSortType)
-		await postsViewModel.firstFetchPost(query: query)
-	}
+    	
+    // EX
+//	private func postReFetch() async {
+//		postsViewModel.isLoading = true
+//		postsViewModel.posts = []
+//		postsViewModel.postImagesURL = [:]
+//		postsViewModel.postThumbnailImagesURL = [:]
+//		let postSortType = postsViewModel.postSortType[postsViewModel.selectedSegmentIndex]
+//		let query = postsViewModel.getPostSortType(postSortType: postSortType)
+//		await postsViewModel.firstFetchPost(query: query)
+//	}
+    
+    // MARK: - NEW post Refetch
+//    private func postReFetch() async {
+//        postViewModel.isLoading = true
+//        postViewModel.posts = []
+//        let postSortType = postViewModel.getPostSortType(postSortType: <#T##PostSortType#>)
+//        let query = postViewModel.getPostSortType(postSortType: postSortType)
+//        await postViewModel.firstFetchPost(query: query)
+//    }
 }
 
 // MARK: - 술상 기록 화면에 보여줄 내용
@@ -242,7 +274,7 @@ struct RecordContent: View {
     }
 }
 
-#Preview {
-    RecordView(recordType: RecordType.add)
-}
+//#Preview {
+//    RecordView(recordType: RecordType.add)
+//}
 

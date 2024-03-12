@@ -40,7 +40,7 @@ struct DrinkTagContent: View {
     
     var body: some View {
         LazyVStack {
-			ForEach(recordViewModel.drinkTags, id: \.drink.drinkID) { drinkTag in
+            ForEach(recordViewModel.drinkTags, id: \.drinkID) { drinkTag in
                 DrinkTagCell(drinkTag: drinkTag)
                     .onTapGesture {
                         // 현재 선택된 DrinkTagCell의 술 태그 정보 받아오기
@@ -64,7 +64,7 @@ struct DrinkTagCell: View {
             VStack(spacing: 10) {
                 HStack {
                     // 술 이름
-					Text(drinkTag.drink.name)
+					Text(drinkTag.drinkName)
                         .font(.semibold16)
                         .lineLimit(1)
                         .padding(.trailing, 40)
@@ -74,7 +74,7 @@ struct DrinkTagCell: View {
                 HStack(alignment: .center) {
                     Text("나의 평가")
                         .font(.regular16)
-                    StarRating(rating: drinkTag.rating,
+                    StarRating(rating: drinkTag.drinkRating,
                                color: .mainAccent03,
                                starSize: .regular20,
                                fontSize: nil,
@@ -86,7 +86,7 @@ struct DrinkTagCell: View {
             // Xmark 버튼
             Button {
                 // 클릭 시, 술 태그 배열에서 해당 술 태그 삭제
-				recordViewModel.drinkTags.removeAll(where: { $0.drink.drinkID == drinkTag.drink.drinkID })
+                recordViewModel.drinkTags.removeAll(where: { $0.drinkID == drinkTag.drinkID })
             } label: {
                 Image(systemName: "xmark")
                     .foregroundStyle(.gray01)
