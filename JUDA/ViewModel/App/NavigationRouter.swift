@@ -25,14 +25,14 @@ enum Route: Hashable {
                          selectedDrinkName: String?,
                          selectedFoodTag: String?)
     case NavigationPostsTo(usedTo: WhereUsedPostGridContent,
-                           searchTagType: SearchTagType)
+                           searchTagType: SearchTagType,
+                           postSearchText: String)
     case DrinkDetail(drink: Drink)
     case DrinkDetailWithUsedTo(drink: Drink,
-                     usedTo: WhereUsedDrinkDetails)
+                               usedTo: WhereUsedDrinkDetails)
     case PostDetail(postUserType: PostUserType,
                     post: Post,
-                    usedTo: WhereUsedPostGridContent,
-                    postPhotosURL: [URL])
+                    usedTo: WhereUsedPostGridContent)
 }
 
 final class NavigationRouter: ObservableObject {

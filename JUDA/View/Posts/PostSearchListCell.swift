@@ -11,6 +11,7 @@ struct PostSearchListCell: View {
 	let searchTagType: SearchTagType
 	let searchText: String
 	let postCount: Int
+    
 	var body: some View {
 		VStack(spacing: 20) {
 			HStack(alignment: .firstTextBaseline) {

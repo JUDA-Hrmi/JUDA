@@ -39,6 +39,8 @@ final class PostViewModel: ObservableObject {
 	private let firestorePostService = FirestorePostService()
     private let firestoreDrinkService = FirestoreDrinkService()
 	private let firestoreReportService = FirestoreReportService()
+    // Fire Storage Service
+    private let fireStorageService = FireStorageService()
 	
 	// 게시글 객체 배열
 	@Published var posts = [Post]()
@@ -48,10 +50,16 @@ final class PostViewModel: ObservableObject {
     @Published var searchPostsByDrinkTag = [Post]()
     // 음식 태그로 검색된 게시글 객체 배열
     @Published var searchPostsByFoodTag = [Post]()
+    // DrinkDetail 에서 이동했을 때, '태그된 게시글' 객체 정렬해서 사용할 배열
+    @Published var drinkTaggedPosts = [Post]()
+    // 게시글 정렬 방식 선택
+    @Published var selectedSegmentIndex = 0
 	// 마지막 포스트 확인용(페이징)
 	@Published var lastQuerydocumentSnapshot: QueryDocumentSnapshot?
 	// 게시글 불러오기 또는 삭제 작업이 진행중인지 나타내는 상태 프로퍼티
-	@Published var isLoading = false
+    @Published var isLoading = false
+    // 검색 중
+	@Published var isSearching = false
 }
 
 // MARK: - Fetch
@@ -69,11 +77,13 @@ extension PostViewModel {
 	}
 	
     // 술상 첫 20개 불러오기 - 페이지네이션
-	func firstFetchPost(query: Query) async {
+	func fetchFirstPost() async {
 		do {
+            let query = getPostSortType(postSortType: PostSortType.list[selectedSegmentIndex])
 			let firstSnapshot = try await query.limit(to: 20).getDocuments()
 			lastQuerydocumentSnapshot = firstSnapshot.documents.last
 			isLoading = true
+            posts.removeAll()
 			await fetchPosts(querySnapshots: firstSnapshot)
 		} catch {
 			print("posts paging fetch error \(error.localizedDescription)")
@@ -81,7 +91,8 @@ extension PostViewModel {
 	}
 	
     // 술상 다음 20개 불러오기 - 페이지네이션
-	func nextFetchPost(query: Query) async {
+	func fetchNextPost() async {
+        let query = getPostSortType(postSortType: PostSortType.list[selectedSegmentIndex])
 		guard let lastQuerydocumentSnapshot = lastQuerydocumentSnapshot else { return }
 		do {
 			let nextSnapshot = try await query.limit(to: 20).start(afterDocument: lastQuerydocumentSnapshot).getDocuments()
@@ -132,6 +143,23 @@ extension PostViewModel {
 	}
 }
 
+// MARK: - Fetch in Post Detail
+extension PostViewModel {
+    // shareLink 에서 사용 할, Image 단일 받아오기
+    // 이미지 못받는 경우, 앱 로고 사용
+    func getPostThumnailImage(url: URL?) async -> Image {
+        do {
+            guard let url = url else { return Image("AppIcon") }
+            let uiImage = try await fireStorageService.getUIImageFile(url: url.absoluteString)
+            guard let uiImage = uiImage else { return Image("AppIcon") }
+            return Image(uiImage: uiImage)
+        } catch {
+            print("error :: getPostThumnailImage", error.localizedDescription)
+            return Image("AppIcon")
+        }
+    }
+}
+
 // MARK: - Delete
 extension PostViewModel {
     // post 삭제
@@ -171,7 +199,7 @@ extension PostViewModel {
 extension PostViewModel {
     // 게시글 검색해서 데이터 받아오기
     func getSearchedPosts(from keyword: String) async {
-        self.isLoading = true
+        self.isSearching = true
         do {
             let collectionRef = db.collection(postCollection)
             let postSnapshot = try await collectionRef.getDocuments()
@@ -198,7 +226,7 @@ extension PostViewModel {
         } catch {
             print("error :: getSearchedPosts", error.localizedDescription)
         }
-        self.isLoading = false
+        self.isSearching = false
     }
     
     // searchPostsBy... 배열에 값을 채워주는 메서드
@@ -247,10 +275,50 @@ extension PostViewModel {
     
 }
 
+// MARK: - Sort Post ( 태그된 게시글 / 검색된 게시글 )
+extension PostViewModel {
+    // 이미 가지고 있는 배열 정렬
+    func sortedPosts(_ postData: [Post], postSortType: PostSortType) async -> [Post] {
+        var result = [Post]()
+        if postSortType == .popularity {
+            result = postData.sorted { 
+                $0.likedUsersID.count > $1.likedUsersID.count
+            } // 인기순
+        } else {
+            result = postData.sorted { 
+                $0.postField.postedTime > $1.postField.postedTime
+            } // 최신순
+        }
+        return result
+    }
+    
+    // '검색된 게시글' 배열 정렬
+    func sortedSearchedPosts(searchTagType: SearchTagType, postSortType: PostSortType) async {
+        let postsToSort: [Post]
+        switch searchTagType {
+        case .userName:
+            postsToSort = searchPostsByUserName
+        case .drinkTag:
+            postsToSort = searchPostsByDrinkTag
+        case .foodTag:
+            postsToSort = searchPostsByFoodTag
+        }
+        let result = await sortedPosts(postsToSort, postSortType: postSortType)
+        switch searchTagType {
+        case .userName:
+            searchPostsByUserName = result
+        case .drinkTag:
+            searchPostsByDrinkTag = result
+        case .foodTag:
+            searchPostsByFoodTag = result
+        }
+    }
+}
+
 // MARK: - Report Upload
 extension PostViewModel {
     // 신고 등록
-    func uploadPostReport(report: Report) async {
+    func uploadPostReport(_ report: Report) async {
         do {
             try await firestoreReportService.uploadReport(report: report)
         } catch {

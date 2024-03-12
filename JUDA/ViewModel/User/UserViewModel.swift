@@ -13,12 +13,15 @@ import FirebaseCore
 final class UserViewModel: ObservableObject {
     // 유저
     @Published var user: User?
+    // 로딩 중
+    @Published var isLoading: Bool = false
     // Firebase User Service
     private let firebaseUserService = FirebaseUserService()
     
     // 유저 데이터 받아오기 ( 본인 X / 타 유저 )
     func getUser(uid: String) async {
         user = nil
+        isLoading = true
         await withTaskGroup(of: Void.self) { taskGroup in
             // UserField 받아오기
             taskGroup.addTask { await self.getUserField(uid: uid) }
@@ -31,6 +34,7 @@ final class UserViewModel: ObservableObject {
             // Notifications 받아오기
             taskGroup.addTask { await self.getUserNotifications(uid: uid) }
         }
+        isLoading = false
     }
     
     // UserField 받아오기

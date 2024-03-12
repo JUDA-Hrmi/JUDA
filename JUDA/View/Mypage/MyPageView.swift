@@ -57,12 +57,10 @@ struct MyPageView: View {
                 //
                 case .PostDetail(let postUserType,
                                  let post,
-                                 let usedTo,
-                                 let postPhotosURL):
+                                 let usedTo):
                     PostDetailView(postUserType: postUserType,
                                    post: post,
-                                   usedTo: usedTo,
-                                   postPhotosURL: postPhotosURL)
+                                   usedTo: usedTo)
                     .modifier(TabBarHidden())
                 default:
                     ErrorPageView()

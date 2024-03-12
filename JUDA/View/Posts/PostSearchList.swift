@@ -8,40 +8,43 @@
 import SwiftUI
 
 struct PostSearchList: View {
-	@EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
+	@EnvironmentObject private var postViewModel: PostViewModel
 	let searchText: String
     
     var body: some View {
         VStack(spacing: 20) {
             NavigationLink(value: Route
                 .NavigationPostsTo(usedTo: .postSearch,
-                                   searchTagType: .userName)) {
+                                   searchTagType: .userName,
+                                   postSearchText: searchText)) {
                 PostSearchListCell(searchTagType: .userName,
                                    searchText: searchText,
-                                   postCount: searchPostsViewModel.searchPostsByUserName.count)
+                                   postCount: postViewModel.searchPostsByUserName.count)
             }
-            .disabled(searchPostsViewModel.searchPostsByUserName.isEmpty)
-            .foregroundStyle(searchPostsViewModel.searchPostsByUserName.isEmpty ? .gray01 : .mainBlack)
+            .disabled(postViewModel.searchPostsByUserName.isEmpty)
+            .foregroundStyle(postViewModel.searchPostsByUserName.isEmpty ? .gray01 : .mainBlack)
 
             NavigationLink(value: Route
                 .NavigationPostsTo(usedTo: .postSearch,
-                                   searchTagType: .drinkTag)) {
+                                   searchTagType: .drinkTag,
+                                   postSearchText: searchText)) {
                 PostSearchListCell(searchTagType: .drinkTag,
                                    searchText: searchText,
-                                   postCount: searchPostsViewModel.searchPostsByDrinkTag.count)
+                                   postCount: postViewModel.searchPostsByDrinkTag.count)
             }
-            .disabled(searchPostsViewModel.searchPostsByDrinkTag.isEmpty)
-            .foregroundStyle(searchPostsViewModel.searchPostsByDrinkTag.isEmpty ? .gray01 : .mainBlack)
+            .disabled(postViewModel.searchPostsByDrinkTag.isEmpty)
+            .foregroundStyle(postViewModel.searchPostsByDrinkTag.isEmpty ? .gray01 : .mainBlack)
 
             NavigationLink(value: Route
                 .NavigationPostsTo(usedTo: .postSearch,
-                                   searchTagType: .foodTag)) {
+                                   searchTagType: .foodTag,
+                                   postSearchText: searchText)) {
                 PostSearchListCell(searchTagType: .foodTag,
                                    searchText: searchText,
-                                   postCount: searchPostsViewModel.searchPostsByFoodTag.count)
+                                   postCount: postViewModel.searchPostsByFoodTag.count)
             }
-            .disabled(searchPostsViewModel.searchPostsByFoodTag.isEmpty)
-            .foregroundStyle(searchPostsViewModel.searchPostsByFoodTag.isEmpty ? .gray01 : .mainBlack)
+            .disabled(postViewModel.searchPostsByFoodTag.isEmpty)
+            .foregroundStyle(postViewModel.searchPostsByFoodTag.isEmpty ? .gray01 : .mainBlack)
             Spacer()
         }
         .padding(20)

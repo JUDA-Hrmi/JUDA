@@ -9,9 +9,8 @@ import SwiftUI
 
 // MARK: - 술상 디테일에서, 음식 태그 부분
 struct PostTags: View {
-	@EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
-	let tags: [String]
-	@State private var windowWidth: CGFloat = 0
+    @State private var windowWidth: CGFloat = 0
+    let tags: [String]
 	
 	var body: some View {
 		VStack(alignment: .leading, spacing: 10) {
@@ -25,7 +24,7 @@ struct PostTags: View {
                         NavigationLink(value: Route
                             .NavigationPosts(usedTo: .postFoodTag,
                                              searchTagType: .foodTag,
-                                             taggedPostID: nil,
+                                             taggedPosts: [],
                                              selectedDrinkName: nil,
                                              selectedFoodTag: tag)) {
                             Text("# \(tag)")

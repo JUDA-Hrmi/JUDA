@@ -29,7 +29,7 @@ struct PostField: Codable {
 struct WrittenUser: Codable {
     var userID: String
     var userName: String
-    var userProfileImageURL: URL
+    var userProfileImageURL: URL?
 }
 
 // post 에 태그된 술 데이터

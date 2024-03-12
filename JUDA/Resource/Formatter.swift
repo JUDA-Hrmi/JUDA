@@ -212,3 +212,13 @@ extension Formatter {
         ]
     }
 }
+
+// MARK: - Post 관련 Formatter
+extension Formatter {
+    // DrinkDetailView - TaggedTrendingPosts 에서 태그 한줄로 보여주기 위한 리스트 map + join 함수
+    static func getTagListToString(list: [String]) -> String {
+        let tagString = "# "
+        let spacing = "    "
+        return list.map { tagString + $0 }.joined(separator: spacing)
+    }
+}

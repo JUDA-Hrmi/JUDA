@@ -186,18 +186,20 @@ struct DrinkInfoView: View {
                         .modifier(TabBarHidden())
                 case .NavigationPosts(let usedTo,
                                       let searchTagType,
-                                      let taggedPostID,
+                                      let taggedPosts,
                                       let selectedDrinkName,
                                       let selectedFoodTag):
                     NavigationPostsView(usedTo: usedTo,
                                         searchTagType: searchTagType,
-                                        taggedPostID: taggedPostID,
+                                        taggedPosts: taggedPosts,
                                         selectedDrinkName: selectedDrinkName,
                                         selectedFoodTag: selectedFoodTag)
                 case .NavigationPostsTo(let usedTo,
-                                        let searchTagType):
+                                        let searchTagType,
+                                        let postSearchText):
                     NavigationPostsView(usedTo: usedTo,
-                                        searchTagType: searchTagType)
+                                        searchTagType: searchTagType,
+                                        postSearchText: postSearchText)
                 case .NavigationProfile(let postUserName,
                                         let postUserID,
                                         let usedTo):
@@ -216,12 +218,10 @@ struct DrinkInfoView: View {
                 //
                 case .PostDetail(let postUserType,
                                  let post,
-                                 let usedTo,
-                                 let postPhotosURL):
+                                 let usedTo):
                     PostDetailView(postUserType: postUserType,
                                    post: post,
-                                   usedTo: usedTo,
-                                   postPhotosURL: postPhotosURL)
+                                   usedTo: usedTo)
                     .modifier(TabBarHidden())
                 default:
                     ErrorPageView()

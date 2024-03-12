@@ -151,7 +151,7 @@ extension AuthViewModel {
     }
     
     // 현재 유저 Posts 받아오기
-    private func getCurrentUserPosts(uid: String) async {
+    func getCurrentUserPosts(uid: String) async {
         do {
             currentUser?.posts = try await firebaseUserService.fetchUserWrittenPosts(uid: uid)
         } catch {

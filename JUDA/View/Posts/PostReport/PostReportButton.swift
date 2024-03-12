@@ -14,7 +14,6 @@ struct PostReportButton: View {
 	
     var body: some View {
 		Button {
-            // TODO: - 신고 데이터 서버에 보내기
 			isReportDialogPresented = true
 		} label: {
 			Text("신고하기")
