@@ -33,7 +33,6 @@ struct SearchTagView: View {
                     // 서치바 submit 시, 술 검색
                     SearchBar(inputText: $tagSearchText, isFocused: $isFocused) {
                         Task {
-//                            await searchDrinkViewModel.fetchSearchDrinks(from: tagSearchText)
                             searchResult = await drinkViewModel.getSearchedDrinks(from: tagSearchText)
                         }
                     }
@@ -154,9 +153,7 @@ struct SearchTagView: View {
 
 // MARK: - 스크롤 뷰 or 뷰 로 보여질 태그 추가 시, DrinkListCell 리스트
 struct SearchTagListContent: View {
-//    @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var recordViewModel: RecordViewModel
-//    @EnvironmentObject private var searchDrinkViewModel: SearchDrinkViewModel
     // CostomRatingDialog를 띄워주는 상태 프로퍼티
     @Binding var isShowRatingDialog: Bool
     // drink 검색 결과 배열

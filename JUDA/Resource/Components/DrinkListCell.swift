@@ -89,17 +89,7 @@ struct DrinkListCell: View {
                         // drinks/likedUsersID에 userID를 id로 가진 빈 document 추가/삭제
                         // user/likedDrinks는 클라우드 펑션으로 처리
                         Task {
-                            if let drinkID = drink.drinkField.drinkID,
-                               let userID = authViewModel.currentUser?.userField.userID {
-                                if isLiked {
-                                    await drinkViewModel.addOrRemoveToLikedUsersID(likedAction: .plus, drinkID: drinkID, userID: userID)
-                                    authViewModel.currentUser?.likedDrinks.append(drink)
-                                    
-                                } else {
-                                    await drinkViewModel.addOrRemoveToLikedUsersID(likedAction: .minus, drinkID: drinkID, userID: userID)
-                                    authViewModel.currentUser?.likedDrinks.removeAll(where: { $0.drinkField.drinkID == drinkID })
-                                }
-                            }
+                            await authViewModel.updateLikedDrinks(isLiked: isLiked, sellectedDrink: drink)
                         }
                     }
                 } label: {

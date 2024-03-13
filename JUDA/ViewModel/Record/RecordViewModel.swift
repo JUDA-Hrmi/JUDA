@@ -25,7 +25,10 @@ final class RecordViewModel: ObservableObject {
     @Published var content: String = ""
     // 음식 태그를 담는 배열
     @Published var foodTags = [String]()
-    
+    // 글 작성 or 수정 기준 충족 ( 글 내용 필수 )
+    @Published var isPostContent: Bool = false
+    // post 업로드 완료 확인 및 로딩 뷰 출력용 프로퍼티
+    @Published var isPostUploading: Bool = false
     // 화면 너비 받아오기
     var windowWidth: CGFloat {
         TagHandler.getScreenWidthWithoutPadding(padding: 20)
@@ -43,13 +46,70 @@ final class RecordViewModel: ObservableObject {
     
     // Firestore db 연결
     private let db = Firestore.firestore()
+
+    // MARK: - 글 내용 유무 체크
+    func isPostContentNotEmpty() {
+        let trimmedString = content.trimmingCharacters(in: .whitespacesAndNewlines) // 공백 + 개행문자 제외
+        isPostContent = !trimmedString.isEmpty
+    }
+
+    // MARK: - 게시글 작성
+    func postUpload(user: User) async {
+        guard let userID = user.userField.userID, !userID.isEmpty else { return }
+        // loadingView 띄우기
+        isPostUploading = true
+        // postID 생성
+        postID = UUID().uuidString
+        // writtenUser 모델 객체 생성
+        writtenUser = WrittenUser(userID: userID,
+                                  userName: user.userField.name,
+                                  userAge: user.userField.age,
+                                  userGender: user.userField.gender,
+                                  userProfileImageURL: user.userField.profileImageURL)
+        
+        
+        if let writtenUser = writtenUser {
+            // firestroage에 이미지 업로드 후 url 받아오기
+            await uploadMultipleImagesToFirebaseStorageAsync()
+            
+            // post 데이터 모델 객체 생성
+            post = Post(postField: PostField(user: writtenUser,
+                                             drinkTags: drinkTags,
+                                             imagesURL: imagesURL,
+                                             content: content,
+                                             foodTags: foodTags,
+                                             postedTime: Date()),
+                        likedUsersID: [])
+            
+            // post 업로드
+            await uploadPosttoFireStore()
+            // drink 업데이트
+            await updateDrinkToFirestore()
+        }
+        
+        // MARK: - search를 위한 전체 post fetch 필요한가?
+//            await searchPostsViewModel.fetchPosts()
+        // loadingView 없애기
+        isPostUploading = false
+    }
+    
+    // MARK: - 게시글 수정
+    func postUpdate() async {
+        guard let postID = post?.postField.postID else { return }
+        // loadingView 띄우기
+        isPostUploading = true
+        // post 업데이트
+        await editPostToFirestore(postID: postID, content: content, foodTags: foodTags)
+        //
+        recordPostDataClear()
+        // loadingView 없애기
+        isPostUploading = false
+    }
     
     // MARK: - FireStroage post 이미지 업로드 및 이미지 URL 받아오기
     func uploadMultipleImagesToFirebaseStorageAsync() async {
         guard let user = writtenUser else { return }
         do {
-            // postID 생성
-            postID = UUID().uuidString
             // 결과를 받을 배열 생성
             var downloadURLs: [(Int, URL)] = []
             
@@ -88,7 +148,7 @@ final class RecordViewModel: ObservableObject {
     }
     
     // MARK: - Firestore post 업로드
-    func uploadPost() async {
+    func uploadPosttoFireStore() async {
         guard let post = post else { return }
         do {
             try await firestorePostService.uploadPostDocument(post: post, postID: postID)
@@ -99,8 +159,27 @@ final class RecordViewModel: ObservableObject {
         }
     }
     
+    // MARK: - Firestore post 업데이트
+    private func editPostToFirestore(postID: String, content: String?, foodTags: [String]?) async {
+        do {
+            let collectionRef = db.collection("posts")
+            if let content = content {
+                try await firestorePostService.updatePostField(ref: collectionRef,
+                                                               postID: postID,
+                                                               data: ["content": content])
+            }
+            if let foodTags = foodTags {
+                try await firestorePostService.updatePostField(ref: collectionRef,
+                                                               postID: postID,
+                                                               data: ["foodTags": foodTags])
+            }
+        } catch {
+            print("error :: editPost", error.localizedDescription)
+        }
+    }
+    
     // MARK: - Firestore drink 업로드
-    func updateDrink() async {
+    func updateDrinkToFirestore() async {
         guard let post = post, let user = writtenUser else { return }
         do {
             let drinkRef = db.collection("drinks")
@@ -155,7 +234,7 @@ final class RecordViewModel: ObservableObject {
     }
     
     // MARK: - post Data 초기화
-    func recordPostDataClear() {
+    private func recordPostDataClear() {
         post = nil
         drinkTags = []
         selectedImages = []

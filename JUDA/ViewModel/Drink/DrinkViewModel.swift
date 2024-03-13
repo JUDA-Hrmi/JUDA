@@ -178,16 +178,3 @@ extension DrinkViewModel {
         return drinkFieldData.name.localizedCaseInsensitiveContains(keyword)
     }
 }
-
-// MARK: - Upload likedUsersID
-extension DrinkViewModel {
-    func addOrRemoveToLikedUsersID(likedAction: LikedActionType, drinkID: String, userID: String) async {
-        let likedUsersIDRef = db.collection(drinkCollection).document(drinkID).collection("likedUsersID")
-        switch likedAction {
-        case .plus:
-            await firestoreDrinkService.uploadDrinkLikedUsersID(collection: likedUsersIDRef, uid: userID)
-        case .minus:
-            await firestoreDrinkService.deleteDrinkLikedUsersID(collection: likedUsersIDRef, uid: userID)
-        }
-    }
-}

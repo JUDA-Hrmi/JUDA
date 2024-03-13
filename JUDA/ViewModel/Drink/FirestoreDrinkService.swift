@@ -241,14 +241,4 @@ extension FirestoreDrinkService {
             print(error.localizedDescription)
         }
     }
-    
-    // likedUsersID 하위 컬렉션에 document 삭제
-    func deleteDrinkLikedUsersID(collection: CollectionReference, uid: String) async {
-        do {
-            try await collection.document(uid).delete()
-        } catch {
-            print("error :: deleteDrinkLikedUsersID() -> delete drink liked users id data failure")
-            print(error.localizedDescription)
-        }
-    }
 }
