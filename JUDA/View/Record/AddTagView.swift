@@ -11,7 +11,6 @@ import PhotosUI
 // MARK: - 글 작성 시, 사진 선택 및 술 태그 추가 화면
 struct AddTagView: View {
     @EnvironmentObject private var navigationRouter: NavigationRouter
-//    @EnvironmentObject private var auth: AuthService
     @EnvironmentObject private var recordViewModel: RecordViewModel
     // 사진 배열
     @State private var selectedPhotos: [PhotosPickerItem] = []

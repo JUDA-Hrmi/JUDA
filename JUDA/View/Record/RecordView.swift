@@ -76,7 +76,7 @@ struct RecordView: View {
         .loadingView($recordViewModel.isPostUploading)
         // 글 내용 유무 체크
         .onAppear {
-            recordViewModel.isPostContentNotEmpty()
+            recordViewModel.checkPostContentIsEmpty()
             // TODO: recordType에 따라 recordView에 값 띄워주기
             switch recordType {
             case .add:
@@ -90,7 +90,7 @@ struct RecordView: View {
         }
         // 글 내용 유무 체크
         .onChange(of: recordViewModel.content) { _ in
-            recordViewModel.isPostContentNotEmpty()
+            recordViewModel.checkPostContentIsEmpty()
         }
         .navigationBarBackButtonHidden()
         .toolbar {
@@ -137,8 +137,8 @@ struct RecordView: View {
                     Text("완료")
                         .font(.regular16)
                 }
-                .foregroundStyle(recordViewModel.isPostContent ? .mainBlack : .gray01)
-                .disabled(!recordViewModel.isPostContent)
+                .foregroundStyle(recordViewModel.postContentIsEmpty ? .gray01 : .mainBlack)
+                .disabled(recordViewModel.postContentIsEmpty)
             }
         }
     }

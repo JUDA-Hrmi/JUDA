@@ -26,7 +26,7 @@ final class RecordViewModel: ObservableObject {
     // 음식 태그를 담는 배열
     @Published var foodTags = [String]()
     // 글 작성 or 수정 기준 충족 ( 글 내용 필수 )
-    @Published var isPostContent: Bool = false
+    @Published var postContentIsEmpty: Bool = true
     // post 업로드 완료 확인 및 로딩 뷰 출력용 프로퍼티
     @Published var isPostUploading: Bool = false
     // 화면 너비 받아오기
@@ -48,9 +48,9 @@ final class RecordViewModel: ObservableObject {
     private let db = Firestore.firestore()
 
     // MARK: - 글 내용 유무 체크
-    func isPostContentNotEmpty() {
+    func checkPostContentIsEmpty() {
         let trimmedString = content.trimmingCharacters(in: .whitespacesAndNewlines) // 공백 + 개행문자 제외
-        isPostContent = !trimmedString.isEmpty
+        postContentIsEmpty = trimmedString.isEmpty
     }
 
     // MARK: - 게시글 작성

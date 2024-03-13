@@ -46,7 +46,7 @@ struct SelectedPhotoHorizontalScroll: View {
 }
 
 // MARK: - 술 리스트 셀 사용 KingFisher 이미지
-struct SelectedImageKFImage: View {
+private struct SelectedImageKFImage: View {
     // post가 가진 imageURL
     let url: URL
     
