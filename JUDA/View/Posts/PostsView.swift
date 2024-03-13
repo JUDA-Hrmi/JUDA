@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: - 술상 탭
 struct PostsView: View {
-    @EnvironmentObject private var navigationRouter: NavigationRouter
+    @StateObject private var navigationRouter = NavigationRouter()
 	@EnvironmentObject private var appViewModel: AppViewModel
 	@EnvironmentObject private var authViewModel: AuthViewModel
 	@EnvironmentObject private var postViewModel: PostViewModel

@@ -19,8 +19,7 @@ enum LikedType: String, CaseIterable {
 struct LikedView: View {
     @StateObject private var navigationRouter = NavigationRouter()
     @EnvironmentObject private var appViewModel: AppViewModel
-    @EnvironmentObject private var authService: AuthService
-    @EnvironmentObject private var likedViewModel: LikedViewModel
+    @EnvironmentObject private var authViewModel: AuthViewModel
 
     @State private var selectedSegmentIndex = 0
     

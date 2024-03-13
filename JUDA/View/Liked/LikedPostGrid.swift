@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: - 술상 리스트 탭 화면
 struct LikedPostGrid: View {
-    @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var authViewModel: AuthViewModel
 
     var body: some View {
         if let user = authService.currentUser,
@@ -40,8 +40,7 @@ struct LikedPostGrid: View {
 
 // MARK: - 스크롤 뷰 or 뷰 로 보여질 술상 그리드
 struct LikedPostGridContent: View {
-    @EnvironmentObject private var authService: AuthService
-    @EnvironmentObject private var likedViewModel: LikedViewModel
+    @EnvironmentObject private var authViewModel: AuthViewModel
 
     // 술상 그리드 셀 2개 column
     private let columns: [GridItem] = [GridItem(.flexible()), GridItem(.flexible())]
