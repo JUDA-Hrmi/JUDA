@@ -147,14 +147,14 @@ extension PostViewModel {
 extension PostViewModel {
     // shareLink 에서 사용 할, Image 단일 받아오기
     // 이미지 못받는 경우, 앱 로고 사용
-    func getPostThumnailImage(url: URL?) async -> Image {
+    func getPostThumbnailImage(url: URL?) async -> Image {
         do {
             guard let url = url else { return Image("AppIcon") }
             let uiImage = try await fireStorageService.getUIImageFile(url: url.absoluteString)
             guard let uiImage = uiImage else { return Image("AppIcon") }
             return Image(uiImage: uiImage)
         } catch {
-            print("error :: getPostThumnailImage", error.localizedDescription)
+            print("error :: getPostThumbnailImage", error.localizedDescription)
             return Image("AppIcon")
         }
     }

@@ -68,7 +68,7 @@ struct PostDetailView: View {
 		}
         .task {
             // shareLink 용 이미지 가져오기
-            shareImage = await postViewModel.getPostThumnailImage(url: post.postField.imagesURL.first)
+            shareImage = await postViewModel.getPostThumbnailImage(url: post.postField.imagesURL.first)
         }
 		.navigationBarBackButtonHidden()
 		.toolbar {
