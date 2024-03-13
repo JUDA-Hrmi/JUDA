@@ -77,6 +77,7 @@ struct PostCell: View {
 					Button {
 						// TODO: 로그인 안 되어 있을 때, 로그인 페이지 넘어가기
 						if authViewModel.signInStatus {
+                            isLike.toggle()
                             debouncer.call {
                                 if isLike {
                                     likeCount -= 1
@@ -86,7 +87,6 @@ struct PostCell: View {
                                 Task {
                                     await authViewModel.updateLikedPosts(isLiked: isLike, selectedPost: post)
                                 }
-                                isLike.toggle()
                             }
 						}
 					} label: {

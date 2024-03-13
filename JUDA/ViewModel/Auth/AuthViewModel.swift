@@ -195,6 +195,7 @@ extension AuthViewModel {
 extension AuthViewModel {
     // 유저가 좋아하는 술 리스트에 추가 or 삭제
     func updateLikedDrinks(isLiked: Bool, selectedDrink: Drink) async {
+        // isLiked 가 먼저 수정이 되고 메서드가 실행이 됨
         if !isLiked { // 좋아요 X -> O
             currentUser?.likedDrinks.removeAll { $0.drinkField.drinkID == selectedDrink.drinkField.drinkID }
             await deleteUserLikedList(type: .drinks, id: selectedDrink.drinkField.drinkID)
@@ -209,6 +210,7 @@ extension AuthViewModel {
     
     // 유저가 좋아하는 게시글 (술상) 리스트에 추가 or 삭제
     func updateLikedPosts(isLiked: Bool, selectedPost: Post) async {
+        // isLiked 가 먼저 수정이 되고 메서드가 실행이 됨
         if !isLiked { // 좋아요 X -> O
             currentUser?.likedPosts.removeAll { $0.postField.postID == selectedPost.postField.postID }
             await deleteUserLikedList(type: .posts, id: selectedPost.postField.postID)

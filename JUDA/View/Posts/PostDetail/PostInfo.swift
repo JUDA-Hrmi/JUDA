@@ -60,6 +60,7 @@ struct PostInfo: View {
                 // 좋아요를 등록 -> 빨간색이 채워진 하트
                 // 좋아요를 해제 -> 테두리가 회색인 하트
                 Button {
+                    isLike.toggle()
                     debouncer.call {
                         if isLike {
                             likeCount -= 1
@@ -69,7 +70,6 @@ struct PostInfo: View {
                         Task {
                             await authViewModel.updateLikedPosts(isLiked: isLike, selectedPost: post)
                         }
-                        isLike.toggle()
                     }
                 } label: {
                     Image(systemName: isLike ? "heart.fill" : "heart")
