@@ -12,7 +12,7 @@ struct LikedPostGrid: View {
     @EnvironmentObject private var authViewModel: AuthViewModel
 
     var body: some View {
-        if let user = authService.currentUser,
+        if let user = authViewModel.currentUser,
            !user.likedPosts.isEmpty {
             // MARK: iOS 16.4 이상
             if #available(iOS 16.4, *) {
@@ -46,25 +46,21 @@ struct LikedPostGridContent: View {
     private let columns: [GridItem] = [GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
-        LazyVGrid(columns: columns, spacing: 10) {
-            if !likedViewModel.isLoading {
-                ForEach(likedViewModel.likedPosts, id: \.postField.postID) { post in
+        if let user = authViewModel.currentUser, 
+            !user.likedPosts.isEmpty {
+            LazyVGrid(columns: columns, spacing: 10) {
+                ForEach(user.likedPosts, id: \.postField.postID) { post in
                     NavigationLink(value: Route
-                        .PostDetail(postUserType: authService.currentUser?.userID == post.userField.userID ? .writter : .reader,
+                        .PostDetail(postUserType: user.userField.userID == post.postField.user.userID ? .writter : .reader,
                                     post: post,
-                                    usedTo: .liked,
-                                    postPhotosURL: post.postField.imagesURL)) {
+                                    usedTo: .liked)) {
                         PostCell(usedTo: .liked, post: post)
                     }
-                    .buttonStyle(EmptyActionStyle())
-                }
-            } else {
-                ForEach(0..<6) { _ in
-                    ShimmerPostCell()
+                                    .buttonStyle(EmptyActionStyle())
                 }
             }
+            .padding(.horizontal, 20)
         }
-        .padding(.horizontal, 20)
     }
 }
 

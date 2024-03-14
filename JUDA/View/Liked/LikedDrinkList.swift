@@ -12,7 +12,7 @@ struct LikedDrinkList: View {
     @EnvironmentObject private var authViewModel: AuthViewModel
 
     var body: some View {
-        if let user = authService.currentUser,
+        if let user = authViewModel.currentUser,
            !user.likedDrinks.isEmpty {
             // MARK: iOS 16.4 이상
             if #available(iOS 16.4, *) {
@@ -40,24 +40,20 @@ struct LikedDrinkList: View {
 
 // MARK: - 스크롤 뷰 or 뷰 로 보여질 술찜 리스트
 struct LikedDrinkListContent: View {
-    @EnvironmentObject private var authService: AuthService
-    @EnvironmentObject private var likedViewModel: LikedViewModel
+    @EnvironmentObject private var authViewModel: AuthViewModel
     
     var body: some View {
-        LazyVStack {
-            if !likedViewModel.isLoading {
-                ForEach(likedViewModel.likedDrinks, id: \.drinkID) { drink in
+        if let user = authViewModel.currentUser, 
+            !user.likedDrinks.isEmpty {
+            LazyVStack {
+                ForEach(user.likedDrinks, id: \.drinkField.drinkID) { drink in
                     NavigationLink(value: Route
                         .DrinkDetailWithUsedTo(drink: drink,
                                                usedTo: .liked)) {
                         DrinkListCell(drink: drink,
                                       usedTo: .liked)
                     }
-                    .buttonStyle(EmptyActionStyle())
-                }
-            } else {
-                ForEach(0..<4) { _ in
-                    ShimmerDrinkListCell()
+                                               .buttonStyle(EmptyActionStyle())
                 }
             }
         }
