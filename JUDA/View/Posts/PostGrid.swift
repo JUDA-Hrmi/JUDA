@@ -85,8 +85,7 @@ struct PostGridContent: View {
                         NavigationLink(value: Route
                             .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writter : .reader,
                                         post: post,
-                                        usedTo: usedTo,
-                                        postPhotosURL: post.postField.imagesURL)) {
+                                        usedTo: usedTo)) {
                             PostCell(usedTo: .post, post: post)
                                 .task {
                                     if post == postViewModel.posts.last {
@@ -111,8 +110,7 @@ struct PostGridContent: View {
 							NavigationLink(value: Route
                                 .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writter : .reader,
                                             post: post,
-                                            usedTo: usedTo,
-                                            postPhotosURL: post.postField.imagesURL)) {
+                                            usedTo: usedTo)) {
 								PostCell(usedTo: .postSearch, post: post)
 							}
 							.buttonStyle(EmptyActionStyle())
@@ -124,8 +122,7 @@ struct PostGridContent: View {
 							NavigationLink(value: Route
                                 .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writter : .reader,
                                             post: post,
-                                            usedTo: usedTo,
-                                            postPhotosURL: post.postField.imagesURL)) {
+                                            usedTo: usedTo)) {
 								PostCell(usedTo: .postSearch, post: post)
 							}
 							.buttonStyle(EmptyActionStyle())
@@ -137,8 +134,7 @@ struct PostGridContent: View {
 							NavigationLink(value: Route
                                 .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writter : .reader,
                                             post: post,
-                                            usedTo: usedTo,
-                                            postPhotosURL: post.postField.imagesURL)) {
+                                            usedTo: usedTo)) {
 								PostCell(usedTo: .postSearch, post: post)
 							}
 							.buttonStyle(EmptyActionStyle())
@@ -152,8 +148,7 @@ struct PostGridContent: View {
 					NavigationLink(value: Route
                         .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writter : .reader,
                                     post: post,
-                                    usedTo: usedTo,
-                                    postPhotosURL: post.postField.imagesURL)) {
+                                    usedTo: usedTo)) {
 						PostCell(usedTo: .postSearch, post: post)
 					}
 					.buttonStyle(EmptyActionStyle())
@@ -166,8 +161,7 @@ struct PostGridContent: View {
                         NavigationLink(value: Route
                             .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writter : .reader,
                                         post: post,
-                                        usedTo: usedTo,
-                                        postPhotosURL: post.postField.imagesURL)) {
+                                        usedTo: usedTo)) {
 							PostCell(usedTo: usedTo, post: post)
                         }
                     }
@@ -179,23 +173,25 @@ struct PostGridContent: View {
             } else if usedTo == .myPage {
                 if !userViewModel.isLoading {
                     if userType == .user {
-                        ForEach(authViewModel.currentUser?.posts, id: \.postField.postID) { post in
-                            NavigationLink(value: Route
-                                .PostDetail(postUserType: .writter,
-                                            post: post,
-                                            usedTo: usedTo,
-                                            postPhotosURL: post.postField.imagesURL)) {
-                                PostCell(usedTo: usedTo, post: post)
+                        if let currentUser = authViewModel.currentUser, !currentUser.posts.isEmpty {
+                            ForEach(currentUser.posts, id: \.postField.postID) { post in
+                                NavigationLink(value: Route
+                                    .PostDetail(postUserType: .writter,
+                                                post: post,
+                                                usedTo: usedTo)) {
+                                    PostCell(usedTo: usedTo, post: post)
+                                }
                             }
                         }
                     } else {
-                        ForEach(userViewModel.user?.posts, id: \.postField.postID) { post in
-                            NavigationLink(value: Route
-                                .PostDetail(postUserType: .reader,
-                                            post: post,
-                                            usedTo: usedTo,
-                                            postPhotosURL: post.postField.imagesURL)) {
-                                PostCell(usedTo: usedTo, post: post)
+                        if let user = userViewModel.user, !user.posts.isEmpty {
+                            ForEach(user.posts, id: \.postField.postID) { post in
+                                NavigationLink(value: Route
+                                    .PostDetail(postUserType: .reader,
+                                                post: post,
+                                                usedTo: usedTo)) {
+                                    PostCell(usedTo: usedTo, post: post)
+                                }
                             }
                         }
                     }
