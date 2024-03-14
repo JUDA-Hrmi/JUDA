@@ -69,7 +69,7 @@ extension FirestoreDrinkService {
 			return Drink(drinkField: drikField, 
 						 taggedPosts: taggedPosts,
 						 agePreference: agePreference,
-						 GenderPreference: genderPreference, 
+						 genderPreference: genderPreference,
 						 likedUsersID: likedUsersID)
 		} catch DrinkError.fetchDrinkField {
 			print("error :: fetchDrinkField() -> fetch drink field data failure")
@@ -196,6 +196,26 @@ extension FirestoreDrinkService {
 	}
 }
 
+extension FirestoreDrinkService {
+    // drink collection agePreference data update 메서드
+    func updateDrinkAgePreference(ref: CollectionReference, drinkID: String, age: Age, userID: String) async {
+        do {
+            try await ref.document(drinkID).collection("agePreference").document(age.rawValue).collection("usersID").document(userID).setData([:])
+        } catch {
+            print("error :: updateDrinkAgePreference() -> upload userID to agePreference failure")
+        }
+    }
+    
+    // drink collection genderPreference data update 메서드
+    func updateDrinkGenderPreference(ref: CollectionReference, drinkID: String, gender: String, userID: String) async {
+        do {
+            try await ref.document(drinkID).collection("genderPreference").document(gender).collection("usersID").document(userID).setData([:])
+        } catch {
+            print("error :: updateDrinkGenderPreference() -> upload userID to genderPreference failure")
+        }
+    }
+}
+
 // MARK: Firestore drink document delete
 extension FirestoreDrinkService {
     // drinks collection에서 삭제하고싶은 drink에 해당하는 document 삭제 메서드
@@ -210,7 +230,7 @@ extension FirestoreDrinkService {
     }
 }
 
-// MARK: Firestore drink document upload
+// MARK: Firestore drink document upload & delete
 extension FirestoreDrinkService {
     // likedUsersID 하위 컬렉션에 업로드
     func uploadDrinkLikedUsersID(collection: CollectionReference, uid: String) async {

@@ -2,219 +2,244 @@
 //  RecordViewModel.swift
 //  JUDA
 //
-//  Created by 홍세희 on 2024/01/24.
+//  Created by 정인선 on 3/10/24.
 //
 
 import SwiftUI
-import FirebaseCore
 import FirebaseFirestore
-import FirebaseStorage
-import PhotosUI
 
-final class RecordViewModel: ObservableObject { 
-    // post 업로드용 Post 모델 객체
+@MainActor
+final class RecordViewModel: ObservableObject {
+    // post 업로드용 Post 객체
     @Published var post: Post?
-    // (dirnkID, (drinkData, rating)) 튜플 형태의 선택한 술 Data
+    // post 작성자 정보를 갖는 WrittenUser 객체
+    @Published var writtenUser: WrittenUser?
+    // post의 전체 술 평가 정보를 갖는 DrinkTag 배열
+    @Published var drinkTags = [DrinkTag]()
     @Published var selectedDrinkTag: DrinkTag?
-    // [drinkID: (drinkData, rating)] 딕셔너리 형태의 태그된 모든 술 Data
-    @Published var drinkTags: [DrinkTag] = []
     // 라이브러리에서 선택된 모든 사진 Data
-    @Published var images: [UIImage] = []
-    // 선택된 모든 사진 Data의 ID를 갖는 배열
-    var imagesURL: [URL] = []
+    @Published var selectedImages = [UIImage]()
+    // 모든 imagesURL을 갖는 배열
+    var imagesURL = [URL]()
     // 글 내용을 담는 프로퍼티
     @Published var content: String = ""
     // 음식 태그를 담는 배열
-    @Published var foodTags: [String] = []
-    // 화면 너비 받아오기
-	var windowWidth: CGFloat {
-		TagHandler.getScreenWidthWithoutPadding(padding: 20)
-	}
+    @Published var foodTags = [String]()
+    // 글 작성 or 수정 기준 충족 ( 글 내용 필수 )
+    @Published var postContentIsEmpty: Bool = true
     // post 업로드 완료 확인 및 로딩 뷰 출력용 프로퍼티
-    @Published var isPostUploadSuccess = false
-    
-    // Firestore connection
-    private let db = Firestore.firestore()
-    
-    // FireStorage 기본 경로
-    private let storage = Storage.storage()
-    private let drinkImagesPath = "drinkImages/"
-}
-
-// MARK: - FirebaseStorage Image Upload
-extension RecordViewModel {
-	func uploadMultipleImagesToFirebaseStorageAsync(_ imagesData: [Data]) async throws {
-		// 여러 이미지 업로드를 동시에 처리하기 위한 비동기 작업 배열
-		var uploadTasks: [Task<(Int, URL), Error>] = []
-		
-		// 각 이미지 데이터에 대해 비동기 업로드 작업 생성 및 배열에 추가
-		for (index, imageData) in imagesData.enumerated() {
-			let uploadTask = Task { try await uploadImageToFirebaseStorageAsync(imageData, index: index) }
-			uploadTasks.append(uploadTask)
-		}
-
-		// 모든 업로드 작업이 완료될 때까지 기다린 후 결과 URL 배열 반환
-		return try await withThrowingTaskGroup(of: (Int, URL).self, body: { group in
-			var downloadURLs: [(Int, URL)] = []
-			
-			// 각 업로드 작업을 TaskGroup에 추가
-			for task in uploadTasks {
-				group.addTask {
-					// Task의 결과를 반환
-					try await task.value
-				}
-			}
-			
-			// TaskGroup의 모든 결과를 수집
-			for try await downloadURL in group {
-				downloadURLs.append(downloadURL)
-			}
-
-			downloadURLs.sort(by: { $0.0 < $1.0 })
-			self.imagesURL = downloadURLs.map { $0.1 }
-		})
-	}
-
-	func uploadImageToFirebaseStorageAsync(_ imageData: Data, index: Int) async throws -> (Int, URL) {
-		let storageRef = Storage.storage().reference()
-		let imageID = UUID().uuidString  // 고유한 이미지 ID 생성
-		let imageRef = storageRef.child("postImages/\(imageID).jpg")
-
-		let metadata = StorageMetadata()
-		metadata.contentType = "image/jpg"
-		
-		// 이미지 업로드
-		let _ = try await imageRef.putDataAsync(imageData, metadata: metadata)
-		
-		// 업로드된 이미지의 URL 가져오기
-		let downloadURL = try await imageRef.downloadURL()
-		
-		return (index, downloadURL)
-	}
-}
-
-// MARK: - Firestore Post Upload & Drink Update
-extension RecordViewModel {
-    // Firestore post data upload
-    func uploadPost() async {
-		guard let post = post, let userID = post.userField.userID else {
-			print("uploadPost() :: error -> don't get post & post's userID")
-			return
-		}
-        // posts documentID uuid 지정
-        let postDocumentPath = UUID().uuidString
-        let postRef = db.collection("posts")
-		let userPostRef = db.collection("users").document(userID).collection("posts")
-//		await firebaseUploadPost(ref: userPostRef, documentPath: postDocumentPath)
-        let references: [CollectionReference] = [postRef, userPostRef]
-        
-        // 동일한 post collection data를 갖는 collection(posts, users/posts)에 data upload
-        for reference in references {
-            await firebaseUploadPost(ref: reference, documentPath: postDocumentPath)
-        }
-        
-        // 동일한 drink collection data를 갖는 collection(posts/drinkTags/drink, drinks)에 data update
-		await updateDrinkDataWithTag(documentPath: postDocumentPath, userID: userID)
+    @Published var isPostUploading: Bool = false
+    // 화면 너비 받아오기
+    var windowWidth: CGFloat {
+        TagHandler.getScreenWidthWithoutPadding(padding: 20)
     }
     
-    // Firestore posts collection upload
-    func firebaseUploadPost(ref: CollectionReference, documentPath: String) async {
+    // post 업로드, iamges 업로드를 위한 postID
+    private var postID = ""
+
+    // firebase Post Service
+    private let firestorePostService = FirestorePostService()
+    // Firebase Drink Service
+    private let firestoreDrinkService = FirestoreDrinkService()
+    // FireStorage Service
+    private let fireStorageService = FireStorageService()
+    
+    // Firestore db 연결
+    private let db = Firestore.firestore()
+
+    // MARK: - 글 내용 유무 체크
+    func checkPostContentIsEmpty() {
+        let trimmedString = content.trimmingCharacters(in: .whitespacesAndNewlines) // 공백 + 개행문자 제외
+        postContentIsEmpty = trimmedString.isEmpty
+    }
+
+    // MARK: - 게시글 작성
+    func postUpload(user: User) async {
+        guard let userID = user.userField.userID, !userID.isEmpty else { return }
+        // loadingView 띄우기
+        isPostUploading = true
+        // postID 생성
+        postID = UUID().uuidString
+        // writtenUser 모델 객체 생성
+        writtenUser = WrittenUser(userID: userID,
+                                  userName: user.userField.name,
+                                  userAge: user.userField.age,
+                                  userGender: user.userField.gender,
+                                  userProfileImageURL: user.userField.profileImageURL)
+        
+        
+        if let writtenUser = writtenUser {
+            // firestroage에 이미지 업로드 후 url 받아오기
+            await uploadMultipleImagesToFirebaseStorageAsync()
+            
+            // post 데이터 모델 객체 생성
+            post = Post(postField: PostField(user: writtenUser,
+                                             drinkTags: drinkTags,
+                                             imagesURL: imagesURL,
+                                             content: content,
+                                             foodTags: foodTags,
+                                             postedTime: Date()),
+                        likedUsersID: [])
+            
+            // post 업로드
+            await uploadPosttoFireStore()
+            // drink 업데이트
+            await updateDrinkToFirestore()
+        }
+        
+        // MARK: - search를 위한 전체 post fetch 필요한가?
+//            await searchPostsViewModel.fetchPosts()
+        // loadingView 없애기
+        isPostUploading = false
+    }
+    
+    // MARK: - 게시글 수정
+    func postUpdate() async {
+        guard let postID = post?.postField.postID else { return }
+        // loadingView 띄우기
+        isPostUploading = true
+        // post 업데이트
+        await editPostToFirestore(postID: postID, content: content, foodTags: foodTags)
+        //
+        recordPostDataClear()
+        // loadingView 없애기
+        isPostUploading = false
+    }
+    
+    // MARK: - FireStroage post 이미지 업로드 및 이미지 URL 받아오기
+    func uploadMultipleImagesToFirebaseStorageAsync() async {
+        guard let user = writtenUser else { return }
+        do {
+            // 결과를 받을 배열 생성
+            var downloadURLs: [(Int, URL)] = []
+            
+            // 이미지 업로드 병렬처리를 위한 taskGroup
+            try await withThrowingTaskGroup(of: (Int, URL).self) { group in
+                for (index, image) in selectedImages.enumerated() {
+                    // 각 이미지 데이터에 대해 비동기 업로드 작업 실행 및 배열에 추가
+                    group.addTask {
+                        // storage 폴더링을 위한 userID
+                        let userID = user.userID
+                        // image fileName 생성
+                        let imageID = UUID().uuidString
+                        // storage에 이미지 업로드
+                        try await self.fireStorageService.uploadImageToStorage(folder: .post, userID: userID , postID: self.postID, image: image, fileName: imageID)
+                        // storage에서 이미지 URL 받아오기
+                        let imageURL = try await self.fireStorageService.fetchImageURL(folder: .post, fileName: imageID)
+                        // (이미지 순서, URL) 반환
+                        return (index, imageURL)
+                    }
+                }
+                
+                // task 반환값을 결과 배열에 저장
+                for try await downloadURL in group {
+                    downloadURLs.append(downloadURL)
+                }
+                // post의 imagesURL에 index순으로 정렬된 URL 배열 저장
+                imagesURL = downloadURLs.sorted(by: { $0.0 < $1.0 }).map { $0.1 }
+            }
+        } catch FireStorageError.uploadImage {
+            print("error :: uploadImageToStorage() -> upload Image data to FireStorage failure")
+        } catch FireStorageError.fetchImageURL {
+            print("error :: fetchImageURL() -> get Image URL from FireStorage failure")
+        } catch {
+            print("error :: uploadMultipleImagesToFirebaseStorageAsync() -> upload Multiple Images failure")
+        }
+    }
+    
+    // MARK: - Firestore post 업로드
+    func uploadPosttoFireStore() async {
         guard let post = post else { return }
         do {
-            // posts collection field data upload
-            try ref.document(documentPath).setData(from: post.postField)
-            // drinkTags collection data upload in posts collection
-			for drinkTag in drinkTags {
-				guard let drinkID = drinkTag.drink.drinkID else {
-					print("firebaseUploadPost() :: error -> don't get drinkID")
-					continue
-				}
-				try await ref.document(documentPath).collection("drinkTags").document(drinkID).setData(["rating": drinkTag.rating])
-				try ref.document(documentPath).collection("drinkTags").document(drinkID).collection("drink").document(drinkID).setData(from: drinkTag.drink)
-			}
-            
-            // user collection data upload in posts collection
-            try ref.document(documentPath)
-                .collection("user")
-				.document(post.userField.userID ?? "")
-                .setData(from: post.userField)
-            
+            try await firestorePostService.uploadPostDocument(post: post, postID: postID)
+        } catch PostError.upload {
+            print("error :: uploadPostDocument() -> upload post to Firestore failure")
         } catch {
-            print("error :: post upload fail")
+            print("error :: uploadPost() -> upload post failure")
         }
     }
     
-    // claculate rating data when user upload post with drinkTag
-    func calcDrinkRating(prev: Double, new: Double, count: Int) -> Double {
+    // MARK: - Firestore post 업데이트
+    private func editPostToFirestore(postID: String, content: String?, foodTags: [String]?) async {
+        do {
+            let collectionRef = db.collection("posts")
+            if let content = content {
+                try await firestorePostService.updatePostField(ref: collectionRef,
+                                                               postID: postID,
+                                                               data: ["content": content])
+            }
+            if let foodTags = foodTags {
+                try await firestorePostService.updatePostField(ref: collectionRef,
+                                                               postID: postID,
+                                                               data: ["foodTags": foodTags])
+            }
+        } catch {
+            print("error :: editPost", error.localizedDescription)
+        }
+    }
+    
+    // MARK: - Firestore drink 업로드
+    func updateDrinkToFirestore() async {
+        guard let post = post, let user = writtenUser else { return }
+        do {
+            let drinkRef = db.collection("drinks")
+            for drinkTag in drinkTags {
+                let drinkID = drinkTag.drinkID
+                let drinkRoute = drinkRef.document(drinkID)
+                // 해당 술 정보 가져오기
+                let drinkData = try await firestoreDrinkService.fetchDrinkDocument(document: drinkRoute)
+                
+                // post 내 술 평가가 4점 이상일 때 agePreference, genderPreference update
+                if drinkTag.drinkRating >= 4 {
+                    let userID = user.userID
+                    let userGender = user.userGender
+                    var userAge: Age {
+                        switch user.userAge {
+                        case ...29:
+                            return Age.twenty
+                        case 30...39:
+                            return Age.thirty
+                        case 40...49:
+                            return Age.fourty
+                        default:
+                            return Age.fifty
+                        }
+                    }
+
+                    // Drink genderPreference/userGender 에 userID 추가
+                    await firestoreDrinkService.updateDrinkGenderPreference(ref: drinkRef, drinkID: drinkID, gender: userGender, userID: userID)
+                    // Drink agePreference/userAge 에 userID 추가
+                    await firestoreDrinkService.updateDrinkAgePreference(ref: drinkRef, drinkID: drinkID, age: userAge, userID: userID)
+                }
+                // rating
+                let prev = drinkData.drinkField.rating
+                let new = drinkTag.drinkRating
+                let count = drinkData.taggedPosts.count
+                let rating = calcDrinkRating(prev: prev, new: new, count: count)
+                
+                // Drink rating update
+                // TODO: return 값 처리
+                let result = await firestoreDrinkService.updateDrinkField(ref: drinkRef, drinkID: drinkID, data: ["rating": rating])
+            }
+        } catch DrinkError.fetchDrinkDocument {
+            print("error :: updateDrinkField() -> update drink data to Firestore failure")
+        } catch {
+            print("error :: updateDrink() -> update drink data failure")
+        }
+    }
+    
+    // 기존 rating을 받아서 새로 계산
+    private func calcDrinkRating(prev: Double, new: Double, count: Int) -> Double {
         return (prev * Double(count) + new) / (Double(count) + 1)
     }
     
-    // Firestore drink collection update
-	func updateDrinkDataWithTag(documentPath: String, userID: String) async {
-        // drinks
-        let drinkRef = db.collection("drinks")
-        // posts/drinkTags/drink
-        let drinkTagRef = db.collection("posts").document(documentPath).collection("drinkTags")
-		// users/posts/drinkTags/drink
-		let userPostDrinkTagRef = db.collection("users").document(userID).collection("posts").document(documentPath).collection("drinkTags")
-        
-        do {
-            for drinkTag in drinkTags {
-				guard let post = post, let drinkID = drinkTag.drink.drinkID else { return }
-				var updateData: [String: Any] = [:]
-				// drink 정보를 바탕으로 update
-				let drinkData = try await drinkRef.document(drinkID).getDocument(as: FBDrink.self)
-				// rating이 4보다 큰 경우
-				// agePreference, genderPreference
-				if drinkTag.rating >= 4 {
-					let userAge: Int = post.userField.age / 10 * 10
-					let stringUserAge = String(userAge < 20 ? 20 : userAge)
-					let userGender = post.userField.gender
-					// agePreference + 1
-					var agePreference = drinkData.agePreference
-					agePreference[stringUserAge] = (agePreference[stringUserAge] ?? 0) + 1
-					// genderPreference + 1
-					var genderPreference = drinkData.genderPreference
-					genderPreference[userGender] = (genderPreference[userGender] ?? 0) + 1
-
-					updateData["agePreference"] = agePreference
-					updateData["genderPreference"] = genderPreference
-				}
-				// rating
-				let prev = drinkData.rating
-				let new = drinkTag.rating
-				let count = drinkData.taggedPostID.count
-				let rating = calcDrinkRating(prev: prev, new: new, count: count)
-				
-				// taggedPostID
-				var taggedPostID = drinkData.taggedPostID
-				taggedPostID.append(documentPath)
-				
-				updateData["rating"] = rating
-				updateData["taggedPostID"] = taggedPostID
-				
-				// drink data(agePreference, genderPreference, rating, taggedPostId) update in drinks, posts collection(posts/drinkTags)
-				try await drinkRef.document(drinkID).updateData(updateData)
-				try await drinkTagRef.document(drinkID).collection("drink").document(drinkID).updateData(updateData)
-				try await userPostDrinkTagRef.document(drinkID).collection("drink").document(drinkID).updateData(updateData)
-            }
-        } catch {
-            print("update error")
-        }
+    // MARK: - post Data 초기화
+    private func recordPostDataClear() {
+        post = nil
+        drinkTags = []
+        selectedImages = []
+        content = ""
+        foodTags = []
+        postID = ""
     }
-	
-	func recordPostDataClear() {
-		self.post = nil
-		self.selectedDrinkTag = nil
-		self.drinkTags = []
-		self.images = []
-		self.imagesURL = []
-		self.content = ""
-		self.foodTags = []
-	}
-}
-
-// MARK: Post Modify
-extension RecordViewModel {
-	
 }

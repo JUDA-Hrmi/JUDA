@@ -22,9 +22,13 @@ final class FireStorageService {
     private let imageType = "image/jpg"
 
     // FireStorage 에 이미지 올리기
-    func uploadImageToStorage(folder: FireStorageFolderType, image: UIImage, fileName: String) async throws {
+    func uploadImageToStorage(folder: FireStorageFolderType, userID: String? = nil, postID: String? = nil, image: UIImage, fileName: String) async throws {
         do {
-            let storageRoute = storageRef.child("\(folder.rawValue)/\(fileName)")
+            var storagePath = folder.rawValue
+            if let userID = userID, let postID = postID {
+                storagePath += "/\(userID)/\(postID)"
+            }
+            let storageRoute = storageRef.child("\(storagePath)/\(fileName)")
             let data = Formatter.compressImage(image)
             let metaData = StorageMetadata()
             metaData.contentType = imageType
