@@ -29,6 +29,8 @@ struct PostField: Codable {
 struct WrittenUser: Codable {
     var userID: String
     var userName: String
+    var userAge: Int
+    var userGender: String
     var userProfileImageURL: URL?
 }
 

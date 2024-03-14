@@ -11,7 +11,6 @@ import PhotosUI
 // MARK: - 글 작성 시, 사진 선택 및 술 태그 추가 화면
 struct AddTagView: View {
     @EnvironmentObject private var navigationRouter: NavigationRouter
-    @EnvironmentObject private var auth: AuthService
     @EnvironmentObject private var recordViewModel: RecordViewModel
     // 사진 배열
     @State private var selectedPhotos: [PhotosPickerItem] = []
@@ -68,7 +67,7 @@ struct AddTagView: View {
                 if isShowRatingDialog {
                     CustomDialog(type: .rating(
                         // 선택된 술 태그의 술 이름
-                        drinkName: recordViewModel.selectedDrinkTag?.drink.name ?? "",
+                        drinkName: recordViewModel.selectedDrinkTag?.drinkName ?? "",
                         leftButtonLabel: "취소",
                         leftButtonAction: {
                             // CustomRatingDialog 사라지게 하기
@@ -80,8 +79,8 @@ struct AddTagView: View {
                             if rating > 0 {
                                 // 술 태그 배열에서 해당 술 태그의 점수를 변경
 								if let selectedDrinkTag = recordViewModel.selectedDrinkTag,
-								   let index = recordViewModel.drinkTags.firstIndex(where: { $0.drink.drinkID == selectedDrinkTag.drink.drinkID }) {
-									recordViewModel.drinkTags[index] = DrinkTag(drink: selectedDrinkTag.drink, rating: rating)
+                                   let index = recordViewModel.drinkTags.firstIndex(where: { $0.drinkID ==  selectedDrinkTag.drinkID }) {
+                                    recordViewModel.drinkTags[index] = DrinkTag(drinkID: selectedDrinkTag.drinkID, drinkName: selectedDrinkTag.drinkName, drinkAmount: selectedDrinkTag.drinkAmount, drinkRating: rating)
                                 }
                                 // 점수 변경 후 CustomRatingDialog 사라지게 하기
                                 isShowRatingDialog = false
@@ -92,7 +91,7 @@ struct AddTagView: View {
                     )
                     // 선택한 drinkTag의 rating을 CustomDialog에 표시하기 위한 rating 값 변경
                     .onAppear {
-						if let rating = recordViewModel.selectedDrinkTag?.rating {
+                        if let rating = recordViewModel.selectedDrinkTag?.drinkRating {
                             self.rating = rating
                         }
                     }

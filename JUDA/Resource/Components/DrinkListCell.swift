@@ -19,11 +19,10 @@ enum WhereUsedDrinkListCell {
 
 // MARK: - 술 리스트 셀
 struct DrinkListCell: View {
-    @EnvironmentObject private var authService: AuthService
+//    @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var authViewModel: AuthViewModel
     @EnvironmentObject private var mainViewModel: MainViewModel
     @EnvironmentObject private var drinkViewModel: DrinkViewModel
-    @EnvironmentObject private var likedViewModel: LikedViewModel
-    @EnvironmentObject private var searchDrinkViewModel: SearchDrinkViewModel
 
     let drink: Drink
     var usedTo: WhereUsedDrinkListCell = .drinkInfo
@@ -37,17 +36,7 @@ struct DrinkListCell: View {
             // 술 정보
             HStack(alignment: .center, spacing: 20) {
                 // 술 사진
-                if usedTo == .main,
-                   let url = mainViewModel.drinkImages[drink.drinkID ?? ""] {
-                    DrinkListCellKFImage(url: url)
-                } else if usedTo == .searchTag,
-                   let url = searchDrinkViewModel.searchDrinksImageURL[drink.drinkID ?? ""] {
-                    DrinkListCellKFImage(url: url)
-                } else if usedTo == .liked,
-                   let url = likedViewModel.drinkImages[drink.drinkID ?? ""] {
-                    DrinkListCellKFImage(url: url)
-                } else if usedTo == .drinkInfo,
-                    let url = drinkViewModel.drinkImages[drink.drinkID ?? ""] {
+                if let url = drink.drinkField.drinkImageURL {
                     DrinkListCellKFImage(url: url)
                 } else {
                     Text("No Image")
@@ -58,28 +47,28 @@ struct DrinkListCell: View {
                 // 술 이름 + 나라, 도수 + 별점
                 VStack(alignment: .leading, spacing: 10) {
                     // 술 이름 + 용량
-                    Text(drink.name + " " + drink.amount)
+                    Text(drink.drinkField.name + " " + drink.drinkField.amount)
                         .lineLimit(2)
                         .multilineTextAlignment(.leading)
                         .font(.semibold16)
                         .foregroundStyle(.mainBlack)
                     // 나라, 도수
                     HStack(spacing: 0) {
-                        Text(drink.country)
+                        Text(drink.drinkField.country)
                             .font(.semibold14)
-                        if drink.category == DrinkType.wine.rawValue,
-                            let province = drink.province {
+                        if drink.drinkField.category == DrinkType.wine.rawValue,
+                           let province = drink.drinkField.province {
                             Text(province)
                                 .font(.semibold14)
                                 .padding(.leading, 6)
                         }
-                        Text(Formatter.formattedABVCount(abv: drink.alcohol))
+                        Text(Formatter.formattedABVCount(abv: drink.drinkField.alcohol))
                             .font(.semibold14)
                             .padding(.leading, 10)
                     }
                     .foregroundStyle(.gray01)
                     // 별점
-                    StarRating(rating: drink.rating,
+                    StarRating(rating: drink.drinkField.rating,
                                color: .mainAccent05,
                                starSize: .semibold14, 
                                fontSize: .semibold14,
@@ -97,8 +86,11 @@ struct DrinkListCell: View {
                     isLiked.toggle()
                     // 디바운서 콜
                     debouncer.call {
-                        authService.addOrRemoveToLikedDrinks(isLiked: isLiked, drink.drinkID)
-                        authService.userLikedListUpdate(type: .drinks)
+                        // drinks/likedUsersID에 userID를 id로 가진 빈 document 추가/삭제
+                        // user/likedDrinks는 클라우드 펑션으로 처리
+                        Task {
+                            await authViewModel.updateLikedDrinks(isLiked: isLiked, sellectedDrink: drink)
+                        }
                     }
                 } label: {
                     Image(systemName: isLiked ? "heart.fill" : "heart")
@@ -110,8 +102,8 @@ struct DrinkListCell: View {
         .padding(.horizontal, 20)
         .frame(height: 130)
 		.task {
-            if let user = authService.currentUser {
-                self.isLiked = user.likedDrinks.contains { $0 == drink.drinkID }
+            if let user = authViewModel.currentUser {
+                self.isLiked = user.likedDrinks.contains { $0.drinkField.drinkID == drink.drinkField.drinkID }
             }
 		}
     }

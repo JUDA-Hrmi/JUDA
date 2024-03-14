@@ -93,8 +93,7 @@ extension FirestorePostService {
 
 //MARK: Firestore post document upload
 extension FirestorePostService {
-	func uploadPostDocument(post: Post) async throws {
-		let postID = UUID().uuidString
+    func uploadPostDocument(post: Post, postID: String) async throws {
 		let postDocumentRef = Firestore.firestore().collection("posts").document(postID)
 		let likedUsersIDCollectionRef = postDocumentRef.collection("likedUsersID")
 		

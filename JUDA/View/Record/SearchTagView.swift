@@ -10,9 +10,11 @@ import SwiftUI
 // MARK: - 술 태그 서치 시트 화면
 // Defualt로 술찜 목록 보여주기
 struct SearchTagView: View {
-    @StateObject private var searchDrinkViewModel = SearchDrinkViewModel()
-    @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var authViewModel: AuthViewModel
     @EnvironmentObject private var recordViewModel: RecordViewModel
+    @EnvironmentObject private var drinkViewModel: DrinkViewModel
+    // drink 검색 결과를 담은 배열
+    @State var searchResult = [Drink]()
     // CostomRatingDialog를 띄워주는 상태 프로퍼티
     @State private var isShowRatingDialog: Bool = false
     // SearchTagView Sheet를 띄워주는 상태 프로퍼티
@@ -31,13 +33,13 @@ struct SearchTagView: View {
                     // 서치바 submit 시, 술 검색
                     SearchBar(inputText: $tagSearchText, isFocused: $isFocused) {
                         Task {
-                            await searchDrinkViewModel.fetchSearchDrinks(from: tagSearchText)
+                            searchResult = await drinkViewModel.getSearchedDrinks(from: tagSearchText)
                         }
                     }
                     // 서치바 Text가 없을 때, 술 검색 결과 비워주기
                     .onChange(of: tagSearchText) { _ in
                         if tagSearchText == "" {
-                            searchDrinkViewModel.searchDrinks = []
+                            searchResult = []
                         }
                     }
                     // Sheet 내려주기
@@ -63,8 +65,9 @@ struct SearchTagView: View {
                             .fill(.background)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
+                // TODO: isSearching 사용하여 검색 중 판별하는 걸로 변경
                 // 검색 중
-                } else if searchDrinkViewModel.isLoading {
+                } else if drinkViewModel.isLoading {
                     VStack {
                         Rectangle()
                             .fill(.background)
@@ -79,20 +82,17 @@ struct SearchTagView: View {
                     // MARK: iOS 16.4 이상
                     if #available(iOS 16.4, *) {
                         ScrollView() {
-                            SearchTagListContent(isShowRatingDialog: $isShowRatingDialog)
-                                .environmentObject(searchDrinkViewModel)
+                            SearchTagListContent(isShowRatingDialog: $isShowRatingDialog, searchResult: searchResult)
                         }
                         .scrollBounceBehavior(.basedOnSize, axes: .vertical)
                         .scrollDismissesKeyboard(.immediately)
                     // MARK: iOS 16.4 미만
                     } else {
                         ViewThatFits(in: .vertical) {
-                            SearchTagListContent(isShowRatingDialog: $isShowRatingDialog)
-                                .environmentObject(searchDrinkViewModel)
+                            SearchTagListContent(isShowRatingDialog: $isShowRatingDialog, searchResult: searchResult)
                                 .frame(maxHeight: .infinity, alignment: .top)
                             ScrollView {
-                                SearchTagListContent(isShowRatingDialog: $isShowRatingDialog)
-                                    .environmentObject(searchDrinkViewModel)
+                                SearchTagListContent(isShowRatingDialog: $isShowRatingDialog, searchResult: searchResult)
                             }
                             .scrollDismissesKeyboard(.immediately)
                         }
@@ -109,7 +109,7 @@ struct SearchTagView: View {
                 if let selectedDrinkTag = recordViewModel.selectedDrinkTag {
                     CustomDialog(type: .rating(
                         // 선택된 술 정보의 술 이름
-						drinkName: selectedDrinkTag.drink.name,
+                        drinkName: selectedDrinkTag.drinkName,
                         leftButtonLabel: "취소",
                         leftButtonAction: {
                             // CustomRatingDialog 사라지게 하기
@@ -120,11 +120,21 @@ struct SearchTagView: View {
                             // 0보다 큰 점수를 매겼을 때 수정 버튼 동작
                             if rating > 0 {
                                 // dirnkTag 값 변경
-								if let index = recordViewModel.drinkTags.firstIndex(where: { $0.drink.drinkID == selectedDrinkTag.drink.drinkID }) {
-									recordViewModel.drinkTags[index] = DrinkTag(drink: selectedDrinkTag.drink, rating: rating)
-								} else {
-									recordViewModel.drinkTags.append(DrinkTag(drink: selectedDrinkTag.drink, rating: rating))
-								}
+                                let drinkID = selectedDrinkTag.drinkID
+                                let drinkName = selectedDrinkTag.drinkName
+                                let drinkAmount = selectedDrinkTag.drinkAmount
+                                
+                                if let index = recordViewModel.drinkTags.firstIndex(where: { $0.drinkID == drinkID }) {
+                                    recordViewModel.drinkTags[index] = DrinkTag(drinkID: drinkID,
+                                                                                drinkName: drinkName,
+                                                                                drinkAmount: drinkAmount,
+                                                                                drinkRating: rating)
+                                } else {
+                                    recordViewModel.drinkTags.append(DrinkTag(drinkID: drinkID,
+                                                                              drinkName: drinkName,
+                                                                              drinkAmount: drinkAmount,
+                                                                              drinkRating: rating))
+                                }
                                 // 변경 후 CustomRatingDialog, SearchTagView 사라지게 하기
                                 isShowRatingDialog.toggle()
                                 isShowSearchTag.toggle()
@@ -137,27 +147,27 @@ struct SearchTagView: View {
         }
         // SearchTagView Disappear시, 검색 결과 비워주기
         .onDisappear {
-            searchDrinkViewModel.searchDrinks = []
+            searchResult = []
         }
     }
 }
 
 // MARK: - 스크롤 뷰 or 뷰 로 보여질 태그 추가 시, DrinkListCell 리스트
 struct SearchTagListContent: View {
-    @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var recordViewModel: RecordViewModel
-    @EnvironmentObject private var searchDrinkViewModel: SearchDrinkViewModel
     // CostomRatingDialog를 띄워주는 상태 프로퍼티
     @Binding var isShowRatingDialog: Bool
+    // drink 검색 결과 배열
+    let searchResult: [Drink]
         
     var body: some View {
         LazyVStack {
-            ForEach(searchDrinkViewModel.searchDrinks, id: \.drinkID) { drink in
-                DrinkListCell(drink: drink,
-                              usedTo: .searchTag)
+            ForEach(searchResult, id: \.drinkField.drinkID) { drink in
+                DrinkListCell(drink: drink, usedTo: .searchTag)
                     .onTapGesture {
                         // 현재 선택된 DrinkListCell의 술 정보를 받아오기
-                        recordViewModel.selectedDrinkTag = DrinkTag(drink: drink, rating: 0)
+                        guard let drinkID = drink.drinkField.drinkID else { return }
+                        recordViewModel.selectedDrinkTag = DrinkTag(drinkID: drinkID, drinkName: drink.drinkField.name, drinkAmount: drink.drinkField.amount, drinkRating: 0)
                         // CustomRatingDialog 띄우기
                         isShowRatingDialog.toggle()
                     }
