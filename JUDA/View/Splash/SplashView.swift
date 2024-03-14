@@ -10,21 +10,13 @@ import SwiftUI
 // MARK: - SplashView
 struct SplashView: View {
     @Environment (\.colorScheme) var systemColorScheme
-    @EnvironmentObject private var authService: AuthService
+    @ObservedObject private var splashViewModel = SplashViewModel()
+    @EnvironmentObject private var authViewModel: AuthViewModel
     @EnvironmentObject private var mainViewModel: MainViewModel
-    @EnvironmentObject var colorScheme: SystemColorTheme
-    @EnvironmentObject var appViewModel: AppViewModel
-    @EnvironmentObject var searchPostsViewModel: SearchPostsViewModel
+    @EnvironmentObject private var colorScheme: SystemColorTheme
+    @EnvironmentObject private var appViewModel: AppViewModel
     
     @Binding var isActive: Bool
-    @State private var imageIndex: Int = 0
-    
-    private let weatherImagesLight = [
-        "cloud_light", "cloudySun_light", "snow_light", "rain_light"
-    ]
-    private let weatherImagesDark = [
-        "cloud_dark", "cloudySun_dark", "snow_dark", "rain_dark"
-    ]
     
     var body: some View {
         VStack() {
@@ -37,28 +29,15 @@ struct SplashView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 300)
-                    Image(weatherImagesDark[imageIndex])
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 100, height: 100)
-                        .offset(x: 40, y: 30)
-                        .onAppear {
-                            switchWeatherImage(list: weatherImagesDark)
-                        }
+                    splashViewModel.configureWeatherImageView(forImages: splashViewModel.weatherImagesDark)
                   // 라이트 모드
                 } else {
                     Image("JUDA_AppLogo_ver2")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 300)
-                    Image(weatherImagesLight[imageIndex])
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 100, height: 100)
-                        .offset(x: 40, y: 30)
-                        .onAppear {
-                            switchWeatherImage(list: weatherImagesLight)
-                        }
+                    splashViewModel.configureWeatherImageView(forImages: splashViewModel.weatherImagesLight)
+
                 }
             }
             Text("JUDA")
@@ -68,17 +47,6 @@ struct SplashView: View {
                 .font(.thin12)
                 .multilineTextAlignment(.center)
         }
-        .task {
-            // 로그인이 되어있다면, 유저 정보 받아오기
-//            if authService.signInStatus == true {
-//                await authService.fetchUserData()
-//            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.75) {
-                withAnimation {
-                    self.isActive = false
-                }
-            }
-        }
         // MainView 에서 보여줄 데이터
         .task {
             await withTaskGroup(of: Void.self) { taskGroup in
@@ -86,25 +54,22 @@ struct SplashView: View {
                 taskGroup.addTask { await mainViewModel.getHottestDrinks() }
                 // 인기 술상 미리 받아오기
                 taskGroup.addTask { await mainViewModel.getHottestPosts() }
-                //
-                taskGroup.addTask { await searchPostsViewModel.fetchPosts() }
+                // 로그인 + 위치 정보 받았을 때, 날씨 & 음식 + 술 받아오기
+                // TODO: - 로그인 X -> 로그인 O 일때, 받아와야 함.
+                // TODO: - App 처음 시작 시, 위치 활용 동의 받은 후 받아오는 것 체크 필요.
+                taskGroup.addTask {
+                    if await authViewModel.signInStatus,
+                       let location = await appViewModel.locationManager.location {
+                        await mainViewModel.getWeatherAndAIResponse(location: location)
+                    }
+                }
             }
-        }
-        .task {
-            if authService.signInStatus,
-               let location = appViewModel.locationManager.location {
-//                await mainService.getWeatherResponse(location: location)
+            // Splash View 종료
+            withAnimation {
+                self.isActive = false
             }
         }
         // SettingView - 화면 모드 -> 선택한 옵션에 따라 배경색 변환
         .preferredColorScheme(colorScheme.selectedColor == .light ? .light : colorScheme.selectedColor == .dark ? .dark : nil)
-    }
-    
-    private func switchWeatherImage(list: [String]) {
-        let timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-            imageIndex = (imageIndex + 1) % list.count
-        }
-        // .common -> 뷰 소멸 시 타이머 멈춤
-        RunLoop.current.add(timer, forMode: .common)
     }
 }

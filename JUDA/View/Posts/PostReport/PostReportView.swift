@@ -16,8 +16,8 @@ struct ReportContent: Hashable {
 
 // MARK: - 술상 신고 화면
 struct PostReportView: View {
-	@EnvironmentObject private var postsViewModel: PostsViewModel
-	@EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var authViewModel: AuthViewModel
+    @EnvironmentObject private var postViewModel: PostViewModel
 	
 	let post: Post
 	
@@ -71,9 +71,6 @@ struct PostReportView: View {
 				// TextEditor에 내가 원하는 백그라운드 컬러를 주기 위함.
 				UITextView.appearance().backgroundColor = .clear
 			}
-			.onDisappear() {
-				postsViewModel.report = nil
-			}
 			// 신고 다이얼로그
 			if isReportDialogPresented {
                 CustomDialog(type: .twoButton(
@@ -83,18 +80,20 @@ struct PostReportView: View {
                         isReportDialogPresented = false},
                     rightButtonLabel: "신고",
                     rightButtonAction: {
-						// TODO: report upload
+						// report upload
 						guard let postID = post.postField.postID else {
 							print("ReportDialog:: rightButtonAction() error -> dot't get postID")
 							return
 						}
 						let contents: [String] = reportContents.filter { $0.check }.map { $0.content }
-						
-						postsViewModel.report = Report(postID: postID, contents: contents,
-													   etcReportText: etcReportText,
-                                                       reportedUserID: authService.currentUser?.userID ?? "", reportedTime: Date())
-						
-						postsViewModel.postReportUpload()
+                        Task {
+                            await postViewModel.uploadPostReport(
+                                Report(reportedPostID: postID,
+                                       reportedUserID: authViewModel.currentUser?.userField.userID ?? "",
+                                       reportedContents: contents,
+                                       reportedEtcContent: etcReportText,
+                                       reportedTime: Date()))
+                        }
                         isReportDialogPresented = false
                         isReportPresented = false
                     })
@@ -104,6 +103,3 @@ struct PostReportView: View {
 	}
 }
 
-//#Preview {
-//	PostReportView(isReportPresented: .constant(false))
-//}

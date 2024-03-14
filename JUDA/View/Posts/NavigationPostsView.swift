@@ -10,22 +10,24 @@ import SwiftUI
 // MARK: - 네비게이션 이동 시, 술상 화면
 struct NavigationPostsView: View {
     @EnvironmentObject private var navigationRouter: NavigationRouter
-    @EnvironmentObject private var postsViewModel: PostsViewModel
-	@EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
+    @EnvironmentObject private var postViewModel: PostViewModel
 	@State private var selectedSegmentIndex = 0
+    
 	let usedTo: WhereUsedPostGridContent
 	let searchTagType: SearchTagType?
 
     // drink detail 에서 올때 받아야 할 정보
-    var taggedPostID: [String]?
+    var taggedPosts: [Post]?
     var selectedDrinkName: String?
     // post detail 에서 올때 받아야 할 정보
 	var selectedFoodTag: String?
+    // post 검색 시 받아올 정보
+    var postSearchText: String?
     
     var titleText: String {
         switch usedTo {
         case .postSearch:
-            return searchPostsViewModel.postSearchText
+            return postSearchText ?? ""
         case .postFoodTag:
             return selectedFoodTag ?? ""
         case .drinkDetail:
@@ -38,7 +40,7 @@ struct NavigationPostsView: View {
     var body: some View {
         VStack {
             // 세그먼트 (인기 / 최신)
-			CustomTextSegment(segments: searchPostsViewModel.postSortType.map { $0.rawValue },
+            CustomTextSegment(segments: PostSortType.list.map { $0.rawValue },
                               selectedSegmentIndex: $selectedSegmentIndex)
                 .padding(.vertical, 14)
                 .padding(.horizontal, 20)
@@ -48,7 +50,7 @@ struct NavigationPostsView: View {
                 ForEach(0..<PostSortType.list.count, id: \.self) { index in
                     ScrollViewReader { value in
                         Group {
-                            if searchPostsViewModel.postSortType[index] == .popularity {
+                            if PostSortType.list[index] == .popularity {
                                 // 인기순
 								PostGrid(usedTo: usedTo, searchTagType: searchTagType)
                             } else {
@@ -65,53 +67,44 @@ struct NavigationPostsView: View {
             .tabViewStyle(.page(indexDisplayMode: .never))
             .ignoresSafeArea()
         }
-        // 데이터 불러오기
+        // 데이터 정렬
         .task {
+            // DrinkDetailView 에서 '태그된 게시물' 받아온 상태 / 기본 인기순 정렬
             if usedTo == .drinkDetail,
-               let taggedPostID = taggedPostID,
-               postsViewModel.drinkTaggedPosts.isEmpty {
-                await postsViewModel.getTaggedPosts(taggedPostID: taggedPostID, sortType: .popularity)
-                postsViewModel.isLoading = false
+               let taggedPosts = taggedPosts {
+                postViewModel.drinkTaggedPosts = await postViewModel.sortedPosts(taggedPosts,
+                                                                   postSortType: .popularity)
+            // PostDetailView 에서 '음식 태그' 로 이동한 상태 / 기본 인기순 정렬
+            } else if usedTo == .postFoodTag,
+                      let selectedFoodTag = selectedFoodTag,
+                      let searchTagType = searchTagType {
+                // TODO: - 여기 넘어와서 검색하는게 맞나 고민
+                await postViewModel.getSearchedPosts(from: selectedFoodTag)
+                await postViewModel.sortedSearchedPosts(searchTagType: searchTagType,
+                                                        postSortType: .popularity)
+            // PostInfo 에서 '검색' 을 통해서 이동한 상태 / 기본 인기순 정렬
+            } else if usedTo == .postSearch,
+                      let searchTagType = searchTagType {
+                await postViewModel.sortedSearchedPosts(searchTagType: searchTagType,
+                                                        postSortType: .popularity)
             }
-			if usedTo == .postFoodTag, let selectedFoodTag = selectedFoodTag, let searchTagType = searchTagType {
-				await searchPostsViewModel.postSearch(selectedFoodTag)
-				await searchPostsViewModel.postSortBySearchTagType(searchTagType: searchTagType, postSortType: .popularity)
-			}
         }
-        // 데이터 변경
+        // 세그먼트 변경 시
         .onChange(of: selectedSegmentIndex) { newValue in
-            Task {
-                // 최신 -> 인기
-                if newValue == 0 {
-                    if usedTo == .drinkDetail, let taggedPostID = taggedPostID {
-                        await postsViewModel.getTaggedPosts(taggedPostID: taggedPostID, sortType: .popularity)
-                        postsViewModel.isLoading = false
-                    }
-                // 인기 -> 최신
-                } else {
-                    if usedTo == .drinkDetail, let taggedPostID = taggedPostID {
-                        await postsViewModel.getTaggedPosts(taggedPostID: taggedPostID, sortType: .mostRecent)
-                        postsViewModel.isLoading = false
-                    }
+            // '태그된 게시물' 의 경우
+            if usedTo == .drinkDetail {
+                Task {
+                    postViewModel.drinkTaggedPosts = await postViewModel.sortedPosts(postViewModel.drinkTaggedPosts,
+                                                                       postSortType: PostSortType.list[selectedSegmentIndex])
+                }
+            // '검색' or '음식 태그' 경우
+            } else if let searchTagType = searchTagType {
+                Task {
+                    await postViewModel.sortedSearchedPosts(searchTagType: searchTagType,
+                                                            postSortType: PostSortType.list[selectedSegmentIndex])
                 }
             }
         }
-		.onChange(of: selectedSegmentIndex) { _ in
-			if let searchTagType = searchTagType {
-				Task {
-					await searchPostsViewModel
-						.postSortBySearchTagType(searchTagType: searchTagType,
-												 postSortType: searchPostsViewModel.postSortType[selectedSegmentIndex])
-				}
-			}
-		}
-		.task {
-			if let searchTagType = searchTagType {
-				await searchPostsViewModel
-					.postSortBySearchTagType(searchTagType: searchTagType,
-											 postSortType: searchPostsViewModel.postSortType[selectedSegmentIndex])
-			}
-		}
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {

@@ -59,6 +59,7 @@ final class AuthViewModel: ObservableObject {
     
     init() {
         Task {
+            // 로그인이 되어있다면, 유저 정보 받아오기
             if signInStatus { await getCurrentUser() }
         }
     }
@@ -150,7 +151,7 @@ extension AuthViewModel {
     }
     
     // 현재 유저 Posts 받아오기
-    private func getCurrentUserPosts(uid: String) async {
+    func getCurrentUserPosts(uid: String) async {
         do {
             currentUser?.posts = try await firebaseUserService.fetchUserWrittenPosts(uid: uid)
         } catch {
@@ -193,29 +194,31 @@ extension AuthViewModel {
 // MARK: - User Update
 extension AuthViewModel {
     // 유저가 좋아하는 술 리스트에 추가 or 삭제
-    func updateLikedDrinks(isLiked: Bool, sellectedDrink: Drink) async {
+    func updateLikedDrinks(isLiked: Bool, selectedDrink: Drink) async {
+        // isLiked 가 먼저 수정이 되고 메서드가 실행이 됨
         if !isLiked { // 좋아요 X -> O
-            currentUser?.likedDrinks.removeAll { $0.drinkField.drinkID == sellectedDrink.drinkField.drinkID }
-            await deleteUserLikedList(type: .drinks, id: sellectedDrink.drinkField.drinkID)
+            currentUser?.likedDrinks.removeAll { $0.drinkField.drinkID == selectedDrink.drinkField.drinkID }
+            await deleteUserLikedList(type: .drinks, id: selectedDrink.drinkField.drinkID)
         } else { // 좋아요 O -> X
             if let user = currentUser,
-               !user.likedDrinks.contains(where: { $0.drinkField.drinkID == sellectedDrink.drinkField.drinkID }) {
-                currentUser?.likedDrinks.append(sellectedDrink)
-                await addUserLikedList(type: .drinks, id: sellectedDrink.drinkField.drinkID)
+               !user.likedDrinks.contains(where: { $0.drinkField.drinkID == selectedDrink.drinkField.drinkID }) {
+                currentUser?.likedDrinks.append(selectedDrink)
+                await addUserLikedList(type: .drinks, id: selectedDrink.drinkField.drinkID)
             }
         }
     }
     
     // 유저가 좋아하는 게시글 (술상) 리스트에 추가 or 삭제
-    func updateLikedPosts(isLiked: Bool, sellectedPost: Post) async {
+    func updateLikedPosts(isLiked: Bool, selectedPost: Post) async {
+        // isLiked 가 먼저 수정이 되고 메서드가 실행이 됨
         if !isLiked { // 좋아요 X -> O
-            currentUser?.likedPosts.removeAll { $0.postField.postID == sellectedPost.postField.postID }
-            await deleteUserLikedList(type: .posts, id: sellectedPost.postField.postID)
+            currentUser?.likedPosts.removeAll { $0.postField.postID == selectedPost.postField.postID }
+            await deleteUserLikedList(type: .posts, id: selectedPost.postField.postID)
         } else { // 좋아요 O -> X
             if let user = currentUser,
-               !user.likedPosts.contains(where: { $0.postField.postID == sellectedPost.postField.postID }) {
-                currentUser?.likedPosts.append(sellectedPost)
-                await addUserLikedList(type: .posts, id: sellectedPost.postField.postID)
+               !user.likedPosts.contains(where: { $0.postField.postID == selectedPost.postField.postID }) {
+                currentUser?.likedPosts.append(selectedPost)
+                await addUserLikedList(type: .posts, id: selectedPost.postField.postID)
             }
         }
     }
@@ -277,10 +280,17 @@ extension AuthViewModel {
 // MARK: - Upload / 데이터 저장
 extension AuthViewModel {
     // 유저 정보 저장
-    func addUserDataToStore(userData: UserField) {
+    func addUserDataToStore(name: String, age: Int,
+                            gender: String, notification: Bool) {
         do {
             let uid = try checkCurrentUserID()
-            firebaseAuthService.addUserDataToStore(userData: userData, uid: uid)
+            firebaseAuthService.addUserDataToStore(
+                userData: UserField(
+                    name: name, age: age, gender: gender,
+                    notificationAllowed: notification,
+                    profileImageURL: (currentUser?.userField.profileImageURL)!,
+                    authProviders: try getProviderOptionString()),
+                uid: uid)
         } catch {
             print("error :: addUserDataToStore :", error.localizedDescription)
         }
@@ -355,7 +365,7 @@ extension AuthViewModel {
                     print("Fisrt ✨ - Apple Sign Up 🍎")
                 } else {
                     print("Apple Sign In 🍎")
-                    await getCurrentUserField(uid: uid)
+                    await getCurrentUser()
                     self.signInStatus = true
                 }
             }
@@ -429,7 +439,7 @@ extension AuthViewModel {
                 print("Fisrt ✨ - Google Sign Up 🤖")
             } else {
                 print("Google Sign In 🤖")
-                await getCurrentUserField(uid: uid)
+                await getCurrentUser()
                 self.signInStatus = true
             }
         } catch {

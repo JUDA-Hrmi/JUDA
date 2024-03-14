@@ -20,14 +20,14 @@ enum WhereUsedPostGridContent {
 
 // MARK: - 스크롤 뷰 or 뷰 로 보여질 post grid
 struct PostGrid: View {
-	@EnvironmentObject private var postsViewModel: PostsViewModel
-	@EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
+	@EnvironmentObject private var postViewModel: PostViewModel
     
     @State private var scrollAxis: Axis.Set = .vertical
     @State private var vHeight = 0.0
+    
     let usedTo: WhereUsedPostGridContent
-	
 	let searchTagType: SearchTagType?
+    
     init(usedTo: WhereUsedPostGridContent = .post, searchTagType: SearchTagType?) {
         self.usedTo = usedTo
 		self.searchTagType = searchTagType
@@ -42,7 +42,7 @@ struct PostGrid: View {
             .scrollBounceBehavior(.basedOnSize, axes: .vertical)
             .scrollDismissesKeyboard(.immediately)
             .refreshable {
-				await postsRefreshable()
+                await postViewModel.fetchFirstPost()
             }
         // MARK: iOS 16.4 미만
         } else {
@@ -54,28 +54,18 @@ struct PostGrid: View {
                 }
                 .scrollDismissesKeyboard(.immediately)
                 .refreshable {
-					await postsRefreshable()
-					await searchPostsViewModel.fetchPosts()
+                    await postViewModel.fetchFirstPost()
                 }
             }
         }
     }
-	private func postsRefreshable() async {
-		postsViewModel.posts = []
-		postsViewModel.postImagesURL = [:]
-		postsViewModel.postThumbnailImagesURL = [:]
-		let postSortType = postsViewModel.postSortType[postsViewModel.selectedSegmentIndex]
-		let query = postsViewModel.getPostSortType(postSortType: postSortType)
-		await postsViewModel.firstFetchPost(query: query)
-	}
 }
 
 // MARK: - 스크롤 뷰 or 뷰 로 보여질 post grid 내용 부분
 struct PostGridContent: View {
-	@EnvironmentObject private var authService: AuthService
-    @EnvironmentObject private var postsViewModel: PostsViewModel
-	@EnvironmentObject private var myPageViewModel: MyPageViewModel
-	@EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
+    @EnvironmentObject private var authViewModel: AuthViewModel
+    @EnvironmentObject private var postViewModel: PostViewModel
+	@EnvironmentObject private var userViewModel: UserViewModel
     
     let usedTo: WhereUsedPostGridContent
 	let searchTagType: SearchTagType?
@@ -90,97 +80,94 @@ struct PostGridContent: View {
     var body: some View {
         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 15) {
             if usedTo == .post {
-				if !postsViewModel.isLoading {
-					ForEach(postsViewModel.posts, id: \.postField.postID) { post in
+				if !postViewModel.isLoading {
+					ForEach(postViewModel.posts, id: \.postField.postID) { post in
                         NavigationLink(value: Route
-                            .PostDetail(postUserType: authService.currentUser?.userID == post.userField.userID ? .writter : .reader,
+                            .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writter : .reader,
                                         post: post,
                                         usedTo: usedTo,
-                                        postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {
+                                        postPhotosURL: post.postField.imagesURL)) {
                             PostCell(usedTo: .post, post: post)
                                 .task {
-                                    if let lastPostID = postsViewModel.posts.last?.postField.postID, post.postField.postID == lastPostID {
-                                        let postSortType = postsViewModel.postSortType[postsViewModel.selectedSegmentIndex]
-                                        let query = postsViewModel.getPostSortType(postSortType: postSortType)
-                                        await postsViewModel.nextFetchPost(query: query)
+                                    if post == postViewModel.posts.last {
+                                        await postViewModel.fetchNextPost()
                                     }
                                 }
                         }
 						.buttonStyle(EmptyActionStyle())
 						// TODO: 비로그인 상태인 경우 눌렀을 때 로그인뷰로 이동
-						.disabled(!authService.signInStatus)
+						.disabled(!authViewModel.signInStatus)
 					}
 				} else {
 					ForEach(0..<10) { _ in
 						ShimmerPostCell()
 					}
 				}
-                
 			} else if usedTo == .postSearch {
 				if let searchTagType = searchTagType {
 					switch searchTagType {
 					case .userName:
-						ForEach(searchPostsViewModel.searchPostsByUserName, id: \.postField.postID) { post in
+                        ForEach(postViewModel.searchPostsByUserName, id: \.postField.postID) { post in
 							NavigationLink(value: Route
-                                .PostDetail(postUserType: authService.currentUser?.userID == post.userField.userID ? .writter : .reader,
+                                .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writter : .reader,
                                             post: post,
                                             usedTo: usedTo,
-                                            postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {
+                                            postPhotosURL: post.postField.imagesURL)) {
 								PostCell(usedTo: .postSearch, post: post)
 							}
 							.buttonStyle(EmptyActionStyle())
 							// TODO: 비로그인 상태인 경우 눌렀을 때 로그인뷰로 이동
-							.disabled(!authService.signInStatus)
+							.disabled(!authViewModel.signInStatus)
 						}
 					case .drinkTag:
-						ForEach(searchPostsViewModel.searchPostsByDrinkTag, id: \.postField.postID) { post in
+						ForEach(postViewModel.searchPostsByDrinkTag, id: \.postField.postID) { post in
 							NavigationLink(value: Route
-                                .PostDetail(postUserType: authService.currentUser?.userID == post.userField.userID ? .writter : .reader,
+                                .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writter : .reader,
                                             post: post,
                                             usedTo: usedTo,
-                                            postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {
+                                            postPhotosURL: post.postField.imagesURL)) {
 								PostCell(usedTo: .postSearch, post: post)
 							}
 							.buttonStyle(EmptyActionStyle())
 							// TODO: 비로그인 상태인 경우 눌렀을 때 로그인뷰로 이동
-							.disabled(!authService.signInStatus)
+							.disabled(!authViewModel.signInStatus)
 						}
 					case .foodTag:
-						ForEach(searchPostsViewModel.searchPostsByFoodTag, id: \.postField.postID) { post in
+						ForEach(postViewModel.searchPostsByFoodTag, id: \.postField.postID) { post in
 							NavigationLink(value: Route
-                                .PostDetail(postUserType: authService.currentUser?.userID == post.userField.userID ? .writter : .reader,
+                                .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writter : .reader,
                                             post: post,
                                             usedTo: usedTo,
-                                            postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {
+                                            postPhotosURL: post.postField.imagesURL)) {
 								PostCell(usedTo: .postSearch, post: post)
 							}
 							.buttonStyle(EmptyActionStyle())
 							// TODO: 비로그인 상태인 경우 눌렀을 때 로그인뷰로 이동
-							.disabled(!authService.signInStatus)
+							.disabled(!authViewModel.signInStatus)
 						}
 					}
 				}
 			} else if usedTo == .postFoodTag {
-				ForEach(searchPostsViewModel.searchPostsByFoodTag, id: \.postField.postID) { post in
+				ForEach(postViewModel.searchPostsByFoodTag, id: \.postField.postID) { post in
 					NavigationLink(value: Route
-                        .PostDetail(postUserType: authService.currentUser?.userID == post.userField.userID ? .writter : .reader,
+                        .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writter : .reader,
                                     post: post,
                                     usedTo: usedTo,
-                                    postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {
+                                    postPhotosURL: post.postField.imagesURL)) {
 						PostCell(usedTo: .postSearch, post: post)
 					}
 					.buttonStyle(EmptyActionStyle())
 					// TODO: 비로그인 상태인 경우 눌렀을 때 로그인뷰로 이동
-					.disabled(!authService.signInStatus)
+					.disabled(!authViewModel.signInStatus)
 				}
 			} else if usedTo == .drinkDetail {
-                if !postsViewModel.isLoading {
-                    ForEach(postsViewModel.drinkTaggedPosts, id: \.postField.postID) { post in
+                if !postViewModel.isLoading {
+                    ForEach(postViewModel.drinkTaggedPosts, id: \.postField.postID) { post in
                         NavigationLink(value: Route
-                            .PostDetail(postUserType: authService.currentUser?.userID == post.userField.userID ? .writter : .reader,
+                            .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writter : .reader,
                                         post: post,
                                         usedTo: usedTo,
-                                        postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {
+                                        postPhotosURL: post.postField.imagesURL)) {
 							PostCell(usedTo: usedTo, post: post)
                         }
                     }
@@ -190,24 +177,24 @@ struct PostGridContent: View {
                     }
                 }
             } else if usedTo == .myPage {
-                if !myPageViewModel.isLoading {
+                if !userViewModel.isLoading {
                     if userType == .user {
-                        ForEach(myPageViewModel.userPosts, id: \.postField.postID) { post in
+                        ForEach(authViewModel.currentUser?.posts, id: \.postField.postID) { post in
                             NavigationLink(value: Route
-                                .PostDetail(postUserType: authService.currentUser?.userID == post.userField.userID ? .writter : .reader,
+                                .PostDetail(postUserType: .writter,
                                             post: post,
                                             usedTo: usedTo,
-                                            postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {
+                                            postPhotosURL: post.postField.imagesURL)) {
                                 PostCell(usedTo: usedTo, post: post)
                             }
                         }
                     } else {
-                        ForEach(myPageViewModel.otherUserPosts, id: \.postField.postID) { post in
+                        ForEach(userViewModel.user?.posts, id: \.postField.postID) { post in
                             NavigationLink(value: Route
-                                .PostDetail(postUserType: authService.currentUser?.userID == post.userField.userID ? .writter : .reader,
+                                .PostDetail(postUserType: .reader,
                                             post: post,
                                             usedTo: usedTo,
-                                            postPhotosURL: postsViewModel.postImagesURL[post.postField.postID ?? ""] ?? [])) {
+                                            postPhotosURL: post.postField.imagesURL)) {
                                 PostCell(usedTo: usedTo, post: post)
                             }
                         }

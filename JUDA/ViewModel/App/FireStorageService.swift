@@ -84,3 +84,14 @@ extension FireStorageService {
         return fileName
     }
 }
+
+
+// MARK: - ShareLink 에서 사용할 이미지 Image 타입으로 단일 받아오기
+extension FireStorageService {
+    // 이미지 1개만 uiImage 로 받아오기
+    func getUIImageFile(url: String) async throws -> UIImage? {
+        let imageURLRef = Storage.storage().reference(forURL: url)
+        let data = try await imageURLRef.data(maxSize: 1 * 1024 * 1024)
+        return UIImage(data: data)
+    }
+}

@@ -14,14 +14,14 @@ enum PostUserType {
 // MARK: - 술상 디테일 화면
 struct PostDetailView: View {
     @EnvironmentObject private var navigationRouter: NavigationRouter
-    @EnvironmentObject private var postsViewModel: PostsViewModel
-	@EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
-	@EnvironmentObject private var myPageViewModel: MyPageViewModel
+    @EnvironmentObject private var authViewModel: AuthViewModel
+    @EnvironmentObject private var postViewModel: PostViewModel
 	
+    @State private var shareImage: Image = Image("AppIcon") // shareLink 용 이미지
+
 	let postUserType: PostUserType
 	let post: Post
 	let usedTo: WhereUsedPostGridContent
-	let postPhotosURL: [URL]
 
 	@State private var isReportPresented = false
 	@State private var isDeleteDialogPresented = false
@@ -32,16 +32,16 @@ struct PostDetailView: View {
             // MARK: iOS 16.4 이상
             if #available(iOS 16.4, *) {
                 ScrollView {
-					PostDetailContent(post: post, usedTo: usedTo, postPhotosURL: postPhotosURL)
+					PostDetailContent(post: post, usedTo: usedTo)
                 }
                 .scrollBounceBehavior(.basedOnSize, axes: .vertical)
                 // MARK: iOS 16.4 미만
             } else {
                 ViewThatFits(in: .vertical) {
-					PostDetailContent(post: post, usedTo: usedTo, postPhotosURL: postPhotosURL)
+                    PostDetailContent(post: post, usedTo: usedTo)
                         .frame(maxHeight: .infinity, alignment: .top)
                     ScrollView {
-						PostDetailContent(post: post, usedTo: usedTo, postPhotosURL: postPhotosURL)
+                        PostDetailContent(post: post, usedTo: usedTo)
                     }
                 }
             }
@@ -57,15 +57,19 @@ struct PostDetailView: View {
                     rightButtonAction: {
                         isDeleteDialogPresented = false
 						Task {
-							await postDeleteButtonAction()
-							await postReFetch()
-							await myPageViewModel.getUsersPosts(userID: post.userField.userID ?? "", userType: .user)
-						}
+                            await postViewModel.deletePost(postID: post.postField.postID ?? "")
+                            await postViewModel.fetchFirstPost()
+                            await authViewModel.getCurrentUserPosts(uid: post.postField.user.userID)
+                        }
                         navigationRouter.back()
                     })
                 )
             }
 		}
+        .task {
+            // shareLink 용 이미지 가져오기
+            shareImage = await postViewModel.getPostThumbnailImage(url: post.postField.imagesURL.first)
+        }
 		.navigationBarBackButtonHidden()
 		.toolbar {
 			ToolbarItem(placement: .topBarLeading) {
@@ -79,13 +83,13 @@ struct PostDetailView: View {
 			case .writter:
 				ToolbarItem(placement: .topBarTrailing) {
 					// 공유하기
-					ShareLink(item: "Test", // TODO: 실제 공유하려는 내용으로 변경 필요
+                    ShareLink(item: "\(post.postField.user.userName)님의 술상",
 							  subject: Text("이 링크를 확인해보세요."),
-							  message: Text("주다 앱에서 술상 게시물을 공유했어요!"),
+							  message: Text("주다 - JUDA 에서 술상 게시글을 공유했어요!"),
 							  // 미리보기
 							  preview: SharePreview(
-								Text("\(post.userField.name)님의 술상"), // TODO: 해당 게시물 이름으로 변경
-								image: Image("foodEx1")) // TODO: 해당 술상의 이미지로 변경
+                                Text("\(post.postField.user.userName)님의 술상"),
+								image: shareImage)
 					) {
 						Image(systemName: "square.and.arrow.up")
 					}
@@ -108,16 +112,16 @@ struct PostDetailView: View {
 			case .reader:
 				ToolbarItem(placement: .topBarTrailing) {
 					// 공유하기
-					ShareLink(item: "Test", // TODO: 실제 공유하려는 내용으로 변경 필요
-							  subject: Text("이 링크를 확인해보세요."),
-							  message: Text("주다 앱에서 술상을 공유했어요!"),
-							  // 미리보기
-							  preview: SharePreview(
-								Text("\(post.userField.name)님의 술상"), // TODO: 해당 게시물 이름으로 변경
-								image: Image("foodEx1")) // TODO: 해당 술상의 이미지로 변경
-					) {
-						Image(systemName: "square.and.arrow.up")
-					}
+                    ShareLink(item: "\(post.postField.user.userName)님의 술상",
+                              subject: Text("이 링크를 확인해보세요."),
+                              message: Text("주다 - JUDA 에서 술상 게시글을 공유했어요!"),
+                              // 미리보기
+                              preview: SharePreview(
+                                Text("\(post.postField.user.userName)님의 술상"),
+                                image: shareImage)
+                    ) {
+                        Image(systemName: "square.and.arrow.up")
+                    }
 				}
 				ToolbarItem(placement: .topBarTrailing) {
 					Button {
@@ -135,40 +139,21 @@ struct PostDetailView: View {
 			PostReportView(post: post, isReportPresented: $isReportPresented)
 		}
 	}
-	
-	private func postDeleteButtonAction() async {
-		guard let userID = post.userField.userID,
-			  let postID = post.postField.postID else {
-			return
-		}
-		await postsViewModel.postDelete(userID: userID, postID: postID)
-		await searchPostsViewModel.fetchPosts()
-	}
-	
-	private func postReFetch() async {
-		postsViewModel.isLoading = true
-		postsViewModel.posts = []
-		postsViewModel.postImagesURL = [:]
-		postsViewModel.postThumbnailImagesURL = [:]
-		let postSortType = postsViewModel.postSortType[postsViewModel.selectedSegmentIndex]
-		let query = postsViewModel.getPostSortType(postSortType: postSortType)
-		await postsViewModel.firstFetchPost(query: query)
-	}
 }
 
 // MARK: - 술상 디테일에서, 스크롤 안에 보여줄 내용 부분
 struct PostDetailContent: View {
-	@EnvironmentObject private var postsViewModel: PostsViewModel
+	@EnvironmentObject private var postViewModel: PostViewModel
+    
 	let post: Post
 	let usedTo: WhereUsedPostGridContent
-	let postPhotosURL: [URL]
 
     var body: some View {
         VStack {
             // Bar 형태로 된 게시글 정보를 보여주는 뷰
 			PostInfo(post: post, usedTo: usedTo)
 			// 게시글의 사진을 페이징 스크롤 형식으로 보여주는 뷰
-			PostPhotoScroll(postPhotosURL: postPhotosURL)
+            PostPhotoScroll(postPhotosURL: post.postField.imagesURL)
 			// 술 평가 + 글 + 음식 태그
 			VStack(alignment: .leading, spacing: 20) {
 				// 술 평가
@@ -178,9 +163,8 @@ struct PostDetailContent: View {
 				Text(post.postField.content)
 					.font(.regular16)
 					.multilineTextAlignment(.leading)
-
 				// 음식 태그
-				PostTags(tags: post.postField.foodTags)
+                PostTags(tags: post.postField.foodTags)
 			}
 			.padding(.horizontal, 20)
         }

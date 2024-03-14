@@ -33,7 +33,6 @@ struct DrinkInfoGrid: View {
 
 // MARK: - 술장 그리드 뷰 내용
 struct DrinkGridContent: View {
-    @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var drinkViewModel: DrinkViewModel
     
     // 술 그리드 셀 2개 column
@@ -42,14 +41,13 @@ struct DrinkGridContent: View {
     var body: some View {
         // 그리드
         LazyVGrid(columns: columns, spacing: 10) {
-            if (!drinkViewModel.isFirstAccess && !drinkViewModel.isLoading) ||
-               (drinkViewModel.isFirstAccess && drinkViewModel.drinkImages.count == drinkViewModel.intendedURLCount) {
-                ForEach(drinkViewModel.drinks, id: \.drinkID) { drink in
+            if !drinkViewModel.isLoading {
+                ForEach(drinkViewModel.drinks, id: \.drinkField.drinkID) { drink in
                     NavigationLink(value: Route
                         .DrinkDetail(drink: drink)) {
 							DrinkGridCell(drink: drink)
                             .task {
-                                if drink.name == drinkViewModel.drinks.last?.name {
+                                if drink == drinkViewModel.drinks.last {
                                     await drinkViewModel.loadDrinksNextPage()
                                 }
                             }

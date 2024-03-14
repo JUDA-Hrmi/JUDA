@@ -22,7 +22,7 @@ import FirebaseStorage
 //    // 첫 접근때만 사용, url 을 받아올 예정인 개수 (첫 접근 시, no image 띄우는 오류때문에 사용)
 //    @Published var intendedURLCount = 0
 //    // 그리드 or 리스트
-//    @Published var selectedViewType: DrinkInfoLayoutOption = .grid
+//    @Published var selectedViewType: DrinkInfoLayoutOption = .gridStyle
 //    // 현재 drinks 를 검색할 reference
 //    @Published var selectedDrinkTypeIndex: Int = 0
 //    // 현재 drinks 를 정렬할 reference

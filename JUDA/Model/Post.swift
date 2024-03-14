@@ -31,7 +31,7 @@ struct WrittenUser: Codable {
     var userName: String
     var userAge: Int
     var userGender: String
-    var userProfileImageURL: URL
+    var userProfileImageURL: URL?
 }
 
 // post 에 태그된 술 데이터

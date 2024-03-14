@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: - 술찜 리스트 탭 화면
 struct LikedDrinkList: View {
-    @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var authViewModel: AuthViewModel
 
     var body: some View {
         if let user = authService.currentUser,

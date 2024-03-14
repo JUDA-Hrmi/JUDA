@@ -10,12 +10,10 @@ import Kingfisher
 
 // MARK: - 술상 그리드 셀
 struct PostCell: View {
-	@EnvironmentObject private var authService: AuthService
-    @EnvironmentObject private var postsViewModel: PostsViewModel
-    @EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
+	@EnvironmentObject private var authViewModel: AuthViewModel
+    @EnvironmentObject private var postViewModel: PostViewModel
     @EnvironmentObject private var mainViewModel: MainViewModel
-    @EnvironmentObject private var myPageViewModel: MyPageViewModel
-	@EnvironmentObject private var likedViewModel: LikedViewModel
+    @EnvironmentObject private var userViewModel: UserViewModel
 
 	@State private var isLike: Bool = false
 	@State private var likeCount: Int = 0
@@ -23,22 +21,6 @@ struct PostCell: View {
 	let usedTo: WhereUsedPostGridContent
 	let post: Post
 	private let debouncer = Debouncer(delay: 0.5)
-    
-    private var profileImageURL: URL? {
-        let userID = post.userField.userID ?? ""
-        switch usedTo {
-        case .postSearch:
-            return searchPostsViewModel.postUserImages[userID]
-        case .liked:
-            return likedViewModel.postUserImages[userID]
-        case .myPage:
-            return myPageViewModel.postUserImages[userID]
-        case .main:
-            return mainViewModel.postUserImages[userID]
-        default: // post 그 외
-            return postsViewModel.postUserImages[userID]
-        }
-    }
     
 	var body: some View {
 		// VStack에 기본적인 spacing이 들어가기 때문에 0으로 설정
@@ -70,8 +52,8 @@ struct PostCell: View {
 			HStack {
                 HStack {
                     // 사용자의 프로필 사진
-                    if let profileImageURL = profileImageURL {
-                        PostCellUserProfileKFImage(url: profileImageURL)
+                    if let url = post.postField.user.userProfileImageURL {
+                        PostCellUserProfileKFImage(url: url)
                     } else {
 						Image("defaultprofileimage")
 							.resizable()
@@ -79,7 +61,7 @@ struct PostCell: View {
 							.clipShape(.circle)
 					}
 					// 사용자의 닉네임
-					Text(post.userField.name)
+                    Text(post.postField.user.userName)
 						.lineLimit(1)
 						.font(.regular14)
 						.foregroundStyle(.mainBlack)
@@ -94,10 +76,18 @@ struct PostCell: View {
 					// 좋아요를 해제 -> 테두리가 회색인 하트
 					Button {
 						// TODO: 로그인 안 되어 있을 때, 로그인 페이지 넘어가기
-						if authService.signInStatus {
-							debouncer.call {
-								postLikeButtonAction()
-							}
+						if authViewModel.signInStatus {
+                            isLike.toggle()
+                            debouncer.call {
+                                if isLike {
+                                    likeCount -= 1
+                                } else {
+                                    likeCount += 1
+                                }
+                                Task {
+                                    await authViewModel.updateLikedPosts(isLiked: isLike, selectedPost: post)
+                                }
+                            }
 						}
 					} label: {
 						Image(systemName: isLike ? "heart.fill" : "heart")
@@ -108,131 +98,16 @@ struct PostCell: View {
 				}
 				.font(.regular14)
 				.padding(.trailing, 5)
-//				.onTapGesture {
-//					// TODO: 로그인 안 되어 있을 때, 로그인 페이지 넘어가기
-//					if authService.signInStatus {
-//						likeButtonAction()
-//					}
-//				}
 			}
 			.frame(height: 35)
 		}
 		.frame(maxWidth: 170, maxHeight: 200)
 		.task {
-            if authService.signInStatus,
-               let user = authService.currentUser {
-                self.isLike = user.likedPosts.contains { $0 == post.postField.postID }
+            if authViewModel.signInStatus,
+               let user = authViewModel.currentUser {
+                self.isLike = user.likedPosts.contains { $0 == post }
 			}
-			self.likeCount = post.postField.likedCount
-		}
-	}
-	
-	private func postLikeButtonAction() {
-		// 좋아요 등록 -> 좋아요 수에 + 1
-		// 좋아요 해제 -> 좋아요 수에 - 1
-		guard let postID = post.postField.postID else {
-			print("PostCell :: likeButtonAction() error -> dot't get postID")
-			return
-		}
-		Task {
-			if isLike {
-				likeCount -= 1
-                authService.currentUser?.likedPosts.removeAll { $0 == postID }
-                authService.userLikedListUpdate(type: .posts)
-				
-				if let index = searchPostsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
-					searchPostsViewModel.posts[index].postField.likedCount -= 1
-				}
-				
-				await withTaskGroup(of: Void.self) { group in
-					group.addTask {
-						if let index = await searchPostsViewModel.searchPostsByUserName.firstIndex(where: { $0.postField.postID == postID }) {
-							await searchPostslikedUpdateWithTag(searchTagType: .userName, likedType: .minus, index: index)
-						}
-					}
-					group.addTask {
-						if let index = await searchPostsViewModel.searchPostsByDrinkTag.firstIndex(where: { $0.postField.postID == postID }) {
-							await searchPostslikedUpdateWithTag(searchTagType: .drinkTag, likedType: .minus, index: index)
-						}
-					}
-					group.addTask {
-						if let index = await searchPostsViewModel.searchPostsByFoodTag.firstIndex(where: { $0.postField.postID == postID }) {
-							await searchPostslikedUpdateWithTag(searchTagType: .foodTag, likedType: .minus, index: index)
-						}
-					}
-				}
-				
-				if let index = postsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
-					postsViewModel.posts[index].postField.likedCount -= 1
-				}
-				if let index = myPageViewModel.userPosts.firstIndex(where: { $0.postField.postID == postID }) {
-					myPageViewModel.userPosts[index].postField.likedCount -= 1
-				}
-				if let index = myPageViewModel.otherUserPosts.firstIndex(where: { $0.postField.postID == postID }) {
-					myPageViewModel.otherUserPosts[index].postField.likedCount -= 1
-				}
-				
-				await postsViewModel.postLikedUpdate(likeType: .minus, postID: postID, userID: post.userField.userID ?? "")
-			} else {
-				likeCount += 1
-                authService.currentUser?.likedPosts.append(postID)
-                authService.userLikedListUpdate(type: .posts)
-				
-				if let index = searchPostsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
-					searchPostsViewModel.posts[index].postField.likedCount += 1
-				}
-				await withTaskGroup(of: Void.self) { group in
-					group.addTask {
-						if let index = await searchPostsViewModel.searchPostsByUserName.firstIndex(where: { $0.postField.postID == postID }) {
-							await searchPostslikedUpdateWithTag(searchTagType: .userName, likedType: .plus, index: index)
-						}
-					}
-					group.addTask {
-						if let index = await searchPostsViewModel.searchPostsByDrinkTag.firstIndex(where: { $0.postField.postID == postID }) {
-							await searchPostslikedUpdateWithTag(searchTagType: .drinkTag, likedType: .plus, index: index)
-						}
-					}
-					group.addTask {
-						if let index = await searchPostsViewModel.searchPostsByFoodTag.firstIndex(where: { $0.postField.postID == postID }) {
-							await searchPostslikedUpdateWithTag(searchTagType: .foodTag, likedType: .plus, index: index)
-						}
-					}
-				}
-				if let index = postsViewModel.posts.firstIndex(where: { $0.postField.postID == postID }) {
-					postsViewModel.posts[index].postField.likedCount += 1
-				}
-				if let index = myPageViewModel.userPosts.firstIndex(where: { $0.postField.postID == postID }) {
-					myPageViewModel.userPosts[index].postField.likedCount += 1
-				}
-				if let index = myPageViewModel.otherUserPosts.firstIndex(where: { $0.postField.postID == postID }) {
-					myPageViewModel.otherUserPosts[index].postField.likedCount += 1
-				}
-				await postsViewModel.postLikedUpdate(likeType: .plus, postID: postID, userID: post.userField.userID ?? "")
-			}
-			isLike.toggle()
-		}
-	}
-	
-	private func searchPostslikedUpdateWithTag(searchTagType: SearchTagType, likedType: LikedActionType, index: Int) {
-		switch searchTagType {
-		case .userName:
-			if likedType == .minus {
-				searchPostsViewModel.searchPostsByUserName[index].postField.likedCount -= 1
-			} else {
-				searchPostsViewModel.searchPostsByUserName[index].postField.likedCount += 1
-			}
-		case .drinkTag:
-			if likedType == .minus {
-				searchPostsViewModel.searchPostsByDrinkTag[index].postField.likedCount -= 1
-			} else {
-				searchPostsViewModel.searchPostsByDrinkTag[index].postField.likedCount += 1
-			}
-		case .foodTag:
-			if likedType == .minus {
-				searchPostsViewModel.searchPostsByFoodTag[index].postField.likedCount -= 1
-			} else {
-				searchPostsViewModel.searchPostsByFoodTag[index].postField.likedCount += 1
-			}
+            self.likeCount = post.likedUsersID.count
 		}
 	}
 }

@@ -12,7 +12,7 @@ import Lottie
 struct MainView: View {
     @StateObject private var navigationRouter = NavigationRouter()
     @EnvironmentObject private var appViewModel: AppViewModel
-    @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var authViewModel: AuthViewModel
 	
     var body: some View {
         NavigationStack(path: $navigationRouter.path) {
@@ -39,18 +39,20 @@ struct MainView: View {
                         .modifier(TabBarHidden())
                 case .NavigationPosts(let usedTo,
                                       let searchTagType,
-                                      let taggedPostID,
+                                      let taggedPosts,
                                       let selectedDrinkName,
                                       let selectedFoodTag):
                     NavigationPostsView(usedTo: usedTo,
                                         searchTagType: searchTagType,
-                                        taggedPostID: taggedPostID,
+                                        taggedPosts: taggedPosts,
                                         selectedDrinkName: selectedDrinkName,
                                         selectedFoodTag: selectedFoodTag)
                 case .NavigationPostsTo(let usedTo,
-                                        let searchTagType):
+                                        let searchTagType,
+                                        let postSearchText):
                     NavigationPostsView(usedTo: usedTo,
-                                        searchTagType: searchTagType)
+                                        searchTagType: searchTagType,
+                                        postSearchText: postSearchText)
                 case .NavigationProfile(let postUserName,
                                         let postUserID,
                                         let usedTo):
@@ -69,12 +71,10 @@ struct MainView: View {
                 //
                 case .PostDetail(let postUserType,
                                  let post,
-                                 let usedTo,
-                                 let postPhotosURL):
+                                 let usedTo):
                     PostDetailView(postUserType: postUserType,
                                    post: post,
-                                   usedTo: usedTo,
-                                   postPhotosURL: postPhotosURL)
+                                   usedTo: usedTo)
                     .modifier(TabBarHidden())
                 default:
                     ErrorPageView()
@@ -89,7 +89,3 @@ struct MainView: View {
         .toolbar(appViewModel.tabBarState, for: .tabBar)
     }
 }
-
-//#Preview {
-//	MainView(selectedTabIndex: .constant(0))
-//}

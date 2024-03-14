@@ -17,13 +17,7 @@ struct TermsOfService: Hashable {
 
 // MARK: - 신규 유저의 경우, 개인 정보 활용 동의 체크 
 struct UserAgreementView: View {
-    @EnvironmentObject private var authService: AuthService
-
-    private let webViewurlList = ["https://bit.ly/HrmiService",
-                                  "https://bit.ly/HrmiPrivacyPolicy",
-                                  "https://bit.ly/HrmiLocationPolicy"]
-    @State var isShowWebView: Bool = false
-
+    @State private var isShowWebView: Bool = false
     @State private var termsOfServiceContents: [TermsOfService] = [
         TermsOfService(essential: true, content: "이용약관", check: false),
         TermsOfService(essential: true, content: "개인정보 수집 및 이용 안내", check: false),
@@ -37,6 +31,10 @@ struct UserAgreementView: View {
     @Binding var viewType: TermsOrVerification
     // 알림 동의
     @Binding var notificationAllowed: Bool
+    
+    private let webViewurlList = ["https://bit.ly/HrmiService",
+                                  "https://bit.ly/HrmiPrivacyPolicy",
+                                  "https://bit.ly/HrmiLocationPolicy"]
     
     var body: some View {
         VStack(alignment: .leading, spacing: 25) {

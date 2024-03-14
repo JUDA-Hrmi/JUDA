@@ -65,3 +65,14 @@ struct GenderPreference {
 	var male: Int
 	var female: Int
 }
+
+// MARK: Drink - Hashable
+extension Drink: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.drinkField.drinkID)
+    }
+    
+    static func == (lhs: Drink, rhs: Drink) -> Bool {
+        return lhs.drinkField.drinkID == rhs.drinkField.drinkID
+    }
+}

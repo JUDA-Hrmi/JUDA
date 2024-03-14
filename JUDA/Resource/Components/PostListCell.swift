@@ -41,11 +41,11 @@ struct PostListCell: View {
             // 유저, 태그, 좋아요
             VStack(alignment: .leading, spacing: 6) {
                 // 유저
-                Text(post.userField.name)
+                Text(post.postField.user.userName)
                     .font(.regular16)
                     .foregroundStyle(.mainBlack)
                 // 태그
-                Text(getTagListToString(list: Array(post.postField.foodTags.prefix(2))))
+                Text(Formatter.getTagListToString(list: Array(post.postField.foodTags.prefix(2))))
                     .font(.light14)
                     .foregroundStyle(.mainBlack)
                     .lineLimit(1)
@@ -56,7 +56,7 @@ struct PostListCell: View {
                         .font(.regular14)
                         .foregroundStyle(isLiked ? .mainAccent01 : .gray01)
                     // 좋아요 숫자 1000 넘으면 k, 1000000 넘으면 m 으로 변경
-                    Text(Formatter.formattedPostLikesCount(post.postField.likedCount))
+                    Text(Formatter.formattedPostLikesCount(post.likedUsersID.count))
                         .font(.regular14)
                         .foregroundStyle(.gray01)
                 }
@@ -65,12 +65,5 @@ struct PostListCell: View {
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
         .frame(maxWidth: .infinity, alignment: .leading)
-    }
-
-    // DrinkDetailView - TaggedTrendingPosts 에서 태그 한줄로 보여주기 위한 리스트 map + join 함수
-    private func getTagListToString(list: [String]) -> String {
-        let tagString = "# "
-        let spacing = "    "
-        return list.map { tagString + $0 }.joined(separator: spacing)
     }
 }

@@ -13,8 +13,6 @@ import FirebaseFirestore
 // MARK: - Drink Detail 에서 사용하는 AI Well Match Service
 @MainActor
 final class AIWellMatchService {
-    // TODO: - isLoading 은 사용처에서 @State 로 사용 예정
-//    @Published var isLoading = false
     private var openAI: OpenAI?
     
     init() {
@@ -29,7 +27,6 @@ final class AIWellMatchService {
     }
     
     func fetchRecommendationsIfNeeded(drinkName: String) async -> String? {
-//        isLoading = true
         let prompt = "Please recommend three foods that go well with drinks. Only food except drinks. List below --- Beverages List: \(drinkName)"
         let query = ChatQuery(
             model: .gpt3_5Turbo_16k,
@@ -48,7 +45,6 @@ final class AIWellMatchService {
             print("error :: AIWellMatchViewModel request", error.localizedDescription)
             return nil
         }
-//        isLoading = false
     }
 }
 

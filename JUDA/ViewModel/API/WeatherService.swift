@@ -30,42 +30,6 @@ final class WeatherService {
         }
     }
     
-    // 날씨 정보 케이스 -> 날씨 설명 텍스트에서 사용
-    func getKoreanWeatherDescription(for weather: String) -> String {
-        switch weather {
-        case "Clouds":
-            return "오늘은 흐림.."
-        case "Clear":
-            return "오늘은 굉장히 맑아요!"
-        case "Rain":
-            return "오늘은 비가 오네요.."
-        case "Snow":
-            return "와우~ 눈이 와요!"
-        case "Thunderstorm":
-            return "천둥 조심하세요!"
-        default:
-            return "알 수 없음"
-        }
-    }
-    
-    // 날씨에 따른 애니메이션 케이스
-    func getAnimationName(for weather: String) -> String {
-        switch weather {
-        case "Clouds":
-            return "Clouds"
-        case "Clear":
-            return "Sun"
-        case "Rain":
-            return "Rain"
-        case "Snow":
-            return "Snow"
-        case "Thunderstorm":
-            return "Thunder"
-        default:
-            return "Sun"
-        }
-    }
-    
     // 날씨 받아오기
     private func getWeather(latitude: Double, longitude: Double) async -> Weather? {
         let weatherURL = "\(baseURL)?lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)"
