@@ -40,28 +40,9 @@ struct UserProfileView: View {
             HStack {
                 HStack(spacing: 20) {
                     HStack(alignment: .bottom, spacing: -15) {
-                        // MARK: - KFImage의 placeholder의 역할에 따라, userType 분기를 두어야 할 거 같음
                         // 사용자 프로필 이미지
-//                        if userType == .user { // 사용자 지정 이미지가 있을 때 (이미지 선택 완료했을 경우)
-//                            KFImage.url(profileImageURL)
-//                                .placeholder {
-//                                    Image(uiImage: selectedImage)
-//                                        .resizable()
-//                                        .aspectRatio(contentMode: .fill)
-//                                        .clipShape(Circle())
-//                                        .frame(width: 70, height: 70)
-//                                }
-//                                .loadDiskFileSynchronously(true) // 디스크에서 동기적으로 이미지 가져오기
-//                                .cancelOnDisappear(true) // 화면 이동 시, 진행중인 다운로드 중단
-//                                .cacheMemoryOnly() // 메모리 캐시만 사용 (디스크 X)
-//                                .fade(duration: 0.2) // 이미지 부드럽게 띄우기
-//                                .resizable()
-//                                .aspectRatio(contentMode: .fill)
-//                                .clipShape(Circle())
-//                                .frame(width: 70, height: 70)
-//                        } else if let profileImageURL = profileImageURL {
                         if let profileImageURL = profileImageURL {
-                            UserProfileKFImage(url: profileImageURL)
+                            UserProfileKFImage(url: profileImageURL, userType: userType, selectedImage: selectedImage)
                         } else {
                             // 사용자 지정 이미지가 없을 때 기본 이미지로 설정
                             Image("defaultprofileimage")
@@ -134,9 +115,20 @@ struct UserProfileView: View {
 // MARK: - UserProfileView 의 이미지 프로필에서 사용하는 KFImage
 struct UserProfileKFImage: View {
     let url: URL
+    let userType: UserType
+    let selectedImage: UIImage
     
     var body: some View {
         KFImage.url(url)
+            .placeholder {
+                if userType == .user {
+                    Image(uiImage: selectedImage)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .clipShape(Circle())
+                        .frame(width: 70, height: 70)
+                }
+            }
             .loadDiskFileSynchronously(true) // 디스크에서 동기적으로 이미지 가져오기
             .cancelOnDisappear(true) // 화면 이동 시, 진행중인 다운로드 중단
             .cacheMemoryOnly() // 메모리 캐시만 사용 (디스크 X)
