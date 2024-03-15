@@ -10,67 +10,58 @@ import WebKit
 
 // MARK: - 환경설정 세팅 화면
 struct SettingView: View {
+    @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject private var navigationRouter: NavigationRouter
-    @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var authViewModel: AuthViewModel
     @EnvironmentObject private var appViewModel: AppViewModel
-	@EnvironmentObject private var myPageViewModel: MyPageViewModel
+    @EnvironmentObject private var userViewModel: UserViewModel
     @EnvironmentObject private var colorScheme: SystemColorTheme
-	
-	private let optionNameList = ["라이트 모드", "다크 모드", "시스템 모드"] // 화면 모드 설정 옵션 이름 리스트
-	private let webViewNameList = ["서비스 이용약관", "개인정보 처리방침", "위치정보 처리방침"] // 웹뷰로 보여줘야하는 항목 이름 리스트
-	private let webViewurlList = ["https://bit.ly/HrmiService",
+    
+    private let optionNameList = ["라이트 모드", "다크 모드", "시스템 모드"] // 화면 모드 설정 옵션 이름 리스트
+    private let webViewNameList = ["서비스 이용약관", "개인정보 처리방침", "위치정보 처리방침"] // 웹뷰로 보여줘야하는 항목 이름 리스트
+    private let webViewurlList = ["https://bit.ly/HrmiService",
                                   "https://bit.ly/HrmiPrivacyPolicy",
                                   "https://bit.ly/HrmiLocationPolicy"] // webViewNameList에 해당하는 url 주소
-	    
+    
     @AppStorage("selectedSortingOption") private var selectedSortingOption: String = "시스템 모드"
     @State private var isAlarmOn: Bool = false // 알람 설정 toggle
-	@State private var isShowingSheet: Bool = false // CustomBottomSheet 올라오기
-	@State private var isLogoutClicked = false // 로그아웃 버튼 클릭 시
-	@State private var isDeletAccount = false // 회원탈퇴 버튼 클릭 시
-	
+    @State private var isShowingSheet: Bool = false // CustomBottomSheet 올라오기
+    @State private var isLogoutClicked = false // 로그아웃 버튼 클릭 시
+    @State private var isDeletAccount = false // 회원탈퇴 버튼 클릭 시
+    
     var version: String? {
         guard let dictionary = Bundle.main.infoDictionary,
-        let version = dictionary["CFBundleShortVersionString"] as? String else {return nil}
-        return version //1.0.0
-    }
-
-    var build: String? {
-        guard let dictionary = Bundle.main.infoDictionary,
-        let build = dictionary["CFBundleVersion"] as? String else {return nil}
-        return build //1
+              let version = dictionary["CFBundleShortVersionString"] as? String else {return nil}
+        return version // 1.0
     }
     
-	var body: some View {
-		ZStack {
+    var build: String? {
+        guard let dictionary = Bundle.main.infoDictionary,
+              let build = dictionary["CFBundleVersion"] as? String else {return nil}
+        return build // 1
+    }
+    
+    var body: some View {
+        // alarm 토글 버튼 액션 추가
+        let alarmToggleBinding = Binding {
+            isAlarmOn
+        } set: {
+            authViewModel.openAppSettings(notUsed: $0)
+        }
+        // View
+        ZStack {
             VStack(alignment: .leading) {
-                if authService.signInStatus {
+                if authViewModel.signInStatus {
                     // 알림 설정
-                    VStack(alignment: .leading, spacing: -10) {
-                        Text("JUDA 알림을 켜주세요!")
-                            .modifier(CustomText())
-                        
-                        Text("정보 알림을 받기 위해서 기기 알림을 켜주세요")
-                            .font(.light14)
-                            .foregroundStyle(.gray01)
-                            .padding(.horizontal, 20)
+                    Toggle(isOn: alarmToggleBinding) {
+                        Text("알림 설정")
                     }
-                    Button {
-                        openAppSettings()
-                    } label: {
-                        Text("기기 알림 켜기")
-                            .font(.medium20)
-                            .foregroundStyle(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 10)
-                            .background(.mainAccent03)
-                            .clipShape(.rect(cornerRadius: 10))
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 10)
-                    }
+                    .tint(.mainAccent03)
+                    .modifier(CustomText())
                     //
                     CustomDivider()
                 }
-
+                
                 // 화면 모드 설정
                 // 버튼 클릭 시 반짝이는 애니메이션 제거 코드 추가하기
                 Button {
@@ -81,24 +72,23 @@ struct SettingView: View {
                         Spacer()
                         CustomSortingButton(optionNameList: optionNameList, selectedSortingOption: selectedSortingOption, isShowingSheet: $isShowingSheet)
                         // CustomSortingButton에서 선택한 selectedSortingOption로 화면 색상 설정하기
-                        .onChange(of: selectedSortingOption) { _ in
-                            switch selectedSortingOption {
-                            case "라이트 모드":
-                                colorScheme.selectedColor = .light
-                            case "다크 모드":
-                                colorScheme.selectedColor = .dark
-                            case "시스템 모드":
-                                colorScheme.selectedColor = nil
-                            default:
-                                break
+                            .onChange(of: selectedSortingOption) { _ in
+                                switch selectedSortingOption {
+                                case "라이트 모드":
+                                    colorScheme.selectedColor = .light
+                                case "다크 모드":
+                                    colorScheme.selectedColor = .dark
+                                case "시스템 모드":
+                                    colorScheme.selectedColor = nil
+                                default:
+                                    break
+                                }
                             }
-                        }
                     }
                     .modifier(CustomText())
                 }
-                
-                
-                if authService.signInStatus {
+                //
+                if authViewModel.signInStatus {
                     // 로그아웃
                     Button {
                         isLogoutClicked.toggle() // 버튼 클릭 시, 커스텀 다이얼로그 활성화
@@ -142,7 +132,7 @@ struct SettingView: View {
                     AppServiceInfoView(text: webViewNameList[index], urlString: webViewurlList[index])
                 }
                 // 버전 정보
-                Text("버전 정보 \(version).\(build)")
+                Text("버전 정보 \(String(describing: version)).\(String(describing: build))")
                     .font(.regular16)
                     .foregroundStyle(.gray01)
                     .padding(.horizontal, 20)
@@ -157,11 +147,11 @@ struct SettingView: View {
                                          isShowingSheet: $isShowingSheet,
                                          selectedSortingOption: $selectedSortingOption,
                                          bottomSheetTypeText: BottomSheetType.displaySetting)
-                    .presentationDetents([.displaySetting])
-                    .presentationDragIndicator(.hidden) // 시트 상단 인디케이터 비활성화
-                    .interactiveDismissDisabled() // 내려서 닫기 비활성화
+                .presentationDetents([.displaySetting])
+                .presentationDragIndicator(.hidden) // 시트 상단 인디케이터 비활성화
+                .interactiveDismissDisabled() // 내려서 닫기 비활성화
             }
-    
+            
             // 로그아웃 - CustomAlert
             if isLogoutClicked {
                 CustomDialog(type: .twoButton(
@@ -173,16 +163,15 @@ struct SettingView: View {
                     rightButtonLabel: "로그아웃",
                     rightButtonAction: {
                         // 로그아웃 - AppStorage 에서 변경
-                        authService.signOut()
-						
+                        authViewModel.signOut()
+                        
                         isLogoutClicked.toggle()
-						navigationRouter.back()
+                        navigationRouter.back()
                         // MainView 로 보내기
-						appViewModel.selectedTabIndex = 0
+                        appViewModel.selectedTabIndex = 0
                     })
                 )
             }
-            
             // 회원탈퇴 - CustomAlert
             // TODO: - 탈퇴 문구 수정하기
             if isDeletAccount {
@@ -196,9 +185,9 @@ struct SettingView: View {
                     rightButtonAction: {
                         Task {
                             // TODO: - 구글 탈퇴 추가
-                            authService.isLoading = true
-                            if await authService.deleteAppleAccount() {
-                                myPageViewModel.myPageUserDataClear()
+                            authViewModel.isLoading = true
+                            if await authViewModel.deleteAppleAccount() {
+                                //                                myPageViewModel.myPageUserDataClear()
                                 isDeletAccount.toggle()
                                 navigationRouter.back()
                                 // 메인 화면으로 이동
@@ -209,54 +198,61 @@ struct SettingView: View {
                 )
             }
             // 로그아웃 or 회원탈퇴 실패 시,
-            if authService.showError {
+            if authViewModel.showError {
                 CustomDialog(type: .oneButton(
-                    message: authService.errorMessage,
+                    message: authViewModel.errorMessage,
                     buttonLabel: "확인",
-                    action: { authService.showError = false }))
+                    action: { authViewModel.showError = false }))
             }
-		}
-		.onAppear {
-			print("onAppear()")
-		}
-//        .onDisappear {
-//            navigationRouter.back()
-//        }
+        }
+        // 앱 내에서 이동하지 않고, 설정에서만 변경 했을 수 있으니 onAppear 시 시스템 다시 확인하기
+        .task {
+            do {
+                self.isAlarmOn = try await authViewModel.getSystemAlarmSetting()
+            } catch {
+                print("error :: getSystemAlarmSetting", error.localizedDescription)
+            }
+        }
+        // 앱 설정으로 다녀왔을 때, 설정 체크
+        .onChange(of: scenePhase) { newScenePhase in
+            Task {
+                switch newScenePhase {
+                    // 앱이 백그라운드에서 포그라운드로 전환될 때 실행할 작업
+                case .active:
+                    do {
+                        self.isAlarmOn = try await authViewModel.getSystemAlarmSetting()
+                    } catch {
+                        print("error :: getSystemAlarmSetting", error.localizedDescription)
+                    }
+                    // 그 외
+                default:
+                    break
+                }
+            }
+        }
         // 회원탈퇴 시, 생기는 로딩
-        .loadingView($authService.isLoading)
-		.navigationBarBackButtonHidden()
-		.toolbar {
-			ToolbarItem(placement: .topBarLeading) {
-				Button {
+        .loadingView($authViewModel.isLoading)
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
                     navigationRouter.back()
-				} label: {
-					Image(systemName: "chevron.backward")
-				}
-				.tint(.mainBlack)
-			}
-			ToolbarItem(placement: .principal) {
-				Text("설정")
-					.font(.medium16)
-					.foregroundStyle(.mainBlack)
-			}
-        }
-        
-    }
-    
-    // '기기 설정 - 주다' 페이지 이동
-    func openAppSettings() {
-        guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
-            return
-        }
-        
-        if UIApplication.shared.canOpenURL(settingsURL) {
-            UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
+                } label: {
+                    Image(systemName: "chevron.backward")
+                }
+                .tint(.mainBlack)
+            }
+            ToolbarItem(placement: .principal) {
+                Text("설정")
+                    .font(.medium16)
+                    .foregroundStyle(.mainBlack)
+            }
         }
     }
 }
 
 // 반복되는 UI 설정 ViewModifier를 통해 한꺼번에 묶기
-struct CustomText: ViewModifier {
+private struct CustomText: ViewModifier {
 	func body(content: Content) -> some View {
 		content
 			.font(.regular16)

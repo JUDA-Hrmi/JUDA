@@ -55,6 +55,16 @@ extension FirebaseAuthService {
             print("error :: updateUserName", error.localizedDescription)
         }
     }
+    
+    // firestore 에서 유저 알림 상태 설정 변경
+    func updateUserNotification(uid: String, notificationAllowed: Bool) async {
+        do {
+            let docRef = db.collection(userCollection).document(uid)
+            try await docRef.updateData(["notificationAllowed": notificationAllowed])
+        } catch {
+            print("error :: updateUserNotification", error.localizedDescription)
+        }
+    }
 }
 
 // MARK: - 데이터 실시간 업데이트

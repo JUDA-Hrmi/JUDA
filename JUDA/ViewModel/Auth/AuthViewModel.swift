@@ -112,6 +112,25 @@ final class AuthViewModel: ObservableObject {
             print("error :: startListeningForUserField :", error.localizedDescription)
         }
     }
+    
+    // MyPage / Setting 에서 사용
+    // '알림 설정' 탭했을 때, 시스템 설정 받아와서 파베에 업데이트
+    func getSystemAlarmSetting() async throws -> Bool {
+        let center = UNUserNotificationCenter.current()
+        let settings = await center.notificationSettings()
+        return try await updateUserNotificationAllowed(systemSetting: settings.alertSetting)
+    }
+    
+    // MyPage / Setting 에서 사용
+    // '알림 설정' - 시스템 설정으로 이동하는 메서드
+    func openAppSettings(notUsed: Bool) {
+        guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
+            return
+        }
+        if UIApplication.shared.canOpenURL(settingsURL) {
+            UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
+        }
+    }
 }
 
 // MARK: - User Fetch
@@ -273,6 +292,29 @@ extension AuthViewModel {
         } catch {
             showError = true
             errorMessage = "닉네임 변경에 문제가 발생했어요.\n다시 시도해주세요."
+        }
+    }
+    
+    // 유저 '알림 설정' 수정
+    private func updateUserNotificationAllowed(systemSetting: UNNotificationSetting) async throws -> Bool {
+        guard let user = currentUser else {
+            throw AuthManagerError.noUser
+        }
+        switch systemSetting {
+            // 허용한 상태일 경우
+            case .enabled:
+                // 파베 유저 데이터의 알림 허용 상태 X 경우, 파베에 허용 O 로 업데이트
+                if !user.userField.notificationAllowed {
+                    await firebaseAuthService.updateUserNotification(uid: user.userField.userID!, notificationAllowed: true)
+                }
+                return true
+            // 허용하지 않은 상태 + 나머지 모든 경우
+            default:
+                // 파베 유저 데이터의 알림 허용 상태 O 경우, 파베에 허용 X 로 업데이트
+                if user.userField.notificationAllowed {
+                    await firebaseAuthService.updateUserNotification(uid: user.userField.userID!, notificationAllowed: false)
+                }
+                return false
         }
     }
 }
