@@ -9,12 +9,12 @@ import SwiftUI
 
 struct MyPageView: View {
     @StateObject private var navigationRouter = NavigationRouter()
-    @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var authViewModel: AuthViewModel
 
     var body: some View {
         NavigationStack(path: $navigationRouter.path) {
             VStack {
-                if authService.signInStatus {
+                if authViewModel.signInStatus {
                     AuthenticatedMypageView()
                 } else {
                     UnauthenticatedMypageView()
@@ -39,11 +39,9 @@ struct MyPageView: View {
                         .modifier(TabBarHidden())
                 case .Notice:
                     NoticeView()
-                case .NavigationProfile(let postUserName,
-                                      let postUserID,
+                case .NavigationProfile(let userID,
                                       let usedTo):
-                    NavigationProfileView(postUserName: postUserName,
-                                          postUserID: postUserID,
+                    NavigationProfileView(userID: userID,
                                           usedTo: usedTo)
                 case .Record(let recordType):
                     RecordView(recordType: recordType)

@@ -10,69 +10,57 @@ import PhotosUI
 import Kingfisher
 
 enum UserType {
-    case user, otheruser
+    case user, otherUser
 }
 
 // MARK: - 유저 프로필 (사진, 닉네임, 닉네임 수정)
 struct UserProfileView: View {
-    @EnvironmentObject private var authService: AuthService
-    @EnvironmentObject private var postsViewModel: PostsViewModel
-    @EnvironmentObject private var searchPostsViewModel: SearchPostsViewModel
+    @EnvironmentObject private var authViewModel: AuthViewModel
     @EnvironmentObject private var mainViewModel: MainViewModel
-    @EnvironmentObject private var myPageViewModel: MyPageViewModel
-    @EnvironmentObject private var likedViewModel: LikedViewModel
+    @EnvironmentObject private var userViewModel: UserViewModel
     
+    // 라이브러리에서 이미지 선택 시 사용
     @State private var selectedPhotos: [PhotosPickerItem] = []
     @State private var selectedImage = UIImage()
-    
-    let userType: UserType
-    let userName: String
-    let userID: String
-    let usedTo: WhereUsedPostGridContent
-
-    private var profileImageURL: URL? {
-        switch usedTo {
-        case .postSearch:
-            return searchPostsViewModel.postUserImages[userID]
-        case .liked:
-            return likedViewModel.postUserImages[userID]
-        case .myPage:
-            return myPageViewModel.postUserImages[userID]
-        case .main:
-            return mainViewModel.postUserImages[userID]
-        default: // post 그 외
-            return postsViewModel.postUserImages[userID]
-        }
-    }
-    
     // 이미지 가져오다가 에러나면 띄워줄 alert
     @State private var showAlert = false
+    
+    let userType: UserType
+    private var profileImageURL: URL? {
+        switch userType {
+        case .user:
+            return authViewModel.currentUser?.userField.profileImageURL
+        case .otherUser:
+            return userViewModel.user?.userField.profileImageURL
+        }
+    }
     
     var body: some View {
         ZStack {
             HStack {
                 HStack(spacing: 20) {
                     HStack(alignment: .bottom, spacing: -15) {
+                        // MARK: - KFImage의 placeholder의 역할에 따라, userType 분기를 두어야 할 거 같음
                         // 사용자 프로필 이미지
-                        if userType == .user,
-                           let user = authService.currentUser { // 사용자 지정 이미지가 있을 때 (이미지 선택 완료했을 경우)
-                            KFImage.url(user.profileURL)
-                                .placeholder {
-                                    Image(uiImage: selectedImage)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .clipShape(Circle())
-                                        .frame(width: 70, height: 70)
-                                }
-                                .loadDiskFileSynchronously(true) // 디스크에서 동기적으로 이미지 가져오기
-                                .cancelOnDisappear(true) // 화면 이동 시, 진행중인 다운로드 중단
-                                .cacheMemoryOnly() // 메모리 캐시만 사용 (디스크 X)
-                                .fade(duration: 0.2) // 이미지 부드럽게 띄우기
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .clipShape(Circle())
-                                .frame(width: 70, height: 70)
-                        } else if let profileImageURL = profileImageURL {
+//                        if userType == .user { // 사용자 지정 이미지가 있을 때 (이미지 선택 완료했을 경우)
+//                            KFImage.url(profileImageURL)
+//                                .placeholder {
+//                                    Image(uiImage: selectedImage)
+//                                        .resizable()
+//                                        .aspectRatio(contentMode: .fill)
+//                                        .clipShape(Circle())
+//                                        .frame(width: 70, height: 70)
+//                                }
+//                                .loadDiskFileSynchronously(true) // 디스크에서 동기적으로 이미지 가져오기
+//                                .cancelOnDisappear(true) // 화면 이동 시, 진행중인 다운로드 중단
+//                                .cacheMemoryOnly() // 메모리 캐시만 사용 (디스크 X)
+//                                .fade(duration: 0.2) // 이미지 부드럽게 띄우기
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fill)
+//                                .clipShape(Circle())
+//                                .frame(width: 70, height: 70)
+//                        } else if let profileImageURL = profileImageURL {
+                        if let profileImageURL = profileImageURL {
                             UserProfileKFImage(url: profileImageURL)
                         } else {
                             // 사용자 지정 이미지가 없을 때 기본 이미지로 설정
@@ -109,8 +97,8 @@ struct UserProfileView: View {
                         }
                     }
                     // 사용자 닉네임 표시
-                    Text(userName)
-                        .font(.medium18)
+                    Text(userType == .user ? authViewModel.currentUser?.userField.name ?? "" : userViewModel.user?.userField.name ?? "" )
+                    .font(.medium18)
                     
                     Spacer()
                     // 닉네임 수정
@@ -136,7 +124,7 @@ struct UserProfileView: View {
             guard let data = try await selectedPhoto.loadTransferable(type: Data.self) else { return }
             guard let uiImage = UIImage(data: data) else { return }
             self.selectedImage = uiImage
-            authService.uploadProfileImageToStorage(image: uiImage)
+            await authViewModel.uploadProfileImageToStorage(image: uiImage)
         } catch {
             throw PhotosPickerImageLoadingError.invalidImageData
         }

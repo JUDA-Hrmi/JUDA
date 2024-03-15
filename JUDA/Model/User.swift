@@ -28,9 +28,14 @@ struct UserField: Codable {
     var authProviders: String // AuthProviderOption - rawValue
 }
 
-struct UserNotification {
+struct UserNotification: Equatable {
+    @DocumentID var userNotificationID: String?
     var notificationField: NotificationField
     var likedPost: Post
+    
+    static func == (lhs: UserNotification, rhs: UserNotification) -> Bool {
+        lhs.userNotificationID == rhs.userNotificationID
+    }
 }
 
 // Firebase users/notificationList 컬렉션 데이터 모델

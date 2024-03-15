@@ -200,7 +200,7 @@ extension FirestoreDrinkService {
     // drink collection agePreference data update 메서드
     func updateDrinkAgePreference(ref: CollectionReference, drinkID: String, age: Age, userID: String) async {
         do {
-            try await ref.document(drinkID).collection("agePreference").document(age.rawValue).collection("usersID").document(userID).setData([:])
+            try await ref.document(drinkID).collection("agePreferenceUID").document(age.rawValue).collection("usersID").document(userID).setData([:])
         } catch {
             print("error :: updateDrinkAgePreference() -> upload userID to agePreference failure")
         }
@@ -209,7 +209,7 @@ extension FirestoreDrinkService {
     // drink collection genderPreference data update 메서드
     func updateDrinkGenderPreference(ref: CollectionReference, drinkID: String, gender: String, userID: String) async {
         do {
-            try await ref.document(drinkID).collection("genderPreference").document(gender).collection("usersID").document(userID).setData([:])
+            try await ref.document(drinkID).collection("genderPreferenceUID").document(gender).collection("usersID").document(userID).setData([:])
         } catch {
             print("error :: updateDrinkGenderPreference() -> upload userID to genderPreference failure")
         }

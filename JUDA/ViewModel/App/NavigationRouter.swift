@@ -16,8 +16,7 @@ enum Route: Hashable {
     case Notice
     case ChangeUserName
     case Record(recordType: RecordType)
-    case NavigationProfile(postUserName: String,
-                           postUserID: String,
+    case NavigationProfile(userID: String,
                            usedTo: WhereUsedPostGridContent)
     case NavigationPosts(usedTo: WhereUsedPostGridContent,
                          searchTagType: SearchTagType?,
