@@ -11,9 +11,9 @@ import Kingfisher
 // MARK: - 술 그리드 셀
 struct DrinkGridCell: View {
     @EnvironmentObject private var drinkViewModel: DrinkViewModel
-    @EnvironmentObject private var authService: AuthService
+    @EnvironmentObject private var authViewModel: AuthViewModel
 
-    let drink: FBDrink
+    let drink: Drink
     @State private var isLiked: Bool = false
     
     private let debouncer = Debouncer(delay: 0.5)
@@ -25,8 +25,10 @@ struct DrinkGridCell: View {
                 isLiked.toggle()
                 // 디바운서 콜
                 debouncer.call {
-                    authService.addOrRemoveToLikedDrinks(isLiked: isLiked, drink.drinkID)
-                    authService.userLikedListUpdate(type: .drinks)
+                    Task {
+                        await authViewModel.updateLikedDrinks(isLiked: isLiked,
+                                                              selectedDrink: drink)
+                    }
                 }
             } label: {
                 Image(systemName: isLiked ? "heart.fill" : "heart")
@@ -36,7 +38,7 @@ struct DrinkGridCell: View {
             VStack(alignment: .leading, spacing: 10) {
                 // 술 사진
                 VStack(alignment: .center) {
-                    if let url = drinkViewModel.drinkImages[drink.drinkID ?? ""] {
+                    if let url = drink.drinkField.drinkImageURL {
                         KFImage.url(url)
                             .placeholder {
                                 CircularLoaderView(size: 20)
@@ -58,13 +60,13 @@ struct DrinkGridCell: View {
                 }
                 .frame(maxWidth: .infinity)
                 // 술 이름 + 용량
-                Text(drink.name + " " + drink.amount)
+                Text(drink.drinkField.name + " " + drink.drinkField.amount)
                     .multilineTextAlignment(.leading)
                     .lineLimit(2)
                     .font(.semibold16)
                     .foregroundStyle(.mainBlack)
                 // 나라, 도수
-                switch drink.category {
+                switch drink.drinkField.category {
                 case DrinkType.wine.rawValue:
                     getCountryAndProvinceAndABV()
                 default:
@@ -72,7 +74,7 @@ struct DrinkGridCell: View {
                 }
                 Spacer()
                 // 별
-                StarRating(rating: drink.rating,
+                StarRating(rating: drink.drinkField.rating,
                            color: .mainAccent05,
                            starSize: .semibold14,
                            fontSize: .semibold14,
@@ -82,8 +84,8 @@ struct DrinkGridCell: View {
         .frame(height: 270)
         .padding(10)
 		.task {
-            if let user = authService.currentUser {
-                self.isLiked = user.likedDrinks.contains { $0 == drink.drinkID }
+            if let user = authViewModel.currentUser {
+                self.isLiked = user.likedDrinks.contains { $0.drinkField.drinkID == drink.drinkField.drinkID }
             }
 		}
     }
@@ -92,11 +94,11 @@ struct DrinkGridCell: View {
     private func getCountryAndABV() -> some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 6) {
-                Text(drink.type)
-                Text(Formatter.formattedABVCount(abv: drink.alcohol))
+                Text(drink.drinkField.type)
+                Text(Formatter.formattedABVCount(abv: drink.drinkField.alcohol))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            Text(drink.country)
+            Text(drink.drinkField.country)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .font(.semibold14)
@@ -107,13 +109,13 @@ struct DrinkGridCell: View {
     private func getCountryAndProvinceAndABV() -> some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 6) {
-                Text(drink.type)
-                Text(Formatter.formattedABVCount(abv: drink.alcohol))
+                Text(drink.drinkField.type)
+                Text(Formatter.formattedABVCount(abv: drink.drinkField.alcohol))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             HStack(spacing: 6) {
-                Text(drink.country)
-                Text(drink.province ?? "")
+                Text(drink.drinkField.country)
+                Text(drink.drinkField.province ?? "")
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }

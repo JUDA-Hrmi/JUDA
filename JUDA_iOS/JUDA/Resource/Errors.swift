@@ -40,3 +40,26 @@ enum FireStorageError: Error {
     case uploadImage
     case fetchImageURL
 }
+
+// MARK: - Token Request Error
+enum TokenRequest: Error {
+    case getToken
+}
+
+// MARK: - Post 관련 에러 : Firestore
+enum PostError: Error {
+    case fieldFetch
+    case documentFetch
+    case collectionFetch
+    case upload
+    case update
+    case delete
+}
+
+// MARK: - Drink 관련 에러 : Firestore
+enum DrinkError: Error {
+    case fetchDrinkField
+    case fetchDrinkDocument
+    case fetchDrinkCollection
+    case delete
+}

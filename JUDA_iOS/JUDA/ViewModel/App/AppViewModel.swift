@@ -8,10 +8,6 @@
 import SwiftUI
 import FirebaseMessaging
 
-enum TokenRequest: Error {
-	case getToken
-}
-
 // MARK: - 앱 전체에서 사용
 @MainActor
 final class AppViewModel: ObservableObject {
@@ -32,17 +28,17 @@ final class AppViewModel: ObservableObject {
 	
 	func setUserToken(uid: String, currentUserToken: String) async {
 		do {
-			let diviceToken = try await getDiviceToken()
+			let deviceToken = try await getDeviceToken()
 			
-			if currentUserToken != diviceToken {
-				await firebaseAuthService.updateUserFcmToken(uid: uid, fcmToken: diviceToken)
+			if currentUserToken != deviceToken {
+				await firebaseAuthService.updateUserFcmToken(uid: uid, fcmToken: deviceToken)
 			}
 		} catch {
 			print("error :: setUserToken", error.localizedDescription)
 		}
 	}
 	
-	func getDiviceToken() async throws -> String {
+	func getDeviceToken() async throws -> String {
 		do {
 			let token = try await Messaging.messaging().token()
 			return token
