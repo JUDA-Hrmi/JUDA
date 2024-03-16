@@ -10,26 +10,23 @@ import SwiftUI
 // MARK: - 네비게이션 이동 시, 유저 프로필 화면
 struct NavigationProfileView: View {
     @EnvironmentObject private var navigationRouter: NavigationRouter
-    @EnvironmentObject private var authService: AuthService
-    @EnvironmentObject private var myPageViewModel: MyPageViewModel
+    @EnvironmentObject private var authViewModel: AuthViewModel
+    @EnvironmentObject private var userViewModel: UserViewModel
     
-    let postUserName: String
-    let postUserID: String
+    let userID: String
     let usedTo: WhereUsedPostGridContent
-    var userType: UserType {
-        postUserID == authService.currentUser?.userID ? .user : .otheruser
+    // 해당 게시글의 작성자가 로그인한 유저인지 판별
+    private var userType: UserType {
+        userID == authViewModel.currentUser?.userField.userID ? .user : .otherUser
     }
     
     var body: some View {
         VStack {
             // 프로필 사진 -- 닉네임 -- 수정
-            UserProfileView(userType: userType,
-                            userName: postUserName,
-                            userID: postUserID,
-                            usedTo: usedTo)
+            UserProfileView(userType: userType)
             // 내가 작성한 게시물 -- 술상 올리기
             HStack {
-                userType == .user ? Text("내가 작성한 술상") : Text("\(postUserName) 님이 작성한 술상")
+                userType == .user ? Text("내가 작성한 술상") : Text("\(userViewModel.user?.userField.name ?? "") 님이 작성한 술상")
                     .font(.semibold18)
                 Spacer()
                 
@@ -67,10 +64,11 @@ struct NavigationProfileView: View {
                 }
             }
         }
-        // 작성한 술상 데이터 가져오기
+        //
         .task {
-            await myPageViewModel.getUsersPosts(userID: userType == .user ? authService.currentUser?.userID ?? "" : postUserID,
-                                                userType: userType)
+            if userType == .otherUser {
+                await userViewModel.getUser(uid: userID)
+            }
         }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -82,7 +80,7 @@ struct NavigationProfileView: View {
                 }
             }
             ToolbarItem(placement: .principal) {
-                userType == .user ? Text("마이페이지") : Text("\(postUserName) 님의 페이지")
+                userType == .user ? Text("마이페이지") : Text("\(userViewModel.user?.userField.name ?? "") 님의 페이지")
                     .font(.medium16)
             }
         }

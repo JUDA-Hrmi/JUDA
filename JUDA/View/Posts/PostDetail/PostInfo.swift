@@ -37,8 +37,7 @@ struct PostInfo: View {
                 }
                 VStack(alignment: .leading) {
                     NavigationLink(value: Route
-                        .NavigationProfile(postUserName: post.postField.user.userName,
-                                           postUserID: post.postField.user.userID,
+                        .NavigationProfile(userID: post.postField.user.userID,
                                            usedTo: usedTo)) {
                         // 사용자의 닉네임
                         Text(post.postField.user.userName)

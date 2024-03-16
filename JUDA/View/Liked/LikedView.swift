@@ -57,11 +57,9 @@ struct LikedView: View {
                 case .AddTag:
                     AddTagView()
                         .modifier(TabBarHidden())
-                case .NavigationProfile(let postUserName,
-                                      let postUserID,
+                case .NavigationProfile(let userID,
                                       let usedTo):
-                    NavigationProfileView(postUserName: postUserName,
-                                          postUserID: postUserID,
+                    NavigationProfileView(userID: userID,
                                           usedTo: usedTo)
                 case .Record(let recordType):
                     RecordView(recordType: recordType)

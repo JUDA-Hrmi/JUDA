@@ -11,8 +11,6 @@ import FirebaseAuth
 // MARK: - 알람 쌓여있는 리스트 화면
 struct AlarmStoreView: View {
     @EnvironmentObject private var navigationRouter: NavigationRouter
-    @EnvironmentObject private var notificationViewModel: MyPageViewModel
-	@EnvironmentObject private var authService: AuthService
 
     var body: some View {
         VStack(spacing: 0) {
@@ -50,27 +48,31 @@ struct AlarmStoreView: View {
                     .foregroundStyle(.mainBlack)
             }
         }
-        .task {
-            await notificationViewModel.fetchNotificationList(userId: authService.currentUser?.userID ?? "")
-        }
+        // TODO: notification refetch는 어디서 이루어지는가
+//        .task {
+//            await notificationViewModel.fetchNotificationList(userId: authService.currentUser?.userID ?? "")
+//        }
     }
 }
 
 // MARK: - 스크롤 뷰 or 뷰 로 보여질 알람 리스트
 struct AlarmListContent: View {
-    @EnvironmentObject private var notificationViewModel: MyPageViewModel
+    @EnvironmentObject private var authViewModel: AuthViewModel
 
     var body: some View {
-        LazyVStack {
-            ForEach(notificationViewModel.notifications.indices, id: \.self) { index in
-                let alarm = notificationViewModel.notifications[index]
-                
-//                NavigationLink(value: post) {
-//                    AlarmStoreListCell(alarm: alarm)
-//                }
-                AlarmStoreListCell(alarm: alarm)
-                if alarm != notificationViewModel.notifications.last {
-                    CustomDivider()
+        if let user = authViewModel.currentUser {
+            LazyVStack {
+                ForEach(user.notifications.indices, id: \.self) { index in
+                    let alarm = user.notifications[index]
+                    // TODO: AlarmStoreListCell 클릭 시 해당 postDetailView로 이동
+//                    NavigationLink(value: post) {
+//                        AlarmStoreListCell(alarm: alarm)
+//                    }
+                    AlarmStoreListCell(alarm: alarm)
+                    
+                    if alarm != user.notifications.last {
+                        CustomDivider()
+                    }
                 }
             }
         }

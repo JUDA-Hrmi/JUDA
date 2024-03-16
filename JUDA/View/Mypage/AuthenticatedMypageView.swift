@@ -11,16 +11,12 @@ import FirebaseAuth
 // MARK: - 마이페이지 탭
 struct AuthenticatedMypageView: View {
     @EnvironmentObject private var appViewModel: AppViewModel
-    @EnvironmentObject private var authService: AuthService
-    @EnvironmentObject private var myPageViewModel: MyPageViewModel
-
+    @EnvironmentObject private var authViewModel: AuthViewModel
+    
     var body: some View {
         VStack {
             // 프로필 사진 -- 닉네임 -- 수정
-            UserProfileView(userType: UserType.user,
-                            userName: authService.currentUser?.name ?? "",
-                            userID: authService.currentUser?.userID ?? "",
-                            usedTo: .myPage)
+            UserProfileView(userType: .user)
             // 내가 작성한 게시물 -- '새 글 작성하기'
             HStack {
                 Text("내가 작성한 술상")
@@ -52,13 +48,6 @@ struct AuthenticatedMypageView: View {
                 }
             }
         }
-        // 작성한 술상 데이터 가져오기
-        .task {
-            if myPageViewModel.userPosts.isEmpty {
-                await myPageViewModel.getUsersPosts(userID: authService.currentUser?.userID ?? "",
-                                                    userType: .user)
-            }
-        }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Text("마이페이지")
@@ -81,7 +70,7 @@ struct AuthenticatedMypageView: View {
         .onAppear {
             appViewModel.tabBarState = .visible
             Task {
-                await authService.startListeningForUser()
+                await authViewModel.startListeningForUserField()
             }
         }
         .toolbar(appViewModel.tabBarState, for: .tabBar)

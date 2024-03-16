@@ -53,11 +53,9 @@ struct MainView: View {
                     NavigationPostsView(usedTo: usedTo,
                                         searchTagType: searchTagType,
                                         postSearchText: postSearchText)
-                case .NavigationProfile(let postUserName,
-                                        let postUserID,
-                                        let usedTo):
-                    NavigationProfileView(postUserName: postUserName,
-                                          postUserID: postUserID,
+                case .NavigationProfile(let userID,
+                                      let usedTo):
+                    NavigationProfileView(userID: userID,
                                           usedTo: usedTo)
                 case .Record(let recordType):
                     RecordView(recordType: recordType)

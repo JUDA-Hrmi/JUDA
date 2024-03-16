@@ -10,15 +10,15 @@ import Kingfisher
 
 // MARK: - 알람 리스트 셀
 struct AlarmStoreListCell: View {
-    @EnvironmentObject private var notificationViewModel: MyPageViewModel
-    let alarm: NotificationField
+    @EnvironmentObject private var authViewModel: AuthViewModel
+    let alarm: UserNotification
     
     var body: some View {
         HStack(alignment: .center) {
             VStack(alignment: .leading, spacing: 2) {
                 // 게사물 좋아요 알람 내용
                 Group {
-                    Text(alarm.likedUserName)
+                    Text(alarm.notificationField.likedUser.userName)
                         .font(.medium14)
                     +
                     Text(" 님이 게시물에 하트를 남겼어요.")
@@ -27,21 +27,22 @@ struct AlarmStoreListCell: View {
                 .multilineTextAlignment(.leading)
                 .foregroundStyle(.mainBlack)
                 .overlay(alignment: .topLeading) {
+                    // TODO: userName 클릭 시, NavigationProfileView로 이동
 //                    NavigationLink(value: Route.NavigationProfile) {
-                        Text(alarm.likedUserName)
+                        Text(alarm.notificationField.likedUser.userName)
                             .font(.medium14)
                             .foregroundStyle(.mainBlack)
 //                    }
 //                    .buttonStyle(EmptyActionStyle())
                 }
                 // 알람 왔던 시기
-                Text(Formatter.formattedDateBeforeStyle(pastDate: alarm.likedTime))
+                Text(Formatter.formattedDateBeforeStyle(pastDate: alarm.notificationField.likedTime))
                     .font(.regular12)
                     .foregroundStyle(.gray01)
             }
             Spacer()
             // 해당 술상 이미지
-            if let imageURL = alarm.thumbnailImageURL {
+            if let imageURL = alarm.notificationField.thumbnailImageURL {
                 KFImage.url(imageURL)
                     .placeholder {
                         CircularLoaderView(size: 20)
