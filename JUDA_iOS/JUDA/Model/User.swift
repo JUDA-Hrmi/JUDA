@@ -23,6 +23,7 @@ struct UserField: Codable {
     var name: String
     var age: Int
     var gender: String
+	var fcmToken: String
     var notificationAllowed: Bool
     var profileImageURL: URL?
     var authProviders: String // AuthProviderOption - rawValue
