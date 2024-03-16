@@ -39,21 +39,9 @@ struct LikedView: View {
                                 if LikedType.list[index] == .drink {
                                     // 술찜 리스트
                                     LikedDrinkList()
-                                        .task {
-                                            if likedViewModel.likedDrinks.isEmpty {
-                                                await likedViewModel
-                                                    .getLikedDrinks(likedDrinksIDList: authService.currentUser?.likedDrinks)
-                                            }
-                                        }
                                 } else {
                                     // 술상 리스트
                                     LikedPostGrid()
-                                        .task {
-                                            if likedViewModel.likedPosts.isEmpty {
-                                                await likedViewModel
-                                                    .getLikedPosts(likedPostsIDList: authService.currentUser?.likedPosts)
-                                            }
-                                        }
                                 }
                             }
                             .onChange(of: selectedSegmentIndex) { newValue in
@@ -99,19 +87,6 @@ struct LikedView: View {
                 default:
                     ErrorPageView()
                         .modifier(TabBarHidden())
-                }
-            }
-            .onChange(of: selectedSegmentIndex) { newValue in
-                Task {
-                    // 술 -> 술상
-                    if newValue == 1 {
-                        await likedViewModel
-                            .getLikedDrinks(likedDrinksIDList: authService.currentUser?.likedDrinks)
-                        // 술상 -> 술
-                    } else {
-                        await likedViewModel
-                            .getLikedPosts(likedPostsIDList: authService.currentUser?.likedPosts)
-                    }
                 }
             }
             .onAppear {

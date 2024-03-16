@@ -34,8 +34,7 @@ struct PostTopView: View {
                 NavigationLink(value: Route
                     .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writter : .reader,
                                 post: post,
-                                usedTo: .main,
-                                postPhotosURL: post.postField.imagesURL)) {
+                                usedTo: .main)) {
                     if let user = authViewModel.currentUser {
                         PostListCell(post: post,
                                      isLiked: post.likedUsersID.contains(user.userField.userID ?? ""))

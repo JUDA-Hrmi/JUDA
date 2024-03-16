@@ -28,8 +28,7 @@ struct TaggedTrendingPosts: View {
                     NavigationLink(value: Route
                         .PostDetail(postUserType: post.postField.user.userID == authViewModel.currentUser?.userField.userID ? .writter : .reader,
                                     post: post,
-                                    usedTo: .drinkDetail,
-                                    postPhotosURL: post.postField.imagesURL)) {
+                                    usedTo: .drinkDetail)) {
                         if !isLoading {
                             if let user = authViewModel.currentUser {
                                 PostListCell(post: post,
