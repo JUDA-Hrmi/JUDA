@@ -14,7 +14,6 @@ struct SettingView: View {
     @EnvironmentObject private var navigationRouter: NavigationRouter
     @EnvironmentObject private var authViewModel: AuthViewModel
     @EnvironmentObject private var appViewModel: AppViewModel
-    @EnvironmentObject private var userViewModel: UserViewModel
     @EnvironmentObject private var colorScheme: SystemColorTheme
     
     private let optionNameList = ["라이트 모드", "다크 모드", "시스템 모드"] // 화면 모드 설정 옵션 이름 리스트
