@@ -9,15 +9,6 @@ import Foundation
 import FirebaseCore
 import FirebaseFirestore
 
-enum PostError: Error {
-    case fieldFetch
-    case documentFetch
-    case collectionFetch
-    case upload
-    case update
-    case delete
-}
-
 @MainActor
 final class FirestorePostService {}
 
@@ -91,7 +82,7 @@ extension FirestorePostService {
 	}
 }
 
-//MARK: Firestore post document upload
+// MARK: Firestore post document upload
 extension FirestorePostService {
     func uploadPostDocument(post: Post, postID: String) async throws {
 		let postDocumentRef = Firestore.firestore().collection("posts").document(postID)

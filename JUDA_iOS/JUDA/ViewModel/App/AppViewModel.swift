@@ -8,10 +8,6 @@
 import SwiftUI
 import FirebaseMessaging
 
-enum TokenRequest: Error {
-	case getToken
-}
-
 // MARK: - 앱 전체에서 사용
 @MainActor
 final class AppViewModel: ObservableObject {

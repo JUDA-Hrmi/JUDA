@@ -116,7 +116,7 @@ extension DrinkViewModel {
         let collectionRef = getReference(
             sortType: DrinkSortType(rawValue: selectedSortedTypeString),
             query: getReference(category: DrinkType.list[selectedDrinkTypeIndex]))
-            .limit(to: paginationCount)
+            .limit(to: paginationCount).start(afterDocument: lastSnapshot)
         do {
             let drinksSnapshot = try await collectionRef.getDocuments()
             for drinkDocument in drinksSnapshot.documents {
@@ -162,6 +162,31 @@ extension DrinkViewModel {
             print("error :: getDrinkImage", error.localizedDescription)
             return Image("AppIcon")
         }
+    }
+}
+
+// MARK: - Fetch in Post Detail View
+extension DrinkViewModel {
+    // PostDetail 에서 Post 에 태그된 술의 정보를 다 갖고 있지 않으니, Drinks 를 받아오기
+    func getPostTaggedDrinks(drinksID: [String]) async -> [Drink] {
+        var result = [Drink]()
+        do {
+            for drinkID in drinksID {
+                let documentRef = db.collection(drinkCollection).document(drinkID)
+                let drinkData = try await firestoreDrinkService.fetchDrinkDocument(document: documentRef)
+                result.append(drinkData)
+            }
+        } catch {
+            print("error :: getPostTaggedDrinks", error.localizedDescription)
+        }
+        return result
+    }
+    
+    // post 에 등록된 drinkRating 을 가져오기 위한 메서드
+    func getDrinkRating(drinkTags: [DrinkTag], drink: Drink) -> Double {
+        drinkTags.filter {
+            $0.drinkID == drink.drinkField.drinkID
+        }.first?.drinkRating ?? 0
     }
 }
 

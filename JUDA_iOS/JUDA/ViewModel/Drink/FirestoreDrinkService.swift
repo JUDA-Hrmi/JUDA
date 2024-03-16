@@ -16,13 +16,6 @@ enum Age: String, CaseIterable {
 	case fifty = "50"
 }
 
-enum DrinkError: Error {
-	case fetchDrinkField
-    case fetchDrinkDocument
-    case fetchDrinkCollection
-    case delete
-}
-
 @MainActor
 final class FirestoreDrinkService {
     // Firestore Post Service

@@ -82,13 +82,10 @@ final class RecordViewModel: ObservableObject {
                         likedUsersID: [])
             
             // post 업로드
-            await uploadPosttoFireStore()
+            await uploadPostToFireStore()
             // drink 업데이트
             await updateDrinkToFirestore()
         }
-        
-        // MARK: - search를 위한 전체 post fetch 필요한가?
-//            await searchPostsViewModel.fetchPosts()
         // loadingView 없애기
         isPostUploading = false
     }
@@ -148,7 +145,7 @@ final class RecordViewModel: ObservableObject {
     }
     
     // MARK: - Firestore post 업로드
-    func uploadPosttoFireStore() async {
+    func uploadPostToFireStore() async {
         guard let post = post else { return }
         do {
             try await firestorePostService.uploadPostDocument(post: post, postID: postID)

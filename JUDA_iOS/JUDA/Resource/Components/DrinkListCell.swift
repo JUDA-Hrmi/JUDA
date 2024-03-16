@@ -19,7 +19,6 @@ enum WhereUsedDrinkListCell {
 
 // MARK: - 술 리스트 셀
 struct DrinkListCell: View {
-//    @EnvironmentObject private var authService: AuthService
     @EnvironmentObject private var authViewModel: AuthViewModel
     @EnvironmentObject private var mainViewModel: MainViewModel
     @EnvironmentObject private var drinkViewModel: DrinkViewModel
@@ -89,7 +88,8 @@ struct DrinkListCell: View {
                         // drinks/likedUsersID에 userID를 id로 가진 빈 document 추가/삭제
                         // user/likedDrinks는 클라우드 펑션으로 처리
                         Task {
-                            await authViewModel.updateLikedDrinks(isLiked: isLiked, sellectedDrink: drink)
+                            await authViewModel.updateLikedDrinks(isLiked: isLiked,
+                                                                  selectedDrink: drink)
                         }
                     }
                 } label: {

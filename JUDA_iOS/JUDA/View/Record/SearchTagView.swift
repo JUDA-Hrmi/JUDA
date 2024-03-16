@@ -65,9 +65,8 @@ struct SearchTagView: View {
                             .fill(.background)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
-                // TODO: isSearching 사용하여 검색 중 판별하는 걸로 변경
                 // 검색 중
-                } else if drinkViewModel.isLoading {
+                } else if drinkViewModel.isSearching {
                     VStack {
                         Rectangle()
                             .fill(.background)
