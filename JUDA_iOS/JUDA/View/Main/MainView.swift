@@ -81,6 +81,18 @@ struct MainView: View {
             }
             .onAppear {
                 appViewModel.tabBarState = .visible
+				
+				// 로그인 한 경우 알림권한 받아옴
+				if authViewModel.signInStatus {
+					appViewModel.setUserNotificationOption()
+					
+					Task {
+						if let user = authViewModel.currentUser?.userField, let uid = user.userID {
+							// 새로 받아온 기기 토큰 체크 후 업데이트
+							await appViewModel.setUserToken(uid: uid, currentUserToken: user.fcmToken)
+						}
+					}
+				}
             }
         }
         .environmentObject(navigationRouter)

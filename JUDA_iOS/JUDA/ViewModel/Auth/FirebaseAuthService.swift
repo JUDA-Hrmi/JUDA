@@ -65,6 +65,16 @@ extension FirebaseAuthService {
             print("error :: updateUserNotification", error.localizedDescription)
         }
     }
+	
+	// firestore 에서 유저 fcm token 변경
+	func updateUserFcmToken(uid: String, fcmToken: String) async {
+		do {
+			let docRef = db.collection(userCollection).document(uid)
+			try await docRef.updateData(["fcmToken": fcmToken])
+		} catch {
+			print("error :: updateUserFcmToken", error.localizedDescription)
+		}
+	}
 }
 
 // MARK: - 데이터 실시간 업데이트
