@@ -329,7 +329,7 @@ extension AuthViewModel {
             firebaseAuthService.addUserDataToStore(
                 userData: UserField(
                     name: name, age: age, gender: gender,
-                    notificationAllowed: notification,
+					fcmToken: "", notificationAllowed: notification,
                     profileImageURL: (currentUser?.userField.profileImageURL)!,
                     authProviders: try getProviderOptionString()),
                 uid: uid)
