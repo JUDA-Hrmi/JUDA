@@ -24,7 +24,10 @@ struct AppServiceInfoView: View {
                 Spacer()
                 Image(systemName: "chevron.forward")
             }
-            .modifier(CustomText())
+            .font(.regular16)
+            .foregroundStyle(.mainBlack)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 10)
             .fullScreenCover(isPresented: $isShowWebView) {
                 SafariView(url: URL(string: self.urlString)!)
             }
