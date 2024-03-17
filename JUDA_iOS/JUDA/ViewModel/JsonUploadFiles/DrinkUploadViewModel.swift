@@ -45,7 +45,7 @@ final class DrinkUploadViewModel: ObservableObject {
 				print("error decoding \(drinkType)")
 				return nil
 			}
-			await fetchImagesURL(drinkData: drinkData, imagesURL: &imagesURL)
+			imagesURL = await fetchImagesURL(drinkData: drinkData)
 			return drinkData.enumerated().map {
 				return DrinkField(drinkImageURL: imagesURL[$0.offset], category: $0.element.category, type: $0.element.type,
 								  name: $0.element.name, amount: $0.element.amount, price: $0.element.price, alcohol: $0.element.alcohol,
@@ -58,7 +58,7 @@ final class DrinkUploadViewModel: ObservableObject {
 				print("error decoding \(drinkType)")
 				return nil
 			}
-			await fetchImagesURL(drinkData: drinkData, imagesURL: &imagesURL)
+			imagesURL = await fetchImagesURL(drinkData: drinkData)
 			return drinkData.enumerated().map {
 				return DrinkField(drinkImageURL: imagesURL[$0.offset], category: $0.element.category, type: $0.element.type,
 								  name: $0.element.name, amount: $0.element.amount, price: $0.element.price, alcohol: $0.element.alcohol,
@@ -72,7 +72,7 @@ final class DrinkUploadViewModel: ObservableObject {
 				print("error decoding \(drinkType)")
 				return nil
 			}
-			await fetchImagesURL(drinkData: drinkData, imagesURL: &imagesURL)
+			imagesURL = await fetchImagesURL(drinkData: drinkData)
 			return drinkData.enumerated().map {
 				return DrinkField(drinkImageURL: imagesURL[$0.offset], category: $0.element.category, type: $0.element.type,
 								  name: $0.element.name, amount: $0.element.amount, price: $0.element.price, alcohol: $0.element.alcohol,
@@ -85,7 +85,7 @@ final class DrinkUploadViewModel: ObservableObject {
 				print("error decoding \(drinkType)")
 				return nil
 			}
-			await fetchImagesURL(drinkData: drinkData, imagesURL: &imagesURL)
+			imagesURL = await fetchImagesURL(drinkData: drinkData)
 			return drinkData.enumerated().map {
 				return DrinkField(drinkImageURL: imagesURL[$0.offset], category: $0.element.category, type: $0.element.type,
 								  name: $0.element.name, amount: $0.element.amount, price: $0.element.price, alcohol: $0.element.alcohol,
@@ -97,7 +97,7 @@ final class DrinkUploadViewModel: ObservableObject {
 		}
 	}
 	
-	private func fetchImagesURL<T: RawDrink>(drinkData: [T], imagesURL: inout [URL?]) async {
+	private func fetchImagesURL<T: RawDrink>(drinkData: [T]) async -> [URL?] {
 		await withTaskGroup(of: (Int, URL?).self) { group in
 			for (index, drink) in drinkData.enumerated() {
 				group.addTask {
@@ -117,7 +117,7 @@ final class DrinkUploadViewModel: ObservableObject {
 			for await downloadURL in group {
 				result.append(downloadURL)
 			}
-			imagesURL = result.sorted(by: { $0.0 < $1.0 }).map { $0.1 }
+			return result.sorted(by: { $0.0 < $1.0 }).map { $0.1 }
 		}
 	}
 	
