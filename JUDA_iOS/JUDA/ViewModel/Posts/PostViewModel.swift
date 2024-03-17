@@ -162,10 +162,13 @@ extension PostViewModel {
 // MARK: - Delete
 extension PostViewModel {
     // post 삭제
-    func deletePost(postID: String) async {
+	func deletePost(userID: String, postID: String) async {
         do {
             let documentRef = db.collection(postCollection).document(postID)
+			// root post document 삭제 후
             try await firestorePostService.deletePostDocument(document: documentRef)
+			// 연관된 document 삭제
+			firestorePostService.deleteRelatedPostDocument(userID: userID, postID: postID)
         } catch {
             print("error :: deletePost", error.localizedDescription)
         }

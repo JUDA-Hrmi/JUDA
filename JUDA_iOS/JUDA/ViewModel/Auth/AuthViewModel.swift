@@ -442,6 +442,8 @@ extension AuthViewModel {
         do {
             guard try getProviderOptionString() == AuthProviderOption.apple.rawValue else { return false }
             try await firebaseAuthService.deleteAccountWithApple()
+			let uid = try checkCurrentUserID()
+			firebaseAuthService.deleteUserData(uid: uid)
             resetData()
             isLoading = false
             return true
@@ -495,5 +497,12 @@ extension AuthViewModel {
     // 회원탈퇴 - Google
     func deleteGoogleAccount() {
         // TODO: - 구글 탈퇴 추가
+		do {
+			let uid = try checkCurrentUserID()
+			firebaseAuthService.deleteUserData(uid: uid)
+		} catch {
+			print("error :: \(error.localizedDescription)")
+			errorMessage = "회원탈퇴에 문제가 발생했어요.\n다시 시도해주세요."
+		}
     }
 }
