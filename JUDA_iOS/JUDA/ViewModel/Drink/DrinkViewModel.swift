@@ -23,7 +23,7 @@ final class DrinkViewModel: ObservableObject {
     // 로딩 중 - Shimmer Drink List / Grid Cell
     @Published var isLoading: Bool = true
     // 검색 중 -
-    @Published var isSearching: Bool = true
+    @Published var isSearching: Bool = false
     // pagination 을 위한, 이전 load의 마지막 체크
     private var lastSnapshot: QueryDocumentSnapshot?
     // pagination 할 documet 개수

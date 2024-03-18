@@ -39,7 +39,7 @@ struct LikedPostGrid: View {
 }
 
 // MARK: - 스크롤 뷰 or 뷰 로 보여질 술상 그리드
-struct LikedPostGridContent: View {
+private struct LikedPostGridContent: View {
     @EnvironmentObject private var authViewModel: AuthViewModel
 
     // 술상 그리드 셀 2개 column
@@ -55,8 +55,7 @@ struct LikedPostGridContent: View {
                                     post: post,
                                     usedTo: .liked)) {
                         PostCell(usedTo: .liked, post: post)
-                    }
-                                    .buttonStyle(EmptyActionStyle())
+                    }.buttonStyle(EmptyActionStyle())
                 }
             }
             .padding(.horizontal, 20)
