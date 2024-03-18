@@ -7,17 +7,6 @@
 
 import SwiftUI
 
-// MARK: - 어느 뷰에서 PostGridContent 이 사용되는지 enum
-enum WhereUsedPostGridContent {
-    case post
-    case postSearch
-	case postFoodTag
-    case drinkDetail
-    case liked
-    case myPage
-    case main
-}
-
 // MARK: - 스크롤 뷰 or 뷰 로 보여질 post grid
 struct PostGrid: View {
 	@EnvironmentObject private var postViewModel: PostViewModel

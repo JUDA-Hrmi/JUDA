@@ -7,14 +7,6 @@
 
 import SwiftUI
 
-// MARK: - 찜 세그먼트 enum
-enum LikedType: String, CaseIterable {
-    case drink = "술찜 리스트"
-    case post = "술상 리스트"
-    // 리스트
-    static let list: [LikedType] = LikedType.allCases
-}
-
 // MARK: - 하트 누른 술 + 술상 볼 수 있는 탭
 struct LikedView: View {
     @StateObject private var navigationRouter = NavigationRouter()

@@ -7,25 +7,6 @@
 
 import SwiftUI
 
-// MARK: - 그리드 or 리스트 enum
-enum DrinkInfoLayoutOption: String, CaseIterable {
-    case gridStyle = "grid.style"
-    case listStyle = "list.style"
-    // 리스트
-    static let list: [DrinkInfoLayoutOption] = DrinkInfoLayoutOption.allCases
-}
-
-// MARK: - 술 정렬 Option enum
-enum DrinkSortType: String, CaseIterable {
-    case popularity = "인기순"
-    case highAlcoholContent = "도수 높은 순"
-    case lowAlcoholContent = "도수 낮은 순"
-    case highPrice = "가격 높은 순"
-    case lowPrice = "가격 낮은 순"
-    // 리스트
-    static let list: [DrinkSortType] = DrinkSortType.allCases
-}
-
 // MARK: - 술장 탭
 struct DrinkInfoView: View {
     @StateObject private var navigationRouter = NavigationRouter()

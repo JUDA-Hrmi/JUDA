@@ -9,13 +9,6 @@ import Foundation
 import FirebaseCore
 import FirebaseFirestore
 
-enum Age: String, CaseIterable {
-	case twenty = "20"
-	case thirty = "30"
-	case fourty = "40"
-	case fifty = "50"
-}
-
 @MainActor
 final class FirestoreDrinkService {
     // Firestore Post Service

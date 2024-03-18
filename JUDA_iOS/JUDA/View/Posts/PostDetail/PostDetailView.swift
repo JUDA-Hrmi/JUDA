@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-enum PostUserType {
-	case writter, reader
-}
-
 // MARK: - 술상 디테일 화면
 struct PostDetailView: View {
     @EnvironmentObject private var navigationRouter: NavigationRouter

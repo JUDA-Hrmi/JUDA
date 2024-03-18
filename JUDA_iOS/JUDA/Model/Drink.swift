@@ -8,17 +8,6 @@
 import Foundation
 import FirebaseFirestore
 
-// MARK: - 술의 카테고리
-enum DrinkType: String, CaseIterable {
-    case all = "전체"
-    case traditional = "우리술"
-    case beer = "맥주"
-    case wine = "와인"
-    case whiskey = "위스키"
-    // 리스트
-    static let list: [DrinkType] = DrinkType.allCases
-}
-
 struct Drink {
 	let drinkField: DrinkField
 	let taggedPosts: [Post]

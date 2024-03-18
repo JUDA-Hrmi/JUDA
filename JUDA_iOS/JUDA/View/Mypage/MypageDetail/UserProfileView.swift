@@ -9,10 +9,6 @@ import SwiftUI
 import PhotosUI
 import Kingfisher
 
-enum UserType {
-    case user, otherUser
-}
-
 // MARK: - 유저 프로필 (사진, 닉네임, 닉네임 수정)
 struct UserProfileView: View {
     @EnvironmentObject private var authViewModel: AuthViewModel

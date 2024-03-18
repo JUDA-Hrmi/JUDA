@@ -8,27 +8,6 @@
 import SwiftUI
 import PhotosUI
 
-// MARK: - 프로필 사진 및 정보 작성 뷰에서 사용될 focusField enum
-enum ProfileSettingFocusField: Hashable {
-    case name
-    case birth
-}
-
-// MARK: - 성별 enum
-enum Gender: String, CaseIterable {
-    case male = "male"
-    case female = "female"
-    
-    var koreanString: String {
-        switch self {
-        case .male: "남성"
-        case .female: "여성"
-        }
-    }
-    // 리스트
-    static let list: [Gender] = Gender.allCases
-}
-
 // MARK: - 신규 유저의 경우, 프로필 사진 및 정보 작성 뷰
 struct ProfileSettingView: View {
     @EnvironmentObject private var navigationRouter: NavigationRouter

@@ -19,6 +19,7 @@
 		093357C92B954A8A00A9ACAB /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 093357C82B954A8A00A9ACAB /* GoogleSignIn */; };
 		093357CB2B954A8A00A9ACAB /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 093357CA2B954A8A00A9ACAB /* GoogleSignInSwift */; };
 		093357CF2B95505E00A9ACAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093357CE2B95505B00A9ACAB /* AppDelegate.swift */; };
+		094D07F82BA7C2F200904E73 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094D07F72BA7C2F200904E73 /* Constants.swift */; };
 		095D708D2B98200B00F76C11 /* FirebaseUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095D708C2B98200B00F76C11 /* FirebaseUserService.swift */; };
 		095D70912B99BD1400F76C11 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095D70902B99BD1400F76C11 /* UserViewModel.swift */; };
 		095D70932B99EAA500F76C11 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095D70922B99EAA500F76C11 /* MainViewModel.swift */; };
@@ -187,6 +188,7 @@
 		093357B72B8DCA5500A9ACAB /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		093357B92B8E120200A9ACAB /* ErrorPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPageView.swift; sourceTree = "<group>"; };
 		093357CE2B95505B00A9ACAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		094D07F72BA7C2F200904E73 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		095D708C2B98200B00F76C11 /* FirebaseUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserService.swift; sourceTree = "<group>"; };
 		095D70902B99BD1400F76C11 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		095D70922B99EAA500F76C11 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -499,6 +501,7 @@
 			isa = PBXGroup;
 			children = (
 				09BCC1482B7C7E1500FF4D1B /* Lottie */,
+				094D07F72BA7C2F200904E73 /* Constants.swift */,
 				09A6AD7D2B72A53C00606585 /* Errors.swift */,
 				B12BEE4E2B6B7BDA00580D29 /* Handler.swift */,
 				7B6D76A62B677A8F00601B55 /* Button.swift */,
@@ -710,8 +713,8 @@
 			isa = PBXGroup;
 			children = (
 				093357B72B8DCA5500A9ACAB /* MyPageView.swift */,
-				B1198F9F2B84EAF3002BE0DE /* UnauthenticatedMypageView.swift */,
 				B1EE24872B61445E007F68B0 /* AuthenticatedMypageView.swift */,
+				B1198F9F2B84EAF3002BE0DE /* UnauthenticatedMypageView.swift */,
 				B12330482B6A99B400DE2A93 /* SettingView.swift */,
 				AC5778E42B6FC20C00F7B04B /* NavigationProfileView.swift */,
 				B123304A2B6A99C200DE2A93 /* MypageDetail */,
@@ -975,6 +978,7 @@
 				093357BA2B8E120200A9ACAB /* ErrorPageView.swift in Sources */,
 				7B92656B2B692E7200840095 /* PostReportTitle.swift in Sources */,
 				090FF1C72B80A0C600AF22B5 /* SplashView.swift in Sources */,
+				094D07F82BA7C2F200904E73 /* Constants.swift in Sources */,
 				AC7EA1DB2B8D7D5000E3E5EC /* LocationManager.swift in Sources */,
 				095D70972B99F35D00F76C11 /* Weather.swift in Sources */,
 				093357CF2B95505E00A9ACAB /* AppDelegate.swift in Sources */,

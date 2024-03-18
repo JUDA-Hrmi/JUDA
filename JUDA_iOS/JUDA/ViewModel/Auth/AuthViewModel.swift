@@ -13,19 +13,6 @@ import GoogleSignIn
 import CryptoKit
 import AuthenticationServices
 
-// MARK: - Auth Provider Option
-enum AuthProviderOption: String {
-    case apple = "apple.com"
-    case google = "google.com"
-    case email = "password"
-}
-
-// MARK: - User Liked List (Posts / Drinks) Type
-enum UserLikedListType: String {
-    case posts = "likedPosts"
-    case drinks = "likedDrinks"
-}
-
 // MARK: - Auth ( 로그인 / 로그아웃 / 탈퇴 / 본인 계정 )
 @MainActor
 final class AuthViewModel: ObservableObject {
