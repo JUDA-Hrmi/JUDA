@@ -34,7 +34,7 @@ struct ChangeUserNameView: View {
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled() // 자동 수정 비활성화
                 .onChange(of: userChangeNickName) { _ in
-                    checkIsCompleted()
+                    isCompleted = authViewModel.isChangeUserName(changeName: userChangeNickName)
                 }
                 Spacer()
                 // 텍스트 한번에 지우는 xmark 버튼
@@ -111,9 +111,5 @@ struct ChangeUserNameView: View {
             }
         }
         .tint(.mainBlack)
-    }
-    
-    private func checkIsCompleted() {
-        isCompleted = userChangeNickName.count >= 2 && userChangeNickName.count <= 10 && authViewModel.currentUser?.userField.name != userChangeNickName
     }
 }

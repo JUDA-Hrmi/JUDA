@@ -12,6 +12,7 @@ import FirebaseAuth
 import GoogleSignIn
 import CryptoKit
 import AuthenticationServices
+import _PhotosUI_SwiftUI
 
 // MARK: - Auth ( 로그인 / 로그아웃 / 탈퇴 / 본인 계정 )
 @MainActor
@@ -116,6 +117,28 @@ final class AuthViewModel: ObservableObject {
         }
         if UIApplication.shared.canOpenURL(settingsURL) {
             UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
+        }
+    }
+    
+    // MyPage / Setting 에서 사용
+    // 유저 닉네임 수정 시, 2글자 이상 10글자 이하 && 기존 닉네임과 같은지 체크
+    func isChangeUserName(changeName: String) -> Bool {
+        guard let user = currentUser else {
+            return false
+        }
+        return changeName.count >= 2 && changeName.count <= 10 && user.userField.name != changeName
+    }
+    
+    // 유저 프로핗 사진 변경 시, 사용되는 메서드
+    func updateImage(selectedPhotos: [PhotosPickerItem]) async throws -> UIImage {
+        guard let selectedPhoto = selectedPhotos.first else {
+            throw PhotosPickerImageLoadingError.noSelectedPhotos
+        }
+        if let data = try await selectedPhoto.loadTransferable(type: Data.self),
+           let uiImage = UIImage(data: data) {
+            return uiImage
+        } else {
+            throw PhotosPickerImageLoadingError.invalidImageData
         }
     }
     
@@ -501,7 +524,7 @@ extension AuthViewModel {
     private func deleteGoogleAccount() async -> Bool {
         do {
             guard try getProviderOptionString() == AuthProviderOption.google.rawValue else { return false }
-            // TODO: - 탈퇴 로직 필요
+            try await firebaseAuthService.deleteAccountWithGoogle()
             resetData()
             return true
         } catch {

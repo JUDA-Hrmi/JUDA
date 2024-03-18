@@ -59,7 +59,9 @@ struct UserProfileView: View {
                             .onChange(of: selectedPhotos) { _ in
                                 Task {
                                     do {
-                                        try await updateImage()
+                                        let uiImage = try await authViewModel.updateImage(selectedPhotos: selectedPhotos)
+                                        self.selectedImage = uiImage
+                                        await authViewModel.uploadProfileImageToStorage(image: uiImage)
                                     } catch {
                                         // 이미지 로드 실패 alert 띄워주기
                                         showAlert = true
@@ -92,24 +94,10 @@ struct UserProfileView: View {
             .padding(.vertical, 10)
         }
     }
-    
-    private func updateImage() async throws {
-        guard let selectedPhoto = selectedPhotos.first else {
-            return
-        }
-        do {
-            guard let data = try await selectedPhoto.loadTransferable(type: Data.self) else { return }
-            guard let uiImage = UIImage(data: data) else { return }
-            self.selectedImage = uiImage
-            await authViewModel.uploadProfileImageToStorage(image: uiImage)
-        } catch {
-            throw PhotosPickerImageLoadingError.invalidImageData
-        }
-    }
 }
 
 // MARK: - UserProfileView 의 이미지 프로필에서 사용하는 KFImage
-struct UserProfileKFImage: View {
+private struct UserProfileKFImage: View {
     let url: URL
     let userType: UserType
     let selectedImage: UIImage

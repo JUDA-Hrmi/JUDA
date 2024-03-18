@@ -36,7 +36,7 @@ struct AppServiceInfoView: View {
 }
 
 // MARK: - url에 해당하는 Safari 뷰로 연결
-struct SafariView: UIViewControllerRepresentable {
+private struct SafariView: UIViewControllerRepresentable {
     let url: URL
 
     func makeUIViewController(context: UIViewControllerRepresentableContext<SafariView>) -> SFSafariViewController {

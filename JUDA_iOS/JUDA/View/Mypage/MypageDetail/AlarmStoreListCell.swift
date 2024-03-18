@@ -27,13 +27,13 @@ struct AlarmStoreListCell: View {
                 .multilineTextAlignment(.leading)
                 .foregroundStyle(.mainBlack)
                 .overlay(alignment: .topLeading) {
-                    // TODO: userName 클릭 시, NavigationProfileView로 이동
-//                    NavigationLink(value: Route.NavigationProfile) {
+                    NavigationLink(value: Route.NavigationProfile(userID: alarm.userNotificationID ?? "",
+                                                                  usedTo: .myPage)) {
                         Text(alarm.notificationField.likedUser.userName)
                             .font(.medium14)
                             .foregroundStyle(.mainBlack)
-//                    }
-//                    .buttonStyle(EmptyActionStyle())
+                    }
+                    .buttonStyle(EmptyActionStyle())
                 }
                 // 알람 왔던 시기
                 Text(Formatter.formattedDateBeforeStyle(pastDate: alarm.notificationField.likedTime))
@@ -65,10 +65,6 @@ struct AlarmStoreListCell: View {
                     .clipShape(.rect(cornerRadius: 5))
             }
         }
-//        .navigationDestination(for: Route.self) { _ in
-            // NavigationProfile
-//            EmptyView()
-//        }
         .padding(.horizontal, 10)
         .frame(maxWidth: .infinity, maxHeight: 80, alignment: .leading)
         .padding(.horizontal, 20)

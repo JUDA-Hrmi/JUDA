@@ -41,7 +41,7 @@ struct MyPageView: View {
                 case .Notice:
                     NoticeView()
                 case .NavigationProfile(let userID,
-                                      let usedTo):
+                                        let usedTo):
                     NavigationProfileView(userID: userID,
                                           usedTo: usedTo)
                 case .Record(let recordType):
