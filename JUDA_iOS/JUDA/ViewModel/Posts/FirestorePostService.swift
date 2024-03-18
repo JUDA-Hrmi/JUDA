@@ -6,11 +6,13 @@
 //
 
 import Foundation
-import FirebaseCore
 import FirebaseFirestore
+import FirebaseFunctions
 
 @MainActor
-final class FirestorePostService {}
+final class FirestorePostService {
+	lazy var functions = Functions.functions()
+}
 
 // MARK: - Firestore post fetch
 extension FirestorePostService {
@@ -126,6 +128,22 @@ extension FirestorePostService {
 			print("error :: deletePostDocument() -> delete post document data failure")
 			print(error.localizedDescription)
 			throw PostError.delete
+		}
+	}
+}
+
+// MARK: Cloud Funtion post related document delete
+extension FirestorePostService {
+	func deleteRelatedPostDocument(userID: String, postID: String) {
+		let reqData = [
+			"userID": userID,
+			"postID": postID
+		]
+		
+		functions.httpsCallable("posts_single_post_delete").call(reqData) { _, error in
+			if let error = error as NSError? {
+				print("error :: deleteRelatedPostDocument", error.localizedDescription)
+			}
 		}
 	}
 }

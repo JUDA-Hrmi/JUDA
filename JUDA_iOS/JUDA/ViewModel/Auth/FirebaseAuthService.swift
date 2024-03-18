@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseCore
 import FirebaseFirestore
+import FirebaseFunctions
 import FirebaseAuth
 import AuthenticationServices
 
@@ -19,6 +20,8 @@ final class FirebaseAuthService {
     private let userCollection = "users"
     // 실시간 반영을 위한 리스너
     private var listener: ListenerRegistration?
+	// Cloud Function 연결
+	lazy var functions = Functions.functions()
     
     // firestore 에 유저 존재 유무 체크
     func isNewUser(uid: String) async -> Bool {
@@ -161,3 +164,16 @@ extension FirebaseAuthService {
 
 // MARK: - 회원 탈퇴 ( Google )
 extension FirebaseAuthService { }
+
+// MARK: - 회원 탈퇴 (Cloud Function)
+extension FirebaseAuthService {
+	func deleteUserData(uid: String) {
+		let reqData = ["userID": uid]
+		
+		functions.httpsCallable("delete_user_data").call(reqData) { _, error in
+			if let error = error as NSError? {
+				print("error :: deleteUserData", error.localizedDescription)
+			}
+		}
+	}
+}
