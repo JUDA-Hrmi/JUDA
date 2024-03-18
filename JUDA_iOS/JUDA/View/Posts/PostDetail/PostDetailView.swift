@@ -16,6 +16,7 @@ struct PostDetailView: View {
     @EnvironmentObject private var navigationRouter: NavigationRouter
     @EnvironmentObject private var authViewModel: AuthViewModel
     @EnvironmentObject private var postViewModel: PostViewModel
+    @EnvironmentObject private var recordViewModel: RecordViewModel
 	
     @State private var shareImage: Image = Image("AppIcon") // shareLink 용 이미지
 
@@ -95,15 +96,17 @@ struct PostDetailView: View {
 						Image(systemName: "square.and.arrow.up")
 					}
 				}
-//				ToolbarItem(placement: .topBarTrailing) {
-//                    // TODO: NavigationLink - value 로 수정
-//					NavigationLink {
-//                        RecordView(recordType: RecordType.edit)
-//					} label: {
-//						Image(systemName: "pencil")
-//					}
-//				}
+                ToolbarItem(placement: .topBarTrailing) {
+                    // 게시글 수정하기
+                    NavigationLink(value: Route.Record(recordType: .edit)) {
+                        Image(systemName: "pencil")
+                            .task {
+                                recordViewModel.post = post
+                            }
+                    }
+                }
 				ToolbarItem(placement: .topBarTrailing) {
+                    // 게시글 삭제하기
 					Button {
 						isDeleteDialogPresented = true
 					} label: {
@@ -125,6 +128,7 @@ struct PostDetailView: View {
                     }
 				}
 				ToolbarItem(placement: .topBarTrailing) {
+                    // 게시글 신고하기
 					Button {
 						// 버튼 탭 할 경우 신고뷰 출력
 						isReportPresented = true

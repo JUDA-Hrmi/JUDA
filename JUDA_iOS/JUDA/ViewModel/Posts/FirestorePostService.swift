@@ -18,11 +18,16 @@ final class FirestorePostService {
 extension FirestorePostService {
     // Post 리스트를 가져오는 함수
     // Post 를 단일로 가져오는 firestorePostViewModel 의 fetchPostDocument 을 사용.
-    func fetchPostCollection(collection: CollectionReference) async throws -> [Post] {
+    func fetchPostCollection(collection: CollectionReference, query: Query? = nil) async throws -> [Post] {
         do {
             var result = [Post]()
+            var snapshot: QuerySnapshot
             // Post 가져오는 코드 - FirestorePostViewModel
-            let snapshot = try await collection.getDocuments()
+            if let query = query {
+                snapshot = try await query.getDocuments()
+            } else {
+                snapshot = try await collection.getDocuments()
+            }
             for document in snapshot.documents {
                 let id = document.documentID
                 let documentRef = collection.document(id)
@@ -35,7 +40,7 @@ extension FirestorePostService {
             throw PostError.collectionFetch
         }
     }
-    
+
 	// posts collection의 post document data 불러오는 메서드
 	// 불러오지 못 할 수 경우 error throw
 	func fetchPostDocument(document: DocumentReference) async throws -> Post {

@@ -13,6 +13,7 @@ struct PostsView: View {
 	@EnvironmentObject private var appViewModel: AppViewModel
 	@EnvironmentObject private var authViewModel: AuthViewModel
 	@EnvironmentObject private var postViewModel: PostViewModel
+    @EnvironmentObject private var recordViewModel: RecordViewModel
 	
     @State private var postSearchText: String = ""
     
@@ -192,6 +193,7 @@ struct PostsView: View {
 			}
 			.onAppear {
 				appViewModel.tabBarState = .visible
+                recordViewModel.recordPostDataClear()
 			}
 		}
         .environmentObject(navigationRouter)

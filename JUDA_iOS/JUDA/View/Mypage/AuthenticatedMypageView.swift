@@ -12,6 +12,7 @@ import FirebaseAuth
 struct AuthenticatedMypageView: View {
     @EnvironmentObject private var appViewModel: AppViewModel
     @EnvironmentObject private var authViewModel: AuthViewModel
+    @EnvironmentObject private var recordViewModel: RecordViewModel
     
     var body: some View {
         VStack {
@@ -69,6 +70,7 @@ struct AuthenticatedMypageView: View {
         .foregroundStyle(.mainBlack)
         .onAppear {
             appViewModel.tabBarState = .visible
+            recordViewModel.recordPostDataClear()
             Task {
                 await authViewModel.startListeningForUserField()
             }

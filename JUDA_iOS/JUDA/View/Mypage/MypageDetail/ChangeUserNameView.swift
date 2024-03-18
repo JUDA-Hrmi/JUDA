@@ -86,7 +86,7 @@ struct ChangeUserNameView: View {
                     .padding(.vertical, 5)
                 
             }
-            .disabled(isCompleted)
+            .disabled(!isCompleted)
             .foregroundColor(isCompleted ? .white : .gray01)
             .buttonStyle(.borderedProminent)
             .tint(.mainAccent03)

@@ -26,11 +26,16 @@ final class FirestoreDrinkService {
 extension FirestoreDrinkService {
     // Drink 리스트를 가져오는 함수
     // Drink 를 단일로 가져오는 firestoreDrinkViewModel 의 fetchDrinkDocument 을 사용.
-    func fetchDrinkCollection(collection: CollectionReference) async throws -> [Drink] {
+    func fetchDrinkCollection(collection: CollectionReference, query: Query? = nil) async throws -> [Drink] {
         do {
             var result = [Drink]()
+            var snapshot: QuerySnapshot
             // Drink 가져오는 코드 - FirestoreDrinkViewModel
-            let snapshot = try await collection.getDocuments()
+            if let query = query {
+                snapshot = try await query.getDocuments()
+            } else {
+                snapshot = try await collection.getDocuments()
+            }
             for document in snapshot.documents {
                 let id = document.documentID
                 let documentRef = collection.document(id)
@@ -177,14 +182,12 @@ extension FirestoreDrinkService {
 // MARK: Firestore drink field data update
 extension FirestoreDrinkService {
 	// drinks collection field data update 메서드
-	func updateDrinkField(ref: CollectionReference, drinkID: String, data: [String: Any]) async -> Bool {
+	func updateDrinkField(ref: CollectionReference, drinkID: String, data: [String: Any]) async {
 		do {
 			try await ref.document(drinkID).updateData(data)
-			return true
 		} catch {
 			print("error :: drinkFieldUpdate() -> update drink field data failure")
 			print(error.localizedDescription)
-			return false
 		}
 	}
 }

@@ -19,11 +19,11 @@ struct MainView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     // 날씨와 어울리는 술 + 안주
-                    WeatherAndFood()
+//                    WeatherAndFood()
                     // 오늘의 술장 Top3
-                    DrinkTopView()
+//                    DrinkTopView()
                     // 오늘의 술상 Top3
-                    PostTopView()
+//                    PostTopView()
                 }
                 .padding(.bottom, 15)
             }

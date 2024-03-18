@@ -47,6 +47,16 @@ final class RecordViewModel: ObservableObject {
     // Firestore db 연결
     private let db = Firestore.firestore()
 
+    // MARK: - post Data 초기화
+    func recordPostDataClear() {
+        post = nil
+        drinkTags = []
+        selectedImages = []
+        content = ""
+        foodTags = []
+        postID = ""
+    }
+
     // MARK: - 글 내용 유무 체크
     func checkPostContentIsEmpty() {
         let trimmedString = content.trimmingCharacters(in: .whitespacesAndNewlines) // 공백 + 개행문자 제외
@@ -54,18 +64,24 @@ final class RecordViewModel: ObservableObject {
     }
 
     // MARK: - 게시글 작성
-    func postUpload(user: User) async {
-        guard let userID = user.userField.userID, !userID.isEmpty else { return }
+    func uploadPost(user: User?) async {
+//        guard let userID = user.userField.userID, !userID.isEmpty else { return }
         // loadingView 띄우기
         isPostUploading = true
         // postID 생성
         postID = UUID().uuidString
         // writtenUser 모델 객체 생성
-        writtenUser = WrittenUser(userID: userID,
-                                  userName: user.userField.name,
-                                  userAge: user.userField.age,
-                                  userGender: user.userField.gender,
-                                  userProfileImageURL: user.userField.profileImageURL)
+//        writtenUser = WrittenUser(userID: userID,
+//                                  userName: user.userField.name,
+//                                  userAge: user.userField.age,
+//                                  userGender: user.userField.gender,
+//                                  userProfileImageURL: user.userField.profileImageURL)
+        
+        writtenUser = WrittenUser(userID: "sampleUserID",
+                                  userName: "sampleUserName",
+                                  userAge: 20,
+                                  userGender: "female",
+                                  userProfileImageURL: nil)
         
         
         if let writtenUser = writtenUser {
@@ -91,21 +107,19 @@ final class RecordViewModel: ObservableObject {
     }
     
     // MARK: - 게시글 수정
-    func postUpdate() async {
+    func updatePost() async {
         guard let postID = post?.postField.postID else { return }
         // loadingView 띄우기
         isPostUploading = true
         // post 업데이트
         await editPostToFirestore(postID: postID, content: content, foodTags: foodTags)
-        //
-        recordPostDataClear()
         // loadingView 없애기
         isPostUploading = false
     }
     
     // MARK: - FireStroage post 이미지 업로드 및 이미지 URL 받아오기
     func uploadMultipleImagesToFirebaseStorageAsync() async {
-        guard let user = writtenUser else { return }
+//        guard let user = writtenUser else { return }
         do {
             // 결과를 받을 배열 생성
             var downloadURLs: [(Int, URL)] = []
@@ -116,7 +130,8 @@ final class RecordViewModel: ObservableObject {
                     // 각 이미지 데이터에 대해 비동기 업로드 작업 실행 및 배열에 추가
                     group.addTask {
                         // storage 폴더링을 위한 userID
-                        let userID = user.userID
+//                        let userID = user.userID
+                        let userID = "sampleUserID"
                         // image fileName 생성
                         let imageID = UUID().uuidString
                         // storage에 이미지 업로드
@@ -175,9 +190,10 @@ final class RecordViewModel: ObservableObject {
         }
     }
     
-    // MARK: - Firestore drink 업로드
+    // MARK: - Firestore drink 업데이트
     func updateDrinkToFirestore() async {
-        guard let post = post, let user = writtenUser else { return }
+        guard let user = writtenUser else { return }
+        print("writtenUser 정보가 있다...????: ", user)
         do {
             let drinkRef = db.collection("drinks")
             for drinkTag in drinkTags {
@@ -215,8 +231,7 @@ final class RecordViewModel: ObservableObject {
                 let rating = calcDrinkRating(prev: prev, new: new, count: count)
                 
                 // Drink rating update
-                // TODO: return 값 처리
-                let result = await firestoreDrinkService.updateDrinkField(ref: drinkRef, drinkID: drinkID, data: ["rating": rating])
+                await firestoreDrinkService.updateDrinkField(ref: drinkRef, drinkID: drinkID, data: ["rating": rating])
             }
         } catch DrinkError.fetchDrinkDocument {
             print("error :: updateDrinkField() -> update drink data to Firestore failure")
@@ -228,15 +243,5 @@ final class RecordViewModel: ObservableObject {
     // 기존 rating을 받아서 새로 계산
     private func calcDrinkRating(prev: Double, new: Double, count: Int) -> Double {
         return (prev * Double(count) + new) / (Double(count) + 1)
-    }
-    
-    // MARK: - post Data 초기화
-    private func recordPostDataClear() {
-        post = nil
-        drinkTags = []
-        selectedImages = []
-        content = ""
-        foodTags = []
-        postID = ""
     }
 }
