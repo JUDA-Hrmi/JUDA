@@ -16,36 +16,49 @@ final class DrinkUploadViewModel: ObservableObject {
 	func decodeJsonUploadFirestore() async {
 		var drinks: [DrinkField] = []
 		for drinkType in DrinkJsonType.allCases {
-			if let drinkData = await mapFirebaseDrink(drinkType: drinkType) {
+			if let drinkData = await mapFirebaseDrink(drinkJsonType: drinkType) {
 				drinks.append(contentsOf: drinkData)
 			}
 		}
 		drinkDataUpload(drinkData: drinks)
 	}
 	
-	private func jsonLoad(drinkType: DrinkJsonType) -> Data? {
-		guard let jsonLocation = Bundle.main.url(forResource: drinkType.jsonName, withExtension: "json") else { return nil }
+	private func jsonLoad(drinkJsonType: DrinkJsonType) -> Data? {
+		guard let jsonLocation = Bundle.main.url(forResource: drinkJsonType.jsonName, withExtension: "json") else { return nil }
 		do {
 			let data = try Data(contentsOf: jsonLocation)
 			return data
 		} catch {
-			print("error:: \(drinkType.jsonName) jsonLoad")
+			print("error:: \(drinkJsonType.jsonName) jsonLoad")
 			return nil
 		}
 	}
 	
-	private func mapFirebaseDrink(drinkType: DrinkJsonType) async -> [DrinkField]? {
-		guard let jsonData = jsonLoad(drinkType: drinkType) else { return nil }
+	private func getDrinkType(drinkJsonType: DrinkJsonType) -> DrinkType {
+		switch drinkJsonType {
+		case .beer:
+			return .beer
+		case .wine:
+			return .wine
+		case .traditional:
+			return .traditional
+		case .whiskey:
+			return .whiskey
+		}
+	}
+	
+	private func mapFirebaseDrink(drinkJsonType: DrinkJsonType) async -> [DrinkField]? {
+		guard let jsonData = jsonLoad(drinkJsonType: drinkJsonType) else { return nil }
 		
 		var imagesURL = [URL?]()
 		
-		switch drinkType {
+		switch drinkJsonType {
 		case .beer:
 			guard let drinkData = try? JSONDecoder().decode([RawBeer].self, from: jsonData) else {
-				print("error decoding \(drinkType)")
+				print("error decoding \(drinkJsonType)")
 				return nil
 			}
-			imagesURL = await fetchImagesURL(drinkData: drinkData)
+			imagesURL = await fetchImagesURL(drinkJsonType: drinkJsonType, drinkData: drinkData)
 			return drinkData.enumerated().map {
 				return DrinkField(drinkImageURL: imagesURL[$0.offset], category: $0.element.category, type: $0.element.type,
 								  name: $0.element.name, amount: $0.element.amount, price: $0.element.price, alcohol: $0.element.alcohol,
@@ -55,10 +68,10 @@ final class DrinkUploadViewModel: ObservableObject {
 			}
 		case .traditional:
 			guard let drinkData = try? JSONDecoder().decode([RawTraditional].self, from: jsonData) else {
-				print("error decoding \(drinkType)")
+				print("error decoding \(drinkJsonType)")
 				return nil
 			}
-			imagesURL = await fetchImagesURL(drinkData: drinkData)
+			imagesURL = await fetchImagesURL(drinkJsonType: drinkJsonType, drinkData: drinkData)
 			return drinkData.enumerated().map {
 				return DrinkField(drinkImageURL: imagesURL[$0.offset], category: $0.element.category, type: $0.element.type,
 								  name: $0.element.name, amount: $0.element.amount, price: $0.element.price, alcohol: $0.element.alcohol,
@@ -69,10 +82,10 @@ final class DrinkUploadViewModel: ObservableObject {
 			}
 		case .whiskey:
 			guard let drinkData = try? JSONDecoder().decode([RawWhiskey].self, from: jsonData) else {
-				print("error decoding \(drinkType)")
+				print("error decoding \(drinkJsonType)")
 				return nil
 			}
-			imagesURL = await fetchImagesURL(drinkData: drinkData)
+			imagesURL = await fetchImagesURL(drinkJsonType: drinkJsonType, drinkData: drinkData)
 			return drinkData.enumerated().map {
 				return DrinkField(drinkImageURL: imagesURL[$0.offset], category: $0.element.category, type: $0.element.type,
 								  name: $0.element.name, amount: $0.element.amount, price: $0.element.price, alcohol: $0.element.alcohol,
@@ -82,10 +95,10 @@ final class DrinkUploadViewModel: ObservableObject {
 			}
 		case .wine:
 			guard let drinkData = try? JSONDecoder().decode([RawWine].self, from: jsonData) else {
-				print("error decoding \(drinkType)")
+				print("error decoding \(drinkJsonType)")
 				return nil
 			}
-			imagesURL = await fetchImagesURL(drinkData: drinkData)
+			imagesURL = await fetchImagesURL(drinkJsonType: drinkJsonType, drinkData: drinkData)
 			return drinkData.enumerated().map {
 				return DrinkField(drinkImageURL: imagesURL[$0.offset], category: $0.element.category, type: $0.element.type,
 								  name: $0.element.name, amount: $0.element.amount, price: $0.element.price, alcohol: $0.element.alcohol,
@@ -97,14 +110,20 @@ final class DrinkUploadViewModel: ObservableObject {
 		}
 	}
 	
-	private func fetchImagesURL<T: RawDrink>(drinkData: [T]) async -> [URL?] {
-		await withTaskGroup(of: (Int, URL?).self) { group in
+	private func fetchImagesURL<T: RawDrink>(drinkJsonType: DrinkJsonType, drinkData: [T]) async -> [URL?] {
+		let category = getDrinkType(drinkJsonType: drinkJsonType)
+		
+		return await withTaskGroup(of: (Int, URL?).self) { group in
 			for (index, drink) in drinkData.enumerated() {
 				group.addTask {
 					do {
-						// TODO: get image file name
-						let url = try await self.fireStorageService.fetchImageURL(folder: .drink, fileName: "")
-						return (index, url)
+						if let fileName = Formatter.getImageName(category: category, detailedCategory: drink.type) {
+							let url = try await self.fireStorageService.fetchImageURL(folder: .drink, fileName: "")
+							return (index, url)
+						} else {
+							print("error :: getImageName")
+							return (index, nil)
+						}
 					} catch {
 						print("error :: fetchImageURL", error.localizedDescription)
 						return (index, nil)
