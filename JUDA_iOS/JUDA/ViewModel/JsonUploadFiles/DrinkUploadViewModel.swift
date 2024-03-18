@@ -132,7 +132,6 @@ final class DrinkUploadViewModel: ObservableObject {
 			}
 			
 			var result = [(Int, URL?)]()
-			
 			for await downloadURL in group {
 				result.append(downloadURL)
 			}
