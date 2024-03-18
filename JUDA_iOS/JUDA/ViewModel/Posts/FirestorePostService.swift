@@ -11,7 +11,7 @@ import FirebaseFunctions
 
 @MainActor
 final class FirestorePostService {
-	lazy var funtions = Functions.functions()
+	lazy var functions = Functions.functions()
 }
 
 // MARK: - Firestore post fetch
@@ -140,7 +140,7 @@ extension FirestorePostService {
 			"postID": postID
 		]
 		
-		funtions.httpsCallable("posts_single_post_delete").call(reqData) { _, error in
+		functions.httpsCallable("posts_single_post_delete").call(reqData) { _, error in
 			if let error = error as NSError? {
 				print("error :: deleteRelatedPostDocument", error.localizedDescription)
 			}
