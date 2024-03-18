@@ -9,6 +9,7 @@ import SwiftUI
 import FirebaseCore
 import FirebaseFirestore
 import FirebaseAuth
+import GoogleSignIn
 import AuthenticationServices
 
 // MARK: - Firebase : Auth
@@ -160,4 +161,23 @@ extension FirebaseAuthService {
 }
 
 // MARK: - 회원 탈퇴 ( Google )
-extension FirebaseAuthService { }
+extension FirebaseAuthService {
+    // 회원탈퇴 - Google
+    func deleteAccountWithGoogle() async throws {
+        guard let user = Auth.auth().currentUser else {
+            throw AuthManagerError.noUser
+        }
+        let signInWithGoogleHelper = SignInWithGoogleHelper()
+        let token = try await signInWithGoogleHelper.signIn()
+        
+        let credential = GoogleAuthProvider.credential(
+            withIDToken: token.idToken,
+            accessToken: token.accessToken
+        )
+        try await user.reauthenticate(with: credential)
+        // 구글에서도 앱에 대한 연결 삭제
+        try await GIDSignIn.sharedInstance.disconnect()
+        // 삭제
+        try await user.delete()
+    }
+}

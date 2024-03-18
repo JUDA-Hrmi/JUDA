@@ -118,6 +118,27 @@ final class AuthViewModel: ObservableObject {
             UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
         }
     }
+    
+    // 회원 탈퇴 - authProviders 를 체크해서 apple or google 탈퇴 로직 수행
+    func deleteAccount() async -> Bool {
+        isLoading = true
+        guard let authProvider = currentUser?.userField.authProviders else {
+            return false
+        }
+        var result: Bool
+        // 애플 유저일때, 탈퇴 로직
+        if authProvider == AuthProviderOption.apple.rawValue {
+            result = await deleteAppleAccount()
+        // 구글 유저일때, 탈퇴 로직
+        } else if authProvider == AuthProviderOption.google.rawValue {
+            result = await deleteGoogleAccount()
+        // ?? - 예외
+        } else {
+            result = false
+        }
+        isLoading = false
+        return result
+    }
 }
 
 // MARK: - User Fetch
@@ -391,7 +412,7 @@ extension AuthViewModel {
                 if isNewUser {
                     signOut()
                     self.isNewUser = true
-                    print("Fisrt ✨ - Apple Sign Up 🍎")
+                    print("First ✨ - Apple Sign Up 🍎")
                 } else {
                     print("Apple Sign In 🍎")
                     await getCurrentUser()
@@ -425,18 +446,15 @@ extension AuthViewModel {
     }
     
     // 회원탈퇴 - Apple
-    func deleteAppleAccount() async -> Bool {
+    private func deleteAppleAccount() async -> Bool {
         do {
             guard try getProviderOptionString() == AuthProviderOption.apple.rawValue else { return false }
             try await firebaseAuthService.deleteAccountWithApple()
             resetData()
-            isLoading = false
             return true
         } catch {
-            print("error :: \(error.localizedDescription)")
+            print("error :: deleteAppleAccount", error.localizedDescription)
             errorMessage = "회원탈퇴에 문제가 발생했어요.\n다시 시도해주세요."
-            showError = true
-            isLoading = false
             return false
         }
     }
@@ -465,14 +483,14 @@ extension AuthViewModel {
             // 신규 유저
             if isNewUser {
                 self.isNewUser = true
-                print("Fisrt ✨ - Google Sign Up 🤖")
+                print("First ✨ - Google Sign Up 🤖")
             } else {
                 print("Google Sign In 🤖")
                 await getCurrentUser()
                 self.signInStatus = true
             }
         } catch {
-            print("error :: \(error.localizedDescription)")
+            print("error :: signInWithGoogle", error.localizedDescription)
             errorMessage = "로그인에 문제가 발생했어요.\n다시 시도해주세요."
             showError = true
             resetData()
@@ -480,7 +498,16 @@ extension AuthViewModel {
     }
     
     // 회원탈퇴 - Google
-    func deleteGoogleAccount() {
-        // TODO: - 구글 탈퇴 추가
+    private func deleteGoogleAccount() async -> Bool {
+        do {
+            guard try getProviderOptionString() == AuthProviderOption.google.rawValue else { return false }
+            // TODO: - 탈퇴 로직 필요
+            resetData()
+            return true
+        } catch {
+            print("error :: deleteGoogleAccount", error.localizedDescription)
+            errorMessage = "회원탈퇴에 문제가 발생했어요.\n다시 시도해주세요."
+            return false
+        }
     }
 }
