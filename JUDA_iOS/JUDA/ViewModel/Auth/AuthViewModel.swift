@@ -330,7 +330,7 @@ extension AuthViewModel {
                 userData: UserField(
                     name: name, age: age, gender: gender,
 					fcmToken: "", notificationAllowed: notification,
-                    profileImageURL: (currentUser?.userField.profileImageURL)!,
+                    profileImageURL: currentUser?.userField.profileImageURL,
                     authProviders: try getProviderOptionString()),
                 uid: uid)
         } catch {
