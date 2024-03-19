@@ -137,7 +137,7 @@ final class RecordViewModel: ObservableObject {
                         // storage에 이미지 업로드
                         try await self.fireStorageService.uploadImageToStorage(folder: .post, userID: userID , postID: self.postID, image: image, fileName: imageID)
                         // storage에서 이미지 URL 받아오기
-                        let imageURL = try await self.fireStorageService.fetchImageURL(folder: .post, fileName: imageID)
+                        let imageURL = try await self.fireStorageService.fetchImageURL(folder: .post, userID: userID , postID: self.postID, fileName: imageID)
                         // (이미지 순서, URL) 반환
                         return (index, imageURL)
                     }
@@ -193,7 +193,6 @@ final class RecordViewModel: ObservableObject {
     // MARK: - Firestore drink 업데이트
     func updateDrinkToFirestore() async {
         guard let user = writtenUser else { return }
-        print("writtenUser 정보가 있다...????: ", user)
         do {
             let drinkRef = db.collection("drinks")
             for drinkTag in drinkTags {
