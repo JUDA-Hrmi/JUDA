@@ -187,14 +187,12 @@ struct DrinkInfoView: View {
                                           usedTo: usedTo)
                 case .Record(let recordType):
                     RecordView(recordType: recordType)
-                //
                 case .DrinkDetail(let drink):
                     DrinkDetailView(drink: drink)
                         .modifier(TabBarHidden())
                 case .DrinkDetailWithUsedTo(let drink, let usedTo):
                     DrinkDetailView(drink: drink, usedTo: usedTo)
                         .modifier(TabBarHidden())
-                //
                 case .PostDetail(let postUserType,
                                  let post,
                                  let usedTo):

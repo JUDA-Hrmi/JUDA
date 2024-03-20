@@ -82,6 +82,7 @@ struct ChangeUserNameView: View {
             } label: {
                 Text("변경 완료")
                     .font(.medium20)
+                    .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 5)
                 

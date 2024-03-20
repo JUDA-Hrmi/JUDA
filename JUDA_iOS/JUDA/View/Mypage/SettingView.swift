@@ -131,7 +131,7 @@ struct SettingView: View {
                     AppServiceInfoView(text: webViewNameList[index], urlString: webViewurlList[index])
                 }
                 // 버전 정보
-                Text("버전 정보 \(String(describing: version)).\(String(describing: build))")
+                Text("버전 정보 \(version ?? "1.0").\(build ?? "6")")
                     .font(.regular16)
                     .foregroundStyle(.gray01)
                     .padding(.horizontal, 20)
@@ -188,6 +188,8 @@ struct SettingView: View {
                                 // 메인 화면으로 이동
                                 appViewModel.selectedTabIndex = 0
                             } else {
+                                isDeletAccount.toggle()
+                                authViewModel.errorMessage = "회원탈퇴에 문제가 발생했어요.\n다시 시도해주세요."
                                 authViewModel.showError = true
                             }
                         }
