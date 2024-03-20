@@ -29,7 +29,7 @@ enum RecordType {
 
 // 술상(게시글) 접근 시, 해당 글의 작성자인지 아닌지 확인
 enum PostUserType {
-    case writter, reader
+    case writer, reader
 }
 
 // cell - 좋아요 + / -

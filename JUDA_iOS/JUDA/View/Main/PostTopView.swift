@@ -32,7 +32,7 @@ struct PostTopView: View {
 
             ForEach(mainViewModel.posts, id: \.postField.postID) { post in
                 NavigationLink(value: Route
-                    .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writter : .reader,
+                    .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writer : .reader,
                                 post: post,
                                 usedTo: .main)) {
                     if let user = authViewModel.currentUser {

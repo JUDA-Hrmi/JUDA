@@ -77,7 +77,7 @@ struct PostDetailView: View {
 				}
 			}
 			switch postUserType {
-			case .writter:
+			case .writer:
 				ToolbarItem(placement: .topBarTrailing) {
 					// 공유하기
                     ShareLink(item: "\(post.postField.user.userName)님의 술상",

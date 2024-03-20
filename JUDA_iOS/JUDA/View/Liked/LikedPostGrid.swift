@@ -51,7 +51,7 @@ private struct LikedPostGridContent: View {
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(user.likedPosts, id: \.postField.postID) { post in
                     NavigationLink(value: Route
-                        .PostDetail(postUserType: user.userField.userID == post.postField.user.userID ? .writter : .reader,
+                        .PostDetail(postUserType: user.userField.userID == post.postField.user.userID ? .writer : .reader,
                                     post: post,
                                     usedTo: .liked)) {
                         PostCell(usedTo: .liked, post: post)

@@ -61,7 +61,7 @@ private struct AlarmListContent: View {
                 ForEach(user.notifications.indices, id: \.self) { index in
                     let alarm = user.notifications[index]
                     NavigationLink(value: Route.PostDetail(
-                        postUserType: .reader,
+                        postUserType: .writer,
                         post: alarm.likedPost,
                         usedTo: .myPage)) {
                             AlarmStoreListCell(alarm: alarm)
