@@ -76,6 +76,16 @@ extension FirebaseAuthService {
 			print("error :: updateUserFcmToken", error.localizedDescription)
 		}
 	}
+    
+    // firestore 에서 유저 프로필 url 변경
+    func updateUserProfileImageURL(uid: String, url: URL) async {
+        do {
+            let docRef = db.collection(userCollection).document(uid)
+            try await docRef.updateData(["profileImageURL": url.absoluteString])
+        } catch {
+            print("error :: updateUserProfileImageURL", error.localizedDescription)
+        }
+    }
 }
 
 // MARK: - 데이터 실시간 업데이트
