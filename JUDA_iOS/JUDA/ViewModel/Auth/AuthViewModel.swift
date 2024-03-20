@@ -123,7 +123,7 @@ final class AuthViewModel: ObservableObject {
         return changeName.count >= 2 && changeName.count <= 10 && user.userField.name != changeName
     }
     
-    // 유저 프로핗 사진 변경 시, 사용되는 메서드
+    // 유저 프로필 사진 변경 시, 사용되는 메서드
     func updateImage(selectedPhotos: [PhotosPickerItem]) async throws -> UIImage {
         guard let selectedPhoto = selectedPhotos.first else {
             throw PhotosPickerImageLoadingError.noSelectedPhotos
