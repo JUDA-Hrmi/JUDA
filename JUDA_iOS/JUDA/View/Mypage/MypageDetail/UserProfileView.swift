@@ -61,7 +61,10 @@ struct UserProfileView: View {
                                     do {
                                         let uiImage = try await authViewModel.updateImage(selectedPhotos: selectedPhotos)
                                         self.selectedImage = uiImage
-                                        await authViewModel.uploadProfileImageToStorage(image: uiImage)
+                                        let url = await authViewModel.uploadProfileImageToStorage(image: uiImage)
+                                        if authViewModel.currentUser?.userField.profileImageURL == nil {
+                                            await authViewModel.updateUserProfileImageURL(url: url)
+                                        }
                                     } catch {
                                         // 이미지 로드 실패 alert 띄워주기
                                         showAlert = true
