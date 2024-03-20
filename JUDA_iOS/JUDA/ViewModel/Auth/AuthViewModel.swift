@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import PhotosUI
+
 import FirebaseCore
 import FirebaseFirestore
 import FirebaseAuth
 import GoogleSignIn
 import CryptoKit
 import AuthenticationServices
-import _PhotosUI_SwiftUI
 
 // MARK: - Auth ( 로그인 / 로그아웃 / 탈퇴 / 본인 계정 )
 @MainActor
@@ -44,13 +45,6 @@ final class AuthViewModel: ObservableObject {
     private let db = Firestore.firestore()
     private let postCollection = "posts"
     private let drinkCollection = "drinks"
-    
-    init() {
-        Task {
-            // 로그인이 되어있다면, 유저 정보 받아오기
-            if signInStatus { await getCurrentUser() }
-        }
-    }
     
     // 현재 유저 있는지 확인, uid 받기
     private func checkCurrentUserID() throws -> String {
@@ -142,10 +136,43 @@ final class AuthViewModel: ObservableObject {
         }
     }
     
+    // 회원 가입 - ProfileSettingView 에서 모든 항목을 입력하고, '완료' 를 눌렀을 때 수행
+    func signInDoneButtonTapped(name: String, age: Int, profileImage: UIImage?, gender: String, notification: Bool) async {
+        let provider: String? = Auth.auth().currentUser?.providerData.first?.providerID
+        do {
+            // 애플의 경우 로그아웃이 된 상태라, 애플인 것을 google 이 아닌 경우로 체크
+            if provider != AuthProviderOption.google.rawValue {
+                // 재로그인
+                let signWithApple = SignInWithAppleHelper()
+                let appleIDCredential = try await signWithApple()
+                isLoading = true
+                await signInApple(appleIDCredential: appleIDCredential)
+                signInStatus = true
+            }
+            // 프로필 이미지 storage 저장
+            let url = await uploadProfileImageToStorage(image: profileImage)
+            // 유저 이름, 생일, 성별, 프로필, 알림 동의 등 forestore 에 저장
+            addUserDataToStore(
+                name: name,
+                age: age,
+                profileImageURL: url,
+                gender: gender,
+                notification: notification
+                )
+            // 유저 데이터 받기
+            await getCurrentUser()
+        } catch {
+            errorMessage = "회원가입에 문제가 발생했어요.\n다시 시도해주세요."
+            showError = true
+            print("error :: signInDoneButtonTapped", error.localizedDescription)
+        }
+    }
+    
     // 회원 탈퇴 - authProviders 를 체크해서 apple or google 탈퇴 로직 수행
     func deleteAccount() async -> Bool {
         isLoading = true
         guard let authProvider = currentUser?.userField.authProviders else {
+            isLoading = false
             return false
         }
         var result: Bool
@@ -166,77 +193,127 @@ final class AuthViewModel: ObservableObject {
 
 // MARK: - User Fetch
 extension AuthViewModel {
+    // 데이터를 한번에 병렬로 받아오기 위해 사용하는 enum
+    private enum CurrentUserResult {
+        case userField(UserField?)
+        case posts([Post]?)
+        case likedPosts([Post]?)
+        case likedDrinks([Drink]?)
+        case notifications([UserNotification]?)
+    }
+    
     // 현재 CurrentUser : User 가져오기
     func getCurrentUser() async {
+        var userFieldResult: UserField?
+        var postsResult: [Post]?
+        var likedPostsResult: [Post]?
+        var likedDrinksResult: [Drink]?
+        var notificationsResult: [UserNotification]?
         do {
             let uid = try checkCurrentUserID()
-            
-            await withTaskGroup(of: Void.self) { taskGroup in
+            await withTaskGroup(of: CurrentUserResult.self) { taskGroup in
                 // 현재 유저 UserField 받아오기
-                taskGroup.addTask { await self.getCurrentUserField(uid: uid) }
+                taskGroup.addTask { .userField(await self.getCurrentUserField(uid: uid)) }
                 // 현재 유저 Posts 받아오기
-                taskGroup.addTask { await self.getCurrentUserPosts(uid: uid) }
+                taskGroup.addTask { .posts(await self.getCurrentUserPosts(uid: uid)) }
                 // 현재 유저 LikedPosts 받아오기
-                taskGroup.addTask { await self.getCurrentUserLikedPosts(uid: uid) }
+                taskGroup.addTask { .likedPosts(await self.getCurrentUserLikedPosts(uid: uid)) }
                 // 현재 유저 LikedDrinks 받아오기
-                taskGroup.addTask { await self.getCurrentUserLikedDrinks(uid: uid) }
+                taskGroup.addTask { .likedDrinks(await self.getCurrentUserLikedDrinks(uid: uid)) }
                 // 현재 유저 Notifications 받아오기
-                taskGroup.addTask { await self.getCurrentUserNotifications(uid: uid) }
+                taskGroup.addTask { .notifications(await self.getCurrentUserNotifications(uid: uid)) }
+                // taskGroup 종료 시, result 받아서 메서드 내부의 프로퍼티에 할당
+                for await result in taskGroup {
+                    switch result {
+                    case .userField(let userField):
+                        userFieldResult = userField
+                    case .posts(let posts):
+                        postsResult = posts
+                    case .likedPosts(let likedPosts):
+                        likedPostsResult = likedPosts
+                    case .likedDrinks(let likedDrinks):
+                        likedDrinksResult = likedDrinks
+                    case .notifications(let notifications):
+                        notificationsResult = notifications
+                    }
+                }
+                // 옵셔널 해제
+                guard let userField = userFieldResult,
+                      let posts = postsResult,
+                      let likedPosts = likedPostsResult,
+                      let likedDrinks = likedDrinksResult,
+                      let notifications = notificationsResult else { return }
+                // 유저에 데이터 값 할당
+                currentUser = User(userField: userField,
+                                   posts: posts,
+                                   likedPosts: likedPosts,
+                                   likedDrinks: likedDrinks,
+                                   notifications: notifications)
             }
         } catch {
             showError = true
             errorMessage = error.localizedDescription
-            print(errorMessage)
+            print("error :: getCurrentUser", error.localizedDescription)
         }
     }
     
     // 현재 유저 UserField 받아오기
-    private func getCurrentUserField(uid: String) async {
+    private func getCurrentUserField(uid: String) async -> UserField? {
         do {
-            currentUser?.userField = try await firebaseUserService.fetchUserFieldData(uid: uid)
+            let userField = try await firebaseUserService.fetchUserFieldData(uid: uid)
+            return userField
         } catch {
             errorMessage = error.localizedDescription
-            print(errorMessage)
+            print("error :: getCurrentUserField", error.localizedDescription)
+            return nil
         }
     }
     
     // 현재 유저 Posts 받아오기
-    func getCurrentUserPosts(uid: String) async {
+    func getCurrentUserPosts(uid: String) async -> [Post]? {
         do {
-            currentUser?.posts = try await firebaseUserService.fetchUserWrittenPosts(uid: uid)
+            let posts = try await firebaseUserService.fetchUserWrittenPosts(uid: uid)
+            return posts
         } catch {
             errorMessage = error.localizedDescription
-            print(errorMessage)
+            print("error :: getCurrentUserPosts", error.localizedDescription)
+            return nil
         }
     }
     
     // 현재 유저 LikedPosts 받아오기
-    private func getCurrentUserLikedPosts(uid: String) async {
+    private func getCurrentUserLikedPosts(uid: String) async -> [Post]? {
         do {
-            currentUser?.likedPosts = try await firebaseUserService.fetchUserLikedPosts(uid: uid)
+            let likedPosts = try await firebaseUserService.fetchUserLikedPosts(uid: uid)
+            return likedPosts
         } catch {
             errorMessage = error.localizedDescription
-            print(errorMessage)
+            print("error :: getCurrentUserLikedPosts", error.localizedDescription)
+            return nil
         }
     }
     
     // 현재 유저 LikedDrinks 받아오기
-    private func getCurrentUserLikedDrinks(uid: String) async {
+    private func getCurrentUserLikedDrinks(uid: String) async -> [Drink]? {
         do {
-            currentUser?.likedDrinks = try await firebaseUserService.fetchUserLikedDrink(uid: uid)
+            let likedDrinks = try await firebaseUserService.fetchUserLikedDrink(uid: uid)
+            return likedDrinks
         } catch {
             errorMessage = error.localizedDescription
-            print(errorMessage)
+            print("error :: getCurrentUserLikedDrinks", error.localizedDescription)
+            return nil
         }
     }
     
     // 현재 유저 Notifications 받아오기
-    private func getCurrentUserNotifications(uid: String) async {
+    private func getCurrentUserNotifications(uid: String) async -> [UserNotification]? {
         do {
-            currentUser?.notifications = try await firebaseUserService.fetchUserNotifications(uid: uid)
+            let notifications = try await firebaseUserService.fetchUserNotifications(uid: uid)
+            return notifications
         } catch {
             errorMessage = error.localizedDescription
-            print(errorMessage)
+            print("error :: getCurrentUserNotifications", error.localizedDescription)
+            return nil
         }
     }
 }
@@ -326,6 +403,17 @@ extension AuthViewModel {
         }
     }
     
+    // 유저 프로필 url 수정 ( url 이 없었는데, 생기는 경우 )
+    func updateUserProfileImageURL(url: URL?) async {
+        do {
+            guard let url = url else { return }
+            let uid = try checkCurrentUserID()
+            await firebaseAuthService.updateUserProfileImageURL(uid: uid, url: url)
+        } catch {
+            print("error :: updateUserProfileImageURL", error.localizedDescription)
+        }
+    }
+    
     // 유저 '알림 설정' 수정
     private func updateUserNotificationAllowed(systemSetting: UNNotificationSetting) async throws -> Bool {
         guard let user = currentUser else {
@@ -353,7 +441,7 @@ extension AuthViewModel {
 // MARK: - Upload / 데이터 저장
 extension AuthViewModel {
     // 유저 정보 저장
-    func addUserDataToStore(name: String, age: Int,
+    func addUserDataToStore(name: String, age: Int, profileImageURL: URL?,
                             gender: String, notification: Bool) {
         do {
             let uid = try checkCurrentUserID()
@@ -361,28 +449,33 @@ extension AuthViewModel {
                 userData: UserField(
                     name: name, age: age, gender: gender,
 					fcmToken: "", notificationAllowed: notification,
-                    profileImageURL: (currentUser?.userField.profileImageURL)!,
+                    profileImageURL: profileImageURL ?? URL(string: ""),
                     authProviders: try getProviderOptionString()),
                 uid: uid)
         } catch {
-            print("error :: addUserDataToStore :", error.localizedDescription)
+            print("error :: addUserDataToStore", error.localizedDescription)
         }
     }
     
     // 유저 가입 시, 프로필 이미지 올리기 + 이미지 URL 저장
-    func uploadProfileImageToStorage(image: UIImage?) async {
+    func uploadProfileImageToStorage(image: UIImage?) async  -> URL? {
         do {
-            let uid = try checkCurrentUserID()
             guard let image = image else {
-                print("error :: uploadProfileImageToStorage : image X")
-                return
+                return nil
             }
-            try await fireStorageService.uploadImageToStorage(folder: .user, image: image, fileName: uid)
+            let uid = try checkCurrentUserID()
+            try await fireStorageService.uploadImageToStorage(folder: .user,
+                                                              image: image,
+                                                              fileName: uid)
             // 유저 프로필 받아오기
-            let url = try await fireStorageService.fetchImageURL(folder: .user, fileName: uid)
+            let url = try await fireStorageService.fetchImageURL(folder: .user,
+                                                                 fileName: uid)
+            //
             currentUser?.userField.profileImageURL = url
+            return url
         } catch {
-            print("error :: uploadProfileImageToStorage :", error.localizedDescription)
+            print("error :: uploadProfileImageToStorage", error.localizedDescription)
+            return nil
         }
     }
 }
@@ -456,7 +549,7 @@ extension AuthViewModel {
     }
     
     // 회원가입 or 회원탈퇴 시, 재 로그인 - Apple
-    func reauthApple() async -> ASAuthorizationAppleIDCredential? {
+    private func reauthApple() async -> ASAuthorizationAppleIDCredential? {
         do {
             let signInWithAppleHelper = SignInWithAppleHelper()
             let appleIDCredential = try await signInWithAppleHelper()
