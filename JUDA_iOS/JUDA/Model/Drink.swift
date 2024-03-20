@@ -17,7 +17,7 @@ struct Drink {
 }
 
 // MARK: - Firebase에서 사용하는 Drink Model
-struct DrinkField: Codable, Hashable {
+struct DrinkField: Codable, Equatable {
 	@DocumentID var drinkID: String?
     let drinkImageURL: URL?
 	let category: String
