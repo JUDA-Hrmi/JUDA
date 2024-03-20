@@ -109,14 +109,15 @@ extension DrinkViewModel {
     
     // 추가적인 데이터 가져오기
     func loadDrinksNextPage() async {
-        guard let lastSnapshot = lastSnapshot else {
+        guard let lastSnapshot = self.lastSnapshot else {
             print("error :: loadDrinksNextPage - lastSnapshot X")
             return
         }
         let collectionRef = getReference(
             sortType: DrinkSortType(rawValue: selectedSortedTypeString),
             query: getReference(category: DrinkType.list[selectedDrinkTypeIndex]))
-            .limit(to: paginationCount).start(afterDocument: lastSnapshot)
+            .start(afterDocument: lastSnapshot)
+            .limit(to: paginationCount)
         do {
             let drinksSnapshot = try await collectionRef.getDocuments()
             for drinkDocument in drinksSnapshot.documents {
