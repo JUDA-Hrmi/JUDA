@@ -54,9 +54,13 @@ struct SplashView: View {
                 taskGroup.addTask { await mainViewModel.getHottestDrinks() }
                 // 인기 술상 미리 받아오기
                 taskGroup.addTask { await mainViewModel.getHottestPosts() }
+                // 앱 시작 시, 유저 데이터 받아오기
+                taskGroup.addTask {
+                    if await authViewModel.signInStatus {
+                        await authViewModel.getCurrentUser()
+                    }
+                }
                 // 로그인 + 위치 정보 받았을 때, 날씨 & 음식 + 술 받아오기
-                // TODO: - 로그인 X -> 로그인 O 일때, 받아와야 함.
-                // TODO: - App 처음 시작 시, 위치 활용 동의 받은 후 받아오는 것 체크 필요.
                 taskGroup.addTask {
                     if await authViewModel.signInStatus,
                        let location = await appViewModel.locationManager.location {
