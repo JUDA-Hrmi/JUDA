@@ -113,7 +113,7 @@ final class RecordViewModel: ObservableObject {
     
     // MARK: - FireStroage post 이미지 업로드 및 이미지 URL 받아오기
     func uploadMultipleImagesToFirebaseStorageAsync() async {
-//        guard let user = writtenUser else { return }
+        guard let user = writtenUser else { return }
         do {
             // 결과를 받을 배열 생성
             var downloadURLs: [(Int, URL)] = []
@@ -124,8 +124,7 @@ final class RecordViewModel: ObservableObject {
                     // 각 이미지 데이터에 대해 비동기 업로드 작업 실행 및 배열에 추가
                     group.addTask {
                         // storage 폴더링을 위한 userID
-//                        let userID = user.userID
-                        let userID = "sampleUserID"
+                        let userID = user.userID
                         // image fileName 생성
                         let imageID = UUID().uuidString
                         // storage에 이미지 업로드
@@ -187,7 +186,6 @@ final class RecordViewModel: ObservableObject {
     // MARK: - Firestore drink 업데이트
     func updateDrinkToFirestore() async {
         guard let user = writtenUser else { return }
-        print("writtenUser 정보가 있다...????: ", user)
         do {
             let drinkRef = db.collection("drinks")
             for drinkTag in drinkTags {

@@ -112,7 +112,7 @@ struct RecordView: View {
                     }
                     DispatchQueue.main.async {
                         Task {
-//                            guard let user = authViewModel.currentUser else { return }
+                            guard let user = authViewModel.currentUser else { return }
                             switch recordType {
                             case .add:
                                 // post images upload, post upload

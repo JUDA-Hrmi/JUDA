@@ -99,6 +99,9 @@ struct PostsView: View {
 						// 비로그인 상태일 때 네비게이션링크 비활성화
 						.opacity(authViewModel.signInStatus ? 1.0 : 0.3)
 						.disabled(!authViewModel.signInStatus)
+                        .task {
+                            recordViewModel.recordPostDataClear()
+                        }
 					}
 					.padding(.horizontal, 20)
 					// 인기 or 최신 탭뷰
@@ -193,7 +196,6 @@ struct PostsView: View {
 			}
 			.onAppear {
 				appViewModel.tabBarState = .visible
-                recordViewModel.recordPostDataClear()
 			}
 		}
         .environmentObject(navigationRouter)

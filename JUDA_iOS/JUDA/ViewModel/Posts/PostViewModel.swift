@@ -106,6 +106,7 @@ extension PostViewModel {
     // Post 데이터 받아오기
 	private func fetchPosts(querySnapshots: QuerySnapshot) async {
 		var tasks: [Task<(Int, Post)?, Error>] = []
+        
         for (index, document) in querySnapshots.documents.enumerated() {
 			let task = Task<(Int, Post)?, Error> {
 				do {

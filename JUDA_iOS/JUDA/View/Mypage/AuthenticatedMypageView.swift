@@ -28,6 +28,9 @@ struct AuthenticatedMypageView: View {
                         .font(.medium16)
                         .foregroundStyle(.mainBlack)
                 }
+                .task {
+                    recordViewModel.recordPostDataClear()
+                }
             }
             .padding(.horizontal, 20)
             .padding(.top, 20)
@@ -70,7 +73,6 @@ struct AuthenticatedMypageView: View {
         .foregroundStyle(.mainBlack)
         .onAppear {
             appViewModel.tabBarState = .visible
-            recordViewModel.recordPostDataClear()
             Task {
                 await authViewModel.startListeningForUserField()
             }
