@@ -9,12 +9,16 @@ import SwiftUI
 import FirebaseFirestore
 import FirebaseCore
 import FirebaseAuth
+import FirebaseAppCheck
 import GoogleSignIn
 import FirebaseMessaging
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        // AppCheck
+        AppCheck.setAppCheckProviderFactory(MyAppCheckProviderFactory())
+        
         // 파이어베이스 설정
         FirebaseApp.configure()
         
@@ -62,4 +66,18 @@ extension AppDelegate: MessagingDelegate {
             userInfo: dataDict
         )
     }
+}
+
+// App
+class MyAppCheckProviderFactory: NSObject, AppCheckProviderFactory {
+  func createProvider(with app: FirebaseApp) -> AppCheckProvider? {
+    #if targetEnvironment(simulator)
+      // App Attest is not available on simulators.
+      // Use a debug provider.
+      return AppCheckDebugProvider(app: app)
+    #else
+      // Use App Attest provider on real devices.
+      return AppAttestProvider(app: app)
+    #endif
+  }
 }
