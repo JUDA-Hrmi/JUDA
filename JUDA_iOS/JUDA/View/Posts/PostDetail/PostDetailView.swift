@@ -53,7 +53,8 @@ struct PostDetailView: View {
                     rightButtonAction: {
                         isDeleteDialogPresented = false
 						Task {
-                            await postViewModel.deletePost(postID: post.postField.postID ?? "")
+							await postViewModel.deletePost(userID: post.postField.user.userID,
+														   postID: post.postField.postID ?? "")
                             await postViewModel.fetchFirstPost()
                             await authViewModel.getCurrentUserPosts(uid: post.postField.user.userID)
                         }

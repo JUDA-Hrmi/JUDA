@@ -566,6 +566,8 @@ extension AuthViewModel {
         do {
             guard try getProviderOptionString() == AuthProviderOption.apple.rawValue else { return false }
             try await firebaseAuthService.deleteAccountWithApple()
+			let uid = try checkCurrentUserID()
+			firebaseAuthService.deleteUserData(uid: uid)
             resetData()
             return true
         } catch {
@@ -618,6 +620,8 @@ extension AuthViewModel {
         do {
             guard try getProviderOptionString() == AuthProviderOption.google.rawValue else { return false }
             try await firebaseAuthService.deleteAccountWithGoogle()
+            // TODO: - 체크
+            firebaseAuthService.deleteUserData(uid: uid)
             resetData()
             return true
         } catch {
