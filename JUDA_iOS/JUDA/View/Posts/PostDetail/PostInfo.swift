@@ -62,9 +62,9 @@ struct PostInfo: View {
                     isLike.toggle()
                     debouncer.call {
                         if isLike {
-                            likeCount -= 1
-                        } else {
                             likeCount += 1
+                        } else {
+                            likeCount -= 1
                         }
                         Task {
                             await authViewModel.updateLikedPosts(isLiked: isLike, selectedPost: post)

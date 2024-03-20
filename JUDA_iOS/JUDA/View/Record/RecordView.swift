@@ -116,9 +116,9 @@ struct RecordView: View {
                             switch recordType {
                             case .add:
                                 // post images upload, post upload
-                                await recordViewModel.uploadPost(user: nil)
-                                // TODO: Post ReFetch - PostsView 내 PostCell의 task 작업에서 이루어지는지 확인
-//                                await refetchPosts()
+                                await recordViewModel.uploadPost(user: authViewModel.currentUser)
+                                // Post refetch
+                                await postViewModel.fetchFirstPost()
                                 // TODO: User posts ReFetch - cloud Fuction 업데이트 시점에 따라 코드 위치 변경
                                 
                                 // 업로드 후, recordViewModel Data clear
@@ -127,8 +127,8 @@ struct RecordView: View {
                             case .edit:
                                 // post update
                                 await recordViewModel.updatePost()
-                                // TODO: Post ReFetch - PostsView 내 PostCell의 task 작업에서 이루어지는지 확인
-//                                await refetchPosts()
+                                // Post refetch
+                                await postViewModel.fetchFirstPost()
                                 // TODO: User posts ReFetch - cloud Fuction 업데이트 시점에 따라 코드 위치 변경
 
                                 // 업로드 후, recordViewModel Data clear
@@ -146,14 +146,6 @@ struct RecordView: View {
             }
         }
     }
-    
-    // posts 재패치 코드
-//    private func refetchPosts() async {
-//        postViewModel.isLoading = true
-//        postViewModel.posts.removeAll()
-//        await postViewModel.fetchFirstPost()
-//        postViewModel.isLoading = false
-//    }
 }
 
 // MARK: - 술상 기록 화면에 보여줄 내용

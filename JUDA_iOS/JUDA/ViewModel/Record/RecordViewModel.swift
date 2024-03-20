@@ -65,24 +65,17 @@ final class RecordViewModel: ObservableObject {
 
     // MARK: - 게시글 작성
     func uploadPost(user: User?) async {
-//        guard let userID = user.userField.userID, !userID.isEmpty else { return }
+        guard let user = user, let userID = user.userField.userID, !userID.isEmpty else { return }
         // loadingView 띄우기
         isPostUploading = true
         // postID 생성
         postID = UUID().uuidString
         // writtenUser 모델 객체 생성
-//        writtenUser = WrittenUser(userID: userID,
-//                                  userName: user.userField.name,
-//                                  userAge: user.userField.age,
-//                                  userGender: user.userField.gender,
-//                                  userProfileImageURL: user.userField.profileImageURL)
-        
-        writtenUser = WrittenUser(userID: "sampleUserID",
-                                  userName: "sampleUserName",
-                                  userAge: 20,
-                                  userGender: "female",
-                                  userProfileImageURL: nil)
-        
+        writtenUser = WrittenUser(userID: userID,
+                                  userName: user.userField.name,
+                                  userAge: user.userField.age,
+                                  userGender: user.userField.gender,
+                                  userProfileImageURL: user.userField.profileImageURL)
         
         if let writtenUser = writtenUser {
             // firestroage에 이미지 업로드 후 url 받아오기
@@ -94,7 +87,8 @@ final class RecordViewModel: ObservableObject {
                                              imagesURL: imagesURL,
                                              content: content,
                                              foodTags: foodTags,
-                                             postedTime: Date()),
+                                             postedTime: Date(),
+                                             likedCount: 0),
                         likedUsersID: [])
             
             // post 업로드
@@ -137,7 +131,7 @@ final class RecordViewModel: ObservableObject {
                         // storage에 이미지 업로드
                         try await self.fireStorageService.uploadImageToStorage(folder: .post, userID: userID , postID: self.postID, image: image, fileName: imageID)
                         // storage에서 이미지 URL 받아오기
-                        let imageURL = try await self.fireStorageService.fetchImageURL(folder: .post, userID: userID , postID: self.postID, fileName: imageID)
+                        let imageURL = try await self.fireStorageService.fetchImageURL(folder: .post, userID: userID, postID: self.postID, fileName: imageID)
                         // (이미지 순서, URL) 반환
                         return (index, imageURL)
                     }
@@ -193,6 +187,7 @@ final class RecordViewModel: ObservableObject {
     // MARK: - Firestore drink 업데이트
     func updateDrinkToFirestore() async {
         guard let user = writtenUser else { return }
+        print("writtenUser 정보가 있다...????: ", user)
         do {
             let drinkRef = db.collection("drinks")
             for drinkTag in drinkTags {
