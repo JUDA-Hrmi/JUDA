@@ -352,10 +352,10 @@ exports.onDeleteLikedToPost = functions.firestore
     }
 
     // users/<userID>/likedPosts/<postID>에 post delete
-    await deleteUserLikedPosts(userId, postId);
+    await deleteUserLikedPost(userId, postId);
   });
 
-async function deleteUserLikedPosts(userId, postId) {
+async function deleteUserLikedPost(userId, postId) {
   const userRef = db.collection(usersString).doc(userId);
   const likedPostRef = userRef.collection(likedPostsString).doc(postId);
 
@@ -363,7 +363,7 @@ async function deleteUserLikedPosts(userId, postId) {
     await likedPostRef.delete();
     console.log(`succress delete likedPost :: uploadUserLikedPosts(), userId: ${userId}, likedPostId: ${postId}`);
   } catch (error) {
-    console.error(`error :: deleteUserLikedPosts(), userId: ${userId}, likedPostId: ${postId}`, error);
+    console.error(`error :: deleteUserLikedPost(), userId: ${userId}, likedPostId: ${postId}`, error);
   }
 }
 
@@ -400,18 +400,18 @@ exports.onDeleteLikedToDrink = functions.firestore
     const drinkId = context.params.drinkId;
     const userId = context.params.userId;
 
-    await deleteUserLikedDrinks(userId, drinkId);
+    await deleteUserLikedDrink(userId, drinkId);
   });
 
-async function deleteUserLikedDrinks(userId, drinkId) {
+async function deleteUserLikedDrink(userId, drinkId) {
   const userRef = db.collection(usersString).doc(userId);
   const likedDrinkRef = userRef.collection(likedDrinksString).doc(drinkId);
 
   try {
     await likedDrinkRef.delete();
-    console.log(`success delete likedDrink :: deleteUserLikedDrinks(), userId: ${userId}, drinkId: ${drinkId}`);
+    console.log(`success delete likedDrink :: deleteUserLikedDrink(), userId: ${userId}, drinkId: ${drinkId}`);
   } catch (error) {
-    console.error(`error :: deleteUserLikedDrinks() userId: ${userId}, drinkId: ${drinkId}`, error);
+    console.error(`error :: deleteUserLikedDrink() userId: ${userId}, drinkId: ${drinkId}`, error);
   }
 }
 
@@ -434,31 +434,102 @@ exports.onUpdateDrinkRating = functions.firestore
     }
   });
 
-  async function updateUsersLikedDrinkRating(userId, drinkId, rating) {
-    const userRef = db.collection(usersString).doc(userId);
-    const likedDrinkRef = userRef.collection(likedDrinksString).doc(drinkId);
+async function updateUsersLikedDrinkRating(userId, drinkId, rating) {
+  const userRef = db.collection(usersString).doc(userId);
+  const likedDrinkRef = userRef.collection(likedDrinksString).doc(drinkId);
 
-    if ((await likedDrinkRef.get()).exists) { // user의 하위 likedDrinks collection에 해당 drink 존재 O
-      try {
-        await likedDrinkRef.update({
-          "rating": rating,
-        });
-        console.log(`success update drink updateUsersLikedDrinkRating(), userId: ${userId}, drinkId: ${drinkId}, rating: ${rating}`);
-      } catch (error) {
-        console.error(`error :: updateUsersLikedDrinkRating(), userId: ${userId}, drinkId: ${drinkId}, rating: ${rating}`, error);
-      }
-    } else { // user의 하위 likedDrinks collection에 해당 drink 존재 x
-      console.log(`user(userId: ${userId})'s sub collection(${likedDrinksString}) not exist drink(drinkId: ${drinkId})`);
+  if ((await likedDrinkRef.get()).exists) { // user의 하위 likedDrinks collection에 해당 drink 존재 O
+    try {
+      await likedDrinkRef.update({
+        "rating": rating,
+      });
+      console.log(`success update drink updateUsersLikedDrinkRating(), userId: ${userId}, drinkId: ${drinkId}, rating: ${rating}`);
+    } catch (error) {
+      console.error(`error :: updateUsersLikedDrinkRating(), userId: ${userId}, drinkId: ${drinkId}, rating: ${rating}`, error);
+    }
+  } else { // user의 하위 likedDrinks collection에 해당 drink 존재 x
+    console.log(`user(userId: ${userId})'s sub collection(${likedDrinksString}) not exist drink(drinkId: ${drinkId})`);
 
-      const drinkRef = db.collection(drinksString).doc(drinkId);
-      const drinkSnapshot = await drinkRef.get();
-      const drinkFieldData = drinkSnapshot.data();
+    const drinkRef = db.collection(drinksString).doc(drinkId);
+    const drinkSnapshot = await drinkRef.get();
+    const drinkFieldData = drinkSnapshot.data();
 
-      try {
-        await likedDrinkRef.set(drinkFieldData);
-        console.log(`success upload drink :: updateUsersLikedDrinkRating(), userId: ${userId}, drinkId: ${drinkId}`);
-      } catch (error) {
-        console.error(`error(fail upload drink) :: updateUsersLikedDrinkRating() userId: ${userId}, drinkId: ${drinkId}`, error);
-      }
+    try {
+      await likedDrinkRef.set(drinkFieldData);
+      console.log(`success upload drink :: updateUsersLikedDrinkRating(), userId: ${userId}, drinkId: ${drinkId}`);
+    } catch (error) {
+      console.error(`error(fail upload drink) :: updateUsersLikedDrinkRating() userId: ${userId}, drinkId: ${drinkId}`, error);
     }
   }
+}
+
+// 회원탈퇴
+exports.onUserDelete = functions.https.onCall(async (data, context) => {
+  const userId = data.userID;
+
+  await Promise.all(
+    // user가 작성한 post들 root posts collection에서 삭제
+    deleteUserPosts(userId),
+    // user의 likedPosts에 있는 post들 root posts의 post likedCount -1 및 likedUsersID에서 삭제
+    deleteUserLikedPosts(userId),
+    // user의 likedDrinks에 있는 drink들 root drinks의 likedUsersID에서 삭제
+    deleteUserLikedDrinks(userId),
+  );
+});
+
+// user/posts에 접근하여 postID를 통해 root collection인 posts에서 post delete
+async function deleteUserPosts(userId) {
+  const userRef = db.collection(usersString).doc(userId);
+  const userPostsRef = userRef.collection(postsString);
+  const userPostsSnapshot = await userPostsRef.get();
+
+  for (const userPostDoc of userPostsSnapshot.docs) {
+    const postId = userPostDoc.id;
+    const postRef = db.collection(postsString).doc(postId);
+    try {
+      await postRef.delete();
+      console.log(`success post delete :: deleteUserPosts(), userId: ${userId}, postId: ${postId}`);
+    } catch (error) {
+      console.error(`error :: deleteUserPosts(), userId: ${userId}, postId: ${postId}`, error);
+    }
+  }
+}
+
+// user/likedPosts에 접근하여 postID를 통해 root collection인 posts에 접근하여 posts/likedUsersID에서 해당 userID를 delete
+async function deleteUserLikedPosts(userId) {
+  const userRef = db.collection(usersString).doc(userId);
+  const userLikedPostsRef = userRef.collection(likedPostsString);
+  const userLikedPostsSnapshot = await userLikedPostsRef.get();
+
+  for (const userLikedPostDoc of userLikedPostsSnapshot.docs) {
+    const postId = userLikedPostDoc.id;
+    const postRef = db.collection(postsString).doc(postId);
+    const postLikedUserIdRef = postRef.collection(likedUsersIDString).doc(userId);
+
+    try {
+      await postLikedUserIdRef.delete();
+      console.log(`success likedUserId delete :: deleteUserLikedPosts(), userId: ${userId}, postId: ${postId}`);
+    } catch (error) {
+      console.error(`error :: deleteUserLikedPosts(), userId: ${userId}, postId: ${postId}`);
+    }
+  }
+}
+// user/likedDrinks에 접근하여 drinkID를 통해 root collection인 drinks에 접근하여 drinks/likedUsersID에서 해당 userID를 delete
+async function deleteUserLikedDrinks(userId) {
+  const userRef = db.collection(usersString).doc(userId);
+  const userLikedDrinksRef = userRef.collection(likedDrinksString);
+  const userLikedDrinksSnapshot = await userLikedDrinksRef.get();
+
+  for (const userLikedDrinkDoc of userLikedDrinksSnapshot.docs) {
+    const drinkId = userLikedDrinkDoc.id;
+    const drinkRef = db.collection(drinksString).doc(drinkId);
+    const drinkLikedUserIdRef = drinkRef.collection(likedUsersIDString).doc(userId);
+
+    try {
+      await drinkLikedUserIdRef.delete();
+      console.log(`success likedUserId delete :: deleteUserLikedDrinks(), userId: ${userId}, drinkId: ${drinkId}`);
+    } catch (error) {
+      console.error(`error :: deleteUserLikedDrinks(),userId: ${userId}, drinkId: ${drinkId}`);
+    }
+  }
+}
