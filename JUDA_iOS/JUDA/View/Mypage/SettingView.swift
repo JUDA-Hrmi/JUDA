@@ -28,13 +28,13 @@ struct SettingView: View {
     @State private var isLogoutClicked = false // 로그아웃 버튼 클릭 시
     @State private var isDeletAccount = false // 회원탈퇴 버튼 클릭 시
     
-    var version: String? {
+    private var version: String? {
         guard let dictionary = Bundle.main.infoDictionary,
               let version = dictionary["CFBundleShortVersionString"] as? String else {return nil}
         return version // 1.0
     }
     
-    var build: String? {
+    private var build: String? {
         guard let dictionary = Bundle.main.infoDictionary,
               let build = dictionary["CFBundleVersion"] as? String else {return nil}
         return build // 1
@@ -131,7 +131,7 @@ struct SettingView: View {
                     AppServiceInfoView(text: webViewNameList[index], urlString: webViewurlList[index])
                 }
                 // 버전 정보
-                Text("버전 정보 \(String(describing: version)).\(String(describing: build))")
+                Text("버전 정보 \(version ?? "1.0").\(build ?? "6")")
                     .font(.regular16)
                     .foregroundStyle(.gray01)
                     .padding(.horizontal, 20)
@@ -163,7 +163,7 @@ struct SettingView: View {
                     rightButtonAction: {
                         // 로그아웃 - AppStorage 에서 변경
                         authViewModel.signOut()
-                        
+                        //
                         isLogoutClicked.toggle()
                         navigationRouter.back()
                         // MainView 로 보내기
@@ -172,7 +172,6 @@ struct SettingView: View {
                 )
             }
             // 회원탈퇴 - CustomAlert
-            // TODO: - 탈퇴 문구 수정하기
             if isDeletAccount {
                 CustomDialog(type: .twoButton(
                     message: "탈퇴 하시겠습니까?",
@@ -183,14 +182,15 @@ struct SettingView: View {
                     rightButtonLabel: "탈퇴하기",
                     rightButtonAction: {
                         Task {
-                            // TODO: - 구글 탈퇴 추가
-                            authViewModel.isLoading = true
-                            if await authViewModel.deleteAppleAccount() {
-                                //                                myPageViewModel.myPageUserDataClear()
+                            if await authViewModel.deleteAccount() {
                                 isDeletAccount.toggle()
                                 navigationRouter.back()
                                 // 메인 화면으로 이동
                                 appViewModel.selectedTabIndex = 0
+                            } else {
+                                isDeletAccount.toggle()
+                                authViewModel.errorMessage = "회원탈퇴에 문제가 발생했어요.\n다시 시도해주세요."
+                                authViewModel.showError = true
                             }
                         }
                     })

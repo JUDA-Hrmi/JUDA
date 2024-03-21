@@ -54,19 +54,17 @@ struct MainView: View {
                                         searchTagType: searchTagType,
                                         postSearchText: postSearchText)
                 case .NavigationProfile(let userID,
-                                      let usedTo):
+                                        let usedTo):
                     NavigationProfileView(userID: userID,
                                           usedTo: usedTo)
                 case .Record(let recordType):
                     RecordView(recordType: recordType)
-                //
                 case .DrinkDetail(let drink):
                     DrinkDetailView(drink: drink)
                         .modifier(TabBarHidden())
                 case .DrinkDetailWithUsedTo(let drink, let usedTo):
                     DrinkDetailView(drink: drink, usedTo: usedTo)
                         .modifier(TabBarHidden())
-                //
                 case .PostDetail(let postUserType,
                                  let post,
                                  let usedTo):
@@ -81,18 +79,19 @@ struct MainView: View {
             }
             .onAppear {
                 appViewModel.tabBarState = .visible
-				
-				// 로그인 한 경우 알림권한 받아옴
-				if authViewModel.signInStatus {
-					appViewModel.setUserNotificationOption()
-					
-					Task {
-						if let user = authViewModel.currentUser?.userField, let uid = user.userID {
-							// 새로 받아온 기기 토큰 체크 후 업데이트
-							await appViewModel.setUserToken(uid: uid, currentUserToken: user.fcmToken)
-						}
-					}
-				}
+            }
+            .onChange(of: authViewModel.signInStatus) { newValue in
+                // 로그인 한 경우 알림권한 받아옴
+                if newValue {
+                    appViewModel.setUserNotificationOption()
+                    Task {
+                        if let user = authViewModel.currentUser?.userField,
+                           let uid = user.userID {
+                            // 새로 받아온 기기 토큰 체크 후 업데이트
+                            await appViewModel.setUserToken(uid: uid, currentUserToken: user.fcmToken)
+                        }
+                    }
+                }
             }
         }
         .environmentObject(navigationRouter)

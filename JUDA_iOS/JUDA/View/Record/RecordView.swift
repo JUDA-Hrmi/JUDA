@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-// MARK: - 술상 기록 타입 : 작성 or 수정
-enum RecordType {
-    case add, edit
-}
-
 // MARK: - 술상 기록 화면
 struct RecordView: View {
     // Navigation을 위한 환경 프로퍼티

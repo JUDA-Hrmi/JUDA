@@ -45,6 +45,15 @@
          BundleIdentifier = "com.hrmi.juda"
          FilePath = "/Users/chung-inseon/Library/Developer/Xcode/DerivedData/JUDA-alivsugfiknafgevihdwjnmwgsbv/Build/Products/Debug-iphoneos/JUDA.app">
       </PathRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "B1B8FE782B5EA9D900921BBE"
+            BuildableName = "JUDA"
+            BlueprintName = "JUDA"
+            ReferencedContainer = "container:JUDA.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

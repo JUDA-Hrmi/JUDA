@@ -56,7 +56,7 @@ extension Font {
     static let thin12: Font = .custom(FontType.Thin.name, size: 12)
 }
 
-enum FontType {
+private enum FontType {
     case Bold
     case SemiBold
     case Medium

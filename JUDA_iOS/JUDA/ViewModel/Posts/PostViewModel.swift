@@ -8,28 +8,6 @@
 import SwiftUI
 import FirebaseFirestore
 
-// MARK: - 술상 정렬 enum
-enum PostSortType: String, CaseIterable {
-    case popularity = "인기"
-    case mostRecent = "최신"
-    // 리스트
-    static let list: [PostSortType] = PostSortType.allCases
-}
-
-// MARK: - 술상 검색 enum
-enum SearchTagType: String, CaseIterable {
-    case userName = "작성자"
-    case drinkTag = "술 태그"
-    case foodTag = "음식 태그"
-    // 리스트
-    static let list: [SearchTagType] = SearchTagType.allCases
-}
-
-// MARK: - 좋아요 + / -
-enum LikedActionType {
-    case plus, minus
-}
-
 // MARK: - Post View Model ( 술상 )
 @MainActor
 final class PostViewModel: ObservableObject {

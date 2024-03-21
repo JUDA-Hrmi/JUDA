@@ -48,15 +48,11 @@ struct AlarmStoreView: View {
                     .foregroundStyle(.mainBlack)
             }
         }
-        // TODO: notification refetch는 어디서 이루어지는가
-//        .task {
-//            await notificationViewModel.fetchNotificationList(userId: authService.currentUser?.userID ?? "")
-//        }
     }
 }
 
 // MARK: - 스크롤 뷰 or 뷰 로 보여질 알람 리스트
-struct AlarmListContent: View {
+private struct AlarmListContent: View {
     @EnvironmentObject private var authViewModel: AuthViewModel
 
     var body: some View {
@@ -64,12 +60,12 @@ struct AlarmListContent: View {
             LazyVStack {
                 ForEach(user.notifications.indices, id: \.self) { index in
                     let alarm = user.notifications[index]
-                    // TODO: AlarmStoreListCell 클릭 시 해당 postDetailView로 이동
-//                    NavigationLink(value: post) {
-//                        AlarmStoreListCell(alarm: alarm)
-//                    }
-                    AlarmStoreListCell(alarm: alarm)
-                    
+                    NavigationLink(value: Route.PostDetail(
+                        postUserType: .writer,
+                        post: alarm.likedPost,
+                        usedTo: .myPage)) {
+                            AlarmStoreListCell(alarm: alarm)
+                        }
                     if alarm != user.notifications.last {
                         CustomDivider()
                     }
@@ -78,4 +74,3 @@ struct AlarmListContent: View {
         }
     }
 }
-

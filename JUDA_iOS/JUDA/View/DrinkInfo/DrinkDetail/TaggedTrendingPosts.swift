@@ -26,7 +26,7 @@ struct TaggedTrendingPosts: View {
             VStack(spacing: 0) {
                 ForEach(posts, id: \.postField.postID) { post in
                     NavigationLink(value: Route
-                        .PostDetail(postUserType: post.postField.user.userID == authViewModel.currentUser?.userField.userID ? .writter : .reader,
+                        .PostDetail(postUserType: post.postField.user.userID == authViewModel.currentUser?.userField.userID ? .writer : .reader,
                                     post: post,
                                     usedTo: .drinkDetail)) {
                         if !isLoading {

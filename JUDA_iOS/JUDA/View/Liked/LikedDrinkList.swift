@@ -39,7 +39,7 @@ struct LikedDrinkList: View {
 }
 
 // MARK: - 스크롤 뷰 or 뷰 로 보여질 술찜 리스트
-struct LikedDrinkListContent: View {
+private struct LikedDrinkListContent: View {
     @EnvironmentObject private var authViewModel: AuthViewModel
     
     var body: some View {
@@ -52,8 +52,7 @@ struct LikedDrinkListContent: View {
                                                usedTo: .liked)) {
                         DrinkListCell(drink: drink,
                                       usedTo: .liked)
-                    }
-                                               .buttonStyle(EmptyActionStyle())
+                    }.buttonStyle(EmptyActionStyle())
                 }
             }
         }

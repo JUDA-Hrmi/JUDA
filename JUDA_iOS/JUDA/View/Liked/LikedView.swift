@@ -7,14 +7,6 @@
 
 import SwiftUI
 
-// MARK: - 찜 세그먼트 enum
-enum LikedType: String, CaseIterable {
-    case drink = "술찜 리스트"
-    case post = "술상 리스트"
-    // 리스트
-    static let list: [LikedType] = LikedType.allCases
-}
-
 // MARK: - 하트 누른 술 + 술상 볼 수 있는 탭
 struct LikedView: View {
     @StateObject private var navigationRouter = NavigationRouter()
@@ -27,7 +19,8 @@ struct LikedView: View {
         NavigationStack(path: $navigationRouter.path) {
             VStack(spacing: 0) {
                 // 세그먼트 (술찜 리스트 / 술상 리스트)
-                CustomTextSegment(segments: LikedType.list.map { $0.rawValue }, selectedSegmentIndex: $selectedSegmentIndex)
+                CustomTextSegment(segments: LikedType.list.map { $0.rawValue },
+                                  selectedSegmentIndex: $selectedSegmentIndex)
                     .padding(.bottom, 14)
                     .padding([.top, .horizontal], 20)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -66,14 +59,12 @@ struct LikedView: View {
                 case .ChangeUserName:
                     ChangeUserNameView()
                         .modifier(TabBarHidden())
-                //
                 case .DrinkDetail(let drink):
                     DrinkDetailView(drink: drink)
                         .modifier(TabBarHidden())
                 case .DrinkDetailWithUsedTo(let drink, let usedTo):
                     DrinkDetailView(drink: drink, usedTo: usedTo)
                         .modifier(TabBarHidden())
-                //
                 case .PostDetail(let postUserType,
                                  let post,
                                  let usedTo):
@@ -81,7 +72,6 @@ struct LikedView: View {
                                    post: post,
                                    usedTo: usedTo)
                     .modifier(TabBarHidden())
-
                 default:
                     ErrorPageView()
                         .modifier(TabBarHidden())

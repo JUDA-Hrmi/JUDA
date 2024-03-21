@@ -7,14 +7,8 @@
 
 import SwiftUI
 
-// MARK: - 바텀 시트 타입
-enum BottomSheetType {
-    static let drinkInfo = "정렬 옵션 설정" // DrinkInfoView에서 쓰는 bottomSheet
-    static let displaySetting = "화면 모드 설정" // 'SettingView - 화면 모드 설정' 에서 쓰는 bottomSheet
-}
-
 // MARK: - .sheet 의 content 부분.
-struct CustomBottomSheetContent: View{
+struct CustomBottomSheetContent: View {
     let optionNameList: [String]
     @Binding var isShowingSheet: Bool
     @Binding var selectedSortingOption: String

@@ -34,22 +34,32 @@ struct AuthenticatedMypageView: View {
             }
             .padding(.horizontal, 20)
             .padding(.top, 20)
-            // 사용자가 작성한 글
-            // MARK: iOS 16.4 이상
-            if #available(iOS 16.4, *) {
-                ScrollView() {
-                    PostGridContent(usedTo: .myPage, searchTagType: nil)
-                }
-                .scrollBounceBehavior(.basedOnSize, axes: .vertical)
-                // MARK: iOS 16.4 미만
-            } else {
-                ViewThatFits(in: .vertical) {
-                    PostGridContent(usedTo: .myPage, searchTagType: nil)
-                        .frame(maxHeight: .infinity, alignment: .top)
-                    ScrollView {
+            if let user = authViewModel.currentUser,
+                !user.posts.isEmpty {
+                // 사용자가 작성한 글
+                // MARK: iOS 16.4 이상
+                if #available(iOS 16.4, *) {
+                    ScrollView() {
                         PostGridContent(usedTo: .myPage, searchTagType: nil)
                     }
+                    .scrollBounceBehavior(.basedOnSize, axes: .vertical)
+                    // MARK: iOS 16.4 미만
+                } else {
+                    ViewThatFits(in: .vertical) {
+                        PostGridContent(usedTo: .myPage, searchTagType: nil)
+                            .frame(maxHeight: .infinity, alignment: .top)
+                        ScrollView {
+                            PostGridContent(usedTo: .myPage, searchTagType: nil)
+                        }
+                    }
                 }
+            } else {
+                VStack {
+                    Text("작성한 술상이 없어요!")
+                        .font(.medium16)
+                        .foregroundStyle(.mainBlack)
+                }
+                .frame(maxHeight: .infinity, alignment: .center)
             }
         }
         .toolbar {

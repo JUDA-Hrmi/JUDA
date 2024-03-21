@@ -10,6 +10,7 @@ import FirebaseCore
 import FirebaseFirestore
 import FirebaseFunctions
 import FirebaseAuth
+import GoogleSignIn
 import AuthenticationServices
 
 // MARK: - Firebase : Auth
@@ -78,6 +79,16 @@ extension FirebaseAuthService {
 			print("error :: updateUserFcmToken", error.localizedDescription)
 		}
 	}
+    
+    // firestore 에서 유저 프로필 url 변경
+    func updateUserProfileImageURL(uid: String, url: URL) async {
+        do {
+            let docRef = db.collection(userCollection).document(uid)
+            try await docRef.updateData(["profileImageURL": url.absoluteString])
+        } catch {
+            print("error :: updateUserProfileImageURL", error.localizedDescription)
+        }
+    }
 }
 
 // MARK: - 데이터 실시간 업데이트
@@ -163,17 +174,35 @@ extension FirebaseAuthService {
 }
 
 // MARK: - 회원 탈퇴 ( Google )
-extension FirebaseAuthService { }
+extension FirebaseAuthService {
+    // 회원탈퇴 - Google
+    func deleteAccountWithGoogle() async throws {
+        guard let user = Auth.auth().currentUser else {
+            throw AuthManagerError.noUser
+        }
+        let signInWithGoogleHelper = SignInWithGoogleHelper()
+        let token = try await signInWithGoogleHelper.signIn()
+        
+        let credential = GoogleAuthProvider.credential(
+            withIDToken: token.idToken,
+            accessToken: token.accessToken
+        )
+        try await user.reauthenticate(with: credential)
+        // 구글에서도 앱에 대한 연결 삭제
+        try await GIDSignIn.sharedInstance.disconnect()
+        // 삭제
+        try await user.delete()
+    }
+}
 
 // MARK: - 회원 탈퇴 (Cloud Function)
 extension FirebaseAuthService {
-	func deleteUserData(uid: String) {
-		let reqData = ["userID": uid]
-		
-		functions.httpsCallable("delete_user_data").call(reqData) { _, error in
-			if let error = error as NSError? {
-				print("error :: deleteUserData", error.localizedDescription)
-			}
-		}
-	}
+    func deleteUserData(uid: String) {
+        let reqData = ["userID": uid]
+        functions.httpsCallable("delete_user_data").call(reqData) { _, error in
+            if let error = error as NSError? {
+                print("error :: deleteUserData", error.localizedDescription)
+            }
+        }
+    }
 }

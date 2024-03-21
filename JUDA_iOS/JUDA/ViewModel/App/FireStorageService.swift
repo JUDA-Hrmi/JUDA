@@ -8,13 +8,6 @@
 import SwiftUI
 import FirebaseStorage
 
-// MARK: - Fire Storage 의 폴더 타입 / 폴더 명
-enum FireStorageFolderType: String {
-    case user = "userImages"
-    case post = "postImages"
-    case drink = "drinkImages"
-}
-
 // MARK: - Fire Storage 에 접근하는 함수를 갖는 Service
 @MainActor
 final class FireStorageService {

@@ -224,6 +224,7 @@ final class RecordViewModel: ObservableObject {
                 
                 // Drink rating update
                 await firestoreDrinkService.updateDrinkField(ref: drinkRef, drinkID: drinkID, data: ["rating": rating])
+
             }
         } catch DrinkError.fetchDrinkDocument {
             print("error :: updateDrinkField() -> update drink data to Firestore failure")

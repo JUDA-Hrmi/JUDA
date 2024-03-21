@@ -23,7 +23,7 @@ final class DrinkViewModel: ObservableObject {
     // 로딩 중 - Shimmer Drink List / Grid Cell
     @Published var isLoading: Bool = true
     // 검색 중 -
-    @Published var isSearching: Bool = true
+    @Published var isSearching: Bool = false
     // pagination 을 위한, 이전 load의 마지막 체크
     private var lastSnapshot: QueryDocumentSnapshot?
     // pagination 할 documet 개수
@@ -109,14 +109,15 @@ extension DrinkViewModel {
     
     // 추가적인 데이터 가져오기
     func loadDrinksNextPage() async {
-        guard let lastSnapshot = lastSnapshot else {
+        guard let lastSnapshot = self.lastSnapshot else {
             print("error :: loadDrinksNextPage - lastSnapshot X")
             return
         }
         let collectionRef = getReference(
             sortType: DrinkSortType(rawValue: selectedSortedTypeString),
             query: getReference(category: DrinkType.list[selectedDrinkTypeIndex]))
-            .limit(to: paginationCount).start(afterDocument: lastSnapshot)
+            .start(afterDocument: lastSnapshot)
+            .limit(to: paginationCount)
         do {
             let drinksSnapshot = try await collectionRef.getDocuments()
             for drinkDocument in drinksSnapshot.documents {

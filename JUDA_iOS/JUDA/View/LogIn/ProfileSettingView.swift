@@ -8,27 +8,6 @@
 import SwiftUI
 import PhotosUI
 
-// MARK: - 프로필 사진 및 정보 작성 뷰에서 사용될 focusField enum
-enum ProfileSettingFocusField: Hashable {
-    case name
-    case birth
-}
-
-// MARK: - 성별 enum
-enum Gender: String, CaseIterable {
-    case male = "male"
-    case female = "female"
-    
-    var koreanString: String {
-        switch self {
-        case .male: "남성"
-        case .female: "여성"
-        }
-    }
-    // 리스트
-    static let list: [Gender] = Gender.allCases
-}
-
 // MARK: - 신규 유저의 경우, 프로필 사진 및 정보 작성 뷰
 struct ProfileSettingView: View {
     @EnvironmentObject private var navigationRouter: NavigationRouter
@@ -105,7 +84,7 @@ struct ProfileSettingView: View {
                         .onChange(of: selectedPhotos) { _ in
                             Task {
                                 do {
-                                    try await updateImage()
+                                    userProfileImage = try await authViewModel.updateImage(selectedPhotos: selectedPhotos)
                                 } catch {
                                     // 이미지 로드 실패 alert 띄워주기
                                     isShowAlertDialog = true
@@ -204,28 +183,16 @@ struct ProfileSettingView: View {
                 // "완료" 버튼
                 Button {
                     Task {
-                        // 애플의 경우 로그아웃이 된 상태라, 애플인지 아닌지 체크를 google 이 아닌 경우로 체크
-                        if authViewModel.currentUser?.userField.authProviders != AuthProviderOption.google.rawValue {
-                            // 재로그인
-                            let signWithApple = SignInWithAppleHelper()
-                            let appleIDCredential = try await signWithApple()
-                            authViewModel.isLoading = true
-                            await authViewModel.signInApple(appleIDCredential: appleIDCredential)
-                            authViewModel.signInStatus = true
-                        }
-                        // 프로필 이미지 storage 저장
-                        await authViewModel.uploadProfileImageToStorage(image: userProfileImage)
-                        // 유저 이름, 생일, 성별, 프로필, 알림 동의 등 forestore 에 저장
-                        authViewModel.addUserDataToStore(
-                            name: name,
-                            age: Formatter.calculateAge(birthdate: birthDate) ?? 20,
-                            gender: selectedGender!.rawValue,
-                            notification: notificationAllowed
+                        await authViewModel
+                            .signInDoneButtonTapped(
+                                name: name,
+                                age: Formatter.calculateAge(birthdate: birthDate) ?? 20,
+                                profileImage: userProfileImage,
+                                gender: selectedGender!.rawValue,
+                                notification: notificationAllowed
                             )
-                        // 유저 데이터 받기
-                        await authViewModel.getCurrentUser()
+                        authViewModel.isLoading = false
                     }
-                    authViewModel.isLoading = false
                     navigationRouter.back()
                 } label: {
                     Text("완료")
@@ -268,19 +235,5 @@ struct ProfileSettingView: View {
         }
         // 회원 가입 시, 로딩 뷰
         .loadingView($authViewModel.isLoading)
-    }
-    
-    private func updateImage() async throws {
-        guard let selectedPhoto = selectedPhotos.first else {
-            return
-        }
-        do {
-            guard let data = try await selectedPhoto.loadTransferable(type: Data.self) else {
-                throw PhotosPickerImageLoadingError.invalidImageData
-            }
-            userProfileImage = UIImage(data: data)
-        } catch {
-            throw PhotosPickerImageLoadingError.invalidImageData
-        }
     }
 }

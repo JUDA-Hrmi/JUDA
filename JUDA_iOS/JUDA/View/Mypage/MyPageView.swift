@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - My Page View
 struct MyPageView: View {
     @StateObject private var navigationRouter = NavigationRouter()
     @EnvironmentObject private var authViewModel: AuthViewModel
@@ -40,19 +41,17 @@ struct MyPageView: View {
                 case .Notice:
                     NoticeView()
                 case .NavigationProfile(let userID,
-                                      let usedTo):
+                                        let usedTo):
                     NavigationProfileView(userID: userID,
                                           usedTo: usedTo)
                 case .Record(let recordType):
                     RecordView(recordType: recordType)
-                //
                 case .DrinkDetail(let drink):
                     DrinkDetailView(drink: drink)
                         .modifier(TabBarHidden())
                 case .DrinkDetailWithUsedTo(let drink, let usedTo):
                     DrinkDetailView(drink: drink, usedTo: usedTo)
                         .modifier(TabBarHidden())
-                //
                 case .PostDetail(let postUserType,
                                  let post,
                                  let usedTo):
