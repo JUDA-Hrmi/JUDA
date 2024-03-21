@@ -177,7 +177,7 @@ final class RecordViewModel: ObservableObject {
     
     // MARK: - Firestore drink 업로드
     func updateDrinkToFirestore() async {
-        guard let post = post, let user = writtenUser else { return }
+        guard let user = writtenUser else { return }
         do {
             let drinkRef = db.collection("drinks")
             for drinkTag in drinkTags {
@@ -216,7 +216,7 @@ final class RecordViewModel: ObservableObject {
                 
                 // Drink rating update
                 // TODO: return 값 처리
-                let result = await firestoreDrinkService.updateDrinkField(ref: drinkRef, drinkID: drinkID, data: ["rating": rating])
+				_ = await firestoreDrinkService.updateDrinkField(ref: drinkRef, drinkID: drinkID, data: ["rating": rating])
             }
         } catch DrinkError.fetchDrinkDocument {
             print("error :: updateDrinkField() -> update drink data to Firestore failure")
