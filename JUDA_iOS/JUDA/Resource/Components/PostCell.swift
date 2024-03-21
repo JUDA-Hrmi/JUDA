@@ -76,16 +76,25 @@ struct PostCell: View {
 					// 좋아요를 해제 -> 테두리가 회색인 하트
 					Button {
 						// TODO: 로그인 안 되어 있을 때, 로그인 페이지 넘어가기
-                        likeAction()
+                        if authViewModel.signInStatus {
+                            isLike.toggle()
+                            debouncer.call {
+                                if isLike {
+                                    likeCount += 1
+                                } else {
+                                    likeCount -= 1
+                                }
+                                Task {
+                                    await authViewModel.updateLikedPosts(isLiked: isLike, selectedPost: post)
+                                }
+                            }
+                        }
 					} label: {
 						Image(systemName: isLike ? "heart.fill" : "heart")
 							.foregroundStyle(isLike ? .mainAccent01 : .gray01)
 					}
 					Text(Formatter.formattedPostLikesCount(likeCount))
 						.foregroundStyle(.gray01)
-                        .onTapGesture {
-                            likeAction()
-                        }
 				}
 				.font(.regular14)
 				.padding(.trailing, 5)
@@ -102,22 +111,6 @@ struct PostCell: View {
             self.likeCount = post.likedUsersID.count
 		}
 	}
-    
-    private func likeAction() {
-        if authViewModel.signInStatus {
-            isLike.toggle()
-            debouncer.call {
-                if isLike {
-                    likeCount += 1
-                } else {
-                    likeCount -= 1
-                }
-                Task {
-                    await authViewModel.updateLikedPosts(isLiked: isLike, selectedPost: post)
-                }
-            }
-        }
-    }
 }
 
 // MARK: - PostCell 의 이미지 프로필에서 사용하는 KFImage
