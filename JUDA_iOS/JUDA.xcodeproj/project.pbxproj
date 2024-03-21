@@ -62,6 +62,9 @@
 		09BCC15F2B7CFC7E00FF4D1B /* TermsAndVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BCC15E2B7CFC7E00FF4D1B /* TermsAndVerificationView.swift */; };
 		09C7C9AF2B8DB57E00F62617 /* NavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C7C9AE2B8DB57E00F62617 /* NavigationRouter.swift */; };
 		09F3BD9C2BA9EAE90087E5FC /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 09F3BD9B2BA9EAE90087E5FC /* Lottie */; };
+		09F3BDF62BAC13E30087E5FC /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09F3BDF42BAC13E30087E5FC /* APIKEYS.plist */; };
+		09F3BDF72BAC13E30087E5FC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09F3BDF52BAC13E30087E5FC /* GoogleService-Info.plist */; };
+		09F3BDF92BAC13EB0087E5FC /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 09F3BDF82BAC13EB0087E5FC /* DrinkLoading.json */; };
 		09F869932B68E36800A56A4C /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869922B68E36800A56A4C /* Formatter.swift */; };
 		09F869962B68E46500A56A4C /* DrinkDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869952B68E46500A56A4C /* DrinkDetailView.swift */; };
 		09F869982B68E48400A56A4C /* DrinkDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F869972B68E48400A56A4C /* DrinkDetails.swift */; };
@@ -91,13 +94,6 @@
 		7B0A8BC52B8C163E00740E61 /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0A8BC42B8C163E00740E61 /* Report.swift */; };
 		7B0A8BCD2B8CA7E900740E61 /* PostSearchList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0A8BCC2B8CA7E900740E61 /* PostSearchList.swift */; };
 		7B0A8BCF2B8CA8C300740E61 /* PostSearchListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0A8BCE2B8CA8C300740E61 /* PostSearchListCell.swift */; };
-		7B17CF0B2BA80B8000A9C080 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7B17CF092BA80B8000A9C080 /* GoogleService-Info.plist */; };
-		7B17CF0C2BA80B8000A9C080 /* APIKEYS.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7B17CF0A2BA80B8000A9C080 /* APIKEYS.plist */; };
-		7B17CF0E2BA80B9400A9C080 /* DrinkLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B17CF0D2BA80B9400A9C080 /* DrinkLoading.json */; };
-		7B17CF132BA80BAA00A9C080 /* WineTest.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B17CF0F2BA80BAA00A9C080 /* WineTest.json */; };
-		7B17CF142BA80BAA00A9C080 /* WhiskeyTest.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B17CF102BA80BAA00A9C080 /* WhiskeyTest.json */; };
-		7B17CF152BA80BAA00A9C080 /* BeerTest.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B17CF112BA80BAA00A9C080 /* BeerTest.json */; };
-		7B17CF162BA80BAA00A9C080 /* TraditionalTest.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B17CF122BA80BAA00A9C080 /* TraditionalTest.json */; };
 		7B5174922B69EAB300915793 /* NavigationPostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5174912B69EAB300915793 /* NavigationPostsView.swift */; };
 		7B56AE172BA66C8200C47F3C /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 7B56AE162BA66C8200C47F3C /* FirebaseFunctions */; };
 		7B6D76A72B677A8F00601B55 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D76A62B677A8F00601B55 /* Button.swift */; };
@@ -226,6 +222,9 @@
 		09BCC1592B7C8CD300FF4D1B /* IdentityVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityVerificationView.swift; sourceTree = "<group>"; };
 		09BCC15E2B7CFC7E00FF4D1B /* TermsAndVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndVerificationView.swift; sourceTree = "<group>"; };
 		09C7C9AE2B8DB57E00F62617 /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
+		09F3BDF42BAC13E30087E5FC /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = APIKEYS.plist; path = "../../../흐르미/APIKEYS.plist"; sourceTree = "<group>"; };
+		09F3BDF52BAC13E30087E5FC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../흐르미/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		09F3BDF82BAC13EB0087E5FC /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = DrinkLoading.json; path = "../../../../../흐르미/Lottie/DrinkLoading.json"; sourceTree = "<group>"; };
 		09F869922B68E36800A56A4C /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		09F869952B68E46500A56A4C /* DrinkDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailView.swift; sourceTree = "<group>"; };
 		09F869972B68E48400A56A4C /* DrinkDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetails.swift; sourceTree = "<group>"; };
@@ -256,13 +255,6 @@
 		7B0A8BC42B8C163E00740E61 /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
 		7B0A8BCC2B8CA7E900740E61 /* PostSearchList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostSearchList.swift; sourceTree = "<group>"; };
 		7B0A8BCE2B8CA8C300740E61 /* PostSearchListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostSearchListCell.swift; sourceTree = "<group>"; };
-		7B17CF092BA80B8000A9C080 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../JUDA_file/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		7B17CF0A2BA80B8000A9C080 /* APIKEYS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = APIKEYS.plist; path = ../../../../../../JUDA_file/APIKEYS.plist; sourceTree = "<group>"; };
-		7B17CF0D2BA80B9400A9C080 /* DrinkLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = DrinkLoading.json; path = ../../../../../../../../JUDA_file/Lottie/DrinkLoading.json; sourceTree = "<group>"; };
-		7B17CF0F2BA80BAA00A9C080 /* WineTest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = WineTest.json; path = ../../../../../../../../JUDA_file/TestJsonData/WineTest.json; sourceTree = "<group>"; };
-		7B17CF102BA80BAA00A9C080 /* WhiskeyTest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = WhiskeyTest.json; path = ../../../../../../../../JUDA_file/TestJsonData/WhiskeyTest.json; sourceTree = "<group>"; };
-		7B17CF112BA80BAA00A9C080 /* BeerTest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = BeerTest.json; path = ../../../../../../../../JUDA_file/TestJsonData/BeerTest.json; sourceTree = "<group>"; };
-		7B17CF122BA80BAA00A9C080 /* TraditionalTest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = TraditionalTest.json; path = ../../../../../../../../JUDA_file/TestJsonData/TraditionalTest.json; sourceTree = "<group>"; };
 		7B5174912B69EAB300915793 /* NavigationPostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationPostsView.swift; sourceTree = "<group>"; };
 		7B6D76A62B677A8F00601B55 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		7B6D76AA2B67CE3D00601B55 /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
@@ -339,7 +331,6 @@
 				B14957F32B86584D00870297 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				09BCC13C2B7B99FF00FF4D1B /* FirebaseAuth in Frameworks */,
 				090FF1CA2B82ED8400AF22B5 /* FirebaseStorage in Frameworks */,
-				0999125C2B84654400E72C73 /* FirebaseCrashlytics in Frameworks */,
 				7B56AE172BA66C8200C47F3C /* FirebaseFunctions in Frameworks */,
 				B14958032B86584D00870297 /* FirebaseDatabase in Frameworks */,
 				AC98D1D22B73586F006F6EC9 /* OpenAI in Frameworks */,
@@ -403,10 +394,6 @@
 			isa = PBXGroup;
 			children = (
 				7BE14B962B84767000C1F6C3 /* DrinkUploadViewModel.swift */,
-				7B17CF112BA80BAA00A9C080 /* BeerTest.json */,
-				7B17CF122BA80BAA00A9C080 /* TraditionalTest.json */,
-				7B17CF102BA80BAA00A9C080 /* WhiskeyTest.json */,
-				7B17CF0F2BA80BAA00A9C080 /* WineTest.json */,
 			);
 			path = JsonUploadFiles;
 			sourceTree = "<group>";
@@ -438,9 +425,9 @@
 			children = (
 				09BCC14E2B7C7E2900FF4D1B /* Clouds.json */,
 				09BCC1492B7C7E2900FF4D1B /* Loading.json */,
+				09F3BDF82BAC13EB0087E5FC /* DrinkLoading.json */,
 				09BCC14C2B7C7E2900FF4D1B /* Rain.json */,
 				09BCC14D2B7C7E2900FF4D1B /* Snow.json */,
-				7B17CF0D2BA80B9400A9C080 /* DrinkLoading.json */,
 				09BCC14B2B7C7E2900FF4D1B /* Sun.json */,
 				09BCC14A2B7C7E2900FF4D1B /* Thunder.json */,
 			);
@@ -578,8 +565,8 @@
 				B1B8FE802B5EA9DA00921BBE /* Assets.xcassets */,
 				B1B8FE8C2B5EAAAB00921BBE /* Colors.xcassets */,
 				B121A56F2B5F8DA100667D42 /* Info.plist */,
-				7B17CF0A2BA80B8000A9C080 /* APIKEYS.plist */,
-				7B17CF092BA80B8000A9C080 /* GoogleService-Info.plist */,
+				09F3BDF42BAC13E30087E5FC /* APIKEYS.plist */,
+				09F3BDF52BAC13E30087E5FC /* GoogleService-Info.plist */,
 				B1B8FE822B5EA9DA00921BBE /* Preview Content */,
 			);
 			path = JUDA;
@@ -876,28 +863,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7B17CF142BA80BAA00A9C080 /* WhiskeyTest.json in Resources */,
 				09BCC1512B7C7E2900FF4D1B /* Sun.json in Resources */,
-				7B17CF0E2BA80B9400A9C080 /* DrinkLoading.json in Resources */,
-				7B17CF162BA80BAA00A9C080 /* TraditionalTest.json in Resources */,
-				7B17CF152BA80BAA00A9C080 /* BeerTest.json in Resources */,
 				09BCC1502B7C7E2900FF4D1B /* Thunder.json in Resources */,
 				B1B8FE8D2B5EAAAB00921BBE /* Colors.xcassets in Resources */,
 				B121A5732B5F910900667D42 /* Pretendard-Bold.otf in Resources */,
+				09F3BDF92BAC13EB0087E5FC /* DrinkLoading.json in Resources */,
 				09BCC14F2B7C7E2900FF4D1B /* Loading.json in Resources */,
 				B1B8FE842B5EA9DA00921BBE /* Preview Assets.xcassets in Resources */,
 				B121A5782B5F911A00667D42 /* Pretendard-Thin.otf in Resources */,
 				B121A5772B5F911900667D42 /* Pretendard-SemiBold.otf in Resources */,
 				09BCC1532B7C7E2900FF4D1B /* Snow.json in Resources */,
 				09BCC1542B7C7E2900FF4D1B /* Clouds.json in Resources */,
-				7B17CF132BA80BAA00A9C080 /* WineTest.json in Resources */,
+				09F3BDF62BAC13E30087E5FC /* APIKEYS.plist in Resources */,
 				B121A5742B5F910B00667D42 /* Pretendard-Light.otf in Resources */,
-				7B17CF0B2BA80B8000A9C080 /* GoogleService-Info.plist in Resources */,
 				09BCC1522B7C7E2900FF4D1B /* Rain.json in Resources */,
-				7B17CF0C2BA80B8000A9C080 /* APIKEYS.plist in Resources */,
 				B121A5762B5F911700667D42 /* Pretendard-Regular.otf in Resources */,
 				B1B8FE812B5EA9DA00921BBE /* Assets.xcassets in Resources */,
 				B121A5752B5F911500667D42 /* Pretendard-Medium.otf in Resources */,
+				09F3BDF72BAC13E30087E5FC /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1338,7 +1321,7 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 09F3BD9A2BA9EAE90087E5FC /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
-        };
+		};
 		7B56AE162BA66C8200C47F3C /* FirebaseFunctions */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B1EE24622B613EB1007F68B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

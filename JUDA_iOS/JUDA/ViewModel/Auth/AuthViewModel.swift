@@ -620,7 +620,7 @@ extension AuthViewModel {
         do {
             guard try getProviderOptionString() == AuthProviderOption.google.rawValue else { return false }
             try await firebaseAuthService.deleteAccountWithGoogle()
-            // TODO: - 체크
+            let uid = try checkCurrentUserID()
             firebaseAuthService.deleteUserData(uid: uid)
             resetData()
             return true
