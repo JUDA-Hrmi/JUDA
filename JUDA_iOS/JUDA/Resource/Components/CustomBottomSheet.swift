@@ -8,7 +8,7 @@
 import SwiftUI
 
 // MARK: - .sheet 의 content 부분.
-struct CustomBottomSheetContent: View{
+struct CustomBottomSheetContent: View {
     let optionNameList: [String]
     @Binding var isShowingSheet: Bool
     @Binding var selectedSortingOption: String
