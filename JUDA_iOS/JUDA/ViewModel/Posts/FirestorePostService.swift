@@ -40,7 +40,7 @@ extension FirestorePostService {
             throw PostError.collectionFetch
         }
     }
-    
+
 	// posts collection의 post document data 불러오는 메서드
 	// 불러오지 못 할 수 경우 error throw
 	func fetchPostDocument(document: DocumentReference) async throws -> Post {

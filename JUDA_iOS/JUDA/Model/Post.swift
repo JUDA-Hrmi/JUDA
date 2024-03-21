@@ -23,6 +23,7 @@ struct PostField: Codable {
     var content: String
     var foodTags: [String]
     var postedTime: Date
+    var likedCount: Int
 }
 
 // post 작성한 유저 데이터

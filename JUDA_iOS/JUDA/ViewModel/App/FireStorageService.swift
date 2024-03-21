@@ -17,11 +17,7 @@ final class FireStorageService {
     // FireStorage 에 이미지 올리기
     func uploadImageToStorage(folder: FireStorageFolderType, userID: String? = nil, postID: String? = nil, image: UIImage, fileName: String) async throws {
         do {
-            var storagePath = folder.rawValue
-            if let userID = userID, let postID = postID {
-                storagePath += "/\(userID)/\(postID)"
-            }
-            let storageRoute = storageRef.child("\(storagePath)/\(fileName)")
+            let storageRoute = getStorageRoute(folder: folder, userID: userID, postID: postID, fileName: fileName)
             let data = Formatter.compressImage(image)
             let metaData = StorageMetadata()
             metaData.contentType = imageType
@@ -33,14 +29,24 @@ final class FireStorageService {
     }
     
     // URL 받아오기
-    func fetchImageURL(folder: FireStorageFolderType, fileName: String) async throws -> URL {
+    func fetchImageURL(folder: FireStorageFolderType, userID: String? = nil, postID: String? = nil, fileName: String) async throws -> URL {
         do {
-            let storageRoute = storageRef.child("\(folder.rawValue)/\(fileName)")
+            let storageRoute = getStorageRoute(folder: folder, userID: userID, postID: postID, fileName: fileName)
             let url = try await storageRoute.downloadURL()
             return url
         } catch {
             throw FireStorageError.fetchImageURL
         }
+    }
+    
+    
+    // FireStorage file 경로에 따른 StorageReference 반환
+    private func getStorageRoute(folder: FireStorageFolderType, userID: String?, postID: String?, fileName: String) -> StorageReference {
+        var storagePath = folder.rawValue
+        if let userID = userID, let postID = postID {
+            storagePath += "/\(userID)/\(postID)"
+        }
+        return storageRef.child("\(storagePath)/\(fileName)")
     }
 }
 

@@ -69,15 +69,15 @@ struct RecordView: View {
         }
         // post upload 여부에 따라 loadingView 표시
         .loadingView($recordViewModel.isPostUploading)
-        // 글 내용 유무 체크
         .onAppear {
+            // 글 내용 유무 체크
             recordViewModel.checkPostContentIsEmpty()
-            // TODO: recordType에 따라 recordView에 값 띄워주기
+            // recordType에 따라 recordView에 값 띄워주기
             switch recordType {
             case .add:
                 break
             case .edit:
-                // TODO: PostdetailView에서 recordViewModel.post에 해당 post 정보 넣어주기
+                // recordViewModel에 해당 post의 content, foodTags 정보 넣어주기
                 guard let post = recordViewModel.post else { return }
                 recordViewModel.content = post.postField.content
                 recordViewModel.foodTags = post.postField.foodTags
@@ -111,18 +111,22 @@ struct RecordView: View {
                             switch recordType {
                             case .add:
                                 // post images upload, post upload
-                                await recordViewModel.postUpload(user: user)
-                                // TODO: Post ReFetch
-                                // TODO: User posts ReFetch
+                                await recordViewModel.uploadPost(user: authViewModel.currentUser)
+                                // Post refetch
+                                await postViewModel.fetchFirstPost()
+                                // TODO: User posts ReFetch - cloud Fuction 업데이트 시점에 따라 코드 위치 변경
                                 
                                 // 업로드 후, recordViewModel Data clear
                                 navigationRouter.clear()
                                 
                             case .edit:
                                 // post update
-                                await recordViewModel.postUpdate()
-                                // TODO: Post ReFetch
-                                // TODO: User posts ReFetch
+                                await recordViewModel.updatePost()
+                                // Post refetch
+                                await postViewModel.fetchFirstPost()
+                                // TODO: User posts ReFetch - cloud Fuction 업데이트 시점에 따라 코드 위치 변경
+
+                                // 업로드 후, recordViewModel Data clear
                                 navigationRouter.clear()
                                 
                             }
@@ -137,18 +141,6 @@ struct RecordView: View {
             }
         }
     }
-    	
-    // EX
-//	private func postReFetch() async {
-//		postsViewModel.isLoading = true
-//		postsViewModel.posts = []
-//		postsViewModel.postImagesURL = [:]
-//		postsViewModel.postThumbnailImagesURL = [:]
-//		let postSortType = postsViewModel.postSortType[postsViewModel.selectedSegmentIndex]
-//		let query = postsViewModel.getPostSortType(postSortType: postSortType)
-//		await postsViewModel.firstFetchPost(query: query)
-//	}
-    
 }
 
 // MARK: - 술상 기록 화면에 보여줄 내용

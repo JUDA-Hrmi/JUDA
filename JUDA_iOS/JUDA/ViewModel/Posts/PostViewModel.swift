@@ -50,7 +50,7 @@ extension PostViewModel {
 		case .popularity:
 			return postRef.order(by: "likedCount", descending: true)
 		case .mostRecent:
-			return postRef.order(by: "postedTimeStamp", descending: true)
+			return postRef.order(by: "postedTime", descending: true)
 		}
 	}
 	
@@ -84,8 +84,8 @@ extension PostViewModel {
     // Post 데이터 받아오기
 	private func fetchPosts(querySnapshots: QuerySnapshot) async {
 		var tasks: [Task<(Int, Post)?, Error>] = []
-		
-		for (index, document) in querySnapshots.documents.enumerated() {
+        
+        for (index, document) in querySnapshots.documents.enumerated() {
 			let task = Task<(Int, Post)?, Error> {
 				do {
 					let post = try await firestorePostService.fetchPostDocument(document: document.reference)

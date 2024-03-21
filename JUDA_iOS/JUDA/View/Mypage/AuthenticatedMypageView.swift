@@ -12,6 +12,7 @@ import FirebaseAuth
 struct AuthenticatedMypageView: View {
     @EnvironmentObject private var appViewModel: AppViewModel
     @EnvironmentObject private var authViewModel: AuthViewModel
+    @EnvironmentObject private var recordViewModel: RecordViewModel
     
     var body: some View {
         VStack {
@@ -26,6 +27,9 @@ struct AuthenticatedMypageView: View {
                     Text("술상 올리기")
                         .font(.medium16)
                         .foregroundStyle(.mainBlack)
+                }
+                .task {
+                    recordViewModel.recordPostDataClear()
                 }
             }
             .padding(.horizontal, 20)

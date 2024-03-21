@@ -175,14 +175,12 @@ extension FirestoreDrinkService {
 // MARK: Firestore drink field data update
 extension FirestoreDrinkService {
 	// drinks collection field data update 메서드
-	func updateDrinkField(ref: CollectionReference, drinkID: String, data: [String: Any]) async -> Bool {
+	func updateDrinkField(ref: CollectionReference, drinkID: String, data: [String: Any]) async {
 		do {
 			try await ref.document(drinkID).updateData(data)
-			return true
 		} catch {
 			print("error :: drinkFieldUpdate() -> update drink field data failure")
 			print(error.localizedDescription)
-			return false
 		}
 	}
 }

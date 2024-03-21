@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1520"
+   LastUpgradeVersion = "1530"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
-      buildImplicitDependencies = "YES">
+      buildImplicitDependencies = "YES"
+      buildArchitectures = "Automatic">
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
@@ -42,7 +43,7 @@
       <PathRunnable
          runnableDebuggingMode = "0"
          BundleIdentifier = "com.hrmi.juda"
-         FilePath = "/Users/phang/Library/Developer/Xcode/DerivedData/JUDA-cosstivdqydphqdalurmudoqzqie/Build/Products/Debug-iphoneos/JUDA.app">
+         FilePath = "/Users/chung-inseon/Library/Developer/Xcode/DerivedData/JUDA-alivsugfiknafgevihdwjnmwgsbv/Build/Products/Debug-iphoneos/JUDA.app">
       </PathRunnable>
       <MacroExpansion>
          <BuildableReference
@@ -60,8 +61,7 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B1B8FE782B5EA9D900921BBE"
@@ -69,7 +69,7 @@
             BlueprintName = "JUDA"
             ReferencedContainer = "container:JUDA.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

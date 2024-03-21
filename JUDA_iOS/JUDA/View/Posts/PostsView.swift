@@ -13,6 +13,7 @@ struct PostsView: View {
 	@EnvironmentObject private var appViewModel: AppViewModel
 	@EnvironmentObject private var authViewModel: AuthViewModel
 	@EnvironmentObject private var postViewModel: PostViewModel
+    @EnvironmentObject private var recordViewModel: RecordViewModel
 	
     @State private var postSearchText: String = ""
     
@@ -98,6 +99,9 @@ struct PostsView: View {
 						// 비로그인 상태일 때 네비게이션링크 비활성화
 						.opacity(authViewModel.signInStatus ? 1.0 : 0.3)
 						.disabled(!authViewModel.signInStatus)
+                        .task {
+                            recordViewModel.recordPostDataClear()
+                        }
 					}
 					.padding(.horizontal, 20)
 					// 인기 or 최신 탭뷰

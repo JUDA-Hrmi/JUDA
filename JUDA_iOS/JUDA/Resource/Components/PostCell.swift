@@ -76,19 +76,19 @@ struct PostCell: View {
 					// 좋아요를 해제 -> 테두리가 회색인 하트
 					Button {
 						// TODO: 로그인 안 되어 있을 때, 로그인 페이지 넘어가기
-						if authViewModel.signInStatus {
+                        if authViewModel.signInStatus {
                             isLike.toggle()
                             debouncer.call {
                                 if isLike {
-                                    likeCount -= 1
-                                } else {
                                     likeCount += 1
+                                } else {
+                                    likeCount -= 1
                                 }
                                 Task {
                                     await authViewModel.updateLikedPosts(isLiked: isLike, selectedPost: post)
                                 }
                             }
-						}
+                        }
 					} label: {
 						Image(systemName: isLike ? "heart.fill" : "heart")
 							.foregroundStyle(isLike ? .mainAccent01 : .gray01)
@@ -101,12 +101,13 @@ struct PostCell: View {
 			}
 			.frame(height: 35)
 		}
-		.frame(maxWidth: 170, maxHeight: 200)
+		.frame(maxWidth: 170)
 		.task {
             if authViewModel.signInStatus,
                let user = authViewModel.currentUser {
                 self.isLike = user.likedPosts.contains { $0 == post }
 			}
+            // TODO: likedCount로 할 것인가 likedUsersID.count로 할 것인가에 대한 논의 및 수정
             self.likeCount = post.likedUsersID.count
 		}
 	}
