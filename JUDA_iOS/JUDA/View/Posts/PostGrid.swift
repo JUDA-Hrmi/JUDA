@@ -7,17 +7,6 @@
 
 import SwiftUI
 
-// MARK: - 어느 뷰에서 PostGridContent 이 사용되는지 enum
-enum WhereUsedPostGridContent {
-    case post
-    case postSearch
-	case postFoodTag
-    case drinkDetail
-    case liked
-    case myPage
-    case main
-}
-
 // MARK: - 스크롤 뷰 or 뷰 로 보여질 post grid
 struct PostGrid: View {
 	@EnvironmentObject private var postViewModel: PostViewModel
@@ -83,7 +72,7 @@ struct PostGridContent: View {
 				if !postViewModel.isLoading {
 					ForEach(postViewModel.posts, id: \.postField.postID) { post in
                         NavigationLink(value: Route
-                            .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writter : .reader,
+                            .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writer : .reader,
                                         post: post,
                                         usedTo: usedTo)) {
                             PostCell(usedTo: .post, post: post)
@@ -108,7 +97,7 @@ struct PostGridContent: View {
 					case .userName:
                         ForEach(postViewModel.searchPostsByUserName, id: \.postField.postID) { post in
 							NavigationLink(value: Route
-                                .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writter : .reader,
+                                .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writer : .reader,
                                             post: post,
                                             usedTo: usedTo)) {
 								PostCell(usedTo: .postSearch, post: post)
@@ -120,7 +109,7 @@ struct PostGridContent: View {
 					case .drinkTag:
 						ForEach(postViewModel.searchPostsByDrinkTag, id: \.postField.postID) { post in
 							NavigationLink(value: Route
-                                .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writter : .reader,
+                                .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writer : .reader,
                                             post: post,
                                             usedTo: usedTo)) {
 								PostCell(usedTo: .postSearch, post: post)
@@ -132,7 +121,7 @@ struct PostGridContent: View {
 					case .foodTag:
 						ForEach(postViewModel.searchPostsByFoodTag, id: \.postField.postID) { post in
 							NavigationLink(value: Route
-                                .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writter : .reader,
+                                .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writer : .reader,
                                             post: post,
                                             usedTo: usedTo)) {
 								PostCell(usedTo: .postSearch, post: post)
@@ -146,7 +135,7 @@ struct PostGridContent: View {
 			} else if usedTo == .postFoodTag {
 				ForEach(postViewModel.searchPostsByFoodTag, id: \.postField.postID) { post in
 					NavigationLink(value: Route
-                        .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writter : .reader,
+                        .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writer : .reader,
                                     post: post,
                                     usedTo: usedTo)) {
 						PostCell(usedTo: .postSearch, post: post)
@@ -159,7 +148,7 @@ struct PostGridContent: View {
                 if !postViewModel.isLoading {
                     ForEach(postViewModel.drinkTaggedPosts, id: \.postField.postID) { post in
                         NavigationLink(value: Route
-                            .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writter : .reader,
+                            .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writer : .reader,
                                         post: post,
                                         usedTo: usedTo)) {
 							PostCell(usedTo: usedTo, post: post)
@@ -176,7 +165,7 @@ struct PostGridContent: View {
                         if let currentUser = authViewModel.currentUser, !currentUser.posts.isEmpty {
                             ForEach(currentUser.posts, id: \.postField.postID) { post in
                                 NavigationLink(value: Route
-                                    .PostDetail(postUserType: .writter,
+                                    .PostDetail(postUserType: .writer,
                                                 post: post,
                                                 usedTo: usedTo)) {
                                     PostCell(usedTo: usedTo, post: post)

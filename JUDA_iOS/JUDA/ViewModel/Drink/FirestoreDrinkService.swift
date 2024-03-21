@@ -9,13 +9,6 @@ import Foundation
 import FirebaseCore
 import FirebaseFirestore
 
-enum Age: String, CaseIterable {
-	case twenty = "20"
-	case thirty = "30"
-	case fourty = "40"
-	case fifty = "50"
-}
-
 @MainActor
 final class FirestoreDrinkService {
     // Firestore Post Service
@@ -24,30 +17,30 @@ final class FirestoreDrinkService {
 
 // MARK: Firestore Fetch Data
 extension FirestoreDrinkService {
-	// Drink 리스트를 가져오는 함수
-	// Drink 를 단일로 가져오는 firestoreDrinkViewModel 의 fetchDrinkDocument 을 사용.
-	func fetchDrinkCollection(collection: CollectionReference, query: Query? = nil) async throws -> [Drink] {
-		do {
-			var result = [Drink]()
-			var snapshot: QuerySnapshot
-			// Drink 가져오는 코드 - FirestoreDrinkViewModel
-			if let query = query {
-				snapshot = try await query.getDocuments()
-			} else {
-				snapshot = try await collection.getDocuments()
-			}
-			for document in snapshot.documents {
-				let id = document.documentID
-				let documentRef = collection.document(id)
-				let drinkData = try await fetchDrinkDocument(document: documentRef)
-				result.append(drinkData)
-			}
-			return result
-		} catch let error {
-			print("error :: fetchDrinkCollection", error.localizedDescription)
-			throw DrinkError.fetchDrinkCollection
-		}
-	}
+    // Drink 리스트를 가져오는 함수
+    // Drink 를 단일로 가져오는 firestoreDrinkViewModel 의 fetchDrinkDocument 을 사용.
+    func fetchDrinkCollection(collection: CollectionReference, query: Query? = nil) async throws -> [Drink] {
+        do {
+            var result = [Drink]()
+            var snapshot: QuerySnapshot
+            // Drink 가져오는 코드 - FirestoreDrinkViewModel
+            if let query = query {
+                snapshot = try await query.getDocuments()
+            } else {
+                snapshot = try await collection.getDocuments()
+            }
+            for document in snapshot.documents {
+                let id = document.documentID
+                let documentRef = collection.document(id)
+                let drinkData = try await fetchDrinkDocument(document: documentRef)
+                result.append(drinkData)
+            }
+            return result
+        } catch let error {
+            print("error :: fetchDrinkCollection", error.localizedDescription)
+            throw DrinkError.fetchDrinkCollection
+        }
+    }
     
 	// drinks collection의 document data 불러오는 메서드
 	// 불러오지 못 할 경우 error를 throw

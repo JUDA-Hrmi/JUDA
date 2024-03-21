@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-enum PostUserType {
-	case writter, reader
-}
-
 // MARK: - 술상 디테일 화면
 struct PostDetailView: View {
     @EnvironmentObject private var navigationRouter: NavigationRouter
@@ -81,7 +77,7 @@ struct PostDetailView: View {
 				}
 			}
 			switch postUserType {
-			case .writter:
+			case .writer:
 				ToolbarItem(placement: .topBarTrailing) {
 					// 공유하기
                     ShareLink(item: "\(post.postField.user.userName)님의 술상",

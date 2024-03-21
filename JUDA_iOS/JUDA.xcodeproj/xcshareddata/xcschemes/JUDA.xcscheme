@@ -41,7 +41,8 @@
       allowLocationSimulation = "YES">
       <PathRunnable
          runnableDebuggingMode = "0"
-         FilePath = "/Users/minjaekim/Library/Developer/Xcode/DerivedData/JUDA-gzjyaxsluhlruncajghxttycvogn/Build/Products/Debug-iphonesimulator/JUDA.app">
+         BundleIdentifier = "com.hrmi.juda"
+         FilePath = "/Users/phang/Library/Developer/Xcode/DerivedData/JUDA-cosstivdqydphqdalurmudoqzqie/Build/Products/Debug-iphoneos/JUDA.app">
       </PathRunnable>
       <MacroExpansion>
          <BuildableReference
@@ -52,10 +53,6 @@
             ReferencedContainer = "container:JUDA.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <LocationScenarioReference
-         identifier = "com.apple.dt.IDEFoundation.CurrentLocationScenarioIdentifier"
-         referenceType = "1">
-      </LocationScenarioReference>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

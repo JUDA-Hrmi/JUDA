@@ -7,15 +7,6 @@
 
 import SwiftUI
 
-// MARK: - 본인 인증 화면에서 사용될 focusField enum
-enum VerificationFocusField: Hashable {
-    case name
-    case birthDate
-    case genderNumber
-    case phoneNumber
-    case verificationNumber
-}
-
 // MARK: - 신규 회원, 본인 인증 화면
 struct IdentityVerificationView: View {
     @Environment(\.dismiss) private var dismiss

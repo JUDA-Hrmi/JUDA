@@ -8,15 +8,6 @@
 import SwiftUI
 import Kingfisher
 
-// MARK: - 어느 뷰에서 DrinkListCell 이 사용되는지 enum
-enum WhereUsedDrinkListCell {
-    case drinkInfo
-    case drinkSearch
-    case searchTag
-    case liked
-    case main
-}
-
 // MARK: - 술 리스트 셀
 struct DrinkListCell: View {
     @EnvironmentObject private var authViewModel: AuthViewModel

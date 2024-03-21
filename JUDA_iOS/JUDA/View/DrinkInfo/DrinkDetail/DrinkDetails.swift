@@ -8,14 +8,6 @@
 import SwiftUI
 import Kingfisher
 
-// MARK: - 어느 뷰에서 DrinkDetails 이 사용되는지 enum
-enum WhereUsedDrinkDetails {
-    case drinkInfo
-    case post
-    case liked
-    case main
-}
-
 // MARK: - 술 디테일에서 보여주는 상단의 술 정보 부분 (이미지, 이름, 가격 등)
 struct DrinkDetails: View {
     @EnvironmentObject private var navigationRouter: NavigationRouter

@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-// MARK: - 평점 Text 추가 여부 확인용 enum type
-enum StarRatingType {
-    case none, withText
-}
-
 // MARK: - 별점
 struct StarRating: View {
     // 평점

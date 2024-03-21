@@ -78,31 +78,31 @@ final class MainViewModel: ObservableObject {
 
 // MARK: - Fetch
 extension MainViewModel {
-	// 인기 있는 drink 가져오기
-	func getHottestDrinks() async {
-		do {
-			let collectionRef = firestore.collection(drinkCollection)
-			let hottestDrinksRef = collectionRef.order(by: "rating", descending: true).limit(to: 3)
-			// Drink 가져오는 함수 사용 - FirestoreDrinkService
-			let hottestDrinks = try await firestoreDrinkService.fetchDrinkCollection(collection: collectionRef, query: hottestDrinksRef)
-			drinks = hottestDrinks
-		} catch {
-			print("error :: getHottestDrinks", error.localizedDescription)
-		}
-	}
-	
-	// 인기 있는 post 가져오기
-	func getHottestPosts() async {
-		do {
-			let collectionRef = firestore.collection(postCollection)
-			let hottestPostsRef = collectionRef.order(by: "likedCount", descending: true).limit(to: 3)
-			//  Post 가져오는 함수 사용 - FirestorePostService
-			let hottestPosts = try await firestorePostService.fetchPostCollection(collection: collectionRef, query: hottestPostsRef)
-			posts = hottestPosts
-		} catch {
-			print("error :: getHottestPosts", error.localizedDescription)
-		}
-	}
+    // 인기 있는 drink 가져오기
+    func getHottestDrinks() async {
+        do {
+            let collectionRef = firestore.collection(drinkCollection)
+            let hottestDrinksRef = collectionRef.order(by: "rating", descending: true).limit(to: 3)
+            // Drink 가져오는 함수 사용 - FirestoreDrinkService
+            let hottestDrinks = try await firestoreDrinkService.fetchDrinkCollection(collection: collectionRef, query: hottestDrinksRef)
+            drinks = hottestDrinks
+        } catch {
+            print("error :: getHottestDrinks", error.localizedDescription)
+        }
+    }
+    
+    // 인기 있는 post 가져오기
+    func getHottestPosts() async {
+        do {
+            let collectionRef = firestore.collection(postCollection)
+            let hottestPostsRef = collectionRef.order(by: "likedCount", descending: true).limit(to: 3)
+            //  Post 가져오는 함수 사용 - FirestorePostService
+            let hottestPosts = try await firestorePostService.fetchPostCollection(collection: collectionRef, query: hottestPostsRef)
+            posts = hottestPosts
+        } catch {
+            print("error :: getHottestPosts", error.localizedDescription)
+        }
+    }
     
     // 날씨 & 음식 + 술 받아오기
     func getWeatherAndAIResponse(location: CLLocation) async {

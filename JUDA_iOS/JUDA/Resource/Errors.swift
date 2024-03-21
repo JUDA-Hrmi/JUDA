@@ -9,6 +9,7 @@ import Foundation
 
 // MARK: - PhotosPicker 에서 이미지 로드 실패 에러
 enum PhotosPickerImageLoadingError: Error {
+    case noSelectedPhotos
     case invalidImageData
 }
 

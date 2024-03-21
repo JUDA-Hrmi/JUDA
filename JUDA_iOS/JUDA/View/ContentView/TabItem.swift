@@ -7,17 +7,7 @@
 
 import Foundation
 
-// RootView ForEach문 내부 Image를 파라미터에 따라 처리해주기 위해 생성
-enum SymbolType {
-    case sfSymbol, customSymbol
-}
-
-// RootView ForEach문 내부 View 변경을 위해 생성
-enum ViewType {
-    case main, drinkInfo, posts, liked, myPage
-}
-
-// MARK: - 앱 최상단 탭뷰의 TabItem에 필요한 데이터
+// MARK: - 앱 최상단 탭뷰의 TabItem 에 필요한 데이터 모델
 struct TabItem: Identifiable {
     let id = UUID()
     let name: String
