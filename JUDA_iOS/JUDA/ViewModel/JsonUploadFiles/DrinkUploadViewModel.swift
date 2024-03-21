@@ -20,6 +20,10 @@ final class DrinkUploadViewModel: ObservableObject {
 				drinks.append(contentsOf: drinkData)
 			}
 		}
+		print(drinks.filter { $0.category == "위스키" }.count)
+		print(drinks.filter { $0.category == "우리술" }.count)
+		print(drinks.filter { $0.category == "맥주" }.count)
+		print(drinks.filter { $0.category == "와인" }.count)
 		drinkDataUpload(drinkData: drinks)
 	}
 	
@@ -118,10 +122,10 @@ final class DrinkUploadViewModel: ObservableObject {
 				group.addTask {
 					do {
 						if let fileName = Formatter.getImageName(category: category, detailedCategory: drink.type) {
-							let url = try await self.fireStorageService.fetchImageURL(folder: .drink, fileName: "")
+							let url = try await self.fireStorageService.fetchImageURL(folder: .drink, fileName: fileName)
 							return (index, url)
 						} else {
-							print("error :: getImageName")
+							print("error :: getImageName", drink.category, drink.type)
 							return (index, nil)
 						}
 					} catch {
@@ -233,11 +237,11 @@ extension DrinkUploadViewModel {
 			switch self {
 			case .beer:
 				return "BeerTest"
-			case .wine:
-				return "TraditionalTest"
 			case .traditional:
-				return "WhiskeyTest"
+				return "TraditionalTest"
 			case .whiskey:
+				return "WhiskeyTest"
+			case .wine:
 				return "WineTest"
 			}
 		}
