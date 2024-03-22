@@ -107,8 +107,7 @@ struct PostCell: View {
                let user = authViewModel.currentUser {
                 self.isLike = user.likedPosts.contains { $0 == post }
 			}
-            // TODO: likedCount로 할 것인가 likedUsersID.count로 할 것인가에 대한 논의 및 수정
-            self.likeCount = post.likedUsersID.count
+            self.likeCount = post.postField.likedCount
 		}
 	}
 }
@@ -124,6 +123,7 @@ struct PostCellUserProfileKFImage: View {
             .cacheMemoryOnly() // 메모리 캐시만 사용 (디스크 X)
             .fade(duration: 0.2) // 이미지 부드럽게 띄우기
             .resizable()
+            .aspectRatio(contentMode: .fill)
             .frame(width: 20, height: 20)
             .clipShape(.circle)
     }

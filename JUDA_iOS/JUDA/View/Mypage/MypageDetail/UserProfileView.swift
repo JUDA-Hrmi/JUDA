@@ -62,7 +62,7 @@ struct UserProfileView: View {
                                         let uiImage = try await authViewModel.updateImage(selectedPhotos: selectedPhotos)
                                         self.selectedImage = uiImage
                                         let url = await authViewModel.uploadProfileImageToStorage(image: uiImage)
-                                        if authViewModel.currentUser?.userField.profileImageURL == nil {
+                                        if authViewModel.currentUser?.userField.profileImageURL != nil {
                                             await authViewModel.updateUserProfileImageURL(url: url)
                                         }
                                     } catch {
