@@ -9,6 +9,7 @@ admin.initializeApp();
 
 const db = admin.firestore();
 const fieldValue = admin.firestore.FieldValue;
+const timestamp = admin.firestore.Timestamp;
 
 exports.helloWorld = onRequest((request, response) => {
   logger.info("Hello logs!", {structuredData: true});
@@ -22,6 +23,44 @@ const taggedPostsString = "taggedPosts"; // taggedPosts collection name
 const likedUsersIDString = "likedUsersID"; // likedUSersID collection name
 const likedPostsString = "likedPosts"; // likedPosts collection name
 const likedDrinksString = "likedDrinks"; // likedDrinks collection name
+const notificationsString = "notifications"; // notifications collection name
+
+// fcm 보내드립니다..
+exports.sendNotification = functions.firestore
+  .document("users/{userId}/notifications/{notificationId}")
+  .onCreate(async (snapshot, context) => {
+    const userId = context.params.userId; // 좋아요 눌러진 post의 userId
+    const userRef = db.collection(usersString).doc(userId);
+    const userSnapshot = await userRef.get();
+    const userFieldData = userSnapshot.data();
+
+    if (userFieldData.notificationAllowed) { // 사용자의 알림설정이 true일 경우
+      const userFcmToken = userFieldData.fcmToken; // 사용자의 fcmToken
+
+      const notification = snapshot.data(); // notification data
+      const likedUserName = notification.likedUser.userName; // 좋아요 누른 사용자의 이름
+
+      // 알림 메시지 생성
+      const message = {
+        notification: {
+          title: "주다",
+          body: `${likedUserName}님이 술상에 좋아요를 눌렀어요.`,
+        },
+        token: userFcmToken,
+      };
+
+      // 알림 전송
+      return admin.messaging().send(message)
+        .then((response) => {
+          console.log("Successfully sent message:", response);
+        })
+        .catch((error) => {
+          console.log("Error sending message:", error);
+        });
+    } else {
+      console.log(`user(userId: ${userId})'s notificationAllowed is false`);
+    }
+  });
 
 // post 업로드
 // root collection인 posts에 post가 업로드됐을 때
@@ -87,19 +126,16 @@ exports.onPostUpdate = functions.firestore
     const postFieldData = snapshot.after.data();
 
     // post 작성한 user 및 user id 추출
-    const user = postFieldData.user;
-    const userId = user.userId;
+    const userId = postFieldData.user.userID;
 
-    await Promise.all(
-      // # 사용자의 'posts' 컬렉션 내 해당 포스트 업데이트
-      updateUserPost(userId, postId, postFieldData),
-      // # 사용자의 'likedPosts' 컬렉션 내 해당 포스트 업데이트
-      updateUserLikedPosts(userId, postId, postFieldData),
-      // # 사용자의 notification 중 'likedPosts' 컬렉션 내 해당 포스트 업데이트
-      updateNotificationLikedPosts(userId, postId, postFieldData),
-      // # 'drinks' 컬렉션 내 'taggedPosts'에서 해당 포스트 업데이트
-      updateTaggedPostDrinks(postId, postFieldData),
-    );
+    // # 사용자의 'posts' 컬렉션 내 해당 포스트 업데이트
+    await updateUserPost(userId, postId, postFieldData);
+    // # 사용자의 'likedPosts' 컬렉션 내 해당 포스트 업데이트
+    await updateUserLikedPosts(userId, postId, postFieldData);
+    // # 사용자의 notification 중 'likedPosts' 컬렉션 내 해당 포스트 업데이트
+    await updateNotificationLikedPosts(userId, postId, postFieldData);
+    // # 'drinks' 컬렉션 내 'taggedPosts'에서 해당 포스트 업데이트
+    await updateTaggedPostDrinks(postId, postFieldData);
   });
 
 // # 사용자의 'posts' 컬렉션 내 해당 포스트 업데이트
@@ -116,13 +152,6 @@ async function updateUserPost(userId, postId, postFieldData) {
     }
   } else { // user의 하위 collection에 해당 post 존재 X
     console.log(`user(userId: ${userId})'s sub collection(posts) not exist post(postId: ${postId})`);
-
-    try {
-      await userPostRef.set(postFieldData);
-      console.log(`success upload post :: updateUserPost(), userId: ${userId}, postId: ${postId}`);
-    } catch (error) {
-      console.error(`error :: upload post user's posts, userId: ${userId}, postId: ${postId}`, error);
-    }
   }
 }
 
@@ -141,13 +170,6 @@ async function updateUserLikedPosts(userId, postId, postFieldData) {
     }
   } else { // user의 하위 likedPosts collection에 해당 post 존재 X
     console.log(`user(userId: ${userId})'s sub collection(likedPosts) not exist post(postId: ${postId})`);
-
-    try {
-      await userLikedPostRef.set(postFieldData);
-      console.log(`success upload post :: updateUserLikedPosts(), userId: ${userId}, postId: ${postId}`);
-    } catch (error) {
-      console.error(`error :: upload post likedPosts, userId: ${userId}, postId: ${postId}`, error);
-    }
   }
 }
 
@@ -167,13 +189,6 @@ async function updateNotificationLikedPosts(userId, postId, postFieldData) {
     }
   } else { // user의 하위 notifications collection에 해당 post 존재 X
     console.log(`user(userId: ${userId})'s sub collection(${notificationsString}) not exist post(postId: ${postId})`);
-
-    try {
-      await notificationRef.set(postFieldData);
-      console.log(`success upload post :: updateNotificationLikedPosts(), userId: ${userId}, postId: ${postId}`);
-    } catch (error) {
-      console.error(`error :: upload post ${notificationsString}, userId: ${userId}, postId: ${postId}`, error);
-    }
   }
 }
 
@@ -196,13 +211,6 @@ async function updateTaggedPostDrinks(postId, postFieldData) {
       }
     } else { // drink의 하위 taggedPosts collection에 해당 post 존재 X
       console.log(`drink(drinkId: ${drinkId})'s sub collection(${taggedPostsString}) not exist post(postId: ${postId})`);
-
-      try {
-        await taggedPostRef.set(postFieldData);
-        console.log(`success upload post :: updateTaggedPostDrinks(), drinkId: ${drinkId}, postId: ${postId}`);
-      } catch (error) {
-        console.error(`error :: upload post ${taggedPostsString}, drinkId: ${drinkId}, postId: ${postId}`, error);
-      }
     }
   }
 }
@@ -218,14 +226,12 @@ exports.onPostDelete = functions.https.onCall(async (data, context) => {
 
 // post와 관련된 document 삭제하는 함수 병렬처리
 async function deleteDocumentsRelatedToPost(userId, postId) {
-  await Promise.all(
-    // 사용자의 'posts' 컬렉션 내 해당 post 삭제
-    deleteUserPost(userId, postId),
-    // post 좋아요 누른 모든 user의 'likedPosts'에서 해당 post 삭제
-    deleteOtherUsersLikedPost(postId),
-    // 'drinks' 컬렉션의 'taggedPosts'에서 해당 post 삭제
-    deleteTaggedPostsInDrinks(postId),
-  );
+  // 사용자의 'posts' 컬렉션 내 해당 post 삭제
+  await deleteUserPost(userId, postId);
+  // post 좋아요 누른 모든 user의 'likedPosts'에서 해당 post 삭제
+  await deleteOtherUsersLikedPost(postId);
+  // 'drinks' 컬렉션의 'taggedPosts'에서 해당 post 삭제
+  await deleteTaggedPostsInDrinks(postId);
 }
 
 // 사용자의 'posts' 컬렉션 내 해당 post 삭제
@@ -301,7 +307,7 @@ exports.onAddLikedToPost = functions.firestore
   .document("posts/{postId}/likedUsersID/{userId}")
   .onCreate(async (snapshot, context) => {
     const postId = context.params.postId;
-    const userId = context.params.userId;
+    const likedUserId = context.params.userId;
 
     // 좋아요 count 1 증가
     const postRef = db.collection(postsString).doc(postId);
@@ -313,21 +319,61 @@ exports.onAddLikedToPost = functions.firestore
       console.error(`error :: likedCount increment(1), postId: ${postId}`, error);
     }
 
-    // users/<userID>/likedPosts/<postID>에 post upload
     const postDoc = await postRef.get();
     const postFieldData = postDoc.data();
-    await uploadUserLikedPosts(userId, postId, postFieldData);
+    // users/<userID>/likedPosts/<postID>에 post upload
+    await uploadUserLikedPosts(likedUserId, postId, postFieldData);
+
+    // users/{userId}/notifications{likedUserId + postId}에 post upload
+    await uploadUserNotification(likedUserId, postId, postFieldData);
   });
 
-async function uploadUserLikedPosts(userId, postId, postFieldData) {
-  const userRef = db.collection(usersString).doc(userId);
+async function uploadUserLikedPosts(likedUserId, postId, postFieldData) {
+  const userRef = db.collection(usersString).doc(likedUserId);
   const likedPostRef = userRef.collection(likedPostsString).doc(postId);
 
   try {
     await likedPostRef.set(postFieldData);
-    console.log(`succress upload likedPost :: uploadUserLikedPosts(), userId: ${userId}, likedPostId: ${postId}`);
+    console.log(`success upload likedPost :: uploadUserLikedPosts(), userId: ${likedUserId}, likedPostId: ${postId}`);
   } catch (error) {
-    console.error(`error :: uploadUserLikedPosts(), userId: ${userId}, likedPostId: ${postId}`, error);
+    console.error(`error :: uploadUserLikedPosts(), userId: ${likedUserId}, likedPostId: ${postId}`, error);
+  }
+}
+
+// users/{userId}/notifications{likedUserId + postId}에 post upload
+async function uploadUserNotification(likedUserId, postId, postFieldData) {
+  const userId = postFieldData.user.userID;
+  if ((userId + postId) == (likedUserId + postId)) {
+    console.log(`post writter's userId(${userId}), likedUserId(${likedUserId}) is same id`);
+    return;
+  }
+
+  const imagesURL = postFieldData.imagesURL;
+  const thumbnailImageURL = imagesURL.length == 0 ? "" : imagesURL[0];
+  const likedUserRef = db.collection(usersString).doc(likedUserId);
+  const likedUserDoc = await likedUserRef.get();
+  const likedUserName = likedUserDoc.data().name;
+  const likedUser = {
+    userID: likedUserId,
+    userName: likedUserName,
+  };
+  const notification = {
+    isChecked: false,
+    likedTime: timestamp.fromDate(new Date()),
+    thumbnailImageURL: thumbnailImageURL,
+    likedUser: likedUser,
+  };
+  const userRef = db.collection(usersString).doc(userId);
+  const notificationRef = userRef.collection(notificationsString).doc(likedUserId + postId);
+  const notificationsLikedPostRef = notificationRef.collection("likedPost").doc(postId);
+
+  try {
+    await notificationRef.set(notification);
+    console.log(`success upload notification :: uploadUserNotification(), userId: ${userId}, likedUserId: ${likedUserId}, likedPostId: ${postId}`);
+    await notificationsLikedPostRef.set(postFieldData);
+    console.log(`success upload notificationLikedPost :: userId: ${userId}, likedUserId: ${likedUserId}, likedPostId: ${postId}`);
+  } catch (error) {
+    console.error(`error :: uploadUserNotification(), userId: ${userId}, likedUserId: ${likedUserId}, likedPostId: ${postId}`);
   }
 }
 
@@ -336,7 +382,7 @@ exports.onDeleteLikedToPost = functions.firestore
   .document("posts/{postId}/likedUsersID/{userId}")
   .onDelete(async (snapshot, context) => {
     const postId = context.params.postId;
-    const userId = context.params.userId;
+    const likedUserId = context.params.userId;
 
     // 좋아요 count 1 감소
     const postRef = db.collection(postsString).doc(postId);
@@ -349,18 +395,35 @@ exports.onDeleteLikedToPost = functions.firestore
     }
 
     // users/<userID>/likedPosts/<postID>에 post delete
-    await deleteUserLikedPost(userId, postId);
+    await deleteUserLikedPost(likedUserId, postId);
+    // users/{userId}/notifications{likedUserId + postId}에 post upload
+    const postDoc = await postRef.get();
+    const postFieldData = postDoc.data();
+    const userId = postFieldData.user.userID;
+    await deleteUserNotification(userId, likedUserId, postId);
   });
 
-async function deleteUserLikedPost(userId, postId) {
-  const userRef = db.collection(usersString).doc(userId);
-  const likedPostRef = userRef.collection(likedPostsString).doc(postId);
+async function deleteUserLikedPost(likedUserId, postId) {
+  const likedUserRef = db.collection(usersString).doc(likedUserId);
+  const likedPostRef = likedUserRef.collection(likedPostsString).doc(postId);
 
   try {
     await likedPostRef.delete();
-    console.log(`succress delete likedPost :: uploadUserLikedPosts(), userId: ${userId}, likedPostId: ${postId}`);
+    console.log(`succress delete likedPost :: uploadUserLikedPosts(), userId: ${likedUserId}, likedPostId: ${postId}`);
   } catch (error) {
-    console.error(`error :: deleteUserLikedPost(), userId: ${userId}, likedPostId: ${postId}`, error);
+    console.error(`error :: deleteUserLikedPost(), userId: ${likedUserId}, likedPostId: ${postId}`, error);
+  }
+}
+
+async function deleteUserNotification(userId, likedUserId, postId) {
+  const userRef = db.collection(usersString).doc(userId);
+  const notificationRef = userRef.collection(notificationsString).doc(likedUserId + postId);
+
+  try {
+    await notificationRef.delete();
+    console.log(`success delete notification, userId: ${userId}, likedUserId: ${likedUserId}, postId: ${postId}`);
+  } catch (error) {
+    console.error(`error :: deleteUserNotification(), userId: ${userId}, likedUserId: ${likedUserId}, postId: ${postId}`);
   }
 }
 
@@ -464,14 +527,12 @@ async function updateUsersLikedDrinkRating(userId, drinkId, rating) {
 exports.onUserDelete = functions.https.onCall(async (data, context) => {
   const userId = data.userID;
 
-  await Promise.all(
-    // user가 작성한 post들 root posts collection에서 삭제
-    deleteUserPosts(userId),
-    // user의 likedPosts에 있는 post들 root posts의 post likedCount -1 및 likedUsersID에서 삭제
-    deleteUserLikedPosts(userId),
-    // user의 likedDrinks에 있는 drink들 root drinks의 likedUsersID에서 삭제
-    deleteUserLikedDrinks(userId),
-  );
+  // user가 작성한 post들 root posts collection에서 삭제
+  await deleteUserPosts(userId);
+  // user의 likedPosts에 있는 post들 root posts의 post likedCount -1 및 likedUsersID에서 삭제
+  await deleteUserLikedPosts(userId);
+  // user의 likedDrinks에 있는 drink들 root drinks의 likedUsersID에서 삭제
+  await deleteUserLikedDrinks(userId);
 });
 
 // user/posts에 접근하여 postID를 통해 root collection인 posts에서 post delete
@@ -501,16 +562,26 @@ async function deleteUserLikedPosts(userId) {
   for (const userLikedPostDoc of userLikedPostsSnapshot.docs) {
     const postId = userLikedPostDoc.id;
     const postRef = db.collection(postsString).doc(postId);
+    try {
+      await postRef.update({
+        "likedCount": fieldValue.increment(-1),
+      });
+      console.log(`success likedCount increment(-1), postId: ${postId}`);
+    } catch (error) {
+      console.error(`error :: fail likedCount increment(-1), postId: ${postId}`, error);
+    }
+
     const postLikedUserIdRef = postRef.collection(likedUsersIDString).doc(userId);
 
     try {
       await postLikedUserIdRef.delete();
       console.log(`success likedUserId delete :: deleteUserLikedPosts(), userId: ${userId}, postId: ${postId}`);
     } catch (error) {
-      console.error(`error :: deleteUserLikedPosts(), userId: ${userId}, postId: ${postId}`);
+      console.error(`error :: deleteUserLikedPosts(), userId: ${userId}, postId: ${postId}`, error);
     }
   }
 }
+
 // user/likedDrinks에 접근하여 drinkID를 통해 root collection인 drinks에 접근하여 drinks/likedUsersID에서 해당 userID를 delete
 async function deleteUserLikedDrinks(userId) {
   const userRef = db.collection(usersString).doc(userId);
@@ -526,7 +597,7 @@ async function deleteUserLikedDrinks(userId) {
       await drinkLikedUserIdRef.delete();
       console.log(`success likedUserId delete :: deleteUserLikedDrinks(), userId: ${userId}, drinkId: ${drinkId}`);
     } catch (error) {
-      console.error(`error :: deleteUserLikedDrinks(),userId: ${userId}, drinkId: ${drinkId}`);
+      console.error(`error :: deleteUserLikedDrinks(),userId: ${userId}, drinkId: ${drinkId}`, error);
     }
   }
 }
