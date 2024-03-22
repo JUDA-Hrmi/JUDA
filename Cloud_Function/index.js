@@ -18,7 +18,7 @@ exports.helloWorld = onRequest((request, response) => {
 const usersString = "users"; // users collection name
 const postsString = "posts"; // posts collection name
 const drinksString = "drinks"; // drinks collection name
-const taggedPostsString = "taggedPostsString"; // taggedPosts collection name
+const taggedPostsString = "taggedPosts"; // taggedPosts collection name
 const likedUsersIDString = "likedUsersID"; // likedUSersID collection name
 const likedPostsString = "likedPosts"; // likedPosts collection name
 const likedDrinksString = "likedDrinks"; // likedDrinks collection name
@@ -30,17 +30,14 @@ exports.onPostCreate = functions.firestore
   .onCreate(async (snapshot, context) =>{
     const postId = context.params.postId; // new post id 추출
     const postFieldData = snapshot.data(); // new post document field data
-    const postRef = snapshot.ref; // new post document ref
 
-    const drinkTagsString = "drinkTags"; // drinkTags collection name
-    const drinkTagsRef = postRef.collection(drinkTagsString); // drinkTags collection ref
-    const drinkTagsSnapshot = await drinkTagsRef.get(); // drinkTags documents snapshot
+    const drinkTags = postFieldData.drinkTags;
 
     // drinkTags collection 순회하여 각 drinkTag document에 post 업로드
-    for await (const drinkTagDoc of drinkTagsSnapshot.docs) {
-      const drinkId = drinkTagDoc.id; // drink id 추출
+    drinkTags.forEach(async (drinkTag) => {
+      const drinkId = drinkTag.drinkID; // drink id 추출
       await uploadPostIdToTaggedPost(drinkId, postId, postFieldData);
-    }
+    });
 
     // post 작성한 user 및 user id 추출
     const user = postFieldData.user;
@@ -369,7 +366,7 @@ async function deleteUserLikedPost(userId, postId) {
 
 // 술에 좋아요를 눌렀을 때
 exports.onAddLikedToDrink = functions.firestore
-  .document("drinks/{drinkId}/likedUsersId/{userId}")
+  .document("drinks/{drinkId}/likedUsersID/{userId}")
   .onCreate(async (snapshot, context) => {
     const drinkId = context.params.drinkId;
     const userId = context.params.userId;
@@ -395,7 +392,7 @@ async function uploadUserLikedDrinks(userId, drinkId, drinkFieldData) {
 
 // 술에 좋아요를 취소했을 때
 exports.onDeleteLikedToDrink = functions.firestore
-  .document("drinks/{drinkId}/likedUsersId/{userId}")
+  .document("drinks/{drinkId}/likedUsersID/{userId}")
   .onDelete(async (snapshot, context) => {
     const drinkId = context.params.drinkId;
     const userId = context.params.userId;
@@ -419,7 +416,7 @@ async function deleteUserLikedDrink(userId, drinkId) {
 
 // drink document field data(rating) 수정됐을 때
 exports.onUpdateDrinkRating = functions.firestore
-  .document("driks/{drinkId}")
+  .document("drinks/{drinkId}")
   .onUpdate(async (snapshot, context) => {
     const drinkId = context.params.drinkId;
     const drinkFieldData = snapshot.after.data();
