@@ -75,7 +75,6 @@ struct PostCell: View {
 					// 좋아요를 등록 -> 빨간색이 채워진 하트
 					// 좋아요를 해제 -> 테두리가 회색인 하트
 					Button {
-						// TODO: 로그인 안 되어 있을 때, 로그인 페이지 넘어가기
                         if authViewModel.signInStatus {
                             isLike.toggle()
                             debouncer.call {

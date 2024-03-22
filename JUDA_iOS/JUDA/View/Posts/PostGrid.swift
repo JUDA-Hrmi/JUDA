@@ -69,8 +69,8 @@ struct PostGridContent: View {
     var body: some View {
         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 15) {
             if usedTo == .post {
-				if !postViewModel.isLoading {
-					ForEach(postViewModel.posts, id: \.postField.postID) { post in
+                if !postViewModel.isLoading {
+                    ForEach(postViewModel.posts, id: \.postField.postID) { post in
                         NavigationLink(value: Route
                             .PostDetail(postUserType: authViewModel.currentUser?.userField.userID == post.postField.user.userID ? .writer : .reader,
                                         post: post,
@@ -82,10 +82,10 @@ struct PostGridContent: View {
                                     }
                                 }
                         }
-						.buttonStyle(EmptyActionStyle())
-						// TODO: 비로그인 상태인 경우 눌렀을 때 로그인뷰로 이동
-						.disabled(!authViewModel.signInStatus)
-					}
+                        .buttonStyle(EmptyActionStyle())
+                        // TODO: 비로그인 상태인 경우 눌렀을 때 로그인뷰로 이동
+                        .disabled(!authViewModel.signInStatus)
+                    }
 				} else {
 					ForEach(0..<10) { _ in
 						ShimmerPostCell()
