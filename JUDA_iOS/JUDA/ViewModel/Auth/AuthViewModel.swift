@@ -47,11 +47,13 @@ final class AuthViewModel: ObservableObject {
     private let drinkCollection = "drinks"
     
     // 현재 유저 있는지 확인, uid 받기
-    private func checkCurrentUserID() throws -> String {
+    private func checkCurrentUserID()  throws -> String {
         guard let uid = Auth.auth().currentUser?.uid else {
             print("error :: currentUser 없음")
             defer {
-                signOut()
+                Task {
+                    await signOut()
+                }
             }
             throw AuthManagerError.noUserID
         }
@@ -483,7 +485,7 @@ extension AuthViewModel {
 // MARK: - 로그아웃 ( Apple & Google 공통 )
 extension AuthViewModel {
     // 로그아웃
-    func signOut() {
+    func signOut() async {
         do {
             try Auth.auth().signOut()
             resetData()
@@ -526,7 +528,7 @@ extension AuthViewModel {
                 isNewUser = await firebaseAuthService.isNewUser(uid: uid)
                 // 신규 유저
                 if isNewUser {
-                    signOut()
+                    await signOut()
                     self.isNewUser = true
                     print("First ✨ - Apple Sign Up 🍎")
                 } else {
