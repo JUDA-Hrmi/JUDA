@@ -69,7 +69,7 @@ final class FirebaseUserService {
             for notificationDocument in userNotificationSnapshot.documents {
                 let notificationFieldData = try notificationDocument.data(as: NotificationField.self)
                 let notificationID = notificationDocument.documentID
-                let notificationPostRef = userNotificationRef.document(notificationID).collection(likedPostCollection)
+                let notificationPostRef = userNotificationRef.document(notificationID).collection("likedPost")
                 // notification 해당되는 post 가져오는 코드 - FirestorePostService
                 let notificationPostList = try await firestorePostService.fetchPostCollection(collection: notificationPostRef)
                 // post는 원래 리스트가 아니라 1개. 하지만, postID 가 필요해서 리스트로 받은 뒤 first 추출

@@ -38,8 +38,6 @@ final class PostViewModel: ObservableObject {
     @Published var isLoading = false
     // 검색 중
 	@Published var isSearching = false
-    // 로그인 안내 다이얼로그
-    @Published var isLoginDialog = false
 }
 
 // MARK: - Fetch
