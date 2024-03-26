@@ -88,28 +88,28 @@ exports.onPostCreate = functions.firestore
 
 // drinks 컬렉션의 taggedPosts 하위 컬렉션에 포스트 필드 데이터 업로드
 async function uploadPostIdToTaggedPost(drinkId, postId, postFieldData) {
-  const drinkRef = db.collection(drinksString).doc(drinkId);
+  const drinkRef = db.collection(drinksString).doc(drinkId); // get drink document reference
 
-  if ((await drinkRef.get()).exists) {
-    const taggedPostRef = drinkRef.collection(taggedPostsString).doc(postId);
+  if ((await drinkRef.get()).exists) { // drink에 대한 document가 존재 O
+    const taggedPostRef = drinkRef.collection(taggedPostsString).doc(postId); // drink document의 하위 taggedPosts collection의 document reference get
     try {
-      await taggedPostRef.set(postFieldData);
+      await taggedPostRef.set(postFieldData); // drink document의 하위 taggedPosts collection의 document에 postFieldData를 업로드
       console.log(`success upload post :: uploadPostIdToTaggedPost(), drinkId: ${drinkId}, postId: ${postId}`);
     } catch (error) {
       console.error(`error :: uploadPostIdToTaggedPost(), drinkId: ${drinkId}, postId: ${postId}`, error);
     }
-  } else {
+  } else { // drink에 대한 document가 존재 X
     console.log(`drink document not exist for drinkId: ${drinkId}`);
   }
 }
 
 // users 컬렉션의 posts 하위 컬렉션에 포스트 필드 업로드
 async function uploadPostToUsers(userId, postId, postFieldData) {
-  const userRef = db.collection(usersString).doc(userId);
-  const postRef = userRef.collection(postsString).doc(postId);
+  const userRef = db.collection(usersString).doc(userId); // get user document reference
+  const postRef = userRef.collection(postsString).doc(postId); // uset의 하위 posts collection의 document reference get
 
   try {
-    await postRef.set(postFieldData);
+    await postRef.set(postFieldData); // user document 하위 posts collection의 document에 postFieldData 업로드
     console.log(`success upload post :: uploadPostToUsers(), userId: ${userId}, postId: ${postId}`);
   } catch (error) {
     console.error(`error :: uploadPostToUsers(), userId: ${userId}, postId: ${postId}`, error);
@@ -140,12 +140,12 @@ exports.onPostUpdate = functions.firestore
 
 // # 사용자의 'posts' 컬렉션 내 해당 포스트 업데이트
 async function updateUserPost(userId, postId, postFieldData) {
-  const userRef = db.collection(usersString).doc(userId);
-  const userPostRef = userRef.collection(postsString).doc(postId);
+  const userRef = db.collection(usersString).doc(userId); // get user document reference
+  const userPostRef = userRef.collection(postsString).doc(postId); // uset의 하위 posts collection의 document reference get
 
   if ((await userPostRef.get()).exists) { // user의 하위 posts collection에 해당 post 존재 O
     try {
-      await userPostRef.update(postFieldData);
+      await userPostRef.update(postFieldData); // user document 하위 posts collection의 document에 postFieldData 업데이트
       console.log(`success update post :: updateUserPost(), userId: ${userId}, postId: ${postId}`);
     } catch (error) {
      console.error(`error :: updateUserPost(), userId: ${userId}, postId: ${postId}`, error);
@@ -157,13 +157,12 @@ async function updateUserPost(userId, postId, postFieldData) {
 
 // # 사용자의 'likedPosts' 컬렉션 내 해당 포스트 업데이트
 async function updateUserLikedPosts(userId, postId, postFieldData) {
-  const likedPostsString = "likedPosts";
-  const userRef = db.collection(usersString).doc(userId);
-  const userLikedPostRef = userRef.collection(likedPostsString).doc(postId);
+  const userRef = db.collection(usersString).doc(userId); // get user document reference
+  const userLikedPostRef = userRef.collection(likedPostsString).doc(postId); // uset의 하위 likedPosts collection의 document reference get
 
   if ((await userLikedPostRef.get()).exists) { // user의 하위 likedPosts collection에 해당 post 존재 O
     try {
-      await userLikedPostRef.update(postFieldData);
+      await userLikedPostRef.update(postFieldData); // user document 하위 likedPosts collection document에 postFieldData 업데이트
       console.log(`success update post :: updateUserLikedPosts(), userId: ${userId}, postId: ${postId}`);
     } catch (error) {
       console.error(`error :: updateUserLikedPosts(), userId: ${userId}, postId: ${postId}`, error);
@@ -178,11 +177,11 @@ async function updateNotificationLikedPosts(userId, postId, postFieldData) {
   const notificationsString = "notifications";
   const notificationId = userId + postId; // notification document id
 
-  const userRef = db.collection(usersString).doc(userId);
+  const userRef = db.collection(usersString).doc(userId); // get user document reference
   const notificationRef = userRef.collection(notificationsString).doc(notificationId);
   if ((await notificationRef.get()).exists) { // user의 하위 notification collection에 해당 post 존재 O
     try {
-      await notificationRef.update(postFieldData);
+      await notificationRef.update(postFieldData); // user document 하위 notifications collection document에 postFieldData 업데이트
       console.log(`success update post :: updateNotificationLikedPosts(), userId: ${userId}, postId: ${postId}`);
     } catch (error) {
       console.error(`error :: updateNotificationLikedPosts(), userId: ${userId}, postId: ${postId}`), error;
@@ -194,17 +193,17 @@ async function updateNotificationLikedPosts(userId, postId, postFieldData) {
 
 // # 'drinks' 컬렉션 내 'taggedPosts'에서 해당 포스트 업데이트
 async function updateTaggedPostDrinks(postId, postFieldData) {
-  const drinksRef = db.collection(drinksString);
-  const drinkTags = postFieldData.drinkTags;
+  const drinksRef = db.collection(drinksString); // get drinks collection reference
+  const drinkTags = postFieldData.drinkTags; // user 하위 fieldData중 drinkTags get
 
-  for (const drinkTag of drinkTags) {
-    const drinkId = drinkTag.drinkID;
-    const drinkRef = drinksRef.doc(drinkId);
-    const taggedPostRef = drinkRef.collection(taggedPostsString).doc(postId);
+  for (const drinkTag of drinkTags) { // drinkTags를 순회
+    const drinkId = drinkTag.drinkID; // tag된 drink의 id get
+    const drinkRef = drinksRef.doc(drinkId); // get drink document reference
+    const taggedPostRef = drinkRef.collection(taggedPostsString).doc(postId); // drink document의 하위 taggedPosts collection의 document reference get
 
     if ((await taggedPostRef.get()).exists) { // drink의 하위 taggedPosts collection에 해당 post 존재 O
       try {
-        await taggedPostRef.update(postFieldData);
+        await taggedPostRef.update(postFieldData); // drink document의 하위 taggedPosts collection의 document에 postFieldData를 업로드
         console.log(`success update post :: updateTaggedPostDrinks(), drinkId: ${drinkId}, postId: ${postId}`);
       } catch (error) {
         console.error(`error :: updateTaggedPostDrinks(), drinkId: ${drinkId}, postId: ${postId}`, error);
@@ -216,9 +215,10 @@ async function updateTaggedPostDrinks(postId, postFieldData) {
 }
 
 // post 삭제
+// 앱 내에서 호출하는 함수
 exports.onPostDelete = functions.https.onCall(async (data, context) => {
-  const userId = data.userID;
-  const postId = data.postID;
+  const userId = data.userID; // 매개변수로 받아온 userId
+  const postId = data.postID; // 매개변수로 받아온 postId
 
   // post와 관련된 collection document 삭제
   await deleteDocumentsRelatedToPost(userId, postId);
@@ -230,18 +230,20 @@ async function deleteDocumentsRelatedToPost(userId, postId) {
   await deleteUserPost(userId, postId);
   // post 좋아요 누른 모든 user의 'likedPosts'에서 해당 post 삭제
   await deleteOtherUsersLikedPost(postId);
-  // 'drinks' 컬렉션의 'taggedPosts'에서 해당 post 삭제
-  await deleteTaggedPostsInDrinks(postId);
 }
 
 // 사용자의 'posts' 컬렉션 내 해당 post 삭제
 async function deleteUserPost(userId, postId) {
-  const userRef = db.collection(usersString).doc(userId);
-  const userPostRef = userRef.collection(postsString).doc(postId);
+  const userRef = db.collection(usersString).doc(userId); // get user document reference
+  const userPostRef = userRef.collection(postsString).doc(postId); // user의 하위 posts collection의 document reference get
+  const userPostSnapshot = await userPostRef.get(); // user의 하위 posts collection의 document snapshot get
 
-  if ((await userPostRef.get()).exists) { // user의 하위 posts collection에 해당 post 존재 O
+  if (userPostSnapshot.exists) { // user의 하위 posts collection에 해당 post 존재 O
+    const postFieldData = userPostSnapshot.data(); // user의 하위 field data get
+    await deleteTaggedPostsInDrinks(postId, postFieldData); // 'drinks' 컬렉션의 'taggedPosts'에서 해당 post 삭제
+
     try {
-      await userPostRef.delete();
+      await userPostRef.delete(); // user의 하위 post document 삭제
       console.log(`success post delete :: deleteUserPost(), userId: ${userId}, postId: ${postId}`);
     } catch (error) {
       console.error(`error :: deleteUserPost(), userId: ${userId}, postId: ${postId}`, error);
@@ -249,6 +251,28 @@ async function deleteUserPost(userId, postId) {
   } else { // user의 하위 posts collection에 해당 post 존재 X
     console.log(`user(userId: ${userId})'s sub collection(${postsString}) not exist post(postId: ${postId})`);
   }
+}
+
+// posts/<postID> field data drinkTags 돌면서 얻은 drinkID 갖고 drinks/<drinkID>/taggedPosts/<postID> document 삭제
+async function deleteTaggedPostsInDrinks(postId, postFieldData) {
+  const drinkTags = postFieldData.drinkTags; // post의 하위 field data중 drinkTags get
+
+  drinkTags.forEach(async (drinkTag) => { // drinkTags 순회하며 비동기 클로저 호출
+    const drinkId = drinkTag.drinkID; // drinkTag 하위 data중 drinkId get
+    const drinkRef = db.collection(drinksString).doc(drinkId); // get drink document reference
+    const taggedPostRef = drinkRef.collection(taggedPostsString).doc(postId); // drinks 하위 taggedPosts collection document reference get
+
+    if ((await taggedPostRef.get()).exists) { // drink의 하위 taggedPosts collection에 해당 post 존재 O
+      try {
+        await taggedPostRef.delete(); // drink 하위 tagged post document 삭제
+        console.log(`success taggedPost delete :: deleteTaggedPostsInDrinks(), drinkId: ${drinkId}, likedPostId: ${postId}`);
+      } catch (error) {
+        console.error(`error :: deleteTaggedPostsInDrinks(), drinkId: ${drinkId}, likedPostId: ${postId}`);
+      }
+    } else { // drink의 하위 taggedPosts collection에 해당 post 존재 X
+      console.log(`drink(drinkId: ${drinkId})'s sub collection(${taggedPostsString}) not exist post(postId: ${postId})`);
+    }
+  });
 }
 
 // post 좋아요 누른 모든 user의 'likedPosts'에서 해당 post 삭제
@@ -271,31 +295,6 @@ async function deleteOtherUsersLikedPost(postId) {
       }
     } else { // user의 하위 likedPosts collection에 해당 post 존재 X
       console.log(`user(userId: ${userId})'s sub collection(${likedPostsString}) not exist post(postId: ${postId})`);
-    }
-  });
-}
-
-// posts/<postID> field data drinkTags 돌면서 얻은 drinkID 갖고 drinks/<drinkID>/taggedPosts/<postID> document 삭제
-async function deleteTaggedPostsInDrinks(postId) {
-  const postRef = db.collection(postsString).doc(postId);
-  const postDoc = await postRef.get();
-  const postFieldData = postDoc.data();
-  const drinkTags = postFieldData.drinkTags;
-
-  drinkTags.forEach(async (drinkTag) => {
-    const drinkId = drinkTag.drinkID;
-    const drinkRef = db.collection(drinksString).doc(drinkId);
-    const taggedPostRef = drinkRef.collection(taggedPostsString).doc(postId);
-
-    if ((await taggedPostRef.get()).exists) { // drink의 하위 taggedPosts collection에 해당 post 존재 O
-      try {
-        await taggedPostRef.delete();
-        console.log(`success taggedPost delete :: deleteTaggedPostsInDrinks(), drinkId: ${drinkId}, likedPostId: ${postId}`);
-      } catch (error) {
-        console.error(`error :: deleteTaggedPostsInDrinks(), drinkId: ${drinkId}, likedPostId: ${postId}`);
-      }
-    } else { // drink의 하위 taggedPosts collection에 해당 post 존재 X
-      console.log(`drink(drinkId: ${drinkId})'s sub collection(${taggedPostsString}) not exist post(postId: ${postId})`);
     }
   });
 }
@@ -526,13 +525,17 @@ async function updateUsersLikedDrinkRating(userId, drinkId, rating) {
 // 회원탈퇴
 exports.onUserDelete = functions.https.onCall(async (data, context) => {
   const userId = data.userID;
-
-  // user가 작성한 post들 root posts collection에서 삭제
-  await deleteUserPosts(userId);
-  // user의 likedPosts에 있는 post들 root posts의 post likedCount -1 및 likedUsersID에서 삭제
-  await deleteUserLikedPosts(userId);
-  // user의 likedDrinks에 있는 drink들 root drinks의 likedUsersID에서 삭제
-  await deleteUserLikedDrinks(userId);
+  const userRef = db.collection(usersString).doc(userId);
+  if ((await userRef.get()).exists) {
+    // user가 작성한 post들 root posts collection에서 삭제
+    await deleteUserPosts(userId);
+    // user의 likedPosts에 있는 post들 root posts의 post likedCount -1 및 likedUsersID에서 삭제
+    await deleteUserLikedPosts(userId);
+    // user의 likedDrinks에 있는 drink들 root drinks의 likedUsersID에서 삭제
+    await deleteUserLikedDrinks(userId);
+  } else {
+    console.log(`user(userId: ${userId}) not exists`);
+  }
 });
 
 // user/posts에 접근하여 postID를 통해 root collection인 posts에서 post delete
