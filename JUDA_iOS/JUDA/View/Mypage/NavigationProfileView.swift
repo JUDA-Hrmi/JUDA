@@ -68,8 +68,10 @@ struct NavigationProfileView: View {
         .task {
             switch userType {
             case .user:
+                print("userType :: user")
                 await authViewModel.startListeningForUserField()
             case .otherUser:
+                print("userType :: otherUser")
                 await userViewModel.getUser(uid: userID)
             }
         }

@@ -26,10 +26,17 @@ final class FirebaseUserService {
     
     
     // firestore 에서 UserField 정보 가져오기
-    func fetchUserFieldData(uid: String) async throws -> UserField {
+    func fetchUserFieldData(uid: String, userType: UserType = .user) async throws -> UserField {
         do {
-            let document = try await db.collection(userCollection).document(uid).getDocument(source: .cache)
+            var document: DocumentSnapshot
+            switch userType {
+            case .user:
+                document = try await db.collection(userCollection).document(uid).getDocument(source: .cache)
+            case .otherUser:
+                document = try await db.collection(userCollection).document(uid).getDocument(source: .server)
+            }
             let userData = try document.data(as: UserField.self)
+            print("fetchUserFieldData from cache")
             return userData
         } catch {
             throw FetchUserError.userField
