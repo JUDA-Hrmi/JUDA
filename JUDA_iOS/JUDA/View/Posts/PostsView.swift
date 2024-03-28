@@ -102,6 +102,7 @@ struct PostsView: View {
                         .task {
                             recordViewModel.recordPostDataClear()
                         }
+<<<<<<< 864b10c052d8eafda116c2341fc1c7486b1083e8
 					}
 					.padding(.horizontal, 20)
 					// 인기 or 최신 탭뷰
@@ -126,6 +127,25 @@ struct PostsView: View {
 					.tabViewStyle(.page(indexDisplayMode: .never))
 				}
 			}
+=======
+                        .tabViewStyle(.page(indexDisplayMode: .never))
+                    }
+                }
+                
+                // 로그인 다이얼로그
+                if authViewModel.isShowLoginDialog {
+                    CustomDialog(type: .navigation(
+                        message: "로그인이 필요한 기능이에요.",
+                        leftButtonLabel: "취소",
+                        leftButtonAction: {
+                            authViewModel.isShowLoginDialog = false
+                        },
+                        rightButtonLabel: "로그인",
+                        navigationLinkValue: .Login))
+                }
+            }
+            .navigationBarTitleDisplayMode(.inline)
+>>>>>>> [Edit] Main, Drink 비로그인 시 로그인 뷰 이동
             .navigationDestination(for: Route.self) { value in
                 switch value {
                 case .ChangeUserName:
@@ -197,6 +217,12 @@ struct PostsView: View {
 			.onAppear {
 				appViewModel.tabBarState = .visible
 			}
+<<<<<<< 864b10c052d8eafda116c2341fc1c7486b1083e8
+=======
+            .onDisappear {
+                authViewModel.isShowLoginDialog = false
+            }
+>>>>>>> [Edit] Main, Drink 비로그인 시 로그인 뷰 이동
 		}
         .environmentObject(navigationRouter)
         .toolbar(appViewModel.tabBarState, for: .tabBar)

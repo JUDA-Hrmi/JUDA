@@ -11,6 +11,7 @@ import SwiftUI
 struct NavigationPostsView: View {
     @EnvironmentObject private var navigationRouter: NavigationRouter
     @EnvironmentObject private var postViewModel: PostViewModel
+    @EnvironmentObject private var authViewModel: AuthViewModel
 	@State private var selectedSegmentIndex = 0
     
 	let usedTo: WhereUsedPostGridContent
@@ -63,6 +64,22 @@ struct NavigationPostsView: View {
                         }
                     }
                 }
+<<<<<<< 864b10c052d8eafda116c2341fc1c7486b1083e8
+=======
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .ignoresSafeArea()
+            }
+            
+            if authViewModel.isShowLoginDialog {
+                CustomDialog(type: .navigation(
+                    message: "로그인이 필요한 기능이에요.",
+                    leftButtonLabel: "취소",
+                    leftButtonAction: {
+                        authViewModel.isShowLoginDialog = false
+                    },
+                    rightButtonLabel: "로그인",
+                    navigationLinkValue: .Login))
+>>>>>>> [Edit] Main, Drink 비로그인 시 로그인 뷰 이동
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
             .ignoresSafeArea()
@@ -105,6 +122,13 @@ struct NavigationPostsView: View {
                 }
             }
         }
+<<<<<<< 864b10c052d8eafda116c2341fc1c7486b1083e8
+=======
+        .onDisappear {
+            authViewModel.isShowLoginDialog = false
+        }
+        .navigationBarTitleDisplayMode(.inline)
+>>>>>>> [Edit] Main, Drink 비로그인 시 로그인 뷰 이동
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {

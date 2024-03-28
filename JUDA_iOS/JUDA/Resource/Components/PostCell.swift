@@ -87,6 +87,8 @@ struct PostCell: View {
                                     await authViewModel.updateLikedPosts(isLiked: isLike, selectedPost: post)
                                 }
                             }
+                        } else {
+                            authViewModel.isShowLoginDialog = true
                         }
 					} label: {
 						Image(systemName: isLike ? "heart.fill" : "heart")
